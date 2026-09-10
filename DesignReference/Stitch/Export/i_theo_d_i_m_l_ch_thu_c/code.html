@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#005248",
+            "text-secondary": "#52666B",
+            "on-primary": "#ffffff",
+            "surface-bright": "#effcff",
+            "on-surface": "#0a1e23",
+            "surface-card": "#FFFFFF",
+            "surface-bg": "#F7F9F8",
+            "activity-medical": "#B63B48",
+            "activity-medical-surface": "#FDF2F4",
+            "activity-routine": "#805B16",
+            "activity-routine-surface": "#FFF7E6",
+            "activity-nutrition": "#176B91",
+            "activity-nutrition-surface": "#EBF5FB",
+            "action-primary": "#146C60",
+            "action-primary-pressed": "#0E4E45",
+            "divider-hairline": "#E6ECEB",
+            "text-primary": "#172D32",
+            "mint-subtle": "#E6F4F1",
+            "mint-border": "#BDE3DC"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "3xl": "1.25rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            sans: ["Be Vietnam Pro", "-apple-system", "BlinkMacSystemFont", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html, body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        overscroll-behavior-y: none;
+        -webkit-tap-highlight-color: transparent;
+        font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 16px);
+      }
+      .pt-safe {
+        padding-top: env(safe-area-inset-top, 16px);
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+    .material-symbols-fill {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="bg-surface-bg text-text-primary antialiased min-h-screen flex flex-col font-sans selection:bg-action-primary/10">
+<!-- Top Global Bar (Header bé) -->
+<header class="fixed top-0 inset-x-0 z-50 bg-surface-bg/90 backdrop-blur-xl border-b border-divider-hairline/60 pt-safe">
+<div class="h-14 px-5 flex items-center justify-between">
+<a class="flex items-center gap-2.5 rounded-full py-1 pr-2.5 pl-1 transition-transform active:scale-95" href="#">
+<div class="w-8 h-8 rounded-full bg-action-primary/15 text-action-primary flex items-center justify-center font-bold text-sm">
+<span class="material-symbols-outlined text-[18px]">child_care</span>
+</div>
+<div class="flex flex-col text-left">
+<div class="flex items-center gap-0.5">
+<span class="text-[15px] font-bold text-text-primary leading-tight">Bé An</span>
+<span class="material-symbols-outlined text-text-secondary text-[16px]">expand_more</span>
+</div>
+<span class="text-[11px] font-medium text-text-secondary leading-none">12 tháng tuổi</span>
+</div>
+</a>
+<div class="flex items-center gap-1.5">
+<a aria-label="Cài đặt" class="w-9 h-9 flex items-center justify-center rounded-full text-text-secondary hover:text-text-primary active:bg-divider-hairline transition-colors" href="#">
+<span class="material-symbols-outlined text-[21px]">settings</span>
+</a>
+<div class="w-8 h-8 rounded-full bg-action-primary/10 text-action-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content View -->
+<main class="flex-1 flex flex-col w-full pt-[calc(3.5rem+env(safe-area-inset-top,16px))] pb-28">
+<!-- Secondary iOS Context Header -->
+<section class="px-5 py-2.5 flex items-center justify-between">
+<button class="inline-flex items-center gap-0.5 text-action-primary font-semibold text-[15px] -ml-1 active:opacity-60 transition-opacity" type="button">
+<span class="material-symbols-outlined text-[22px]">chevron_left</span>
+<span>Ghi nhanh</span>
+</button>
+<div class="flex flex-col items-center text-center px-2 flex-1">
+<h1 class="text-[16px] font-bold text-text-primary tracking-tight leading-tight">Theo dõi ốm &amp; Lịch thuốc</h1>
+<span class="text-[11px] font-medium text-text-secondary leading-tight mt-0.5">Bé An · 12 tháng tuổi</span>
+</div>
+<button aria-label="Cài đặt đợt ốm" class="w-8 h-8 rounded-full flex items-center justify-center text-text-secondary hover:text-text-primary bg-white/80 border border-divider-hairline shadow-xs active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</section>
+<!-- Scrollable Sections Container -->
+<div class="px-5 flex flex-col gap-4 mt-1">
+<!-- 1. Hero Card: Đợt ốm hiện tại -->
+<section class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#FFF5F6] via-[#FDF0F2] to-white border border-[#F3D2D6] shadow-[0_4px_16px_rgba(182,59,72,0.06)] p-4 flex flex-col gap-3.5">
+<!-- Top Row: Active Status Badge & Action -->
+<div class="flex items-center justify-between">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#B63B48]/10 text-activity-medical">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-activity-medical opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-activity-medical"></span>
+</span>
+<span class="text-[11px] font-bold tracking-wide uppercase">
+              Đang theo dõi ốm · Ngày thứ 2
+            </span>
+</div>
+<button class="inline-flex items-center gap-1 text-[12px] font-medium text-activity-routine bg-activity-routine-surface px-2.5 py-1 rounded-full border border-[#FFE0A3] hover:bg-[#FFE8B8] active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[14px]">flag</span>
+<span>Kết thúc đợt</span>
+</button>
+</div>
+<!-- Episode Name & Start Info -->
+<div>
+<h2 class="text-[18px] font-bold text-text-primary tracking-tight leading-snug">
+            Sốt mọc răng &amp; Viêm họng nhẹ
+          </h2>
+<p class="text-[12px] text-text-secondary flex items-center gap-1.5 mt-0.5">
+<span class="material-symbols-outlined text-[15px] text-text-secondary">calendar_today</span>
+<span>Khởi phát: 07/09/2026 (2 ngày trước)</span>
+</p>
+</div>
+<!-- Metric Highlight: Quick Temperature Card -->
+<div class="rounded-xl bg-white/95 backdrop-blur-sm border border-[#F5D5D9] p-3 flex items-center justify-between shadow-xs">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-activity-medical-surface text-activity-medical flex items-center justify-center border border-[#FAD8DC]">
+<span class="material-symbols-outlined text-[24px]">device_thermostat</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[11px] font-medium text-text-secondary">Nhiệt độ gần nhất</span>
+<div class="flex items-baseline gap-1">
+<span class="text-[26px] font-bold text-activity-medical tracking-tight leading-none">37,7</span>
+<span class="text-[15px] font-bold text-activity-medical">°C</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end text-right">
+<div class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md bg-[#FDF0F2] text-activity-medical text-[11px] font-semibold border border-[#FAD8DC]">
+<span class="material-symbols-outlined text-[13px]">trending_down</span>
+<span>-0.4°C</span>
+</div>
+<span class="text-[11px] text-text-secondary mt-1 font-medium">Sốt nhẹ (Đo lúc 20:00)</span>
+</div>
+</div>
+<!-- Quick Pill Action Buttons -->
+<div class="grid grid-cols-2 gap-2.5 pt-0.5">
+<button class="h-11 rounded-xl bg-action-primary hover:bg-action-primary-pressed text-white font-semibold text-[14px] flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-all" type="button">
+<span class="text-base">🌡️</span>
+<span>Đo nhiệt độ</span>
+</button>
+<button class="h-11 rounded-xl bg-white border border-[#E0E7E6] hover:bg-[#F2F6F5] text-text-primary font-semibold text-[14px] flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-all" type="button">
+<span class="text-base">💊</span>
+<span>Ghi uống thuốc</span>
+</button>
+</div>
+</section>
+<!-- 2. Section: Lịch nhắc thuốc của bé -->
+<section class="flex flex-col gap-2.5">
+<div class="flex items-center justify-between px-0.5">
+<div class="flex items-center gap-1.5">
+<span class="w-1 h-3.5 bg-action-primary rounded-full"></span>
+<h3 class="text-[13px] font-bold text-text-primary tracking-wide uppercase">
+              Lịch nhắc thuốc của bé
+            </h3>
+</div>
+<button class="inline-flex items-center gap-1 text-action-primary text-[13px] font-semibold hover:opacity-80 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>Thêm nhắc</span>
+</button>
+</div>
+<!-- Main Active Medicine Card: Thuốc A -->
+<div class="rounded-2xl bg-surface-card border border-divider-hairline shadow-sm p-4 flex flex-col gap-3">
+<!-- Medication Header -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-activity-medical-surface text-activity-medical flex items-center justify-center border border-[#FCDFE3]">
+<span class="material-symbols-outlined text-[22px]">prescriptions</span>
+</div>
+<div>
+<h4 class="text-[15px] font-bold text-text-primary leading-snug">Thuốc A (Paracetamol 80mg)</h4>
+<p class="text-[12px] text-text-secondary mt-0.5">
+                  Liều dùng: <strong class="text-text-primary font-semibold">5 ml</strong> (Hạ sốt &amp; Giảm đau)
+                </p>
+</div>
+</div>
+<button aria-label="Tùy chọn thuốc" class="text-text-secondary hover:text-text-primary p-1 active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+</div>
+<!-- Highlight Countdown Box -->
+<div class="rounded-xl bg-[#F0F8F6] border border-[#C6E6DF] p-3 flex flex-col gap-2.5">
+<div class="flex items-center justify-between">
+<div class="inline-flex items-center gap-1.5 text-action-primary font-bold text-[12px] tracking-wider uppercase">
+<span class="material-symbols-outlined text-[16px] animate-pulse">alarm</span>
+<span>CỮ KẾ TIẾP: 22:00</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="text-[11px] text-text-secondary font-medium">Còn:</span>
+<span class="font-mono text-[16px] font-bold text-action-primary tracking-tight" id="med-timer">00:59:57</span>
+</div>
+</div>
+<!-- Progress Elapsed Bar -->
+<div class="w-full h-1.5 rounded-full bg-white/80 overflow-hidden">
+<div class="h-full rounded-full bg-action-primary transition-all duration-700" style="width: 78%"></div>
+</div>
+<div class="flex items-center justify-between text-[11px] text-text-secondary">
+<span>Uống lần gần nhất lúc 18:00 (5 ml)</span>
+<span class="font-medium text-action-primary">Cách nhau tối thiểu 4-6 giờ</span>
+</div>
+</div>
+<!-- Bottom Action & Today's Count -->
+<div class="flex items-center justify-between pt-0.5">
+<div class="text-[12px] text-text-secondary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-action-primary">history</span>
+<span>Hôm nay: <strong class="text-text-primary font-semibold">2 lần (10 ml)</strong></span>
+</div>
+<button class="h-8 px-3.5 rounded-full bg-action-primary hover:bg-action-primary-pressed text-white text-[12px] font-semibold flex items-center gap-1 shadow-xs active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]">check</span>
+<span>Ghi đã dùng</span>
+</button>
+</div>
+</div>
+<!-- Routine Medicine 2: BioGaia -->
+<div class="rounded-2xl bg-surface-card border border-divider-hairline shadow-sm p-4 flex flex-col gap-2.5">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-activity-nutrition-surface text-activity-nutrition flex items-center justify-center border border-[#D5EAF7]">
+<span class="material-symbols-outlined text-[20px]">water_drop</span>
+</div>
+<div>
+<h4 class="text-[15px] font-bold text-text-primary">Men vi sinh BioGaia</h4>
+<p class="text-[12px] text-text-secondary mt-0.5">
+                  Liều dùng: <strong class="text-text-primary font-semibold">5 giọt</strong> · 09:00 sáng
+                </p>
+</div>
+</div>
+<div class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#E5F6F1] text-action-primary text-[11px] font-semibold border border-[#BEE7DC]">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>Đã dùng hôm nay</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-[11px] text-text-secondary px-0.5 pt-0.5 border-t border-divider-hairline/60">
+<span>Đã uống sau cữ bú sáng (09:15)</span>
+<span class="text-text-primary font-medium">Hẹn sáng mai 09:00</span>
+</div>
+</div>
+</section>
+<!-- 3. Section: Lưu ý an toàn y khoa (Clinical Notice) -->
+<section class="rounded-2xl bg-[#E6F4F1] border border-[#BDE3DC] p-3.5 flex gap-3 shadow-xs">
+<div class="w-8 h-8 rounded-full bg-action-primary/15 text-action-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<div class="flex flex-col gap-0.5">
+<span class="text-[13px] font-bold text-action-primary">Lưu ý an toàn y khoa</span>
+<p class="text-[12px] text-[#2B4B48] leading-relaxed">
+            Khoảng cách giữa 2 liều Paracetamol tối thiểu <strong class="font-semibold text-text-primary">4 – 6 giờ</strong>. Luôn cho bé uống nhiều nước ấm, mặc đồ thoáng mát và chườm ấm khi sốt.
+          </p>
+</div>
+</section>
+<!-- 4. Section: Nhật ký đợt ốm gần đây -->
+<section class="flex flex-col gap-2.5">
+<div class="flex items-center justify-between px-0.5">
+<div class="flex items-center gap-1.5">
+<span class="w-1 h-3.5 bg-action-primary rounded-full"></span>
+<h3 class="text-[13px] font-bold text-text-primary tracking-wide uppercase">
+              Nhật ký đợt ốm gần đây
+            </h3>
+</div>
+<span class="text-[11px] font-medium text-text-secondary">3 sự kiện mới nhất</span>
+</div>
+<div class="rounded-2xl bg-surface-card border border-divider-hairline shadow-sm p-3.5 flex flex-col divide-y divide-divider-hairline">
+<!-- Event 1: Temp 37.7C -->
+<div class="flex items-center justify-between pb-3">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-activity-medical-surface text-activity-medical flex items-center justify-center border border-[#FAD8DC]">
+<span class="material-symbols-outlined text-[17px]">device_thermostat</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[13px] font-semibold text-text-primary leading-tight">Đo thân nhiệt: 37,7 °C</span>
+<span class="text-[11px] text-text-secondary leading-tight mt-0.5">Trán ấm, bé chơi ngoan hơn</span>
+</div>
+</div>
+<span class="text-[12px] font-semibold text-text-secondary font-mono">20:00</span>
+</div>
+<!-- Event 2: Paracetamol 5ml -->
+<div class="flex items-center justify-between py-3">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-[#EAF4FB] text-secondary flex items-center justify-center border border-[#CDE5F6]">
+<span class="material-symbols-outlined text-[17px]">medication_liquid</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[13px] font-semibold text-text-primary leading-tight">Uống Paracetamol (5 ml)</span>
+<span class="text-[11px] text-text-secondary leading-tight mt-0.5">Cữ thứ 2 trong ngày</span>
+</div>
+</div>
+<span class="text-[12px] font-semibold text-text-secondary font-mono">18:00</span>
+</div>
+<!-- Event 3: Temp 38.1C -->
+<div class="flex items-center justify-between pt-3">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-activity-medical-surface text-activity-medical flex items-center justify-center border border-[#FAD8DC]">
+<span class="material-symbols-outlined text-[17px]">device_thermostat</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[13px] font-semibold text-text-primary leading-tight">Đo thân nhiệt: 38,1 °C</span>
+<span class="text-[11px] text-text-secondary leading-tight mt-0.5">Sốt cao vừa, đã cho bé chườm ấm</span>
+</div>
+</div>
+<span class="text-[12px] font-semibold text-text-secondary font-mono">08:00</span>
+</div>
+</div>
+</section>
+<!-- 5. Bottom Sticky Primary Action CTA -->
+<div class="pt-1">
+<button class="w-full h-12 rounded-2xl bg-action-primary hover:bg-action-primary-pressed text-white font-semibold text-[15px] flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(20,108,96,0.25)] active:scale-[0.99] transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">share_location</span>
+<span>Xuất báo cáo 48h gửi bác sĩ (PDF / QR)</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Tab Bar (3 tabs: Ghi nhanh, Nhật ký, Thống kê) -->
+<nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-white/90 backdrop-blur-xl border-t border-divider-hairline shadow-[0_-2px_10px_rgba(0,0,0,0.03)]">
+<div class="flex justify-around items-center h-14 px-4">
+<a aria-current="page" class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] text-action-primary font-semibold transition-colors" href="#">
+<span class="material-symbols-outlined material-symbols-fill text-[22px]">bolt</span>
+<span class="text-[10px] tracking-tight">Ghi nhanh</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] text-text-secondary hover:text-text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">auto_stories</span>
+<span class="text-[10px] tracking-tight">Nhật ký</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-0.5 min-w-[56px] text-text-secondary hover:text-text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">bar_chart</span>
+<span class="text-[10px] tracking-tight">Thống kê</span>
+</a>
+</div>
+</nav>
+<!-- Live Countdown Timer Simulation -->
+<script>
+    (function() {
+      let secondsLeft = 59 * 60 + 57; // 00:59:57
+      const timerEl = document.getElementById('med-timer');
+      if (!timerEl) return;
+
+      setInterval(() => {
+        if (secondsLeft > 0) {
+          secondsLeft--;
+        }
+        const hrs = String(Math.floor(secondsLeft / 3600)).padStart(2, '0');
+        const mins = String(Math.floor((secondsLeft % 3600) / 60)).padStart(2, '0');
+        const secs = String(secondsLeft % 60).padStart(2, '0');
+        timerEl.textContent = `${hrs}:${mins}:${secs}`;
+      }, 1000);
+    })();
+  </script>
+</body></html>

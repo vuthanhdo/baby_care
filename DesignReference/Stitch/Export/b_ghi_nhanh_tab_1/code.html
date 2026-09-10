@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #F7F9F8;
+      }
+      body {
+        overscroll-behavior-y: none;
+        -webkit-tap-highlight-color: transparent;
+        font-family: 'Be Vietnam Pro', sans-serif;
+      }
+      .pb-safe { padding-bottom: env(safe-area-inset-bottom, 16px); }
+      .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bg": "#F7F9F8",
+            "surface-card": "#FFFFFF",
+            "text-primary": "#172D32",
+            "text-secondary": "#52666B",
+            "divider-hairline": "#E3E8E7",
+            "action-primary": "#146C60",
+            "action-primary-pressed": "#0E4E45",
+            "activity-medical": "#B63B48",
+            "activity-medical-surface": "#FBECEE",
+            "activity-nutrition": "#176B91",
+            "activity-nutrition-surface": "#E8F3FA",
+            "activity-routine": "#805B16",
+            "activity-routine-surface": "#FFF3D7",
+            "primary-fixed": "#a3f1e2",
+          },
+          fontFamily: {
+            sans: ['Be Vietnam Pro', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface-bg text-text-primary antialiased min-h-screen flex flex-col">
+<!-- Header Bé chuẩn iOS/SwiftUI -->
+<header class="fixed top-0 inset-x-0 z-50 bg-[#F7F9F8]/90 backdrop-blur-xl pt-safe border-b border-divider-hairline/80">
+<div class="h-16 px-5 flex items-center justify-between">
+<!-- Bé Avatar & Name -->
+<a class="flex items-center gap-3 py-1 text-left active:scale-95 transition-transform" data-path="baby-profile" href="#">
+<div class="relative w-11 h-11 rounded-full bg-[#E6F4F1] border-2 border-white shadow-sm flex items-center justify-center text-action-primary font-bold text-lg">
+          A
+          <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-action-primary border-2 border-white"></span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1">
+<span class="text-[17px] font-bold text-text-primary leading-tight">Bé An</span>
+<span class="material-symbols-outlined text-text-secondary text-[18px]">expand_more</span>
+</div>
+<span class="text-[12px] text-text-secondary font-medium">12 tháng tuổi</span>
+</div>
+</a>
+<!-- Quick Action Icons -->
+<div class="flex items-center gap-2">
+<a aria-label="Cài đặt" class="w-10 h-10 rounded-full bg-white border border-divider-hairline shadow-sm flex items-center justify-center text-text-secondary active:scale-95 hover:text-text-primary transition-all" data-path="settings" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</a>
+<button aria-label="Thông báo" class="w-10 h-10 rounded-full bg-white border border-divider-hairline shadow-sm flex items-center justify-center text-text-secondary active:scale-95 hover:text-text-primary transition-all relative" type="button">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-activity-medical"></span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col relative w-full pt-20 pb-28 px-5 max-w-md mx-auto">
+<div class="space-y-5 pt-1">
+<!-- Header title & context -->
+<div class="flex items-center justify-between">
+<div>
+<span class="text-[12px] font-medium text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-action-primary">calendar_today</span>
+            Thứ Ba, 08/09 · 21:00
+          </span>
+<h1 class="text-[24px] font-bold text-text-primary tracking-tight mt-0.5">Ghi nhanh</h1>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 bg-white rounded-full border border-emerald-200/80 shadow-sm text-emerald-800 text-[12px] font-semibold">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+          Trực tiếp
+        </div>
+</div>
+<!-- Section 1: Active tracking banner -->
+<section class="space-y-2.5">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold uppercase tracking-wider text-text-secondary">Trạng thái đang diễn ra</span>
+<span class="text-[12px] text-activity-medical font-semibold">2 theo dõi active</span>
+</div>
+<!-- Medical Active Card -->
+<div class="bg-white rounded-2xl p-4 border border-activity-medical-surface shadow-[0_2px_12px_rgba(182,59,72,0.06)] space-y-3 relative overflow-hidden">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-activity-medical-surface text-activity-medical flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">thermostat</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-[15px] font-bold text-activity-medical">Đang theo dõi ốm · Ngày thứ 2</h3>
+</div>
+<p class="text-[13px] font-semibold text-text-primary mt-0.5">Sốt mọc răng &amp; Viêm họng nhẹ</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-[#FEE4E2] text-activity-medical text-[11px] font-bold">Cần chú ý</span>
+</div>
+<!-- Metric Display Box -->
+<div class="px-3.5 py-2.5 rounded-xl bg-[#FFF8F8] border border-rose-100 flex items-center justify-between">
+<div>
+<p class="text-[11px] text-text-secondary">Nhiệt độ gần nhất</p>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="text-[24px] font-bold text-activity-medical leading-none">37,7</span>
+<span class="text-[14px] font-bold text-activity-medical">°C</span>
+<span class="text-[12px] text-text-secondary ml-1 font-medium">(Sốt nhẹ · Đo lúc 20:00)</span>
+</div>
+</div>
+<span class="px-2 py-1 rounded-lg bg-amber-100 text-amber-800 text-[11px] font-bold">Theo dõi</span>
+</div>
+<!-- Quick Action Buttons -->
+<div class="grid grid-cols-2 gap-2.5 pt-0.5">
+<button class="h-11 rounded-xl bg-action-primary active:bg-action-primary-pressed text-white text-[14px] font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-98 transition-transform" onclick="triggerQuickAction('Đã mở giao diện đo nhiệt độ')" type="button">
+<span class="material-symbols-outlined text-[19px]">device_thermostat</span>
+<span>Đo nhiệt độ</span>
+</button>
+<button class="h-11 rounded-xl bg-white border border-activity-medical text-activity-medical active:bg-activity-medical-surface text-[14px] font-semibold flex items-center justify-center gap-1 shadow-sm active:scale-98 transition-transform" onclick="triggerQuickAction('Xem chi tiết bệnh án')" type="button">
+<span>Xem theo dõi</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Section: Thẻ nhắc thuốc thông minh sắp đến giờ (Countdown pill) -->
+<div class="bg-white rounded-2xl p-4 border border-divider-hairline shadow-[0_2px_10px_rgba(23,45,50,0.04)] space-y-3">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-activity-medical-surface text-activity-medical flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">medication</span>
+</div>
+<div>
+<h3 class="text-[15px] font-bold text-text-primary">Thuốc A (Paracetamol 80mg) · 5 ml</h3>
+<p class="text-[12px] text-text-secondary mt-0.5">Giảm đau &amp; hạ sốt khi thân nhiệt &gt; 38°C</p>
+</div>
+</div>
+</div>
+<!-- Hộp đếm ngược countdown -->
+<div class="p-3 rounded-xl bg-activity-nutrition-surface/40 border border-sky-100 space-y-2">
+<div class="flex items-center justify-between text-[13px]">
+<span class="font-bold text-activity-nutrition tracking-wide text-[11px] uppercase">CỮ KẾ TIẾP: 22:00</span>
+<span class="font-bold text-action-primary flex items-center gap-1 text-[13px]">
+<span class="material-symbols-outlined text-[16px] animate-spin" style="animation-duration: 4s;">hourglass_top</span>
+                Còn 01:00:00
+              </span>
+</div>
+<!-- Progress bar -->
+<div class="w-full h-2 bg-sky-100 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-action-primary to-activity-nutrition rounded-full" style="width: 75%;"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2.5 pt-0.5">
+<button class="h-11 rounded-xl bg-action-primary text-white text-[14px] font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-98 transition-transform" onclick="triggerQuickAction('Đã lưu cữ thuốc 5ml')" type="button">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span>Ghi đã dùng</span>
+</button>
+<button class="h-11 rounded-xl bg-white border border-divider-hairline text-text-secondary active:bg-surface-bg text-[14px] font-semibold flex items-center justify-center gap-1 shadow-sm active:scale-98 transition-transform" onclick="triggerQuickAction('Mở danh sách lịch thuốc')" type="button">
+<span>Xem lịch thuốc</span>
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Section 2: Gợi ý thông minh lúc này -->
+<section class="space-y-2.5">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold uppercase tracking-wider text-text-secondary">GỢI Ý LÚC NÀY</span>
+<span class="text-[12px] text-text-secondary">Nhịp sinh hoạt bé</span>
+</div>
+<div class="grid grid-cols-1 gap-3">
+<!-- Suggestion 1: Milk -->
+<div class="bg-white rounded-2xl p-4 border border-divider-hairline shadow-[0_2px_8px_rgba(23,45,50,0.03)] space-y-3">
+<div class="flex items-start gap-3">
+<div class="w-11 h-11 rounded-xl bg-activity-nutrition-surface text-activity-nutrition flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">water_bottle</span>
+</div>
+<div class="flex-1">
+<h4 class="text-[15px] font-bold text-text-primary">Cữ sữa trước khi ngủ</h4>
+<p class="text-[12px] text-text-secondary mt-0.5 leading-relaxed">
+                  Lần trước: 120 ml lúc 07:00. Thường dùng trước 21:30 để bé ngủ ngon
+                </p>
+</div>
+</div>
+<button class="w-full h-11 rounded-xl bg-activity-nutrition text-white text-[14px] font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-98 transition-transform" onclick="triggerQuickAction('Đã ghi cữ sữa 120 ml cho bé An')" type="button">
+<span class="material-symbols-outlined text-[19px]">add_circle</span>
+<span>Ghi cữ sữa (120 ml)</span>
+</button>
+</div>
+<!-- Suggestion 2: Night Sleep -->
+<div class="bg-white rounded-2xl p-4 border border-divider-hairline shadow-[0_2px_8px_rgba(23,45,50,0.03)] space-y-3">
+<div class="flex items-start gap-3">
+<div class="w-11 h-11 rounded-xl bg-activity-routine-surface text-activity-routine flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">bedtime</span>
+</div>
+<div class="flex-1">
+<h4 class="text-[15px] font-bold text-text-primary">Giấc ngủ đêm</h4>
+<p class="text-[12px] text-text-secondary mt-0.5 leading-relaxed">
+                  Giấc trưa: 12:30–14:00 (1h30). Bé đã thức 7 tiếng, sẵn sàng vào giấc đêm.
+                </p>
+</div>
+</div>
+<button class="w-full h-11 rounded-xl bg-activity-routine text-white text-[14px] font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-98 transition-transform" onclick="triggerSleepAction(this)" type="button">
+<span class="material-symbols-outlined text-[19px]">play_arrow</span>
+<span>Bắt đầu ngủ</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Section 3: 3 Nút nhóm hoạt động lớn (3 Big Categories Buttons) -->
+<section class="space-y-2.5">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold uppercase tracking-wider text-text-secondary">DANH MỤC GHI CHÉP</span>
+<span class="text-[12px] text-action-primary font-semibold">Tất cả danh mục</span>
+</div>
+<div class="space-y-3">
+<!-- Nhóm 1: Y tế & Triệu chứng -->
+<a class="flex items-center justify-between p-4 bg-white rounded-2xl border border-divider-hairline shadow-[0_2px_8px_rgba(23,45,50,0.04)] active:scale-[0.98] transition-transform" href="#">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-xl bg-activity-medical-surface text-activity-medical flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">stethoscope</span>
+</div>
+<div>
+<h3 class="text-[16px] font-bold text-text-primary">Y tế &amp; Triệu chứng</h3>
+<p class="text-[12px] text-text-secondary mt-0.5">Uống thuốc, nhiệt độ, triệu chứng, khám bệnh</p>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-bg flex items-center justify-center text-activity-medical shrink-0">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</div>
+</a>
+<!-- Nhóm 2: Ăn uống & Dinh dưỡng -->
+<a class="flex items-center justify-between p-4 bg-white rounded-2xl border border-divider-hairline shadow-[0_2px_8px_rgba(23,45,50,0.04)] active:scale-[0.98] transition-transform" href="#">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-xl bg-activity-nutrition-surface text-activity-nutrition flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+</div>
+<div>
+<h3 class="text-[16px] font-bold text-text-primary">Ăn uống &amp; Dinh dưỡng</h3>
+<p class="text-[12px] text-text-secondary mt-0.5">Sữa bú/công thức, ăn dặm, uống nước</p>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-bg flex items-center justify-center text-activity-nutrition shrink-0">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</div>
+</a>
+<!-- Nhóm 3: Ngủ & Sinh hoạt -->
+<a class="flex items-center justify-between p-4 bg-white rounded-2xl border border-divider-hairline shadow-[0_2px_8px_rgba(23,45,50,0.04)] active:scale-[0.98] transition-transform" href="#">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-xl bg-activity-routine-surface text-activity-routine flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">nightlight_round</span>
+</div>
+<div>
+<h3 class="text-[16px] font-bold text-text-primary">Ngủ &amp; Sinh hoạt</h3>
+<p class="text-[12px] text-text-secondary mt-0.5">Giấc ngủ, tắm mát, thay tã / vệ sinh</p>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-bg flex items-center justify-center text-activity-routine shrink-0">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</div>
+</a>
+</div>
+</section>
+<!-- Section 4: Nút AI giọng nói 'Nói để ghi' -->
+<section>
+<button class="w-full p-4 rounded-2xl bg-gradient-to-r from-[#E6F4F1] to-[#F2FBF9] border border-action-primary/30 shadow-[0_4px_16px_rgba(20,108,96,0.08)] flex items-center justify-between text-left active:scale-[0.98] transition-all" id="voiceLoggingBtn" onclick="toggleVoiceLogging()" type="button">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-full bg-action-primary text-white flex items-center justify-center shadow-md shrink-0 relative transition-all" id="voiceMicCircle">
+<span class="material-symbols-outlined text-[26px]" id="voiceMicIcon">mic</span>
+<span class="absolute -top-0.5 -right-0.5 flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 ring-2 ring-white"></span>
+</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-[15px] font-bold text-text-primary" id="voiceTitleText">Nói để ghi với AI</span>
+<span class="px-2 py-0.5 rounded-full bg-action-primary/10 text-action-primary text-[11px] font-bold">Tiện lợi</span>
+</div>
+<p class="text-[12px] text-text-secondary mt-0.5" id="voiceHintText">
+                Ví dụ: “Bé An uống 120ml sữa lúc 7 giờ sáng”
+              </p>
+</div>
+</div>
+<!-- Sóng âm thanh indicator -->
+<div class="flex items-center gap-1 pl-2 text-action-primary" id="voiceWaveIndicator">
+<span class="w-1 h-3 rounded-full bg-action-primary animate-pulse"></span>
+<span class="w-1 h-6 rounded-full bg-action-primary animate-pulse" style="animation-delay: 0.15s;"></span>
+<span class="w-1 h-4 rounded-full bg-action-primary animate-pulse" style="animation-delay: 0.3s;"></span>
+</div>
+</button>
+</section>
+<!-- Section 5: Hoạt động gần đây (3 bản ghi) -->
+<section class="space-y-2.5">
+<div class="flex items-center justify-between">
+<span class="text-[16px] font-bold text-text-primary">Hoạt động gần đây</span>
+<a class="text-[13px] font-semibold text-action-primary flex items-center hover:underline" data-path="daily-timeline" href="#">
+<span>Xem tất cả</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+<div class="bg-white rounded-2xl p-3 border border-divider-hairline shadow-[0_2px_8px_rgba(23,45,50,0.03)] space-y-1">
+<!-- Bản ghi 1 -->
+<div class="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-bg transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-activity-medical-surface text-activity-medical flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">device_thermostat</span>
+</div>
+<div>
+<p class="text-[14px] font-bold text-text-primary">Đo thân nhiệt: 37,7 °C</p>
+<p class="text-[12px] text-text-secondary">Trán ấm, chơi ngoan</p>
+</div>
+</div>
+<span class="text-[13px] font-bold text-text-secondary">20:00</span>
+</div>
+<div class="h-[1px] bg-divider-hairline/60 mx-2"></div>
+<!-- Bản ghi 2 -->
+<div class="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-bg transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-activity-medical-surface text-activity-medical flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">medication</span>
+</div>
+<div>
+<p class="text-[14px] font-bold text-text-primary">Uống Paracetamol 80mg (5 ml)</p>
+<p class="text-[12px] text-text-secondary">Cữ thuốc tối hạ sốt</p>
+</div>
+</div>
+<span class="text-[13px] font-bold text-text-secondary">18:00</span>
+</div>
+<div class="h-[1px] bg-divider-hairline/60 mx-2"></div>
+<!-- Bản ghi 3 -->
+<div class="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-bg transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-activity-routine-surface text-activity-routine flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">bedtime</span>
+</div>
+<div>
+<p class="text-[14px] font-bold text-text-primary">Kết thúc ngủ trưa (1h30p)</p>
+<p class="text-[12px] text-text-secondary">Giấc trưa tròn giấc, dậy vui</p>
+</div>
+</div>
+<span class="text-[13px] font-bold text-text-secondary">14:00</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Floating Feedback Toast -->
+<div class="hidden fixed bottom-24 inset-x-5 max-w-sm mx-auto z-50 bg-text-primary text-white py-3 px-4 rounded-2xl shadow-xl flex items-center justify-between transition-all duration-300" id="quickUndoToast">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-400 text-[20px]">check_circle</span>
+<span class="text-[14px] font-medium" id="toastMessageText">Đã ghi thành công</span>
+</div>
+<button class="text-[13px] font-bold text-emerald-300 hover:underline" onclick="hideToast()" type="button">Hoàn tác</button>
+</div>
+</main>
+<!-- Bottom Navigation Bar chuẩn iOS -->
+<nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-white/95 backdrop-blur-xl border-t border-divider-hairline shadow-[0_-2px_10px_rgba(0,0,0,0.03)]">
+<div class="flex justify-around items-center h-16 px-5 max-w-md mx-auto">
+<!-- Tab 1: Ghi nhanh (Active) -->
+<a aria-current="page" class="flex flex-col items-center justify-center gap-0.5 text-action-primary font-bold py-1 min-w-[64px]" data-path="quick-log" href="#">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="text-[11px] tracking-tight">Ghi nhanh</span>
+<span class="w-1 h-1 rounded-full bg-action-primary"></span>
+</a>
+<!-- Tab 2: Nhật ký -->
+<a class="flex flex-col items-center justify-center gap-0.5 text-text-secondary hover:text-text-primary font-medium py-1 min-w-[64px] transition-colors" data-path="daily-timeline" href="#">
+<span class="material-symbols-outlined text-[24px]">auto_stories</span>
+<span class="text-[11px] tracking-tight">Nhật ký</span>
+<span class="w-1 h-1 rounded-full bg-transparent"></span>
+</a>
+<!-- Tab 3: Thống kê -->
+<a class="flex flex-col items-center justify-center gap-0.5 text-text-secondary hover:text-text-primary font-medium py-1 min-w-[64px] transition-colors" data-path="insights-and-growth" href="#">
+<span class="material-symbols-outlined text-[24px]">bar_chart</span>
+<span class="text-[11px] tracking-tight">Thống kê</span>
+<span class="w-1 h-1 rounded-full bg-transparent"></span>
+</a>
+</div>
+</nav>
+<!-- JavaScript Interactivity -->
+<script>
+    function triggerQuickAction(msg) {
+      showToastMessage(msg);
+    }
+
+    function triggerSleepAction(btn) {
+      btn.innerHTML = '<span class="material-symbols-outlined text-[19px] animate-spin">sync</span><span>Đang theo dõi giấc ngủ...</span>';
+      btn.classList.remove('bg-activity-routine');
+      btn.classList.add('bg-action-primary');
+      showToastMessage('Bé An đã bắt đầu ngủ đêm');
+    }
+
+    let isRecordingVoice = false;
+    function toggleVoiceLogging() {
+      isRecordingVoice = !isRecordingVoice;
+      const micCircle = document.getElementById('voiceMicCircle');
+      const titleText = document.getElementById('voiceTitleText');
+      const hintText = document.getElementById('voiceHintText');
+      const wave = document.getElementById('voiceWaveIndicator');
+
+      if (isRecordingVoice) {
+        micCircle.classList.remove('bg-action-primary');
+        micCircle.classList.add('bg-activity-medical', 'animate-pulse');
+        titleText.innerText = 'Đang lắng nghe ba mẹ...';
+        titleText.classList.add('text-activity-medical');
+        hintText.innerText = 'Nói: "Bé An vừa uống 120ml sữa"...';
+        wave.innerHTML = `
+          <span class="w-1.5 h-6 rounded-full bg-activity-medical animate-bounce"></span>
+          <span class="w-1.5 h-4 rounded-full bg-activity-medical animate-bounce" style="animation-delay: 0.15s"></span>
+          <span class="w-1.5 h-7 rounded-full bg-activity-medical animate-bounce" style="animation-delay: 0.3s"></span>
+        `;
+        setTimeout(() => {
+          if (isRecordingVoice) toggleVoiceLogging();
+        }, 4000);
+      } else {
+        micCircle.classList.remove('bg-activity-medical', 'animate-pulse');
+        micCircle.classList.add('bg-action-primary');
+        titleText.innerText = 'Nói để ghi với AI';
+        titleText.classList.remove('text-activity-medical');
+        hintText.innerText = 'Ví dụ: "Bé An uống 120ml sữa lúc 7 giờ sáng"';
+        wave.innerHTML = `
+          <span class="w-1 h-3 rounded-full bg-action-primary"></span>
+          <span class="w-1 h-6 rounded-full bg-action-primary"></span>
+          <span class="w-1 h-4 rounded-full bg-action-primary"></span>
+        `;
+        showToastMessage('Đã nhận dạng: "Bé An uống 120ml sữa"');
+      }
+    }
+
+    let toastTimer = null;
+    function showToastMessage(msg) {
+      const toast = document.getElementById('quickUndoToast');
+      const label = document.getElementById('toastMessageText');
+      if (!toast || !label) return;
+
+      label.innerText = msg;
+      toast.classList.remove('hidden');
+
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        hideToast();
+      }, 3500);
+    }
+
+    function hideToast() {
+      const toast = document.getElementById('quickUndoToast');
+      if (!toast) return;
+      toast.classList.add('hidden');
+    }
+  </script>
+</body></html>

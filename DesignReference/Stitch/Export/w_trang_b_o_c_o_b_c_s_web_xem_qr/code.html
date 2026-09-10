@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Bé Khỏe - Báo Cáo Y Khoa Dành Cho Bác Sĩ (48 Giờ)</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "action-primary": "#146C60",
+            "action-primary-pressed": "#0E4E45",
+            "text-primary": "#172D32",
+            "text-secondary": "#52666B",
+            "surface-bg": "#F8FAFC",
+            "surface-card": "#FFFFFF",
+            "activity-medical": "#B63B48",
+            "activity-medical-surface": "#FBECEE",
+            "status-alert-border": "#F3B2B9",
+            "activity-nutrition": "#176B91",
+            "activity-nutrition-surface": "#E8F3FA",
+            "activity-routine": "#805B16",
+            "activity-routine-surface": "#FFF3D7",
+            "divider-hairline": "#E2E8F0"
+          },
+          fontFamily: {
+            sans: ["Be Vietnam Pro", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    @layer base {
+      html, body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #F8FAFC !important;
+        color: #172D32;
+        font-family: 'Be Vietnam Pro', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+      .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+    }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] text-[#172D32] min-h-screen flex flex-col antialiased">
+<!-- 1. Web Header (Safari / Mobile Browser Top Bar) -->
+<header class="sticky top-0 z-50 bg-[#F8FAFC]/95 backdrop-blur-md border-b border-slate-200/80 pt-safe">
+<div class="px-5 py-3 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<!-- Logo & Brand -->
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-xl bg-[#146C60] flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined text-[20px]">health_and_safety</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-[17px] text-[#172D32] tracking-tight">Bé Khỏe</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#146C60]/10 text-[#146C60] border border-[#146C60]/20">
+              Báo cáo y khoa dành cho bác sĩ
+            </span>
+</div>
+</div>
+</div>
+<!-- Link Security & Expiry Notice -->
+<div class="flex items-center justify-between text-[11px] text-[#52666B] pt-0.5">
+<div class="flex items-center gap-1.5 text-emerald-700 font-medium">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span>Liên kết an toàn</span>
+</div>
+<div class="flex items-center gap-1 text-[#805B16] font-medium bg-[#FFF3D7] px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[13px]">hourglass_top</span>
+<span>Hết hạn sau 23 giờ</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Container -->
+<main class="flex-1 w-full max-w-lg mx-auto px-5 py-4 flex flex-col gap-4">
+<!-- 2. Thông tin bệnh nhi (Hero Summary Card) -->
+<section class="bg-white rounded-[16px] p-4 border border-slate-200 shadow-sm flex flex-col gap-3.5">
+<!-- Title & Live Status -->
+<div class="flex items-center justify-between border-b border-slate-100 pb-3">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-[#146C60]">
+<span class="material-symbols-outlined text-[28px]">child_care</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h1 class="text-[19px] font-bold text-[#172D32] tracking-tight">Bé An</h1>
+<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#E8F3FA] text-[#176B91]">Nữ</span>
+<span class="text-[12px] text-[#52666B] font-medium">12 tháng tuổi</span>
+</div>
+<p class="text-[12px] text-[#52666B] mt-0.5">Sinh ngày: <span class="font-medium text-[#172D32]">08/09/2025</span></p>
+</div>
+</div>
+<div class="text-right">
+<span class="inline-block text-[11px] font-medium text-slate-400 uppercase tracking-wider">Mã hồ sơ</span>
+<div class="text-[14px] font-bold text-[#172D32]">#AN-8902</div>
+</div>
+</div>
+<!-- Detail Grid: Tracking Window & Vital Highlights -->
+<div class="grid grid-cols-2 gap-2.5">
+<div class="bg-slate-50/80 rounded-xl p-2.5 border border-slate-100">
+<span class="text-[11px] font-medium text-[#52666B] block">Khoảng theo dõi</span>
+<span class="text-[12px] font-semibold text-[#172D32] leading-tight block mt-0.5">48 giờ qua</span>
+<span class="text-[10.5px] text-[#52666B]">06/09 21:00 – 08/09 21:00</span>
+</div>
+<div class="bg-rose-50/70 rounded-xl p-2.5 border border-rose-100">
+<span class="text-[11px] font-medium text-[#B63B48] block">Thân nhiệt mới nhất</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="text-[20px] font-bold text-[#B63B48] leading-none">37.7°C</span>
+<span class="text-[11px] text-[#B63B48] font-medium">(Nách)</span>
+</div>
+<span class="text-[10.5px] text-[#52666B]">Đo lúc 20:00 (vừa xong)</span>
+</div>
+<div class="bg-slate-50/80 rounded-xl p-2.5 border border-slate-100">
+<span class="text-[11px] font-medium text-[#52666B] block">Chỉ số thể chất</span>
+<div class="text-[13px] font-semibold text-[#172D32] mt-0.5">9.3 kg · 73 cm</div>
+<span class="text-[10.5px] text-emerald-700 font-medium">Chuẩn P50 WHO</span>
+</div>
+<div class="bg-slate-50/80 rounded-xl p-2.5 border border-slate-100">
+<span class="text-[11px] font-medium text-[#52666B] block">Bác sĩ phụ trách</span>
+<div class="text-[12px] font-semibold text-[#172D32] mt-0.5 truncate">BS. Nguyễn Mai Trang</div>
+<span class="text-[10.5px] text-[#52666B] truncate block">BV Nhi Đồng 2</span>
+</div>
+</div>
+<!-- Clinical Reason Banner -->
+<div class="p-3 bg-[#FFF8EE] rounded-xl border border-amber-200/80 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[#805B16] text-[18px] mt-0.5 shrink-0">clinical_notes</span>
+<div>
+<div class="text-[11px] uppercase tracking-wider font-bold text-[#805B16]">Tình trạng chính</div>
+<p class="text-[13px] font-semibold text-[#172D32] mt-0.5 leading-snug">
+            Đang theo dõi đợt sốt mọc răng &amp; viêm họng nhẹ (Ngày thứ 2)
+          </p>
+</div>
+</div>
+</section>
+<!-- 3. Diễn biến thân nhiệt & Liều thuốc hạ sốt (Clinical Chart Section) -->
+<section class="bg-white rounded-[16px] p-4 border border-slate-200 shadow-sm flex flex-col gap-3.5">
+<div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#B63B48] text-[20px]">show_chart</span>
+<h2 class="text-[15px] font-bold text-[#172D32]">Diễn biến thân nhiệt 48 giờ</h2>
+</div>
+<span class="text-[11px] font-medium text-[#52666B] bg-slate-100 px-2 py-0.5 rounded-full">
+          Đỉnh sốt: 38.5°C
+        </span>
+</div>
+<!-- Temperature Chart SVG -->
+<div class="relative w-full bg-[#F8FAFC] rounded-xl p-3 border border-slate-100">
+<!-- Legend & Threshold indicator -->
+<div class="flex items-center justify-between text-[11px] text-[#52666B] mb-2 px-1">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-[#B63B48]"></span>
+<span class="font-medium text-[#172D32]">Đường cong nhiệt độ</span>
+</div>
+<div class="flex items-center gap-1 text-[#B63B48]">
+<span class="inline-block w-4 border-b-2 border-dashed border-[#B63B48]"></span>
+<span class="font-semibold">Ngưỡng sốt 38.0°C</span>
+</div>
+</div>
+<!-- SVG Line Chart with Grid -->
+<div class="relative w-full h-44">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 320 150">
+<!-- Y-Axis Gridlines & Labels -->
+<!-- 39.0°C line (y=20) -->
+<line stroke="#E2E8F0" stroke-dasharray="2 2" stroke-width="1" x1="30" x2="315" y1="20" y2="20"></line>
+<text fill="#64748B" font-family="Be Vietnam Pro" font-size="9" x="4" y="23">39.0°</text>
+<!-- 38.5°C line (y=45) -->
+<line stroke="#F1F5F9" stroke-width="1" x1="30" x2="315" y1="45" y2="45"></line>
+<text fill="#64748B" font-family="Be Vietnam Pro" font-size="9" x="4" y="48">38.5°</text>
+<!-- 38.0°C threshold line (y=70) -->
+<line stroke="#F3B2B9" stroke-dasharray="4 3" stroke-width="1.5" x1="30" x2="315" y1="70" y2="70"></line>
+<text fill="#B63B48" font-family="Be Vietnam Pro" font-size="9.5" font-weight="700" x="4" y="73">38.0°</text>
+<!-- 37.5°C line (y=95) -->
+<line stroke="#F1F5F9" stroke-width="1" x1="30" x2="315" y1="95" y2="95"></line>
+<text fill="#64748B" font-family="Be Vietnam Pro" font-size="9" x="4" y="98">37.5°</text>
+<!-- 37.0°C line (y=120) -->
+<line stroke="#E2E8F0" stroke-dasharray="2 2" stroke-width="1" x1="30" x2="315" y1="120" y2="120"></line>
+<text fill="#64748B" font-family="Be Vietnam Pro" font-size="9" x="4" y="123">37.0°</text>
+<!-- Area Gradient Fill -->
+<defs>
+<lineargradient id="chartFill" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#B63B48" stop-opacity="0.25"></stop>
+<stop offset="50%" stop-color="#E07A5F" stop-opacity="0.10"></stop>
+<stop offset="100%" stop-color="#146C60" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Polygon Shading under curve -->
+<!-- Points: 06/09 21h (37.6), 07/09 08h (38.5 peak), 07/09 14h (38.2), 07/09 20h (38.0), 08/09 08h (37.9), 08/09 20h (37.7) -->
+<polygon fill="url(#chartFill)" points="40,135 40,90 95,45 150,60 205,70 260,75 305,85 305,135"></polygon>
+<!-- Fever Curve Line (Red/Orange fading to Teal) -->
+<path d="M 40 90 C 70 70, 80 45, 95 45 C 120 45, 135 58, 150 60 C 175 63, 190 69, 205 70 C 235 72, 245 74, 260 75 C 280 76, 290 83, 305 85" fill="none" stroke="#B63B48" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<!-- Data Point Dots -->
+<circle cx="40" cy="90" fill="#FFFFFF" r="3.5" stroke="#E07A5F" stroke-width="2"></circle>
+<!-- Peak Fever Dot -->
+<circle cx="95" cy="45" fill="#B63B48" r="5" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<circle cx="150" cy="60" fill="#FFFFFF" r="3.5" stroke="#B63B48" stroke-width="2"></circle>
+<circle cx="205" cy="70" fill="#FFFFFF" r="3.5" stroke="#E07A5F" stroke-width="2"></circle>
+<circle cx="260" cy="75" fill="#FFFFFF" r="3.5" stroke="#146C60" stroke-width="2"></circle>
+<!-- Current Dot -->
+<circle cx="305" cy="85" fill="#146C60" r="5" stroke="#FFFFFF" stroke-width="2.5"></circle>
+</svg>
+<!-- Annotations Over Graph -->
+<div class="absolute left-[29%] top-2 -translate-x-1/2 bg-[#FBECEE] border border-[#F3B2B9] px-1.5 py-0.5 rounded text-[10px] font-bold text-[#B63B48] shadow-xs">
+            Đỉnh 38.5°C
+          </div>
+<div class="absolute right-[5px] top-[74px] -translate-y-1/2 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded text-[10px] font-bold text-[#146C60] shadow-xs">
+            Hiện tại 37.7°C
+          </div>
+</div>
+<!-- X-Axis Timeline Labels -->
+<div class="flex justify-between items-center text-[10px] font-medium text-[#52666B] pt-1 px-1 border-t border-slate-200/60 mt-1">
+<span>06/09 21:00</span>
+<span>07/09 08:00</span>
+<span>07/09 20:00</span>
+<span>08/09 08:00</span>
+<span class="text-[#146C60] font-bold">20:00 (Nay)</span>
+</div>
+</div>
+<!-- Medication Administration Log Table -->
+<div class="flex flex-col gap-2 pt-1">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[#146C60] text-[18px]">medication</span>
+<span class="text-[13px] font-bold text-[#172D32]">Nhật ký liều thuốc hạ sốt</span>
+</div>
+<span class="text-[11px] text-[#52666B] font-medium">3 liều đã dùng</span>
+</div>
+<div class="space-y-2">
+<!-- Dose 1 (Most recent) -->
+<div class="p-3 bg-emerald-50/50 rounded-xl border border-emerald-200/70 flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-emerald-600 text-white text-[11px] font-bold">20:05</span>
+<span class="text-[13px] font-semibold text-[#172D32]">Paracetamol 80mg (5ml)</span>
+</div>
+<span class="text-[11px] font-medium text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-full">Hôm nay</span>
+</div>
+<p class="text-[12px] text-[#52666B] pl-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-emerald-600 text-[15px]">trending_down</span>
+<span>Sau hạ sốt 30p nhiệt độ giảm rõ (từ 38.1°C xuống 37.7°C), bé dễ chịu.</span>
+</p>
+</div>
+<!-- Dose 2 -->
+<div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-slate-200 text-[#172D32] text-[11px] font-semibold">14:30</span>
+<span class="text-[13px] font-medium text-[#172D32]">Paracetamol 80mg (5ml)</span>
+</div>
+<span class="text-[11px] text-[#52666B]">Chiều nay (08/09)</span>
+</div>
+<!-- Dose 3 -->
+<div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-slate-200 text-[#172D32] text-[11px] font-semibold">08:30</span>
+<span class="text-[13px] font-medium text-[#172D32]">Paracetamol 80mg (5ml)</span>
+</div>
+<span class="text-[11px] text-[#52666B]">Sáng nay (08/09)</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Dinh dưỡng & Sinh hoạt 48h qua -->
+<section class="bg-white rounded-[16px] p-4 border border-slate-200 shadow-sm flex flex-col gap-3.5">
+<div class="flex items-center gap-2 border-b border-slate-100 pb-2.5">
+<span class="material-symbols-outlined text-[#176B91] text-[20px]">nutrition</span>
+<h2 class="text-[15px] font-bold text-[#172D32]">Dinh dưỡng &amp; Sinh hoạt 48h qua</h2>
+</div>
+<!-- 2-Column Grid -->
+<div class="grid grid-cols-2 gap-3">
+<!-- Sữa -->
+<div class="bg-[#E8F3FA]/70 rounded-xl p-3 border border-sky-100 flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-[#176B91]">
+<span class="text-[11px] font-semibold uppercase tracking-wider">Tổng sữa uống</span>
+<span class="material-symbols-outlined text-[18px]">baby_changing_station</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="text-[22px] font-bold text-[#172D32] leading-none">1.440</span>
+<span class="text-[12px] font-medium text-[#52666B]">ml / 48h</span>
+</div>
+<p class="text-[11.5px] text-[#52666B] leading-snug">
+            Trung bình <strong class="text-[#172D32]">720ml/ngày</strong> · Dung nạp tốt, không nôn trớ.
+          </p>
+</div>
+<!-- Giấc ngủ -->
+<div class="bg-slate-50 rounded-xl p-3 border border-slate-200/70 flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-[#52666B]">
+<span class="text-[11px] font-semibold uppercase tracking-wider">Giấc ngủ</span>
+<span class="material-symbols-outlined text-[18px]">bedtime</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="text-[22px] font-bold text-[#172D32] leading-none">11.5</span>
+<span class="text-[12px] font-medium text-[#52666B]">giờ / ngày</span>
+</div>
+<p class="text-[11.5px] text-[#52666B] leading-snug">
+            Ngủ ngoan, không giật mình, giấc đêm sâu từ 21:30.
+          </p>
+</div>
+</div>
+<!-- Allergy Note -->
+<div class="p-3 bg-emerald-50/60 rounded-xl border border-emerald-200/60 flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[#146C60] text-[20px] shrink-0">check_circle</span>
+<div class="text-[12.5px] text-[#172D32]">
+<span class="font-bold">Lưu ý dị ứng:</span> Chưa ghi nhận dị ứng thuốc hoặc thức ăn.
+        </div>
+</div>
+</section>
+<!-- 5. Action Buttons & Disclaimer -->
+<section class="flex flex-col gap-3 pt-1 pb-8">
+<!-- Main Action: PDF Download -->
+<button class="w-full h-14 bg-[#146C60] active:bg-[#0E4E45] text-white rounded-xl font-semibold text-[16px] flex items-center justify-center gap-2.5 shadow-md shadow-[#146C60]/15 transition-all">
+<span class="material-symbols-outlined text-[22px]">picture_as_pdf</span>
+<span>Tải bản in PDF y khoa (Đầy đủ chữ ký)</span>
+</button>
+<!-- Secondary Action: Print Direct -->
+<button class="w-full h-12 bg-white active:bg-slate-100 text-[#172D32] border border-slate-300 rounded-xl font-medium text-[15px] flex items-center justify-center gap-2 shadow-xs transition-colors" onclick="window.print()">
+<span class="material-symbols-outlined text-[20px] text-[#52666B]">print</span>
+<span>In báo cáo trực tiếp</span>
+</button>
+<!-- Medical Disclaimer -->
+<div class="p-3.5 bg-slate-100/80 rounded-xl border border-slate-200/80 flex items-start gap-2.5 mt-1">
+<span class="material-symbols-outlined text-slate-500 text-[18px] mt-0.5 shrink-0">verified_user</span>
+<p class="text-[11.5px] text-[#52666B] leading-relaxed text-left">
+<strong class="text-[#172D32]">Tuyên bố y khoa:</strong> Báo cáo này được phụ huynh ghi nhận qua ứng dụng Bé Khỏe phục vụ thăm khám lâm sàng. Không thay thế chẩn đoán chuyên sâu từ bác sĩ.
+        </p>
+</div>
+<!-- Safe QR Web Signature Footer -->
+<div class="text-center text-[11px] text-slate-400 pt-1">
+        Cổng thông tin phụ huynh – bác sĩ · Hệ thống Bé Khỏe Pediatric Web
+      </div>
+</section>
+</main>
+</body></html>

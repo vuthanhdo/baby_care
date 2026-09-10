@@ -1,0 +1,485 @@
+<!DOCTYPE html><html class="h-full" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+<title>Cài đặt - Bé Khỏe</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+    @layer base {
+      html, body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #F7F9F8;
+      }
+      body {
+        overscroll-behavior-y: none;
+        -webkit-tap-highlight-color: transparent;
+        font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+        color: #172D32;
+      }
+      .pb-safe { padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px); }
+      .pt-safe { padding-top: max(env(safe-area-inset-top, 0px), 12px); }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#146C60",
+            "action-primary": "#146C60",
+            "action-primary-pressed": "#0E4E45",
+            "text-primary": "#172D32",
+            "text-secondary": "#52666B",
+            "surface-bg": "#F7F9F8",
+            "surface-card": "#FFFFFF",
+            "divider-hairline": "#EAEFEF",
+            "status-alert-border": "#F3B2B9",
+            "activity-routine": "#805B16",
+            "activity-routine-surface": "#FFF7E6",
+            "activity-medical": "#B63B48",
+            "activity-medical-surface": "#FDF0F2",
+            "activity-nutrition": "#176B91",
+            "activity-nutrition-surface": "#EBF6FA"
+          },
+          borderRadius: {
+            "xl": "12px",
+            "2xl": "16px",
+            "full": "9999px"
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#F7F9F8] text-[#172D32] antialiased min-h-screen flex flex-col selection:bg-teal-100">
+<!-- iOS Standard Navigation Header -->
+<header class="fixed top-0 inset-x-0 z-40 bg-[#F7F9F8]/90 backdrop-blur-md pt-safe border-b border-slate-200/60 transition-all">
+<div class="h-12 px-4 flex items-center justify-between">
+<button class="flex items-center gap-0.5 text-[#146C60] active:opacity-60 transition-opacity min-h-[44px] -ml-1" onclick="history.back()" type="button">
+<span class="material-symbols-outlined text-[26px] font-medium leading-none">chevron_left</span>
+<span class="text-[17px] font-semibold tracking-tight">Cài đặt</span>
+</button>
+<div class="flex items-center gap-2 bg-white/90 py-1 px-2.5 rounded-full border border-slate-100 shadow-xs">
+<div class="w-6 h-6 rounded-full bg-[#146C60] flex items-center justify-center text-white text-[13px] font-bold shadow-xs">
+          A
+        </div>
+<div class="flex items-baseline gap-1">
+<span class="text-[13px] font-semibold text-[#172D32]">Bé An</span>
+<span class="text-[11px] text-[#52666B] font-medium">12 tháng</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Body -->
+<main class="flex-1 flex flex-col w-full pt-[calc(env(safe-area-inset-top,0px)+54px)] pb-28 px-5">
+<!-- Title Page Area -->
+<div class="pt-2 pb-4">
+<h1 class="text-[28px] font-bold text-[#172D32] tracking-tight leading-tight">Cài đặt</h1>
+<p class="text-[14px] text-[#52666B] mt-0.5">Tùy chỉnh ứng dụng &amp; quản trị dữ liệu bé An</p>
+</div>
+<!-- Apple Inset Grouped List Sections -->
+<div class="space-y-6">
+<!-- Nhóm 1: Trải nghiệm & Hiển thị -->
+<section>
+<h2 class="text-[12px] font-semibold uppercase tracking-wider text-[#52666B] px-3 mb-2">
+          Trải nghiệm &amp; Hiển thị
+        </h2>
+<div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden divide-y divide-[#EAEFEF]">
+<!-- Cỡ chữ -->
+<button class="w-full flex items-center justify-between p-4 hover:bg-slate-50/80 active:bg-slate-100/70 transition-colors text-left group" id="open-font-sheet-btn" type="button">
+<div class="flex items-center gap-3.5 min-w-0">
+<div class="w-9 h-9 rounded-xl bg-teal-50 text-[#146C60] flex items-center justify-center flex-shrink-0 shadow-xs">
+<span class="material-symbols-outlined text-[20px]">format_size</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[15px] font-semibold text-[#172D32]">Cỡ chữ</span>
+<span class="text-[12px] text-[#52666B]">Chuẩn 100% (Theo hệ thống iOS)</span>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">chevron_right</span>
+</div>
+</button>
+<!-- Gợi ý theo thói quen -->
+<div class="p-4 flex items-center justify-between gap-3">
+<div class="flex items-start gap-3.5 min-w-0">
+<div class="w-9 h-9 rounded-xl bg-[#FFF7E6] text-[#805B16] flex items-center justify-center flex-shrink-0 mt-0.5 shadow-xs">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+</div>
+<div class="flex flex-col pr-2">
+<span class="text-[15px] font-semibold text-[#172D32]">Gợi ý theo thói quen</span>
+<p class="text-[12px] text-[#52666B] mt-0.5 leading-snug">Nhắc cữ sữa và nhiệt độ thông minh theo khung giờ thường ngày của bé</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+<input checked="" class="sr-only peer" id="toggle-habits" type="checkbox">
+<div class="w-12 h-7 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all after:shadow-sm peer-checked:bg-[#146C60]"></div>
+</label>
+</div>
+<!-- Đơn vị đo -->
+<div class="p-4 flex items-center justify-between">
+<div class="flex items-center gap-3.5 min-w-0">
+<div class="w-9 h-9 rounded-xl bg-[#EBF6FA] text-[#176B91] flex items-center justify-center flex-shrink-0 shadow-xs">
+<span class="material-symbols-outlined text-[20px]">straighten</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[15px] font-semibold text-[#172D32]">Đơn vị đo</span>
+<span class="text-[12px] text-[#52666B]">Hệ đo lường tiêu chuẩn Việt Nam</span>
+</div>
+</div>
+<span class="text-[12px] font-medium text-[#146C60] bg-[#146C60]/10 px-2.5 py-1 rounded-md">°C, kg, cm, ml</span>
+</div>
+</div>
+</section>
+<!-- Nhóm 2: Theo dõi & Nhắc nhở -->
+<section>
+<h2 class="text-[12px] font-semibold uppercase tracking-wider text-[#52666B] px-3 mb-2">
+          Theo dõi &amp; Nhắc nhở
+        </h2>
+<div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden divide-y divide-[#EAEFEF]">
+<!-- Lịch nhắc thuốc -->
+<div class="p-4 flex items-center justify-between group cursor-pointer hover:bg-slate-50/80 active:bg-slate-100/70 transition-colors">
+<div class="flex items-center gap-3.5 min-w-0">
+<div class="w-9 h-9 rounded-xl bg-[#FDF0F2] text-[#B63B48] flex items-center justify-center flex-shrink-0 shadow-xs">
+<span class="material-symbols-outlined text-[20px]">alarm</span>
+</div>
+<div class="flex flex-col truncate">
+<span class="text-[15px] font-semibold text-[#172D32]">Lịch nhắc thuốc</span>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="w-2 h-2 rounded-full bg-[#B63B48] animate-pulse"></span>
+<span class="text-[12px] text-[#B63B48] font-medium">Đang có 2 lịch kích hoạt (Paracetamol, Men vi sinh)</span>
+</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-[20px]">chevron_right</span>
+</div>
+<!-- Quyền thông báo & Mic AI -->
+<div class="p-4 flex items-center justify-between">
+<div class="flex items-center gap-3.5 min-w-0">
+<div class="w-9 h-9 rounded-xl bg-teal-50 text-[#146C60] flex items-center justify-center flex-shrink-0 shadow-xs">
+<span class="material-symbols-outlined text-[20px]">notifications_active</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[15px] font-semibold text-[#172D32]">Quyền thông báo &amp; Mic AI</span>
+<span class="text-[12px] text-[#52666B]">Phát hiện tiếng khóc &amp; báo thức cữ</span>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 text-[12px] font-semibold text-[#146C60] bg-teal-50 px-2.5 py-1 rounded-full">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+              Đã cấp quyền
+            </span>
+</div>
+</div>
+</section>
+<!-- Nhóm 3: Dữ liệu & Báo cáo -->
+<section>
+<h2 class="text-[12px] font-semibold uppercase tracking-wider text-[#52666B] px-3 mb-2">
+          Dữ liệu &amp; Báo cáo
+        </h2>
+<div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden divide-y divide-[#EAEFEF]">
+<!-- Liên kết báo cáo đã chia sẻ -->
+<button class="w-full p-4 flex items-center justify-between hover:bg-slate-50/80 active:bg-slate-100/70 transition-colors text-left" id="open-qr-modal-btn" type="button">
+<div class="flex items-center gap-3.5 min-w-0">
+<div class="w-9 h-9 rounded-xl bg-[#EBF6FA] text-[#176B91] flex items-center justify-center flex-shrink-0 shadow-xs">
+<span class="material-symbols-outlined text-[20px]">qr_code_2</span>
+</div>
+<div class="flex flex-col truncate">
+<span class="text-[15px] font-semibold text-[#172D32]">Liên kết báo cáo đã chia sẻ</span>
+<span class="text-[12px] text-[#176B91] font-medium">1 mã QR đang hoạt động (Hết hạn sau 24h)</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-[20px]">chevron_right</span>
+</button>
+<!-- Bộ nhớ trên thiết bị -->
+<div class="p-4 flex items-center justify-between">
+<div class="flex items-center gap-3.5 min-w-0">
+<div class="w-9 h-9 rounded-xl bg-teal-50 text-[#146C60] flex items-center justify-center flex-shrink-0 shadow-xs">
+<span class="material-symbols-outlined text-[20px]">sd_storage</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[15px] font-semibold text-[#172D32]">Bộ nhớ trên thiết bị</span>
+<span class="text-[12px] text-[#52666B]">12.4 MB · An toàn &amp; Riêng tư tuyệt đối</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#146C60] text-[20px]">shield</span>
+</div>
+</div>
+</section>
+<!-- Nhóm 4: Hướng dẫn & Giới thiệu -->
+<section>
+<h2 class="text-[12px] font-semibold uppercase tracking-wider text-[#52666B] px-3 mb-2">
+          Hướng dẫn &amp; Giới thiệu
+        </h2>
+<div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden divide-y divide-[#EAEFEF]">
+<!-- Hướng dẫn 4 bước (Accordion) -->
+<div class="p-4">
+<button class="w-full flex items-center justify-between text-left group" id="toggle-accordion-btn" type="button">
+<div class="flex items-center gap-3.5">
+<div class="w-9 h-9 rounded-xl bg-teal-50 text-[#146C60] flex items-center justify-center flex-shrink-0 shadow-xs">
+<span class="material-symbols-outlined text-[20px]">menu_book</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[15px] font-semibold text-[#172D32]">Hướng dẫn sử dụng 4 bước</span>
+<span class="text-[12px] text-[#52666B]">Ghi nhanh, Tìm lại, Lịch thuốc, Chia sẻ</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-[20px] transition-transform duration-200" id="accordion-chevron">expand_more</span>
+</button>
+<div class="hidden mt-4 pt-3 border-t border-[#EAEFEF] space-y-2.5" id="accordion-content">
+<div class="flex items-start gap-3 p-3 rounded-xl bg-[#F7F9F8]">
+<span class="w-5 h-5 rounded-full bg-[#146C60] text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-0.5">1</span>
+<div>
+<p class="text-[13px] font-semibold text-[#172D32]">Ghi nhanh 30 giây</p>
+<p class="text-[12px] text-[#52666B] mt-0.5">Chạm nút Ghi nhanh để lưu cữ bú, tã hoặc giấc ngủ chỉ với 1 thao tác.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 rounded-xl bg-[#F7F9F8]">
+<span class="w-5 h-5 rounded-full bg-[#146C60] text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-0.5">2</span>
+<div>
+<p class="text-[13px] font-semibold text-[#172D32]">Tìm lại linh hoạt</p>
+<p class="text-[12px] text-[#52666B] mt-0.5">Gõ từ khóa không dấu như "uong sua", "sot" để tra cứu nhật ký tức thời.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 rounded-xl bg-[#F7F9F8]">
+<span class="w-5 h-5 rounded-full bg-[#146C60] text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-0.5">3</span>
+<div>
+<p class="text-[13px] font-semibold text-[#172D32]">Lịch thuốc &amp; Đếm ngược</p>
+<p class="text-[12px] text-[#52666B] mt-0.5">Tự động nhắc liều cách nhau 4-6 tiếng an toàn, tránh quên hay quá liều.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 rounded-xl bg-[#F7F9F8]">
+<span class="w-5 h-5 rounded-full bg-[#146C60] text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-0.5">4</span>
+<div>
+<p class="text-[13px] font-semibold text-[#172D32]">Chia sẻ bác sĩ</p>
+<p class="text-[12px] text-[#52666B] mt-0.5">Xuất mã QR hoặc tệp PDF tóm tắt 48h thân nhiệt để bác sĩ chẩn đoán chính xác.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Về ứng dụng Bé Khỏe -->
+<div class="p-4 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 shadow-xs border border-slate-100 bg-white"><img src="https://lh3.googleusercontent.com/aida/AEtjO1Uw8jRtJpJgTVQgLADcrkIJYXlhniaxQnq83EJgHw63fa6HBqIzrdWO7QVo68uXl_Rzx30KwGK-DK-qfVFoAZVbTcsO5fj66iwtWcPEhTjB7oWwAhSYOcl_r7p-7jy28u32mHnUjAJdnCmeSCTL3RJD7Qw283iYOpdHHRHQsqg8DjP-uMpk0Qox-In8ENkW9INCupltSZeyhDZ1ulVu9syUkvd9aHz8RIqLld13b2-qN6CJ8HaeTuxnVDQ" alt="Logo Bé Khỏe" class="w-full h-full object-cover"></div>
+<div class="flex flex-col">
+<span class="text-[15px] font-semibold text-[#172D32]">Về ứng dụng Bé Khỏe</span>
+<span class="text-[12px] text-[#52666B]">Phiên bản phát hành chính thức</span>
+</div>
+</div>
+<span class="text-[12px] text-[#52666B] font-semibold bg-[#F7F9F8] border border-slate-200 px-2.5 py-1 rounded-full">v1.2.0</span>
+</div>
+<div class="bg-[#FDF0F2] border border-[#F3B2B9]/60 rounded-xl p-3 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[#B63B48] text-[18px] mt-0.5 flex-shrink-0">health_and_safety</span>
+<p class="text-[11px] text-[#B63B48] leading-relaxed">
+<strong>Tuyên bố y tế:</strong> Dữ liệu dùng để chăm sóc bé và trao đổi y khoa trong gia đình, không thay thế việc chẩn đoán hay phác đồ từ bác sĩ chuyên khoa.
+              </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Đăng xuất & Thông tin hệ thống -->
+<div class="pt-1 pb-4 space-y-3 text-center">
+<button class="w-full bg-white rounded-2xl py-3.5 text-center text-[#B63B48] font-semibold text-[15px] shadow-sm border border-slate-100 active:bg-rose-50 transition-colors" type="button">
+          Đăng xuất tài khoản
+        </button>
+<p class="text-[11px] text-[#52666B]">Thiết kế vì sự an tâm của Bố Mẹ · Bé Khỏe 2026</p>
+</div>
+</div>
+</main>
+<!-- Bottom Sheet Modal: Active QR Details -->
+<div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs hidden flex items-end justify-center transition-opacity" id="qr-modal">
+<div class="bg-white w-full max-w-md rounded-t-3xl p-6 shadow-2xl animate-in slide-in-from-bottom duration-200">
+<div class="w-10 h-1 bg-slate-300 rounded-full mx-auto mb-4"></div>
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#146C60] text-[24px]">qr_code_2</span>
+<h3 class="text-[18px] font-bold text-[#172D32]">Mã QR đang hoạt động</h3>
+</div>
+<button class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 active:scale-95" id="close-qr-modal" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="bg-[#F7F9F8] rounded-2xl p-5 flex flex-col items-center text-center space-y-3 mb-5 border border-slate-100">
+<div class="w-40 h-40 bg-white rounded-xl p-3 shadow-sm flex items-center justify-center border border-slate-100">
+<svg class="w-full h-full text-[#172D32]" fill="currentColor" viewBox="0 0 100 100">
+<path d="M10 10h30v30h-30zM15 15v20h20v-20zM22 22h6v6h-6zM60 10h30v30h-30zM65 15v20h20v-20zM72 22h6v6h-6zM10 60h30v30h-30zM15 65v20h20v-20zM22 72h6v6h-6zM50 10h5v15h-5zM50 35h10v10h-10zM60 50h15v5h-15zM80 50h10v15h-10zM50 65h15v10h-15zM75 75h15v15h-15zM55 85h10v5h-10z"></path>
+</svg>
+</div>
+<div>
+<span class="text-[14px] font-semibold text-[#172D32]">Báo cáo thân nhiệt &amp; cữ ăn 48h</span>
+<p class="text-[12px] text-[#B63B48] font-medium mt-0.5">Hết hạn sau: 23 giờ 14 phút</p>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 h-12 rounded-xl bg-slate-100 text-[#B63B48] font-semibold text-[15px] flex items-center justify-center active:scale-98 transition-transform" id="revoke-qr-btn" type="button">
+          Hủy mã chia sẻ
+        </button>
+<button class="flex-1 h-12 rounded-xl bg-[#146C60] text-white font-semibold text-[15px] flex items-center justify-center active:scale-98 transition-transform shadow-xs" onclick="navigator.clipboard &amp;&amp; navigator.clipboard.writeText('https://bekhoe.app/r/a98x21'); showToast('Đã sao chép liên kết');" type="button">
+          Sao chép liên kết
+        </button>
+</div>
+</div>
+</div>
+<!-- Bottom Sheet Modal: Font Size Options -->
+<div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs hidden flex items-end justify-center transition-opacity" id="font-sheet">
+<div class="bg-white w-full max-w-md rounded-t-3xl p-6 shadow-2xl animate-in slide-in-from-bottom duration-200">
+<div class="w-10 h-1 bg-slate-300 rounded-full mx-auto mb-4"></div>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-[18px] font-bold text-[#172D32]">Chọn cỡ chữ hiển thị</h3>
+<button class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 active:scale-95" id="close-font-sheet" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="space-y-2 mb-5">
+<label class="flex items-center justify-between p-3.5 rounded-xl bg-teal-50/70 border border-[#146C60]/20 cursor-pointer">
+<div class="flex flex-col">
+<span class="text-[15px] font-semibold text-[#146C60]">Tiêu chuẩn (100%)</span>
+<span class="text-[12px] text-[#52666B]">Khuyên dùng cho mọi thiết bị iPhone</span>
+</div>
+<span class="material-symbols-outlined text-[#146C60] text-[22px]">check_circle</span>
+</label>
+<label class="flex items-center justify-between p-3.5 rounded-xl bg-[#F7F9F8] border border-slate-100 hover:bg-slate-50 cursor-pointer transition-colors">
+<div class="flex flex-col">
+<span class="text-[15px] font-medium text-[#172D32]">Cỡ lớn (+15%)</span>
+<span class="text-[12px] text-[#52666B]">Thuận tiện xem trong đêm tối &amp; cho ông bà</span>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-[22px]">radio_button_unchecked</span>
+</label>
+</div>
+<button class="w-full h-12 rounded-xl bg-[#146C60] text-white font-semibold text-[15px] flex items-center justify-center active:scale-98 transition-transform shadow-xs" id="confirm-font-btn" type="button">
+        Xác nhận
+      </button>
+</div>
+</div>
+<!-- Micro Toast Feedback -->
+<div class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-[#172D32] text-white px-4 py-2.5 rounded-full shadow-lg flex items-center gap-2 opacity-0 pointer-events-none transition-all duration-300 z-50" id="settings-toast">
+<span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
+<span class="text-[13px] font-medium" id="toast-message">Đã lưu cài đặt</span>
+</div>
+<!-- Synchronized iOS Bottom Navigation Bar (Matching SCREEN_8, SCREEN_9) -->
+<nav class="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-xl border-t border-slate-200/80 pb-safe">
+<div class="flex items-center justify-around h-16 px-4">
+<!-- Tab 1: Ghi nhanh -->
+<a class="flex flex-col items-center justify-center flex-1 h-full py-1 text-slate-400 hover:text-[#146C60] transition-colors group" href="#">
+<svg class="w-6 h-6 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+</svg>
+<span class="text-[11px] font-medium mt-1">Ghi nhanh</span>
+</a>
+<!-- Tab 2: Nhật ký -->
+<a class="flex flex-col items-center justify-center flex-1 h-full py-1 text-slate-400 hover:text-[#146C60] transition-colors group" href="#">
+<svg class="w-6 h-6 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+<path d="M6 6h10"></path>
+<path d="M6 10h10"></path>
+</svg>
+<span class="text-[11px] font-medium mt-1">Nhật ký</span>
+</a>
+<!-- Tab 3: Thống kê -->
+<a class="flex flex-col items-center justify-center flex-1 h-full py-1 text-slate-400 hover:text-[#146C60] transition-colors group" href="#">
+<svg class="w-6 h-6 transition-transform group-hover:scale-105" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+<line x1="18" x2="18" y1="20" y2="10"></line>
+<line x1="12" x2="12" y1="20" y2="4"></line>
+<line x1="6" x2="6" y1="20" y2="14"></line>
+</svg>
+<span class="text-[11px] font-medium mt-1">Thống kê</span>
+</a>
+</div>
+</nav>
+<script>
+    (function() {
+      // Accordion Toggle
+      const accordionBtn = document.getElementById('toggle-accordion-btn');
+      const accordionContent = document.getElementById('accordion-content');
+      const accordionChevron = document.getElementById('accordion-chevron');
+
+      if (accordionBtn && accordionContent && accordionChevron) {
+        accordionBtn.addEventListener('click', function() {
+          const isHidden = accordionContent.classList.contains('hidden');
+          if (isHidden) {
+            accordionContent.classList.remove('hidden');
+            accordionChevron.style.transform = 'rotate(180deg)';
+          } else {
+            accordionContent.classList.add('hidden');
+            accordionChevron.style.transform = 'rotate(0deg)';
+          }
+        });
+      }
+
+      // QR Code Sheet
+      const openQrBtn = document.getElementById('open-qr-modal-btn');
+      const closeQrBtn = document.getElementById('close-qr-modal');
+      const qrModal = document.getElementById('qr-modal');
+      const revokeQrBtn = document.getElementById('revoke-qr-btn');
+
+      if (openQrBtn && closeQrBtn && qrModal) {
+        openQrBtn.addEventListener('click', () => qrModal.classList.remove('hidden'));
+        closeQrBtn.addEventListener('click', () => qrModal.classList.add('hidden'));
+        qrModal.addEventListener('click', (e) => {
+          if (e.target === qrModal) qrModal.classList.add('hidden');
+        });
+      }
+
+      if (revokeQrBtn) {
+        revokeQrBtn.addEventListener('click', () => {
+          qrModal.classList.add('hidden');
+          showToast('Đã hủy liên kết chia sẻ');
+        });
+      }
+
+      // Font Sheet
+      const openFontBtn = document.getElementById('open-font-sheet-btn');
+      const closeFontBtn = document.getElementById('close-font-sheet');
+      const fontSheet = document.getElementById('font-sheet');
+      const confirmFontBtn = document.getElementById('confirm-font-btn');
+
+      if (openFontBtn && closeFontBtn && fontSheet) {
+        openFontBtn.addEventListener('click', () => fontSheet.classList.remove('hidden'));
+        closeFontBtn.addEventListener('click', () => fontSheet.classList.add('hidden'));
+        fontSheet.addEventListener('click', (e) => {
+          if (e.target === fontSheet) fontSheet.classList.add('hidden');
+        });
+      }
+
+      if (confirmFontBtn) {
+        confirmFontBtn.addEventListener('click', () => {
+          fontSheet.classList.add('hidden');
+          showToast('Đã lưu cỡ chữ hiển thị');
+        });
+      }
+
+      // Habit Toggle
+      const toggleHabits = document.getElementById('toggle-habits');
+      if (toggleHabits) {
+        toggleHabits.addEventListener('change', (e) => {
+          showToast(e.target.checked ? 'Đã bật gợi ý thói quen' : 'Đã tắt gợi ý thói quen');
+        });
+      }
+
+      // Toast Notification
+      const toast = document.getElementById('settings-toast');
+      const toastMsg = document.getElementById('toast-message');
+      let toastTimeout;
+
+      window.showToast = function(msg) {
+        if (!toast || !toastMsg) return;
+        toastMsg.textContent = msg;
+        toast.classList.remove('opacity-0', 'pointer-events-none');
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+          toast.classList.add('opacity-0', 'pointer-events-none');
+        }, 2200);
+      };
+    })();
+  </script>
+
+
+</body></html>

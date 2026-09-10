@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#005248",
+            "primary-container": "#146c60",
+            "action-primary": "#146C60",
+            "action-primary-pressed": "#0E4E45",
+            "surface-bg": "#F7F9F8",
+            "surface-card": "#FFFFFF",
+            "text-primary": "#172D32",
+            "text-secondary": "#52666B",
+            "divider-hairline": "#E3E8E7",
+            "activity-nutrition": "#176B91",
+            "activity-nutrition-surface": "#E8F3FA",
+            "activity-routine": "#C2681B",
+            "activity-routine-surface": "#FFF4EC",
+            "activity-medical": "#C7384A",
+            "activity-medical-surface": "#FDF0F1",
+            "mint-soft": "#E6F4F1",
+            "mint-border": "#BCE3DC",
+            "on-primary": "#ffffff"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "touch-target-min": "48px",
+            "card-padding": "16px",
+            "cta-height": "56px",
+            "margin-screen": "20px"
+          },
+          fontFamily: {
+            sans: ["'Be Vietnam Pro'", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html, body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        overscroll-behavior-y: none;
+        -webkit-tap-highlight-color: transparent;
+        font-family: 'Be Vietnam Pro', sans-serif;
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      .pt-safe {
+        padding-top: env(safe-area-inset-top, 0px);
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-surface-bg text-text-primary antialiased min-h-screen flex flex-col justify-between">
+<!-- Top Application Shell Header -->
+<header class="fixed top-0 inset-x-0 z-50 bg-surface-bg/85 backdrop-blur-xl pt-safe shadow-[0_1px_4px_rgba(23,45,50,0.03)] border-b border-divider-hairline/60">
+<div class="h-14 px-5 flex items-center justify-between">
+<a class="flex items-center gap-2.5 rounded-full py-1 pr-2.5 pl-1 transition-transform active:scale-95" data-path="baby-profile" href="#">
+<div class="w-8 h-8 rounded-full bg-action-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-white text-[18px]">child_care</span>
+</div>
+<div class="flex flex-col text-left">
+<div class="flex items-center gap-0.5">
+<span class="font-bold text-[15px] text-text-primary leading-tight">Bé An</span>
+<span class="material-symbols-outlined text-text-secondary text-[16px]">expand_more</span>
+</div>
+<span class="text-[11px] text-text-secondary leading-none">12 tháng tuổi</span>
+</div>
+</a>
+<div class="flex items-center gap-1">
+<a aria-label="Cài đặt" class="w-9 h-9 flex items-center justify-center rounded-full text-text-secondary hover:text-text-primary active:bg-divider-hairline/60 transition-colors" data-path="settings" href="#">
+<span class="material-symbols-outlined text-[21px]">settings</span>
+</a>
+<div class="w-8 h-8 rounded-full bg-action-primary/10 border border-action-primary/20 flex items-center justify-center text-action-primary font-semibold text-xs">
+          Mẹ
+        </div>
+</div>
+</div>
+</header>
+<!-- Main Modal Sheet Container -->
+<main class="flex-1 flex flex-col relative w-full pt-14 pb-28 bg-surface-bg">
+<!-- iOS Modal Navigation Bar -->
+<div class="px-5 pt-3 pb-2 flex items-center justify-between border-b border-divider-hairline/40 bg-surface-bg">
+<button aria-label="Hủy và quay lại" class="flex items-center gap-1 min-h-touch-target-min py-1 text-text-secondary active:text-text-primary active:scale-95 transition-all text-left" type="button">
+<span class="material-symbols-outlined text-[20px]">arrow_back_ios_new</span>
+<span class="font-medium text-[16px]">Hủy</span>
+</button>
+<div class="flex flex-col items-center text-center">
+<h1 class="font-bold text-[18px] text-text-primary tracking-tight leading-tight">Ghi nhiệt độ</h1>
+<span class="text-[12px] font-medium text-text-secondary">Bé An • 12 tháng tuổi</span>
+</div>
+<button class="flex items-center justify-end min-h-touch-target-min min-w-[52px] py-1 text-action-primary font-bold text-[16px] active:opacity-60 transition-opacity" id="headerSaveBtn" type="button">
+        Lưu
+      </button>
+</div>
+<!-- Scrollable Form Content -->
+<div class="px-5 pt-3 pb-6 space-y-3.5 max-w-lg mx-auto w-full">
+<!-- Card 1: Core Temperature Interactive Card -->
+<div class="bg-surface-card rounded-2xl shadow-sm border border-divider-hairline/60 p-4 flex flex-col items-center relative overflow-hidden">
+<!-- Ambient Status Pill (Warm Peach / Adaptive) -->
+<div class="mb-3 px-3.5 py-1 rounded-full bg-activity-routine-surface border border-[#FCD8BE] flex items-center gap-1.5 transition-all duration-300" id="statusTag">
+<span class="material-symbols-outlined text-[16px] text-activity-routine" id="statusIcon" style="font-variation-settings: 'FILL' 1;">device_thermostat</span>
+<span class="text-[12px] font-semibold text-activity-routine tracking-wide" id="statusLabel">Sốt nhẹ (Theo dõi tại nhà)</span>
+</div>
+<!-- Large Stepper & Temperature Number Row -->
+<div class="w-full flex items-center justify-between px-2 py-1">
+<!-- Minus Button -->
+<button aria-label="Giảm 0.1 độ C" class="w-12 h-12 rounded-full bg-surface-bg border border-divider-hairline flex items-center justify-center text-action-primary active:scale-90 active:bg-mint-soft transition-all shadow-sm hover:border-action-primary/30" id="btnMinus" type="button">
+<span class="material-symbols-outlined text-[26px]">remove</span>
+</button>
+<!-- Large Display -->
+<div class="flex flex-col items-center select-none">
+<div class="flex items-baseline justify-center tracking-tight">
+<span class="text-[52px] font-bold text-text-primary leading-none" id="tempInteger">37</span>
+<span class="text-[52px] font-bold text-text-primary leading-none">.</span>
+<span class="text-[52px] font-bold text-text-primary leading-none" id="tempDecimal">8</span>
+<span class="ml-1.5 text-[26px] font-semibold text-text-secondary">°C</span>
+</div>
+<span class="text-[12px] text-text-secondary mt-1 font-normal flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">touch_app</span> Chạm nút để tinh chỉnh ±0.1°C
+            </span>
+</div>
+<!-- Plus Button -->
+<button aria-label="Tăng 0.1 độ C" class="w-12 h-12 rounded-full bg-surface-bg border border-divider-hairline flex items-center justify-center text-action-primary active:scale-90 active:bg-mint-soft transition-all shadow-sm hover:border-action-primary/30" id="btnPlus" type="button">
+<span class="material-symbols-outlined text-[26px]">add</span>
+</button>
+</div>
+<!-- Preset Chips (Rounded Fully) -->
+<div class="grid grid-cols-4 gap-2 w-full mt-3 pt-1 border-t border-divider-hairline/50">
+<button class="preset-pill py-1.5 px-2 rounded-full bg-surface-bg text-text-secondary font-medium text-[13px] border border-divider-hairline/70 active:scale-95 transition-all text-center hover:bg-mint-soft/50" data-val="36.8" type="button">36.8°</button>
+<button class="preset-pill py-1.5 px-2 rounded-full bg-surface-bg text-text-secondary font-medium text-[13px] border border-divider-hairline/70 active:scale-95 transition-all text-center hover:bg-mint-soft/50" data-val="37.5" type="button">37.5°</button>
+<button class="preset-pill active-preset py-1.5 px-2 rounded-full bg-activity-routine-surface text-activity-routine font-bold text-[13px] border border-[#F8B88B] active:scale-95 transition-all text-center shadow-xs" data-val="38.0" type="button">38.0°</button>
+<button class="preset-pill py-1.5 px-2 rounded-full bg-surface-bg text-text-secondary font-medium text-[13px] border border-divider-hairline/70 active:scale-95 transition-all text-center hover:bg-mint-soft/50" data-val="38.5" type="button">38.5°</button>
+</div>
+<!-- Fever Metric Gradient Gauge -->
+<div class="w-full mt-4 pt-1">
+<div class="flex justify-between items-center mb-2 text-[12px]">
+<span class="font-medium text-text-secondary">Thang cảnh báo thân nhiệt</span>
+<span class="font-bold text-activity-routine" id="rangeDescriptor">37.5 - 38.4°C</span>
+</div>
+<!-- Continuous Smooth Gradient Bar -->
+<div class="relative w-full h-3 rounded-full overflow-visible bg-divider-hairline/50 p-[1px]">
+<div class="w-full h-full rounded-full bg-gradient-to-r from-[#208474] via-[#F39A36] to-[#E24A58]"></div>
+<!-- Marker Thumb Pointer -->
+<div class="absolute -top-1 w-5 h-5 bg-white border-2 border-text-primary rounded-full shadow-[0_2px_6px_rgba(0,0,0,0.25)] -ml-2.5 transition-all duration-200 pointer-events-none flex items-center justify-center" id="gaugeIndicator" style="left: 45%;">
+<div class="w-1.5 h-1.5 rounded-full bg-activity-routine" id="indicatorDot"></div>
+</div>
+</div>
+<div class="flex justify-between text-[11px] font-medium text-text-secondary mt-2 px-0.5">
+<span>&lt;37.5° Bình thường</span>
+<span class="text-center">37.5° - 38.4° Sốt nhẹ</span>
+<span class="text-right">≥38.5° Sốt cao</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Measurement Site & Time -->
+<div class="bg-surface-card rounded-2xl shadow-sm border border-divider-hairline/60 p-4 space-y-4">
+<!-- Site Selector (iOS Segmented Style) -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<label class="text-[14px] font-bold text-text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-action-primary text-[18px]">accessibility_new</span>
+              Vị trí đo
+            </label>
+<span class="text-[12px] text-text-secondary font-medium">Nách chuẩn xác nhất cho bé</span>
+</div>
+<div class="grid grid-cols-4 gap-2" id="siteSelector">
+<!-- Nách: Active default -->
+<button class="site-chip min-h-[50px] rounded-xl bg-mint-soft border-2 border-action-primary text-action-primary font-bold text-[12px] flex flex-col items-center justify-center py-1.5 px-1 active:scale-95 transition-all shadow-xs" data-site="nach" type="button">
+<span class="material-symbols-outlined text-[19px] mb-0.5" style="font-variation-settings: 'FILL' 1;">front_hand</span>
+<span class="leading-tight text-center">Nách (Chuẩn)</span>
+</button>
+<button class="site-chip min-h-[50px] rounded-xl bg-surface-bg border border-divider-hairline text-text-secondary font-medium text-[12px] flex flex-col items-center justify-center py-1.5 px-1 active:scale-95 transition-all hover:bg-surface-card" data-site="tai" type="button">
+<span class="material-symbols-outlined text-[19px] mb-0.5">hearing</span>
+<span>Tai</span>
+</button>
+<button class="site-chip min-h-[50px] rounded-xl bg-surface-bg border border-divider-hairline text-text-secondary font-medium text-[12px] flex flex-col items-center justify-center py-1.5 px-1 active:scale-95 transition-all hover:bg-surface-card" data-site="tran" type="button">
+<span class="material-symbols-outlined text-[19px] mb-0.5">face</span>
+<span>Trán</span>
+</button>
+<button class="site-chip min-h-[50px] rounded-xl bg-surface-bg border border-divider-hairline text-text-secondary font-medium text-[12px] flex flex-col items-center justify-center py-1.5 px-1 active:scale-95 transition-all hover:bg-surface-card" data-site="khac" type="button">
+<span class="material-symbols-outlined text-[19px] mb-0.5">more_horiz</span>
+<span>Khác</span>
+</button>
+</div>
+</div>
+<!-- Time Picker Block -->
+<div class="pt-1 border-t border-divider-hairline/60">
+<div class="flex items-center justify-between mb-2">
+<label class="text-[14px] font-bold text-text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-action-primary text-[18px]">schedule</span>
+              Thời điểm đo
+            </label>
+<button class="px-2.5 py-1 rounded-full bg-mint-soft border border-mint-border text-action-primary font-semibold text-[12px] active:scale-95 transition-transform flex items-center gap-1" id="btnSetNow" type="button">
+<span class="material-symbols-outlined text-[14px]">update</span>
+              Bây giờ
+            </button>
+</div>
+<div class="w-full rounded-xl bg-surface-bg border border-divider-hairline/80 px-3.5 py-2.5 flex items-center justify-between active:bg-divider-hairline/30 transition-colors cursor-pointer" id="timeDisplayBlock">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-card border border-divider-hairline/80 flex items-center justify-center text-action-primary">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+</div>
+<div class="flex flex-col text-left">
+<span class="font-bold text-[14px] text-text-primary" id="timePrimary">Hôm nay, 20:00</span>
+<span class="text-[11px] text-text-secondary" id="timeSecondary">Chủ nhật, 08/09/2026</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-secondary text-[20px]">edit_calendar</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Pediatric Guidance Banner (Mint Pastel, Calming & Scientific) -->
+<div class="bg-mint-soft border border-mint-border rounded-2xl p-3.5 flex items-start gap-3 shadow-xs transition-all duration-300" id="pediatricAdvice">
+<div class="w-8 h-8 rounded-full bg-action-primary/15 flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-action-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+</div>
+<div class="flex flex-col text-left">
+<h3 class="font-bold text-[13.5px] text-action-primary flex items-center gap-1.5">
+<span>Lời khuyên bác sĩ nhi khoa</span>
+<span class="text-[10px] bg-action-primary/10 text-action-primary px-1.5 py-0.5 rounded-full font-semibold">Chuẩn Y khoa</span>
+</h3>
+<p class="text-[12.5px] text-text-primary mt-1 leading-relaxed" id="adviceText">
+            Chưa cần dùng thuốc hạ sốt khi thân nhiệt dưới 38.5°C. Mẹ hãy mặc đồ thoáng mát, lau ấm các nếp gấp (nách, bẹn) và cho bé bú cữ ngắn nhiều lần.
+          </p>
+</div>
+</div>
+<!-- Card 4: Accordion: Additional Details & Media -->
+<div class="bg-surface-card rounded-2xl shadow-sm border border-divider-hairline/60 overflow-hidden transition-all duration-300">
+<button aria-expanded="false" class="w-full px-4 py-3 flex items-center justify-between text-left active:bg-surface-bg transition-colors" id="toggleDetailsBtn" type="button">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-action-primary text-[20px]">add_circle_outline</span>
+<span class="font-bold text-[14px] text-text-primary">Thêm chi tiết (Ảnh &amp; Ghi chú)</span>
+</div>
+<span class="material-symbols-outlined text-text-secondary text-[20px] transition-transform duration-300" id="accordionChevron">expand_more</span>
+</button>
+<!-- Expandable Content -->
+<div class="px-4 pb-4 space-y-3.5 hidden border-t border-divider-hairline/40 pt-3" id="detailsContent">
+<!-- Measuring Device -->
+<div>
+<label class="text-[12px] font-semibold text-text-secondary mb-1.5 block">Loại nhiệt kế sử dụng</label>
+<div class="grid grid-cols-3 gap-2">
+<button class="device-pill py-2 px-1 rounded-xl bg-mint-soft border border-action-primary/40 text-action-primary font-bold text-[12px] text-center" type="button">
+                Điện tử kẹp
+              </button>
+<button class="device-pill py-2 px-1 rounded-xl bg-surface-bg border border-divider-hairline text-text-secondary font-medium text-[12px] text-center" type="button">
+                Hồng ngoại trán
+              </button>
+<button class="device-pill py-2 px-1 rounded-xl bg-surface-bg border border-divider-hairline text-text-secondary font-medium text-[12px] text-center" type="button">
+                Thủy ngân
+              </button>
+</div>
+</div>
+<!-- Note Textarea -->
+<div>
+<label class="text-[12px] font-semibold text-text-secondary mb-1 block">Ghi chú triệu chứng kèm theo</label>
+<div class="w-full bg-surface-bg border border-divider-hairline rounded-xl p-2.5 focus-within:border-action-primary focus-within:bg-white transition-all">
+<textarea class="w-full bg-transparent border-none text-text-primary text-[13px] leading-relaxed focus:outline-none resize-none placeholder:text-text-secondary/60" placeholder="Bé ấm trán, má ửng hồng, quấy khóc nhẹ khi chạm nách, ăn bú bình thường..." rows="3"></textarea>
+</div>
+</div>
+<!-- Photo Attachments -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<label class="text-[12px] font-semibold text-text-secondary">Đính kèm ảnh nhiệt kế / biểu hiện</label>
+<span class="text-[11px] text-text-secondary font-medium">1/3 ảnh</span>
+</div>
+<div class="flex items-center gap-2.5">
+<!-- Attached Thumbnail Preview -->
+<div class="relative w-16 h-16 rounded-xl overflow-hidden shadow-xs border border-divider-hairline shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close up photograph of a digital thermometer displaying thirty-seven point eight degrees celsius next to a soft baby blanket in warm daylight with clean baby-safe aesthetics" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUe5-oJtPdnJCmt3fvgVM6TpvPLDVdmpOisukdEGSdJohzB21bCHkoisTxGrUcxneXApeoejalLQBKkCt5wFUoT2wCbF7fxviK64rHtw1DkyWNfNlUNPJsFD82m1q_3nASnmBhxagzjSi8I3Pmm1CBF3I7iQujYle5d_HWmjBDxSvnhrX7XFOpug8tnz324guEhjypq_m6N-Oknj0iRW7v_pze10ucgv5IP_dZvx4TRnT8NWBscBKT"/>
+<button class="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black" type="button">
+<span class="material-symbols-outlined text-[13px]">close</span>
+</button>
+</div>
+<!-- Upload Trigger Box -->
+<button class="w-16 h-16 rounded-xl bg-surface-bg border-2 border-dashed border-divider-hairline flex flex-col items-center justify-center text-action-primary active:bg-mint-soft hover:border-action-primary/50 transition-colors shrink-0" type="button">
+<span class="material-symbols-outlined text-[22px]">add_a_photo</span>
+<span class="text-[10px] font-medium text-text-secondary mt-0.5">Thêm ảnh</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Bottom Primary CTA Arc (Padded 20px on sides, h-56px, rounded-16px) -->
+<div class="sticky bottom-0 inset-x-0 bg-surface-bg/95 backdrop-blur-xl px-5 py-2.5 border-t border-divider-hairline/60 z-40 max-w-lg mx-auto w-full">
+<button class="w-full h-cta-height rounded-2xl bg-action-primary hover:bg-[#115E54] active:bg-action-primary-pressed text-white font-bold text-[16px] flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(20,108,96,0.28)] active:scale-[0.98] transition-all cursor-pointer" id="mainSubmitBtn" type="button">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Lưu nhiệt độ 37.8°C</span>
+</button>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Consistent with Screen A and B) -->
+<nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface-card/95 backdrop-blur-xl border-t border-divider-hairline shadow-[0_-2px_10px_rgba(23,45,50,0.04)]" data-active-classes="text-action-primary font-bold">
+<div class="flex justify-around items-center h-16 px-4 max-w-lg mx-auto">
+<a aria-current="page" class="flex flex-col items-center justify-center gap-1 min-w-touch-target-min min-h-touch-target-min transition-colors text-action-primary font-bold" data-path="quick-log" href="#">
+<span class="material-symbols-outlined text-[23px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="text-[11px]">Ghi nhanh</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 min-w-touch-target-min min-h-touch-target-min text-text-secondary hover:text-text-primary transition-colors font-medium" data-path="daily-timeline" href="#">
+<span class="material-symbols-outlined text-[23px]">auto_stories</span>
+<span class="text-[11px]">Nhật ký</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 min-w-touch-target-min min-h-touch-target-min text-text-secondary hover:text-text-primary transition-colors font-medium" data-path="insights-and-growth" href="#">
+<span class="material-symbols-outlined text-[23px]">bar_chart</span>
+<span class="text-[11px]">Thống kê</span>
+</a>
+</div>
+</nav>
+<!-- Dynamic Logic for Temperature Tuning, Gauge, and Pediatric Advice -->
+<script>
+    (function() {
+      let currentTemp = 37.8;
+
+      const intElem = document.getElementById('tempInteger');
+      const decElem = document.getElementById('tempDecimal');
+      const minusBtn = document.getElementById('btnMinus');
+      const plusBtn = document.getElementById('btnPlus');
+      const gauge = document.getElementById('gaugeIndicator');
+      const indicatorDot = document.getElementById('indicatorDot');
+      const statusTag = document.getElementById('statusTag');
+      const statusLabel = document.getElementById('statusLabel');
+      const statusIcon = document.getElementById('statusIcon');
+      const rangeDescriptor = document.getElementById('rangeDescriptor');
+      const adviceCard = document.getElementById('pediatricAdvice');
+      const adviceText = document.getElementById('adviceText');
+      const mainSubmitBtn = document.getElementById('mainSubmitBtn');
+      const headerSaveBtn = document.getElementById('headerSaveBtn');
+
+      function updateUI() {
+        const valStr = currentTemp.toFixed(1);
+        const parts = valStr.split('.');
+        intElem.textContent = parts[0];
+        decElem.textContent = parts[1];
+
+        // Gauge needle mapped between 36.0°C and 40.0°C (0% to 100%)
+        const minScale = 36.0;
+        const maxScale = 40.0;
+        let percent = ((currentTemp - minScale) / (maxScale - minScale)) * 100;
+        percent = Math.max(3, Math.min(97, percent));
+        gauge.style.left = percent + '%';
+
+        // Categorize into Normal, Mild fever, or High fever
+        if (currentTemp < 37.5) {
+          // Normal (< 37.5°C)
+          statusTag.className = "mb-3 px-3.5 py-1 rounded-full bg-mint-soft border border-mint-border flex items-center gap-1.5 transition-all duration-300";
+          statusLabel.className = "text-[12px] font-semibold text-action-primary tracking-wide";
+          statusLabel.textContent = "Thân nhiệt bình thường";
+          statusIcon.className = "material-symbols-outlined text-[16px] text-action-primary";
+          rangeDescriptor.className = "font-bold text-action-primary";
+          rangeDescriptor.textContent = "< 37.5°C";
+          indicatorDot.className = "w-1.5 h-1.5 rounded-full bg-action-primary";
+
+          adviceText.textContent = "Thân nhiệt bé hoàn toàn ổn định. Mẹ tiếp tục cho bé bú đủ cữ, giữ không gian sinh hoạt thoáng mát và theo dõi sinh hiệu thường ngày.";
+        } else if (currentTemp >= 37.5 && currentTemp < 38.5) {
+          // Mild Fever (37.5°C - 38.4°C)
+          statusTag.className = "mb-3 px-3.5 py-1 rounded-full bg-activity-routine-surface border border-[#FCD8BE] flex items-center gap-1.5 transition-all duration-300";
+          statusLabel.className = "text-[12px] font-semibold text-activity-routine tracking-wide";
+          statusLabel.textContent = "Sốt nhẹ (Theo dõi tại nhà)";
+          statusIcon.className = "material-symbols-outlined text-[16px] text-activity-routine";
+          rangeDescriptor.className = "font-bold text-activity-routine";
+          rangeDescriptor.textContent = "37.5 - 38.4°C";
+          indicatorDot.className = "w-1.5 h-1.5 rounded-full bg-activity-routine";
+
+          adviceText.textContent = "Chưa cần dùng thuốc hạ sốt khi thân nhiệt dưới 38.5°C. Mẹ hãy mặc đồ thoáng mát, lau ấm các nếp gấp (nách, bẹn) và cho bé bú cữ ngắn nhiều lần.";
+        } else {
+          // High Fever (≥ 38.5°C)
+          statusTag.className = "mb-3 px-3.5 py-1 rounded-full bg-activity-medical-surface border border-[#F9C3CA] flex items-center gap-1.5 transition-all duration-300";
+          statusLabel.className = "text-[12px] font-semibold text-activity-medical tracking-wide";
+          statusLabel.textContent = "Sốt cao (Cần hạ sốt)";
+          statusIcon.className = "material-symbols-outlined text-[16px] text-activity-medical";
+          rangeDescriptor.className = "font-bold text-activity-medical";
+          rangeDescriptor.textContent = "≥ 38.5°C";
+          indicatorDot.className = "w-1.5 h-1.5 rounded-full bg-activity-medical";
+
+          adviceText.textContent = "Bé cần uống thuốc hạ sốt (Paracetamol 10-15mg/kg mỗi 4-6h) khi ≥ 38.5°C. Cho bé uống nhiều nước hoặc bú thêm. Nếu bé li bì hoặc quấy khóc liên tục, hãy khám bác sĩ ngay.";
+        }
+
+        mainSubmitBtn.querySelector('span:last-child').textContent = 'Lưu nhiệt độ ' + valStr + '°C';
+      }
+
+      minusBtn.addEventListener('click', () => {
+        if (currentTemp > 35.0) {
+          currentTemp = Math.round((currentTemp - 0.1) * 10) / 10;
+          updateUI();
+          syncPresetSelection();
+        }
+      });
+
+      plusBtn.addEventListener('click', () => {
+        if (currentTemp < 42.0) {
+          currentTemp = Math.round((currentTemp + 0.1) * 10) / 10;
+          updateUI();
+          syncPresetSelection();
+        }
+      });
+
+      function syncPresetSelection() {
+        document.querySelectorAll('.preset-pill').forEach(btn => {
+          if (parseFloat(btn.dataset.val) === currentTemp) {
+            btn.className = "preset-pill active-preset py-1.5 px-2 rounded-full bg-activity-routine-surface text-activity-routine font-bold text-[13px] border border-[#F8B88B] active:scale-95 transition-all text-center shadow-xs";
+          } else {
+            btn.className = "preset-pill py-1.5 px-2 rounded-full bg-surface-bg text-text-secondary font-medium text-[13px] border border-divider-hairline/70 active:scale-95 transition-all text-center hover:bg-mint-soft/50";
+          }
+        });
+      }
+
+      // Quick preset pills
+      document.querySelectorAll('.preset-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentTemp = parseFloat(btn.dataset.val);
+          updateUI();
+          syncPresetSelection();
+        });
+      });
+
+      // Measurement Site Selector
+      const siteChips = document.querySelectorAll('.site-chip');
+      siteChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          siteChips.forEach(c => {
+            c.className = "site-chip min-h-[50px] rounded-xl bg-surface-bg border border-divider-hairline text-text-secondary font-medium text-[12px] flex flex-col items-center justify-center py-1.5 px-1 active:scale-95 transition-all hover:bg-surface-card";
+            const icon = c.querySelector('.material-symbols-outlined');
+            if (icon) icon.style.fontVariationSettings = "'FILL' 0";
+          });
+          chip.className = "site-chip min-h-[50px] rounded-xl bg-mint-soft border-2 border-action-primary text-action-primary font-bold text-[12px] flex flex-col items-center justify-center py-1.5 px-1 active:scale-95 transition-all shadow-xs";
+          const activeIcon = chip.querySelector('.material-symbols-outlined');
+          if (activeIcon) activeIcon.style.fontVariationSettings = "'FILL' 1";
+        });
+      });
+
+      // Device selector pills
+      const devicePills = document.querySelectorAll('.device-pill');
+      devicePills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          devicePills.forEach(p => {
+            p.className = "device-pill py-2 px-1 rounded-xl bg-surface-bg border border-divider-hairline text-text-secondary font-medium text-[12px] text-center";
+          });
+          pill.className = "device-pill py-2 px-1 rounded-xl bg-mint-soft border border-action-primary/40 text-action-primary font-bold text-[12px] text-center";
+        });
+      });
+
+      // Details accordion toggle
+      const toggleBtn = document.getElementById('toggleDetailsBtn');
+      const detailsContent = document.getElementById('detailsContent');
+      const chevron = document.getElementById('accordionChevron');
+
+      toggleBtn.addEventListener('click', () => {
+        const isHidden = detailsContent.classList.contains('hidden');
+        if (isHidden) {
+          detailsContent.classList.remove('hidden');
+          chevron.style.transform = 'rotate(180deg)';
+          toggleBtn.setAttribute('aria-expanded', 'true');
+        } else {
+          detailsContent.classList.add('hidden');
+          chevron.style.transform = 'rotate(0deg)';
+          toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // "Bây giờ" Quick reset button
+      const btnSetNow = document.getElementById('btnSetNow');
+      const timePrimary = document.getElementById('timePrimary');
+      btnSetNow.addEventListener('click', () => {
+        const d = new Date();
+        const hrs = String(d.getHours()).padStart(2, '0');
+        const mins = String(d.getMinutes()).padStart(2, '0');
+        timePrimary.textContent = 'Hôm nay, ' + hrs + ':' + mins;
+        btnSetNow.classList.add('scale-95');
+        setTimeout(() => btnSetNow.classList.remove('scale-95'), 150);
+      });
+
+      // Header save and CTA save toast simulation
+      function handleSave() {
+        const label = currentTemp.toFixed(1) + '°C';
+        alert('Đã lưu thành công: ' + label + ' cho Bé An lúc ' + timePrimary.textContent);
+      }
+      mainSubmitBtn.addEventListener('click', handleSave);
+      headerSaveBtn.addEventListener('click', handleSave);
+
+      updateUI();
+    })();
+  </script>
+</body></html>

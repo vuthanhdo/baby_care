@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Chia sẻ báo cáo - Bé An</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bg": "#F7F9F8",
+            "surface-card": "#FFFFFF",
+            "text-primary": "#172D32",
+            "text-secondary": "#52666B",
+            "action-primary": "#146C60",
+            "action-primary-pressed": "#0E4E45",
+            "primary": "#005248",
+            "primary-fixed": "#a3f1e2",
+            "divider-hairline": "#E3E8E7",
+            "activity-medical": "#B63B48",
+            "activity-medical-surface": "#FBECEE",
+            "activity-nutrition": "#176B91",
+            "activity-nutrition-surface": "#E8F3FA",
+            "activity-routine": "#805B16",
+            "activity-routine-surface": "#FFF3D7",
+            "status-alert-border": "#F3B2B9",
+            "surface-container-low": "#e2f7fd"
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+            "headline-title-1": ['"Be Vietnam Pro"', 'sans-serif'],
+            "headline-title-2": ['"Be Vietnam Pro"', 'sans-serif'],
+            "headline-title-3": ['"Be Vietnam Pro"', 'sans-serif'],
+            "body-large": ['"Be Vietnam Pro"', 'sans-serif'],
+            "body-medium": ['"Be Vietnam Pro"', 'sans-serif'],
+            "body-medium-semibold": ['"Be Vietnam Pro"', 'sans-serif'],
+            "label-caption": ['"Be Vietnam Pro"', 'sans-serif'],
+            "label-callout": ['"Be Vietnam Pro"', 'sans-serif'],
+            "label-footnote": ['"Be Vietnam Pro"', 'sans-serif'],
+            "cta-button-text": ['"Be Vietnam Pro"', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html, body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #F7F9F8 !important;
+        color: #172D32;
+      }
+      body {
+        overscroll-behavior-y: none;
+        -webkit-tap-highlight-color: transparent;
+        font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+      .pb-safe { padding-bottom: env(safe-area-inset-bottom, 16px); }
+      .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+</head>
+<body class="bg-[#F7F9F8] text-[#172D32] antialiased min-h-screen flex flex-col">
+<!-- Top App Navigation Bar -->
+<header class="sticky top-0 inset-x-0 z-50 bg-[#F7F9F8]/95 backdrop-blur-md pt-safe border-b border-[#E3E8E7]">
+<div class="h-14 px-5 flex items-center justify-between">
+<a class="flex items-center gap-1 text-[#146C60] -ml-2 px-2 py-1.5 rounded-xl hover:bg-emerald-50 active:bg-emerald-100 transition-colors" data-path="insights-and-growth" href="#">
+<span class="material-symbols-outlined text-[24px]">chevron_left</span>
+<span class="text-[16px] font-semibold">Quay lại</span>
+</a>
+<div class="text-center flex-1 pr-3">
+<h1 class="text-[17px] font-bold text-[#172D32] leading-tight">Chia sẻ báo cáo</h1>
+<p class="text-[12px] font-medium text-[#52666B]">Bé An · 12 tháng</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center text-[#146C60] border border-[#146C60]/20">
+<span class="material-symbols-outlined text-[19px]">verified_user</span>
+</div>
+</div>
+</header>
+<!-- Main Scrollable Content -->
+<main class="flex-1 w-full max-w-md mx-auto px-5 py-4 space-y-4 pb-32">
+<!-- Quick Trust Micro-Banner -->
+<div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-[0_2px_8px_rgba(23,45,50,0.04)] flex items-start gap-3">
+<div class="w-10 h-10 rounded-full bg-emerald-50 border border-[#146C60]/20 flex-shrink-0 flex items-center justify-center text-[#146C60]">
+<span class="material-symbols-outlined text-[22px]">health_and_safety</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="text-[14px] font-bold text-[#172D32]">Hồ sơ y tế mã hóa đầu cuối</span>
+<span class="bg-emerald-100 text-[#146C60] px-1.5 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase">HIPAA</span>
+</div>
+<p class="text-[12px] text-[#52666B] mt-1 leading-relaxed">Dữ liệu chia sẻ được bảo vệ theo chuẩn y khoa. Liên kết có thể thu hồi bất kỳ lúc nào.</p>
+</div>
+</div>
+<!-- KHỐI 1: Chọn nội dung chia sẻ -->
+<section class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-[0_2px_8px_rgba(23,45,50,0.04)] space-y-3.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-[#146C60] text-white text-[12px] font-bold flex items-center justify-center">1</span>
+<h2 class="text-[16px] font-bold text-[#172D32]">Chọn nội dung chia sẻ</h2>
+</div>
+<span class="text-[12px] font-semibold text-[#146C60] bg-emerald-50 px-2 py-0.5 rounded-full">4/4 mục</span>
+</div>
+<!-- Khoảng thời gian: Thẻ chọn -->
+<div>
+<label class="text-[12px] font-semibold text-[#52666B] mb-1.5 block">Khoảng thời gian tổng hợp</label>
+<div class="w-full bg-[#F7F9F8] border border-slate-200/90 rounded-xl p-3 flex items-center justify-between text-left">
+<div class="flex items-center gap-2.5 min-w-0">
+<span class="material-symbols-outlined text-[#146C60] text-[22px]">calendar_clock</span>
+<div class="truncate">
+<p class="text-[14px] font-bold text-[#172D32] truncate">48 giờ gần nhất</p>
+<p class="text-[12px] text-[#52666B] font-medium truncate">06/09 21:00 – 08/09 21:00</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#52666B] text-[20px]">edit_calendar</span>
+</div>
+</div>
+<!-- Danh mục dữ liệu (Checklist dạng thẻ có checkbox xanh ngọc) -->
+<div class="space-y-2.5 pt-1">
+<!-- Item 1: Y tế & Diễn tiến sốt -->
+<label class="flex items-start gap-3 p-3 rounded-xl bg-[#FBECEE]/60 border border-[#F3B2B9]/70 cursor-pointer select-none transition-all active:scale-[0.99]">
+<input checked="" class="mt-1 w-5 h-5 rounded-md text-[#146C60] focus:ring-[#146C60] accent-[#146C60] cursor-pointer flex-shrink-0" type="checkbox"/>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="text-[14px] font-bold text-[#B63B48] flex items-center gap-1.5">
+<span class="w-5 h-5 rounded-full bg-[#B63B48] text-white flex items-center justify-center text-[12px]">🩺</span>
+                Y tế &amp; Diễn tiến sốt
+              </span>
+<span class="text-[10px] bg-white text-[#B63B48] px-2 py-0.5 rounded-full font-bold border border-[#F3B2B9]">Ưu tiên</span>
+</div>
+<p class="text-[12px] text-[#52666B] mt-1 leading-relaxed">
+              Thân nhiệt (đỉnh sốt <strong class="text-[#172D32]">38.5°C</strong>), các cữ hạ sốt Paracetamol và phản ứng.
+            </p>
+</div>
+</label>
+<!-- Item 2: Lượng sữa & Ăn uống -->
+<label class="flex items-start gap-3 p-3 rounded-xl bg-[#E8F3FA]/70 border border-[#c5e7ff] cursor-pointer select-none transition-all active:scale-[0.99]">
+<input checked="" class="mt-1 w-5 h-5 rounded-md text-[#146C60] focus:ring-[#146C60] accent-[#146C60] cursor-pointer flex-shrink-0" type="checkbox"/>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="text-[14px] font-bold text-[#176B91] flex items-center gap-1.5">
+<span class="w-5 h-5 rounded-full bg-[#176B91] text-white flex items-center justify-center text-[12px]">🍼</span>
+                Lượng sữa &amp; Ăn uống
+              </span>
+<span class="text-[10px] bg-white text-[#176B91] px-2 py-0.5 rounded-full font-bold border border-sky-100">Đầy đủ</span>
+</div>
+<p class="text-[12px] text-[#52666B] mt-1 leading-relaxed">
+              Tổng lượng sữa: <strong class="text-[#172D32]">720ml/ngày</strong>, cháo yến mạch, bù điện giải Oresol.
+            </p>
+</div>
+</label>
+<!-- Item 3: Giấc ngủ & Sinh hoạt -->
+<label class="flex items-start gap-3 p-3 rounded-xl bg-[#FFF3D7]/70 border border-[#ffdead] cursor-pointer select-none transition-all active:scale-[0.99]">
+<input checked="" class="mt-1 w-5 h-5 rounded-md text-[#146C60] focus:ring-[#146C60] accent-[#146C60] cursor-pointer flex-shrink-0" type="checkbox"/>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="text-[14px] font-bold text-[#805B16] flex items-center gap-1.5">
+<span class="w-5 h-5 rounded-full bg-[#805B16] text-white flex items-center justify-center text-[12px]">🌙</span>
+                Giấc ngủ &amp; Sinh hoạt
+              </span>
+<span class="text-[10px] bg-white text-[#805B16] px-2 py-0.5 rounded-full font-bold border border-amber-100">Bình thường</span>
+</div>
+<p class="text-[12px] text-[#52666B] mt-1 leading-relaxed">
+              Tổng ngủ: <strong class="text-[#172D32]">11g 30p</strong>, 4 lần thay tã, vệ sinh và tắm nước ấm.
+            </p>
+</div>
+</label>
+<!-- Item 4: Tăng trưởng -->
+<label class="flex items-start gap-3 p-3 rounded-xl bg-emerald-50/50 border border-emerald-200/70 cursor-pointer select-none transition-all active:scale-[0.99]">
+<input checked="" class="mt-1 w-5 h-5 rounded-md text-[#146C60] focus:ring-[#146C60] accent-[#146C60] cursor-pointer flex-shrink-0" type="checkbox"/>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="text-[14px] font-bold text-[#146C60] flex items-center gap-1.5">
+<span class="w-5 h-5 rounded-full bg-[#146C60] text-white flex items-center justify-center text-[12px]">📈</span>
+                Tăng trưởng
+              </span>
+<span class="text-[10px] bg-white text-[#146C60] px-2 py-0.5 rounded-full font-bold border border-emerald-100">Mới nhất</span>
+</div>
+<p class="text-[12px] text-[#52666B] mt-1 leading-relaxed">
+              Cân nặng: <strong class="text-[#172D32]">9.3 kg</strong> (P50), Chiều dài: <strong class="text-[#172D32]">73 cm</strong> (P55) mốc 12 tháng.
+            </p>
+</div>
+</label>
+</div>
+<!-- Tùy chọn thông tin bé: Đính kèm lưu ý y tế & liên hệ bác sĩ -->
+<details class="group pt-2 border-t border-slate-100">
+<summary class="flex items-center justify-between py-1 text-[#146C60] cursor-pointer list-none font-semibold text-[13px]">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">medical_information</span>
+            Đính kèm lưu ý y tế &amp; liên hệ bác sĩ
+          </span>
+<span class="material-symbols-outlined text-[18px] transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="mt-2.5 p-3 bg-[#F7F9F8] rounded-xl space-y-2 text-[12px] border border-slate-200/70">
+<div class="flex justify-between items-center">
+<span class="text-[#52666B]">Bác sĩ phụ trách:</span>
+<span class="font-semibold text-[#172D32]">BS. CKII Lê Hoàng Minh</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[#52666B]">Số điện thoại khẩn cấp:</span>
+<span class="font-semibold text-[#146C60]">0908.***.892</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[#52666B]">Tiền sử dị ứng:</span>
+<span class="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">Chưa phát hiện dị ứng</span>
+</div>
+</div>
+</details>
+</section>
+<!-- KHỐI 2: Xem trước tóm tắt báo cáo (Clinical Report Preview Card) -->
+<section class="bg-white rounded-2xl p-4 border border-slate-200 shadow-[0_2px_8px_rgba(23,45,50,0.04)] space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-[#146C60] text-white text-[12px] font-bold flex items-center justify-center">2</span>
+<h2 class="text-[16px] font-bold text-[#172D32]">Xem trước phiếu tóm tắt</h2>
+</div>
+<span class="text-[11px] font-bold text-[#146C60] bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">assignment</span>
+          Mẫu báo cáo Nhi khoa 48h
+        </span>
+</div>
+<!-- Card nội dung phiếu y khoa -->
+<div class="bg-[#F7F9F8] rounded-xl p-3.5 border border-slate-200/90 space-y-3">
+<!-- Tóm tắt lâm sàng nhanh -->
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-white p-2.5 rounded-lg border border-red-100 shadow-xs">
+<span class="text-[11px] text-[#52666B] block">Thân nhiệt cao nhất</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="text-[19px] font-bold text-[#B63B48]">38.5°C</span>
+<span class="text-[10px] font-semibold text-[#B63B48] bg-[#FBECEE] px-1.5 py-0.5 rounded">Đỉnh sốt</span>
+</div>
+</div>
+<div class="bg-white p-2.5 rounded-lg border border-emerald-100 shadow-xs">
+<span class="text-[11px] text-[#52666B] block">Nhiệt độ hiện tại</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="text-[19px] font-bold text-[#146C60]">37.7°C</span>
+<span class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">Đang hạ nhiệt</span>
+</div>
+</div>
+</div>
+<!-- Đồ thị mini diễn tiến nhiệt độ dạng SVG trên nền trắng sáng -->
+<div class="bg-white rounded-lg p-3 border border-slate-200 space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-[12px] font-bold text-[#B63B48] flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">show_chart</span>
+              Biểu đồ diễn tiến nhiệt độ 48h
+            </span>
+<span class="text-[11px] font-medium text-[#52666B]">Ngưỡng sốt: ≥ 38.0°C</span>
+</div>
+<div class="h-28 w-full relative">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 320 100">
+<defs>
+<!-- Grid Lines Pattern -->
+<pattern height="20" id="lightGrid" patternunits="userSpaceOnUse" width="40">
+<path d="M 40 0 L 0 0 0 40" fill="none" stroke="#F1F5F9" stroke-width="1"></path>
+</pattern>
+<lineargradient id="feverArea" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#B63B48" stop-opacity="0.22"></stop>
+<stop offset="100%" stop-color="#B63B48" stop-opacity="0.01"></stop>
+</lineargradient>
+</defs>
+<!-- Light Background Grid -->
+<rect fill="url(#lightGrid)" height="100" width="320"></rect>
+<!-- Baseline Fever Line 38.0°C -->
+<line stroke="#F3B2B9" stroke-dasharray="4 3" stroke-width="1.2" x1="10" x2="310" y1="45" y2="45"></line>
+<text fill="#B63B48" font-family="'Be Vietnam Pro', sans-serif" font-size="10" font-weight="600" x="260" y="40">38.0°C</text>
+<!-- Filled Area Under Curve -->
+<path d="M 15 80 Q 70 30, 130 35 T 200 18 T 260 55 L 305 60 L 305 95 L 15 95 Z" fill="url(#feverArea)"></path>
+<!-- Temperature Line Graph -->
+<path d="M 15 80 Q 70 30, 130 35 T 200 18 T 260 55 L 305 60" fill="none" stroke="#B63B48" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<!-- Point 1 (Normal start) -->
+<circle cx="15" cy="80" fill="#FFFFFF" r="3.5" stroke="#B63B48" stroke-width="2"></circle>
+<!-- Point 2 (Peak Fever 38.5) -->
+<circle cx="200" cy="18" fill="#B63B48" r="5" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<rect fill="#B63B48" height="15" rx="4" width="40" x="180" y="2"></rect>
+<text fill="#FFFFFF" font-family="'Be Vietnam Pro', sans-serif" font-size="10" font-weight="700" text-anchor="middle" x="200" y="13">38.5°C</text>
+<!-- Point 3 (Recent 37.7) -->
+<circle cx="305" cy="60" fill="#146C60" r="4.5" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<rect fill="#146C60" height="15" rx="4" width="40" x="272" y="68"></rect>
+<text fill="#FFFFFF" font-family="'Be Vietnam Pro', sans-serif" font-size="10" font-weight="700" text-anchor="middle" x="292" y="79">37.7°C</text>
+</svg>
+</div>
+<div class="flex justify-between text-[11px] text-[#52666B] pt-0.5 px-1 font-medium">
+<span>06/09 21:00</span>
+<span class="text-[#B63B48] font-bold">07/09 14:30 (Đỉnh sốt)</span>
+<span class="text-[#146C60] font-bold">08/09 21:00 (Hiện tại)</span>
+</div>
+</div>
+<!-- Bảng 2 cữ thuốc Paracetamol gần nhất (08:30 và 14:30) -->
+<div class="bg-white rounded-lg p-3 border border-slate-200 space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-[12px] font-bold text-[#172D32] flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-[#146C60]">medication</span>
+              2 cữ thuốc Paracetamol gần nhất
+            </span>
+<span class="text-[11px] font-semibold text-[#146C60] bg-emerald-50 px-2 py-0.5 rounded">Chuẩn liều</span>
+</div>
+<div class="divide-y divide-slate-100">
+<div class="py-1.5 flex items-center justify-between text-[12px]">
+<div>
+<span class="font-bold text-[#172D32]">14:30</span>
+<span class="text-[#52666B] ml-1">· Paracetamol 80mg (gói 5ml)</span>
+</div>
+<span class="text-emerald-700 font-semibold text-[11px] bg-emerald-50 px-2 py-0.5 rounded">Hạ sốt sau 45p</span>
+</div>
+<div class="py-1.5 flex items-center justify-between text-[12px]">
+<div>
+<span class="font-bold text-[#172D32]">08:30</span>
+<span class="text-[#52666B] ml-1">· Paracetamol 80mg (gói 5ml)</span>
+</div>
+<span class="text-emerald-700 font-semibold text-[11px] bg-emerald-50 px-2 py-0.5 rounded">Đáp ứng tốt</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- KHỐI 3: Tạo mã QR & Liên kết chia sẻ an toàn -->
+<section class="bg-white rounded-2xl p-4 border border-slate-200 shadow-[0_2px_8px_rgba(23,45,50,0.04)] space-y-3.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-[#146C60] text-white text-[12px] font-bold flex items-center justify-center">3</span>
+<h2 class="text-[16px] font-bold text-[#172D32]">Mã QR &amp; Liên kết an toàn</h2>
+</div>
+<span class="flex items-center gap-1 text-[11px] bg-emerald-50 text-[#146C60] border border-emerald-200 px-2 py-0.5 rounded-full font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-[#146C60] animate-pulse"></span>
+          Đang hoạt động
+        </span>
+</div>
+<!-- Thẻ card trắng nổi bật: Mã QR vector rõ nét ở giữa SVG xanh đậm #146C60 -->
+<div class="flex flex-col items-center justify-center p-4 bg-[#F7F9F8] border border-slate-200/90 rounded-xl text-center space-y-3">
+<div class="p-3.5 bg-white rounded-2xl shadow-sm border border-slate-200 flex items-center justify-center">
+<svg class="w-44 h-44" viewbox="0 0 160 160">
+<!-- Corner Finder 1 (Top Left) -->
+<rect fill="#146C60" height="38" rx="6" width="38" x="10" y="10"></rect>
+<rect fill="#FFFFFF" height="26" rx="4" width="26" x="16" y="16"></rect>
+<rect fill="#146C60" height="14" rx="2" width="14" x="22" y="22"></rect>
+<!-- Corner Finder 2 (Top Right) -->
+<rect fill="#146C60" height="38" rx="6" width="38" x="112" y="10"></rect>
+<rect fill="#FFFFFF" height="26" rx="4" width="26" x="118" y="16"></rect>
+<rect fill="#146C60" height="14" rx="2" width="14" x="124" y="22"></rect>
+<!-- Corner Finder 3 (Bottom Left) -->
+<rect fill="#146C60" height="38" rx="6" width="38" x="10" y="112"></rect>
+<rect fill="#FFFFFF" height="26" rx="4" width="26" x="16" y="118"></rect>
+<rect fill="#146C60" height="14" rx="2" width="14" x="22" y="124"></rect>
+<!-- QR Data Pixels -->
+<g fill="#172D32">
+<rect height="6" rx="1.5" width="6" x="54" y="14"></rect>
+<rect height="6" rx="1.5" width="6" x="66" y="14"></rect>
+<rect height="6" rx="1.5" width="6" x="78" y="14"></rect>
+<rect height="6" rx="1.5" width="6" x="94" y="14"></rect>
+<rect height="6" rx="1.5" width="6" x="54" y="26"></rect>
+<rect height="6" rx="1.5" width="6" x="72" y="26"></rect>
+<rect height="6" rx="1.5" width="6" x="90" y="26"></rect>
+<rect height="6" rx="1.5" width="6" x="100" y="26"></rect>
+<rect height="6" rx="1.5" width="6" x="60" y="38"></rect>
+<rect height="6" rx="1.5" width="6" x="78" y="38"></rect>
+<rect height="6" rx="1.5" width="6" x="96" y="38"></rect>
+<rect height="6" rx="1.5" width="6" x="14" y="56"></rect>
+<rect height="6" rx="1.5" width="6" x="26" y="56"></rect>
+<rect height="6" rx="1.5" width="6" x="38" y="56"></rect>
+<rect height="6" rx="1.5" width="6" x="116" y="56"></rect>
+<rect height="6" rx="1.5" width="6" x="134" y="56"></rect>
+<rect height="6" rx="1.5" width="6" x="14" y="68"></rect>
+<rect height="6" rx="1.5" width="6" x="32" y="68"></rect>
+<rect height="6" rx="1.5" width="6" x="122" y="68"></rect>
+<rect height="6" rx="1.5" width="6" x="140" y="68"></rect>
+<rect height="6" rx="1.5" width="6" x="14" y="94"></rect>
+<rect height="6" rx="1.5" width="6" x="38" y="94"></rect>
+<rect height="6" rx="1.5" width="6" x="122" y="94"></rect>
+<rect height="6" rx="1.5" width="6" x="134" y="94"></rect>
+<rect height="6" rx="1.5" width="6" x="54" y="114"></rect>
+<rect height="6" rx="1.5" width="6" x="66" y="114"></rect>
+<rect height="6" rx="1.5" width="6" x="84" y="114"></rect>
+<rect height="6" rx="1.5" width="6" x="100" y="114"></rect>
+<rect height="6" rx="1.5" width="6" x="118" y="114"></rect>
+<rect height="6" rx="1.5" width="6" x="136" y="114"></rect>
+<rect height="6" rx="1.5" width="6" x="60" y="126"></rect>
+<rect height="6" rx="1.5" width="6" x="78" y="126"></rect>
+<rect height="6" rx="1.5" width="6" x="96" y="126"></rect>
+<rect height="6" rx="1.5" width="6" x="116" y="126"></rect>
+<rect height="6" rx="1.5" width="6" x="136" y="126"></rect>
+<rect height="6" rx="1.5" width="6" x="54" y="138"></rect>
+<rect height="6" rx="1.5" width="6" x="72" y="138"></rect>
+<rect height="6" rx="1.5" width="6" x="90" y="138"></rect>
+<rect height="6" rx="1.5" width="6" x="108" y="138"></rect>
+<rect height="6" rx="1.5" width="6" x="126" y="138"></rect>
+</g>
+<!-- Center Healthcare Cross Badge -->
+<rect fill="#FFFFFF" height="44" rx="12" stroke="#E3E8E7" stroke-width="1.5" width="44" x="58" y="58"></rect>
+<rect fill="#146C60" height="34" rx="8" width="34" x="63" y="63"></rect>
+<path d="M 80 70 L 80 90 M 70 80 L 90 80" stroke="#FFFFFF" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+</div>
+<!-- Dòng thông tin bảo mật -->
+<div class="space-y-1">
+<p class="text-[13px] font-bold text-[#805B16] flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[17px]">schedule</span>
+            Mã QR có hiệu lực trong 24 giờ
+          </p>
+<p class="text-[12px] text-[#52666B]">Tự động hết hạn lúc <span class="font-semibold text-[#172D32]">21:00 ngày 09/09</span></p>
+</div>
+</div>
+<!-- Checkbox đồng ý chia sẻ -->
+<label class="flex items-start gap-2.5 cursor-pointer pt-1 select-none">
+<input checked="" class="mt-0.5 w-4 h-4 rounded text-[#146C60] focus:ring-[#146C60] accent-[#146C60] cursor-pointer flex-shrink-0" type="checkbox"/>
+<span class="text-[12px] text-[#52666B] leading-relaxed">
+          Tôi đồng ý chia sẻ dữ liệu y tế này với bác sĩ/người chăm sóc qua liên kết bảo mật tạm thời.
+        </span>
+</label>
+<!-- Hàng 3 nút tiện ích -->
+<div class="grid grid-cols-3 gap-2 pt-1">
+<!-- Nút 1: Sao chép link -->
+<button class="h-11 bg-[#F7F9F8] border border-slate-200 text-[#172D32] hover:bg-slate-100 rounded-xl text-[12px] font-bold flex flex-col items-center justify-center gap-0.5 active:scale-98 transition-all" id="copy-link-btn" type="button">
+<span class="material-symbols-outlined text-[18px] text-[#146C60]">link</span>
+<span>Sao chép link</span>
+</button>
+<!-- Nút 2: Mở trang xem QR (Giao diện Bác sĩ) -->
+<a class="h-11 bg-emerald-50 border border-emerald-200 text-[#146C60] hover:bg-emerald-100 rounded-xl text-[12px] font-bold flex flex-col items-center justify-center gap-0.5 active:scale-98 transition-all" data-path="doctor-web-view" href="#">
+<span class="material-symbols-outlined text-[18px]">open_in_new</span>
+<span>Mở xem QR</span>
+</a>
+<!-- Nút 3: Thu hồi mã -->
+<button class="h-11 bg-rose-50 border border-rose-200 text-[#B63B48] hover:bg-rose-100 rounded-xl text-[12px] font-bold flex flex-col items-center justify-center gap-0.5 active:scale-98 transition-all" id="revoke-qr-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">block</span>
+<span>Thu hồi mã</span>
+</button>
+</div>
+</section>
+</main>
+<!-- STICKY BOTTOM ACTION: Nút CTA lớn dính đáy "Xuất file PDF & Chia sẻ" -->
+<div class="fixed bottom-0 inset-x-0 bg-[#F7F9F8]/95 backdrop-blur-md border-t border-[#E3E8E7] px-5 py-3 pb-safe z-40">
+<div class="max-w-md mx-auto">
+<button class="w-full h-[56px] bg-[#146C60] hover:bg-[#0E4E45] text-white rounded-2xl font-bold text-[16px] flex items-center justify-center gap-2.5 shadow-lg shadow-[#146C60]/25 active:scale-[0.98] transition-all" id="export-pdf-btn" type="button">
+<span class="material-symbols-outlined text-[22px]">picture_as_pdf</span>
+<span>Xuất file PDF &amp; Chia sẻ</span>
+</button>
+</div>
+</div>
+<!-- Toast Notification Message (Hidden by default) -->
+<div class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 transform translate-y-8 opacity-0 pointer-events-none flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#172D32] text-white shadow-xl max-w-[90%]" id="toast-notification">
+<span class="material-symbols-outlined text-[18px] text-emerald-400">check_circle</span>
+<span class="text-[13px] font-medium" id="toast-message">Đã sao chép liên kết vào bộ nhớ tạm!</span>
+</div>
+<script>
+    (function() {
+      const copyBtn = document.getElementById('copy-link-btn');
+      const toast = document.getElementById('toast-notification');
+      const toastMsg = document.getElementById('toast-message');
+      const revokeBtn = document.getElementById('revoke-qr-btn');
+      const exportPdfBtn = document.getElementById('export-pdf-btn');
+
+      function showToast(message) {
+        if (!toast || !toastMsg) return;
+        toastMsg.textContent = message;
+        toast.classList.remove('translate-y-8', 'opacity-0', 'pointer-events-none');
+        toast.classList.add('translate-y-0', 'opacity-100');
+
+        setTimeout(() => {
+          toast.classList.remove('translate-y-0', 'opacity-100');
+          toast.classList.add('translate-y-8', 'opacity-0', 'pointer-events-none');
+        }, 3000);
+      }
+
+      if (copyBtn) {
+        copyBtn.addEventListener('click', function() {
+          showToast('Đã sao chép liên kết báo cáo vào bộ nhớ tạm!');
+        });
+      }
+
+      if (exportPdfBtn) {
+        exportPdfBtn.addEventListener('click', function() {
+          showToast('Đang tạo và tải file PDF báo cáo (Bé An - 48h)...');
+        });
+      }
+
+      if (revokeBtn) {
+        revokeBtn.addEventListener('click', function() {
+          if (confirm('Bác sĩ sẽ không thể quét mã QR này nữa. Bạn có chắc muốn thu hồi?')) {
+            showToast('Đã thu hồi mã QR thành công!');
+          }
+        });
+      }
+    })();
+  </script>
+</body></html>

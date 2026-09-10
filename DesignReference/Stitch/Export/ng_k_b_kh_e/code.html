@@ -1,0 +1,269 @@
+<!DOCTYPE html><html class="h-full" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+    @layer base {
+      html, body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #F7F9F8;
+      }
+      body {
+        overscroll-behavior-y: none;
+        -webkit-tap-highlight-color: transparent;
+        font-family: 'Be Vietnam Pro', sans-serif;
+      }
+      .pb-safe { padding-bottom: env(safe-area-inset-bottom, 24px); }
+      .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-bg": "#F7F9F8",
+            "surface-card": "#FFFFFF",
+            "text-primary": "#172D32",
+            "text-secondary": "#52666B",
+            "divider-hairline": "#E3E8E7",
+            "action-primary": "#146C60",
+            "action-primary-pressed": "#0E4E45",
+            "activity-medical": "#B63B48",
+            "activity-medical-surface": "#FBECEE",
+            "activity-nutrition": "#176B91",
+            "activity-nutrition-surface": "#E8F3FA",
+            "activity-routine": "#805B16",
+            "activity-routine-surface": "#FFF3D7",
+            "primary-fixed": "#a3f1e2",
+          },
+          fontFamily: {
+            sans: ['Be Vietnam Pro', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#F7F9F8] text-[#172D32] antialiased min-h-screen flex flex-col justify-between">
+<!-- Top Navigation Bar chuẩn iOS -->
+<header class="fixed top-0 inset-x-0 z-50 bg-[#F7F9F8]/90 backdrop-blur-xl pt-safe border-b border-[#E3E8E7]/60">
+<div class="h-14 px-5 max-w-md mx-auto flex items-center justify-between">
+<a class="inline-flex items-center gap-1 text-[#146C60] active:opacity-70 transition-opacity font-medium -ml-1 text-[16px]" data-path="login" href="#">
+<span class="material-symbols-outlined text-[24px]">chevron_left</span>
+<span class="">Đăng nhập</span>
+</a>
+<div class="w-10"></div>
+</div>
+</header>
+<!-- Main Content Container -->
+<main class="flex-1 w-full max-w-md mx-auto pt-20 pb-safe px-5 flex flex-col justify-start">
+<div class="flex flex-col gap-4 py-2">
+<!-- White Main Card -->
+<div class="w-full bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex flex-col gap-5">
+<!-- Header Info -->
+<div class="flex flex-col items-start gap-1.5"><div class="flex items-center gap-3 mb-1"><img src="https://lh3.googleusercontent.com/aida/AEtjO1Uw8jRtJpJgTVQgLADcrkIJYXlhniaxQnq83EJgHw63fa6HBqIzrdWO7QVo68uXl_Rzx30KwGK-DK-qfVFoAZVbTcsO5fj66iwtWcPEhTjB7oWwAhSYOcl_r7p-7jy28u32mHnUjAJdnCmeSCTL3RJD7Qw283iYOpdHHRHQsqg8DjP-uMpk0Qox-In8ENkW9INCupltSZeyhDZ1ulVu9syUkvd9aHz8RIqLld13b2-qN6CJ8HaeTuxnVDQ" alt="Logo Bé Khỏe - Bố Mẹ An Tâm" class="w-16 h-16 rounded-2xl shadow-sm object-cover"></div>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-[#146C60]">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="text-xs font-semibold">Bước đầu tiên</span>
+</div>
+<h1 class="text-2xl font-bold text-[#172D32] tracking-tight mt-1">Tạo tài khoản</h1>
+<p class="text-sm text-[#52666B]">Chỉ mất 30 giây để bắt đầu đồng hành cùng bé yêu</p>
+</div>
+<!-- Quick 1-Tap Sign-up (Apple & Google) -->
+<div class="flex flex-col gap-2.5">
+<!-- Apple Sign Up -->
+<button class="w-full h-12 bg-[#172D32] text-white rounded-xl flex items-center justify-center gap-2.5 px-4 active:scale-[0.98] transition-all shadow-sm" type="button">
+<svg aria-hidden="true" class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.61-.75 1.04-1.8 0.92-2.85-.92.04-2.02.62-2.66 1.37-.56.65-.05 1.72.08 2.76 1.02.08 2.05-.53 2.66-1.28z"></path>
+</svg>
+<span class="text-[15px] font-semibold tracking-tight">Đăng ký nhanh với Apple</span>
+</button>
+<!-- Google Sign Up -->
+<button class="w-full h-12 bg-white border border-slate-200 text-[#172D32] rounded-xl flex items-center justify-center gap-2.5 px-4 active:scale-[0.98] transition-all shadow-sm" type="button">
+<svg aria-hidden="true" class="w-5 h-5" viewBox="0 0 24 24">
+<path d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z" fill="#EA4335"></path>
+<path d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5.1 3.7-8.8z" fill="#4285F4"></path>
+<path d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.3 0 12s.7 3.3 1.9 5.7l3.7-2.9z" fill="#FBBC05"></path>
+<path d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16c1.8 3.7 5.6 7 10.1 7z" fill="#34A853"></path>
+</svg>
+<span class="text-[15px] font-semibold tracking-tight">Đăng ký nhanh với Google</span>
+</button>
+</div>
+<!-- Divider -->
+<div class="relative flex items-center justify-center my-0.5">
+<div class="w-full h-px bg-slate-200"></div>
+<span class="absolute bg-white px-3 text-xs text-[#52666B] font-medium">Hoặc điền thông tin bên dưới</span>
+</div>
+<!-- Form Elements -->
+<form class="flex flex-col gap-4" id="signup-form" onsubmit="return false;">
+<!-- Field 1: Name -->
+<div class="flex flex-col gap-1.5">
+<label class="text-[13px] font-semibold text-[#172D32] flex items-center gap-1.5" for="parent-name">
+<span class="material-symbols-outlined text-[17px] text-[#146C60]">badge</span>
+<span class="">Tên hiển thị của bố/mẹ</span>
+</label>
+<input autocomplete="name" class="w-full h-12 rounded-xl border border-slate-200 bg-white p-3.5 text-[15px] text-[#172D32] placeholder:text-[#52666B]/50 focus:border-[#146C60] focus:ring-1 focus:ring-[#146C60] outline-none transition-all" id="parent-name" placeholder="Ví dụ: Mẹ Mai, Bố Hùng" type="text">
+</div>
+<!-- Field 2: Phone or Email -->
+<div class="flex flex-col gap-1.5">
+<label class="text-[13px] font-semibold text-[#172D32] flex items-center gap-1.5" for="contact-input">
+<span class="material-symbols-outlined text-[17px] text-[#146C60]">contact_mail</span>
+<span class="">Số điện thoại / Email</span>
+</label>
+<input autocomplete="username" class="w-full h-12 rounded-xl border border-slate-200 bg-white p-3.5 text-[15px] text-[#172D32] placeholder:text-[#52666B]/50 focus:border-[#146C60] focus:ring-1 focus:ring-[#146C60] outline-none transition-all" id="contact-input" placeholder="Để nhận mã xác thực OTP" type="text">
+</div>
+<!-- Field 3: Password -->
+<div class="flex flex-col gap-1.5">
+<label class="text-[13px] font-semibold text-[#172D32] flex items-center gap-1.5" for="password-input">
+<span class="material-symbols-outlined text-[17px] text-[#146C60]">lock</span>
+<span class="">Mật khẩu</span>
+</label>
+<div class="relative flex items-center">
+<input autocomplete="new-password" class="w-full h-12 rounded-xl border border-slate-200 bg-white pl-3.5 pr-11 text-[15px] text-[#172D32] placeholder:text-[#52666B]/50 focus:border-[#146C60] focus:ring-1 focus:ring-[#146C60] outline-none transition-all" id="password-input" placeholder="Tối thiểu 6 ký tự" type="password">
+<button aria-label="Hiện/ẩn mật khẩu" class="absolute right-0 top-0 bottom-0 w-11 flex items-center justify-center text-[#52666B] hover:text-[#172D32] active:scale-95 transition-all" id="toggle-password" type="button">
+<span class="material-symbols-outlined text-[20px]" id="password-eye-icon">visibility</span>
+</button>
+</div>
+<!-- Password Strength Bar (3 nấc) -->
+<div class="flex flex-col gap-1 mt-1 px-0.5">
+<div class="flex items-center justify-between text-[11px]">
+<span class="text-[#52666B]">Độ bảo mật:</span>
+<span class="font-semibold text-[#52666B]" id="strength-label">Chưa nhập</span>
+</div>
+<div class="grid grid-cols-3 gap-1.5 w-full h-1.5 rounded-full bg-slate-100 overflow-hidden">
+<div class="h-full rounded-full bg-slate-200 transition-colors duration-300" id="bar-1"></div>
+<div class="h-full rounded-full bg-slate-200 transition-colors duration-300" id="bar-2"></div>
+<div class="h-full rounded-full bg-slate-200 transition-colors duration-300" id="bar-3"></div>
+</div>
+</div>
+</div>
+<!-- Terms Checkbox -->
+<div class="pt-1">
+<label class="flex items-start gap-2.5 cursor-pointer select-none group">
+<div class="relative flex items-center justify-center mt-0.5">
+<input checked="" class="peer sr-only" id="terms-checkbox" type="checkbox">
+<div class="w-4 h-4 rounded-md border border-slate-300 bg-white peer-checked:bg-[#146C60] peer-checked:border-[#146C60] flex items-center justify-center transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[13px] text-white scale-0 peer-checked:scale-100 transition-transform font-bold">check</span>
+</div>
+</div>
+<span class="text-[12px] text-[#52666B] leading-relaxed">
+                Tôi đồng ý với <a class="text-[#146C60] font-semibold hover:underline" href="#">Điều khoản dịch vụ</a> và <a class="text-[#146C60] font-semibold hover:underline" href="#">Chính sách bảo mật dữ liệu y tế gia đình</a>.
+              </span>
+</label>
+</div>
+<!-- Primary CTA Button (56px, rounded-2xl) -->
+<button class="w-full h-14 bg-[#146C60] hover:bg-[#0E4E45] active:scale-[0.98] text-white rounded-2xl flex items-center justify-center gap-2 shadow-sm font-semibold text-[16px] transition-all mt-1" id="btn-signup" type="submit">
+<span class="">Đăng ký &amp; Bắt đầu</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</form>
+<!-- Footer link -->
+<div class="flex items-center justify-center gap-1.5 pt-1 text-center">
+<span class="text-[14px] text-[#52666B]">Đã có tài khoản?</span>
+<a class="text-[14px] font-semibold text-[#146C60] hover:underline" data-path="login" href="#">
+            Đăng nhập
+          </a>
+</div>
+</div>
+<!-- Informational Hint Box -->
+<div class="w-full bg-[#E2F7FD] p-3.5 rounded-xl border border-teal-100 flex items-center gap-2.5">
+<span class="text-base flex-shrink-0">💡</span>
+<p class="text-xs text-[#146C60] font-medium leading-snug">
+<span class="font-semibold">Tiện lợi:</span> Bố mẹ có thể tạo hồ sơ cho bé ngay sau bước này.
+        </p>
+</div>
+</div>
+</main>
+<!-- Interactive Logic -->
+<script>
+    (function() {
+      const passwordInput = document.getElementById('password-input');
+      const toggleBtn = document.getElementById('toggle-password');
+      const eyeIcon = document.getElementById('password-eye-icon');
+      const bar1 = document.getElementById('bar-1');
+      const bar2 = document.getElementById('bar-2');
+      const bar3 = document.getElementById('bar-3');
+      const strengthLabel = document.getElementById('strength-label');
+
+      // Toggle Password Visibility
+      if (toggleBtn && passwordInput && eyeIcon) {
+        toggleBtn.addEventListener('click', () => {
+          const isPassword = passwordInput.type === 'password';
+          passwordInput.type = isPassword ? 'text' : 'password';
+          eyeIcon.textContent = isPassword ? 'visibility_off' : 'visibility';
+        });
+      }
+
+      // Password Strength Meter (3 nấc: Yếu / Trung bình / An toàn)
+      if (passwordInput && bar1 && bar2 && bar3 && strengthLabel) {
+        passwordInput.addEventListener('input', (e) => {
+          const val = e.target.value;
+          const len = val.length;
+
+          // Reset styles
+          bar1.className = 'h-full rounded-full transition-colors duration-300';
+          bar2.className = 'h-full rounded-full transition-colors duration-300';
+          bar3.className = 'h-full rounded-full transition-colors duration-300';
+
+          if (len === 0) {
+            bar1.classList.add('bg-slate-200');
+            bar2.classList.add('bg-slate-200');
+            bar3.classList.add('bg-slate-200');
+            strengthLabel.textContent = 'Chưa nhập';
+            strengthLabel.className = 'font-semibold text-[#52666B]';
+          } else if (len < 6) {
+            // Nấc 1: Yếu (Đỏ)
+            bar1.classList.add('bg-[#B63B48]');
+            bar2.classList.add('bg-slate-200');
+            bar3.classList.add('bg-slate-200');
+            strengthLabel.textContent = 'Yếu';
+            strengthLabel.className = 'font-semibold text-[#B63B48]';
+          } else if (len >= 6 && len < 9 && !/(?=.*[A-Z])(?=.*[0-9])/.test(val)) {
+            // Nấc 2: Trung bình (Vàng/Cam)
+            bar1.classList.add('bg-[#805B16]');
+            bar2.classList.add('bg-[#805B16]');
+            bar3.classList.add('bg-slate-200');
+            strengthLabel.textContent = 'Trung bình';
+            strengthLabel.className = 'font-semibold text-[#805B16]';
+          } else {
+            // Nấc 3: An toàn (Xanh chuẩn Brand)
+            bar1.classList.add('bg-[#146C60]');
+            bar2.classList.add('bg-[#146C60]');
+            bar3.classList.add('bg-[#146C60]');
+            strengthLabel.textContent = 'An toàn';
+            strengthLabel.className = 'font-semibold text-[#146C60]';
+          }
+        });
+      }
+
+      // Action CTA Pulse
+      const signupBtn = document.getElementById('btn-signup');
+      if (signupBtn) {
+        signupBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const termsCheck = document.getElementById('terms-checkbox');
+          if (termsCheck && !termsCheck.checked) {
+            termsCheck.focus();
+            return;
+          }
+          signupBtn.classList.add('scale-95');
+          setTimeout(() => {
+            signupBtn.classList.remove('scale-95');
+          }, 150);
+        });
+      }
+    })();
+  </script>
+
+
+</body></html>

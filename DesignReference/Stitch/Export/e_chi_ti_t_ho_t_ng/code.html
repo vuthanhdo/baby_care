@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        overscroll-behavior-y: none;
+        -webkit-tap-highlight-color: transparent;
+        font-family: 'Be Vietnam Pro', sans-serif;
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      .pt-safe {
+        padding-top: env(safe-area-inset-top, 0px);
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#005248",
+            "text-secondary": "#52666B",
+            "on-primary": "#ffffff",
+            "surface-card": "#FFFFFF",
+            "surface-bg": "#F7F9F8",
+            "outline-variant": "#E3E8E7",
+            "action-primary": "#146C60",
+            "action-primary-pressed": "#0E4E45",
+            "activity-medical": "#B63B48",
+            "activity-medical-surface": "#FBECEE",
+            "activity-routine": "#805B16",
+            "activity-routine-surface": "#FFF3D7",
+            "activity-nutrition": "#176B91",
+            "activity-nutrition-surface": "#E8F3FA",
+            "text-primary": "#172D32",
+            "mint-accent": "#E8F5E9",
+            "mint-border": "#C8E6C9",
+            "mint-text": "#1E4620"
+          },
+          borderRadius: {
+            "xl": "16px",
+            "2xl": "20px",
+            "3xl": "24px",
+            "full": "9999px"
+          },
+          spacing: {
+            "margin-screen": "20px"
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface-bg text-text-primary antialiased min-h-screen flex flex-col font-['Be_Vietnam_Pro'] selection:bg-action-primary/10">
+<!-- Fixed Top Header: Baby Selector & Profile -->
+<header class="fixed top-0 inset-x-0 z-40 bg-surface-bg/90 backdrop-blur-xl border-b border-outline-variant/60 pt-safe">
+<div class="h-14 px-5 flex items-center justify-between">
+<a class="flex items-center gap-2.5 rounded-full py-1 pr-3 pl-1 active:opacity-75 transition-opacity" data-path="baby-profile" href="#">
+<div class="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">child_care</span>
+</div>
+<div class="flex flex-col text-left">
+<div class="flex items-center gap-1">
+<span class="text-[15px] font-bold text-text-primary leading-tight">Bé An</span>
+<span class="material-symbols-outlined text-text-secondary text-[16px]">expand_more</span>
+</div>
+<span class="text-[11px] font-medium text-text-secondary">12 tháng tuổi</span>
+</div>
+</a>
+<div class="flex items-center gap-2">
+<a aria-label="Cài đặt" class="w-9 h-9 flex items-center justify-center rounded-full text-text-secondary hover:text-text-primary active:bg-outline-variant/50 transition-colors" data-path="settings" href="#">
+<span class="material-symbols-outlined text-[22px]">settings</span>
+</a>
+<div class="w-8 h-8 rounded-full bg-action-primary/15 border border-action-primary/25 flex items-center justify-center text-action-primary font-semibold text-xs">
+          Mẹ
+        </div>
+</div>
+</div>
+</header>
+<!-- Main Content Body -->
+<main class="flex-1 flex flex-col w-full pt-20 pb-28">
+<div class="max-w-md w-full mx-auto flex flex-col px-5">
+<!-- iOS Sub-Navigation Bar -->
+<nav class="flex items-center justify-between py-3">
+<a class="inline-flex items-center gap-0.5 text-action-primary active:opacity-60 transition-opacity -ml-2 px-2 py-1 rounded-lg" data-path="daily-timeline" href="#">
+<span class="material-symbols-outlined text-[24px]">chevron_left</span>
+<span class="text-[16px] font-medium">Nhật ký</span>
+</a>
+<h1 class="text-[17px] font-bold text-text-primary tracking-tight">Chi tiết hoạt động</h1>
+<div class="relative">
+<button aria-label="Tùy chọn hoạt động" class="w-9 h-9 flex items-center justify-center text-text-secondary active:text-text-primary rounded-full hover:bg-black/5 transition-colors" id="more-menu-btn" type="button">
+<span class="material-symbols-outlined text-[22px]">more_horiz</span>
+</button>
+<!-- Context Popover Menu -->
+<div class="hidden absolute right-0 top-10 w-48 bg-surface-card rounded-2xl shadow-xl border border-outline-variant/80 z-50 p-1.5 flex-col gap-1 transition-all" id="options-popover">
+<button class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-left hover:bg-surface-bg active:bg-outline-variant/40 transition-colors w-full text-[14px] font-medium text-text-primary" id="share-record-btn" type="button">
+<span class="material-symbols-outlined text-action-primary text-[18px]">share</span>
+<span>Chia sẻ bản ghi</span>
+</button>
+<div class="h-px bg-outline-variant/60 my-0.5"></div>
+<button class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-left hover:bg-activity-medical-surface active:bg-activity-medical-surface text-[14px] font-medium text-activity-medical w-full transition-colors" id="delete-record-btn" type="button">
+<span class="material-symbols-outlined text-activity-medical text-[18px]">delete</span>
+<span>Xóa hoạt động</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Content Container -->
+<div class="flex flex-col gap-4 pt-1">
+<!-- 1. Hero Card: Primary Activity Metrics -->
+<section class="bg-gradient-to-b from-[#FFF9F5] via-surface-card to-surface-card rounded-[20px] p-4 border border-[#FADCD5] shadow-[0_4px_16px_rgba(182,59,72,0.06)] flex flex-col gap-4 relative overflow-hidden">
+<!-- Top Accent Ribbon -->
+<div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#F48FB1] via-[#E57373] to-[#FFB74D]"></div>
+<!-- Category and Timestamp Header -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-2xl bg-activity-medical-surface border border-[#FADCD5] flex items-center justify-center text-activity-medical shadow-sm">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">device_thermostat</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[15px] font-bold text-activity-medical leading-snug">Y tế &amp; Triệu chứng</span>
+<span class="text-[12px] text-text-secondary font-medium">20:00 · Hôm nay, 08/09/2026</span>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 bg-[#F0F5F4] border border-[#D5E5E3] px-2.5 py-1 rounded-full text-text-secondary text-[11px] font-medium">
+<span class="material-symbols-outlined text-[13px] text-action-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span>Bản ghi gốc</span>
+</span>
+</div>
+<!-- Hero Value Spotlight Box -->
+<div class="bg-activity-medical-surface/45 rounded-2xl p-4 border border-[#FDE3E5] flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[12px] font-medium text-text-secondary uppercase tracking-wider">Nhiệt độ cơ thể</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="text-[34px] font-bold text-text-primary tracking-tight leading-none">37,7</span>
+<span class="text-[22px] font-bold text-activity-medical leading-none">°C</span>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FFE8D6] border border-[#FFCCAA] text-[#B2531B] shadow-sm">
+<span class="w-2 h-2 rounded-full bg-[#FF8A00] animate-pulse"></span>
+<span class="text-[14px] font-bold">Sốt nhẹ</span>
+</div>
+<span class="text-[11px] text-text-secondary font-medium">Cao hơn chuẩn +0,4°C</span>
+</div>
+</div>
+<!-- iOS Inset Grouped Attributes -->
+<div class="bg-surface-bg rounded-2xl p-3 border border-outline-variant/70 flex flex-col divide-y divide-outline-variant/60">
+<div class="flex items-center justify-between py-2 first:pt-1">
+<div class="flex items-center gap-2 text-text-secondary text-[13px] font-medium">
+<span class="material-symbols-outlined text-[17px]">child_care</span>
+<span>Đối tượng:</span>
+</div>
+<span class="text-[13px] font-semibold text-text-primary">Bé An (12 tháng)</span>
+</div>
+<div class="flex items-center justify-between py-2">
+<div class="flex items-center gap-2 text-text-secondary text-[13px] font-medium">
+<span class="material-symbols-outlined text-[17px]">straighten</span>
+<span>Vị trí &amp; Thiết bị:</span>
+</div>
+<span class="text-[13px] font-semibold text-text-primary">Nách (Nhiệt kế điện tử Omron)</span>
+</div>
+<div class="flex items-center justify-between py-2 last:pb-1">
+<div class="flex items-center gap-2 text-text-secondary text-[13px] font-medium">
+<span class="material-symbols-outlined text-[17px]">history</span>
+<span>Tình trạng:</span>
+</div>
+<span class="text-[13px] font-medium text-action-primary bg-action-primary/10 px-2 py-0.5 rounded-md">Bản ghi trực tiếp</span>
+</div>
+</div>
+</section>
+<!-- 2. Section: Mom's Note & Doctor's Advice -->
+<section class="bg-surface-card rounded-[20px] p-4 border border-outline-variant/80 shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col gap-3.5">
+<!-- Mom's Note -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-1.5 text-text-secondary">
+<span class="material-symbols-outlined text-[18px] text-action-primary">edit_note</span>
+<span class="text-[12px] font-bold uppercase tracking-wider text-text-secondary">Ghi chú của mẹ</span>
+</div>
+<div class="bg-surface-bg rounded-2xl p-3.5 border border-outline-variant/60">
+<p class="text-[14px] text-text-primary leading-relaxed">
+                Bé hơi ấm trán và quấy nhẹ sau khi tắm, đã lau mát và cho uống nước ấm. Tinh thần bé vẫn linh hoạt, chịu uống 120ml nước điện giải Oresol.
+              </p>
+</div>
+</div>
+<!-- Doctor's Medical Advice Box -->
+<div class="rounded-2xl p-3.5 bg-mint-accent border border-mint-border flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0 text-[#2E7D32] shadow-sm mt-0.5">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">health_and_safety</span>
+</div>
+<div class="flex flex-col gap-0.5">
+<span class="text-[13px] font-bold text-mint-text">Gợi ý từ bác sĩ nhi khoa</span>
+<p class="text-[12px] text-[#28532A] leading-normal font-medium">
+                Chưa cần dùng thuốc hạ sốt khi dưới 38,5°C. Tiếp tục lau mát và theo dõi sau 1-2 giờ.
+              </p>
+</div>
+</div>
+</section>
+<!-- 3. Section: Temperature Daily Progression Sparkline -->
+<section class="bg-surface-card rounded-[20px] p-4 border border-outline-variant/80 shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-xl bg-action-primary/10 flex items-center justify-center text-action-primary">
+<span class="material-symbols-outlined text-[20px]">trending_down</span>
+</div>
+<div>
+<h2 class="text-[15px] font-bold text-text-primary leading-tight">Diễn biến thân nhiệt trong ngày</h2>
+<p class="text-[11px] text-text-secondary font-medium">Xu hướng nhiệt độ đang hạ dần tích cực</p>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 text-[12px] font-bold text-action-primary bg-action-primary/10 px-2.5 py-1 rounded-full border border-action-primary/20">
+<span class="material-symbols-outlined text-[15px]">arrow_downward</span>
+<span>-0,4 °C</span>
+</span>
+</div>
+<!-- Sparkline Graph Container -->
+<div class="w-full bg-surface-bg rounded-2xl p-3.5 border border-outline-variant/60 flex flex-col gap-2">
+<div class="flex justify-between items-center text-[11px] font-medium text-text-secondary">
+<span class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-red-400"></span> Ngưỡng sốt vừa (38,0 °C)
+              </span>
+<span class="text-activity-medical font-semibold">Cảnh báo thân nhiệt</span>
+</div>
+<!-- Visual SVG Wave / Sparkline -->
+<div class="py-1">
+<svg class="w-full h-16 overflow-visible" fill="none" viewbox="0 0 340 68" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<!-- Warm drop gradient fill -->
+<lineargradient id="tempWaveGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#E57373" stop-opacity="0.3"></stop>
+<stop offset="50%" stop-color="#FFB74D" stop-opacity="0.15"></stop>
+<stop offset="100%" stop-color="#146C60" stop-opacity="0.0"></stop>
+</lineargradient>
+<!-- Gradient line -->
+<lineargradient id="lineStroke" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0%" stop-color="#B63B48"></stop>
+<stop offset="100%" stop-color="#146C60"></stop>
+</lineargradient>
+</defs>
+<!-- Warning Threshold Dash Line (at 38.0°C) -->
+<line stroke="#F3B2B9" stroke-dasharray="4 4" stroke-width="1.5" x1="10" x2="330" y1="20" y2="20"></line>
+<!-- Area fill -->
+<path d="M 35 16 C 140 18, 200 48, 305 48 L 305 68 L 35 68 Z" fill="url(#tempWaveGradient)"></path>
+<!-- Connecting Trend Line -->
+<path d="M 35 16 C 140 18, 200 48, 305 48" stroke="url(#lineStroke)" stroke-linecap="round" stroke-width="3"></path>
+<!-- Point 1: 08:00 (38.1°C) -->
+<circle cx="35" cy="16" fill="#B63B48" r="5.5" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<!-- Point 2: 20:00 (37.7°C) -->
+<circle cx="305" cy="48" fill="#146C60" r="5.5" stroke="#FFFFFF" stroke-width="2.5"></circle>
+</svg>
+</div>
+<!-- X Axis Timestamps -->
+<div class="flex justify-between items-center text-[12px] pt-0.5">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-activity-medical"></span>
+<span class="font-bold text-activity-medical">08:00 · 38,1°C</span>
+<span class="text-[10px] text-text-secondary">(Sốt vừa)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-action-primary"></span>
+<span class="font-bold text-action-primary">20:00 · 37,7°C</span>
+<span class="text-[10px] text-text-secondary">(Hiện tại)</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Action Buttons Footer Group -->
+<section class="flex flex-col gap-2.5 pt-2">
+<!-- Secondary Outline Button: Sửa hoạt động -->
+<button class="w-full h-12 rounded-2xl bg-surface-card border-2 border-action-primary/30 text-action-primary font-bold text-[15px] flex items-center justify-center gap-2 shadow-sm active:bg-action-primary/5 transition-all" id="edit-record-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+<span>Sửa hoạt động</span>
+</button>
+<!-- Primary Gradient CTA: Ghi tương tự (Đo lại bây giờ) -->
+<button class="w-full h-13 py-3.5 rounded-2xl bg-gradient-to-r from-[#146C60] to-[#0A5046] text-white font-bold text-[15px] flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(20,108,96,0.3)] active:scale-[0.99] transition-all" id="repeat-record-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+<span>Ghi tương tự (Đo lại bây giờ)</span>
+</button>
+<!-- Safe Deletion Link Button -->
+<button class="w-full py-2.5 text-activity-medical/90 hover:text-activity-medical font-medium text-[13px] flex items-center justify-center gap-1.5 active:opacity-60 transition-colors mt-0.5" id="delete-trigger-btn" type="button">
+<span class="material-symbols-outlined text-[17px]">delete_outline</span>
+<span>Xóa hoạt động này</span>
+</button>
+</section>
+</div>
+</div>
+<!-- iOS Safety Confirmation Sheet for Deletion (Modal) -->
+<div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-end justify-center pb-safe" id="delete-modal-backdrop">
+<div class="w-full max-w-md bg-surface-card rounded-t-3xl p-5 flex flex-col gap-4 shadow-2xl animate-in slide-in-from-bottom duration-200">
+<div class="w-10 h-1 bg-outline-variant rounded-full mx-auto"></div>
+<div class="flex flex-col items-center text-center gap-2 pt-1">
+<div class="w-12 h-12 rounded-full bg-activity-medical-surface flex items-center justify-center text-activity-medical mb-1">
+<span class="material-symbols-outlined text-[28px]">warning</span>
+</div>
+<h3 class="text-[18px] font-bold text-text-primary">Xác nhận xóa bản ghi?</h3>
+<p class="text-[13px] text-text-secondary leading-relaxed px-2">
+            Bản ghi đo nhiệt độ 37,7 °C lúc 20:00 của bé An sẽ bị xóa khỏi nhật ký theo dõi và không thể khôi phục sau khi hết thời gian hoàn tác.
+          </p>
+</div>
+<div class="flex flex-col gap-2 pt-2">
+<button class="w-full h-12 rounded-2xl bg-activity-medical text-white font-bold text-[15px] flex items-center justify-center active:opacity-90 transition-opacity" id="confirm-delete-btn" type="button">
+            Xóa vĩnh viễn
+          </button>
+<button class="w-full h-12 rounded-2xl bg-surface-bg border border-outline-variant text-text-primary font-bold text-[15px] flex items-center justify-center active:bg-outline-variant/40 transition-colors" id="cancel-delete-btn" type="button">
+            Hủy bỏ
+          </button>
+</div>
+</div>
+</div>
+<!-- Floating Undo Toast Notification -->
+<div class="fixed bottom-24 inset-x-5 mx-auto max-w-sm bg-[#172D32] text-white px-4 py-3 rounded-2xl shadow-2xl z-50 hidden flex items-center justify-between gap-3 border border-white/10" id="undo-toast">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#87D5C6] text-[20px]">check_circle</span>
+<span class="text-[13px] font-medium text-white" id="toast-message">Đã xóa bản ghi thành công</span>
+</div>
+<button class="text-[13px] font-bold text-[#87D5C6] hover:underline active:opacity-75 transition-opacity px-1" id="undo-btn" type="button">
+        Hoàn tác
+      </button>
+</div>
+</main>
+<!-- Synchronized iOS Bottom Tab Bar -->
+<nav class="fixed bottom-0 inset-x-0 z-40 pb-safe bg-surface-bg/95 backdrop-blur-xl border-t border-outline-variant/80">
+<div class="max-w-md mx-auto flex justify-around items-center h-16 px-4">
+<a class="flex flex-col items-center justify-center gap-1 w-16 text-text-secondary hover:text-action-primary transition-colors" data-path="quick-log" href="#">
+<span class="material-symbols-outlined text-[24px]">bolt</span>
+<span class="text-[11px] font-medium">Ghi nhanh</span>
+</a>
+<a aria-current="page" class="flex flex-col items-center justify-center gap-1 w-16 text-action-primary transition-colors" data-path="daily-timeline" href="#">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+<span class="text-[11px] font-bold">Nhật ký</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-16 text-text-secondary hover:text-action-primary transition-colors" data-path="insights-and-growth" href="#">
+<span class="material-symbols-outlined text-[24px]">bar_chart</span>
+<span class="text-[11px] font-medium">Thống kê</span>
+</a>
+</div>
+</nav>
+<!-- Interactive Logic Handlers -->
+<script>
+    (function() {
+      const moreBtn = document.getElementById('more-menu-btn');
+      const popover = document.getElementById('options-popover');
+      const deleteTriggerBtn = document.getElementById('delete-trigger-btn');
+      const deleteModalBackdrop = document.getElementById('delete-modal-backdrop');
+      const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+      const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+      const deleteRecordBtn = document.getElementById('delete-record-btn');
+      const shareRecordBtn = document.getElementById('share-record-btn');
+      const editRecordBtn = document.getElementById('edit-record-btn');
+      const repeatRecordBtn = document.getElementById('repeat-record-btn');
+      const undoToast = document.getElementById('undo-toast');
+      const toastMessage = document.getElementById('toast-message');
+      const undoBtn = document.getElementById('undo-btn');
+
+      let toastTimer = null;
+
+      // Popover Menu Toggle
+      if (moreBtn && popover) {
+        moreBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          popover.classList.toggle('hidden');
+          popover.classList.toggle('flex');
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!popover.contains(e.target) && !moreBtn.contains(e.target)) {
+            popover.classList.add('hidden');
+            popover.classList.remove('flex');
+          }
+        });
+      }
+
+      // Modal Dialog Handlers
+      function showDeleteModal() {
+        if (popover) {
+          popover.classList.add('hidden');
+          popover.classList.remove('flex');
+        }
+        if (deleteModalBackdrop) deleteModalBackdrop.classList.remove('hidden');
+      }
+
+      function hideDeleteModal() {
+        if (deleteModalBackdrop) deleteModalBackdrop.classList.add('hidden');
+      }
+
+      if (deleteTriggerBtn) deleteTriggerBtn.addEventListener('click', showDeleteModal);
+      if (deleteRecordBtn) deleteRecordBtn.addEventListener('click', showDeleteModal);
+      if (cancelDeleteBtn) cancelDeleteBtn.addEventListener('click', hideDeleteModal);
+
+      if (deleteModalBackdrop) {
+        deleteModalBackdrop.addEventListener('click', (e) => {
+          if (e.target === deleteModalBackdrop) hideDeleteModal();
+        });
+      }
+
+      // Notification Toast with Undo
+      function showToast(msg) {
+        if (!undoToast) return;
+        if (toastMessage) toastMessage.textContent = msg;
+        undoToast.classList.remove('hidden');
+        undoToast.classList.add('flex');
+
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          undoToast.classList.add('hidden');
+          undoToast.classList.remove('flex');
+        }, 4500);
+      }
+
+      if (confirmDeleteBtn) {
+        confirmDeleteBtn.addEventListener('click', () => {
+          hideDeleteModal();
+          showToast('Đã xóa bản ghi 37,7 °C (20:00)');
+        });
+      }
+
+      if (undoBtn) {
+        undoBtn.addEventListener('click', () => {
+          undoToast.classList.add('hidden');
+          undoToast.classList.remove('flex');
+        });
+      }
+
+      if (editRecordBtn) {
+        editRecordBtn.addEventListener('click', () => {
+          showToast('Đang mở màn hình chỉnh sửa...');
+        });
+      }
+
+      if (repeatRecordBtn) {
+        repeatRecordBtn.addEventListener('click', () => {
+          showToast('Đã tạo biểu mẫu: Đo nhiệt độ mới');
+        });
+      }
+
+      if (shareRecordBtn) {
+        shareRecordBtn.addEventListener('click', () => {
+          if (popover) {
+            popover.classList.add('hidden');
+            popover.classList.remove('flex');
+          }
+          showToast('Đã sao chép chi tiết để gửi bác sĩ');
+        });
+      }
+    })();
+  </script>
+</body></html>

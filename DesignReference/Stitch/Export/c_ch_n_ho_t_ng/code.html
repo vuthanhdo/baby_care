@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        overscroll-behavior-y: none;
+        -webkit-tap-highlight-color: transparent;
+        font-family: 'Be Vietnam Pro', sans-serif;
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 16px);
+      }
+      .pt-safe {
+        padding-top: env(safe-area-inset-top, 0px);
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#005248",
+            "text-secondary": "#52666B",
+            "on-primary": "#ffffff",
+            "on-tertiary-fixed": "#281900",
+            "surface-bright": "#effcff",
+            "primary-fixed-dim": "#87d5c6",
+            "primary-fixed": "#a3f1e2",
+            "on-surface": "#0a1e23",
+            "surface-dim": "#c8dee3",
+            "on-primary-fixed": "#00201b",
+            "tertiary-container": "#7e5914",
+            "surface-container-lowest": "#ffffff",
+            "secondary-fixed": "#c5e7ff",
+            "secondary": "#09658b",
+            "status-alert-border": "#F3B2B9",
+            "inverse-primary": "#87d5c6",
+            "tertiary-fixed": "#ffdead",
+            "on-secondary-fixed": "#001e2d",
+            "surface-card": "#FFFFFF",
+            "surface-container-highest": "#d1e6ec",
+            "outline": "#6f7976",
+            "surface": "#effcff",
+            "inverse-surface": "#203338",
+            "error": "#ba1a1a",
+            "surface-bg": "#F7F9F8",
+            "on-error": "#ffffff",
+            "surface-container-low": "#e2f7fd",
+            "background": "#effcff",
+            "activity-medical-surface": "#FBECEE",
+            "on-error-container": "#93000a",
+            "outline-variant": "#bec9c5",
+            "activity-routine": "#805B16",
+            "error-container": "#ffdad6",
+            "secondary-fixed-dim": "#89cff9",
+            "on-secondary-container": "#005c80",
+            "on-primary-container": "#9ceadb",
+            "on-secondary-fixed-variant": "#004c6a",
+            "on-primary-fixed-variant": "#005047",
+            "on-secondary": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "tertiary-fixed-dim": "#efbf71",
+            "activity-nutrition": "#176B91",
+            "inverse-on-surface": "#dff5fa",
+            "surface-container-high": "#d6ecf2",
+            "activity-medical": "#B63B48",
+            "on-surface-variant": "#3f4946",
+            "activity-nutrition-surface": "#E8F3FA",
+            "tertiary": "#624200",
+            "on-tertiary-fixed-variant": "#604100",
+            "on-tertiary-container": "#ffd494",
+            "action-primary": "#146C60",
+            "surface-variant": "#d1e6ec",
+            "action-primary-pressed": "#0E4E45",
+            "divider-hairline": "#E3E8E7",
+            "surface-container": "#dcf2f7",
+            "activity-routine-surface": "#FFF3D7",
+            "on-background": "#0a1e23",
+            "surface-tint": "#106a5e",
+            "text-primary": "#172D32",
+            "primary-container": "#146c60",
+            "secondary-container": "#8fd4ff"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "tabbar-height": "84px",
+            "space-xxs": "4px",
+            "space-xs": "8px",
+            "space-xl": "24px",
+            "card-padding": "16px",
+            "space-lg": "20px",
+            "margin-screen": "20px",
+            "cta-height": "56px",
+            "space-xxl": "32px",
+            "space-sm": "12px",
+            "touch-target-min": "48px",
+            "space-md": "16px"
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface-bg text-text-primary antialiased min-h-screen flex flex-col relative overflow-hidden">
+<!-- Top Status/Navigation bar from Screen A/B -->
+<header class="fixed top-0 inset-x-0 z-10 bg-surface-bg/85 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(23,45,50,0.04)]">
+<div class="h-16 px-5 flex items-center justify-between">
+<div class="flex items-center gap-2.5 rounded-full py-1 pr-3 pl-1">
+<div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center shadow-[0_2px_6px_rgba(0,82,72,0.2)]">
+<span class="material-symbols-outlined text-on-primary text-[20px]">child_care</span>
+</div>
+<div class="flex flex-col text-left">
+<div class="flex items-center gap-1">
+<span class="font-bold text-[17px] text-text-primary tracking-tight leading-tight">Bé An</span>
+<span class="material-symbols-outlined text-text-secondary text-[18px]">expand_more</span>
+</div>
+<span class="text-[12px] text-text-secondary">12 tháng</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 flex items-center justify-center rounded-full text-text-secondary hover:text-text-primary">
+<span class="material-symbols-outlined text-[24px]">settings</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary/15 text-primary flex items-center justify-center font-semibold text-sm">
+          A
+        </div>
+</div>
+</div>
+</header>
+<!-- Ambient Parent Timeline underneath (Simulating Screen B) -->
+<main class="flex-1 w-full pt-20 px-5 opacity-40 filter blur-[2px] pointer-events-none select-none flex flex-col gap-3">
+<div class="bg-surface-card rounded-2xl p-4 shadow-sm border border-divider-hairline/60 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-2xl bg-activity-nutrition-surface flex items-center justify-center text-activity-nutrition">
+<span class="material-symbols-outlined text-[24px]">water_bottle</span>
+</div>
+<div>
+<div class="font-semibold text-text-primary text-[15px]">Bú sữa công thức</div>
+<div class="text-[13px] text-text-secondary">08:30 • 180ml</div>
+</div>
+</div>
+<span class="text-[12px] text-text-secondary font-medium">15 phút trước</span>
+</div>
+<div class="bg-surface-card rounded-2xl p-4 shadow-sm border border-divider-hairline/60 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-2xl bg-activity-routine-surface flex items-center justify-center text-activity-routine">
+<span class="material-symbols-outlined text-[24px]">bedtime</span>
+</div>
+<div>
+<div class="font-semibold text-text-primary text-[15px]">Giấc ngủ sáng</div>
+<div class="text-[13px] text-text-secondary">09:15 - 10:45 • 1g 30p</div>
+</div>
+</div>
+<span class="text-[12px] text-text-secondary font-medium">Hôm nay</span>
+</div>
+</main>
+<!-- Modal Backdrop with gentle blur -->
+<div class="fixed inset-0 bg-text-primary/40 backdrop-blur-[6px] z-40 transition-opacity"></div>
+<!-- iOS / SwiftUI Presentation Detent Bottom Sheet -->
+<div class="fixed inset-x-0 bottom-16 z-50 flex flex-col max-h-[82vh] bg-surface-card rounded-t-[32px] shadow-[0_-12px_40px_rgba(23,45,50,0.18)] border-t border-white/60 overflow-hidden">
+<!-- Drag Indicator Bar -->
+<div class="w-full flex items-center justify-center pt-3 pb-1.5 cursor-grab">
+<div class="w-11 h-1.5 bg-outline-variant/70 rounded-full"></div>
+</div>
+<!-- Sheet Header: Title & Circular Close Button -->
+<div class="px-5 pt-1 pb-3 flex items-center justify-between">
+<div>
+<h2 class="text-[21px] font-bold text-text-primary tracking-tight">Ghi hoạt động cho Bé An</h2>
+<p class="text-[13px] text-text-secondary mt-0.5">Chọn danh mục hoặc chạm nói AI để lưu tức thì</p>
+</div>
+<button aria-label="Đóng" class="w-9 h-9 flex items-center justify-center rounded-full bg-surface-bg text-text-secondary hover:text-text-primary active:scale-95 transition-transform" id="close-modal-btn">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Segmented Control Tabs (iOS Style) -->
+<div class="px-5 pb-3">
+<div class="p-1 bg-[#EFF3F2] rounded-2xl flex items-center gap-1.5 shadow-inner">
+<!-- Tab 1: Y tế -->
+<button class="flex-1 py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 font-semibold text-[14px] transition-all duration-200 bg-activity-medical-surface text-activity-medical border border-[#F3B2B9]/60 shadow-sm" id="tab-medical" onclick="switchCategory('medical')">
+<span class="text-base">🩺</span>
+<span>Y tế</span>
+</button>
+<!-- Tab 2: Ăn uống -->
+<button class="flex-1 py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 font-semibold text-[14px] transition-all duration-200 text-text-secondary hover:text-text-primary" id="tab-nutrition" onclick="switchCategory('nutrition')">
+<span class="text-base">🍼</span>
+<span>Ăn uống</span>
+</button>
+<!-- Tab 3: Sinh hoạt -->
+<button class="flex-1 py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 font-semibold text-[14px] transition-all duration-200 text-text-secondary hover:text-text-primary" id="tab-routine" onclick="switchCategory('routine')">
+<span class="text-base">🌙</span>
+<span>Sinh hoạt</span>
+</button>
+</div>
+</div>
+<!-- Scrollable Content with 20px (px-5) Spacing -->
+<div class="px-5 overflow-y-auto max-h-[calc(82vh-210px)] pb-4 space-y-4">
+<!-- ================= NHÓM Y TẾ ================= -->
+<div class="space-y-2.5 block" id="content-medical">
+<div class="flex items-center justify-between pt-0.5">
+<span class="text-[12px] uppercase font-bold tracking-wider text-activity-medical flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-activity-medical inline-block"></span>
+            Sức khỏe &amp; Triệu chứng bé
+          </span>
+<span class="text-[12px] text-text-secondary font-medium">5 mục theo dõi</span>
+</div>
+<!-- Medical Items Grid (2 cols + feature card) -->
+<!-- Đo nhiệt độ (Feature card full width) -->
+<a class="flex items-center justify-between p-4 bg-activity-medical-surface rounded-2xl border border-[#F3B2B9]/70 shadow-sm active:scale-[0.98] transition-transform" href="#">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-[#E04D36] shadow-sm">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">device_thermostat</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-[16px] text-text-primary">Đo nhiệt độ</span>
+<span class="px-2 py-0.5 rounded-full bg-activity-medical text-white text-[11px] font-bold">Cần theo dõi</span>
+</div>
+<p class="text-[13px] text-text-secondary mt-0.5">Theo dõi sốt, biểu đồ cơn sốt theo giờ</p>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-white/80 flex items-center justify-center text-activity-medical">
+<span class="material-symbols-outlined text-[20px]">arrow_forward_ios</span>
+</div>
+</a>
+<!-- 2x2 Grid for remaining medical items -->
+<div class="grid grid-cols-2 gap-2.5">
+<!-- Uống thuốc -->
+<a class="flex flex-col justify-between p-4 bg-surface-bg rounded-2xl border border-divider-hairline shadow-sm hover:border-[#89cff9] active:scale-[0.98] transition-transform min-h-[120px]" href="#">
+<div class="w-10 h-10 rounded-xl bg-[#E3F2FD] text-[#1976D2] flex items-center justify-center shadow-xs">
+<span class="material-symbols-outlined text-[24px]">medication</span>
+</div>
+<div class="mt-2">
+<div class="font-bold text-[15px] text-text-primary">Uống thuốc</div>
+<p class="text-[12px] text-text-secondary leading-snug mt-0.5 line-clamp-2">Kháng sinh, hạ sốt, vitamin D3</p>
+</div>
+</a>
+<!-- Triệu chứng -->
+<a class="flex flex-col justify-between p-4 bg-surface-bg rounded-2xl border border-divider-hairline shadow-sm hover:border-[#F3B2B9] active:scale-[0.98] transition-transform min-h-[120px]" href="#">
+<div class="w-10 h-10 rounded-xl bg-activity-medical-surface text-activity-medical flex items-center justify-center shadow-xs">
+<span class="material-symbols-outlined text-[24px]">sick</span>
+</div>
+<div class="mt-2">
+<div class="font-bold text-[15px] text-text-primary">Triệu chứng</div>
+<p class="text-[12px] text-text-secondary leading-snug mt-0.5 line-clamp-2">Ho đờm, sổ mũi, nôn trớ, phát ban</p>
+</div>
+</a>
+<!-- Đi khám -->
+<a class="flex flex-col justify-between p-4 bg-surface-bg rounded-2xl border border-divider-hairline shadow-sm hover:border-primary active:scale-[0.98] transition-transform min-h-[120px]" href="#">
+<div class="w-10 h-10 rounded-xl bg-[#E0F2F1] text-primary flex items-center justify-center shadow-xs">
+<span class="material-symbols-outlined text-[24px]">local_hospital</span>
+</div>
+<div class="mt-2">
+<div class="font-bold text-[15px] text-text-primary">Đi khám</div>
+<p class="text-[12px] text-text-secondary leading-snug mt-0.5 line-clamp-2">Chẩn đoán bác sĩ &amp; đơn thuốc</p>
+</div>
+</a>
+<!-- Dị ứng -->
+<a class="flex flex-col justify-between p-4 bg-surface-bg rounded-2xl border border-divider-hairline shadow-sm hover:border-amber-400 active:scale-[0.98] transition-transform min-h-[120px]" href="#">
+<div class="w-10 h-10 rounded-xl bg-[#FFF3E0] text-[#E65100] flex items-center justify-center shadow-xs">
+<span class="material-symbols-outlined text-[24px]">warning_amber</span>
+</div>
+<div class="mt-2">
+<div class="font-bold text-[15px] text-text-primary">Dị ứng</div>
+<p class="text-[12px] text-text-secondary leading-snug mt-0.5 line-clamp-2">Phản ứng đồ ăn, thuốc, thời tiết</p>
+</div>
+</a>
+</div>
+</div>
+<!-- ================= NHÓM ĂN UỐNG ================= -->
+<div class="space-y-2.5 hidden" id="content-nutrition">
+<div class="flex items-center justify-between pt-0.5">
+<span class="text-[12px] uppercase font-bold tracking-wider text-activity-nutrition flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-activity-nutrition inline-block"></span>
+            Dinh dưỡng &amp; Lượng ăn hàng ngày
+          </span>
+<span class="text-[12px] text-text-secondary font-medium">3 danh mục</span>
+</div>
+<div class="grid grid-cols-1 gap-2.5">
+<!-- Cữ sữa -->
+<a class="flex items-center justify-between p-4 bg-activity-nutrition-surface rounded-2xl border border-[#BDE0F5] shadow-sm active:scale-[0.98] transition-transform" href="#">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-activity-nutrition shadow-sm">
+<span class="material-symbols-outlined text-[28px]">baby_changing_station</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-[16px] text-text-primary">Cữ sữa</span>
+<span class="px-2 py-0.5 rounded-full bg-activity-nutrition/15 text-activity-nutrition text-[11px] font-bold">Phổ biến</span>
+</div>
+<p class="text-[13px] text-text-secondary mt-0.5">Bú mẹ trực tiếp • Sữa mẹ vắt • Sữa công thức</p>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-white/80 flex items-center justify-center text-activity-nutrition">
+<span class="material-symbols-outlined text-[20px]">arrow_forward_ios</span>
+</div>
+</a>
+<!-- Bữa ăn dặm -->
+<a class="flex items-center justify-between p-4 bg-surface-bg rounded-2xl border border-divider-hairline shadow-sm active:scale-[0.98] transition-transform" href="#">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-2xl bg-activity-nutrition-surface flex items-center justify-center text-activity-nutrition shadow-xs">
+<span class="material-symbols-outlined text-[26px]">ramen_dining</span>
+</div>
+<div>
+<span class="font-bold text-[16px] text-text-primary">Bữa ăn dặm</span>
+<p class="text-[13px] text-text-secondary mt-0.5">Cháo rây, súp dinh dưỡng, ăn dặm tự chỉ huy BLW</p>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-card flex items-center justify-center text-text-secondary">
+<span class="material-symbols-outlined text-[20px]">arrow_forward_ios</span>
+</div>
+</a>
+<!-- Uống nước -->
+<a class="flex items-center justify-between p-4 bg-surface-bg rounded-2xl border border-divider-hairline shadow-sm active:scale-[0.98] transition-transform" href="#">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-2xl bg-activity-nutrition-surface flex items-center justify-center text-activity-nutrition shadow-xs">
+<span class="material-symbols-outlined text-[26px]">water_drop</span>
+</div>
+<div>
+<span class="font-bold text-[16px] text-text-primary">Uống nước</span>
+<p class="text-[13px] text-text-secondary mt-0.5">Nước lọc ấm, dung dịch bù điện giải, nước ép trái cây</p>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-card flex items-center justify-center text-text-secondary">
+<span class="material-symbols-outlined text-[20px]">arrow_forward_ios</span>
+</div>
+</a>
+</div>
+</div>
+<!-- ================= NHÓM SINH HOẠT ================= -->
+<div class="space-y-2.5 hidden" id="content-routine">
+<div class="flex items-center justify-between pt-0.5">
+<span class="text-[12px] uppercase font-bold tracking-wider text-activity-routine flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-activity-routine inline-block"></span>
+            Nhịp sinh hoạt &amp; Chăm sóc
+          </span>
+<span class="text-[12px] text-text-secondary font-medium">4 danh mục</span>
+</div>
+<!-- Giấc ngủ (Full card) -->
+<a class="flex items-center justify-between p-4 bg-activity-routine-surface rounded-2xl border border-[#FFE199] shadow-sm active:scale-[0.98] transition-transform" href="#">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-activity-routine shadow-sm">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">bedtime</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-[16px] text-text-primary">Giấc ngủ</span>
+<span class="px-2 py-0.5 rounded-full bg-activity-routine/20 text-activity-routine text-[11px] font-bold">Bộ bấm giờ</span>
+</div>
+<p class="text-[13px] text-text-secondary mt-0.5">Bắt đầu tính giờ ngủ hoặc ghi nhận giấc đã qua</p>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-white/80 flex items-center justify-center text-activity-routine">
+<span class="material-symbols-outlined text-[20px]">arrow_forward_ios</span>
+</div>
+</a>
+<!-- 3 Grid columns for Tắm, Thay tã, Khác -->
+<div class="grid grid-cols-3 gap-2.5">
+<!-- Tắm bé -->
+<a class="flex flex-col items-center text-center p-3.5 bg-surface-bg rounded-2xl border border-divider-hairline shadow-sm active:scale-[0.96] transition-transform" href="#">
+<div class="w-11 h-11 rounded-2xl bg-activity-routine-surface flex items-center justify-center text-activity-routine mb-2 shadow-xs">
+<span class="material-symbols-outlined text-[24px]">bathtub</span>
+</div>
+<span class="font-bold text-[14px] text-text-primary leading-tight">Tắm bé</span>
+<span class="text-[11px] text-text-secondary mt-1">Tắm &amp; gội đầu</span>
+</a>
+<!-- Thay tã / Vệ sinh -->
+<a class="flex flex-col items-center text-center p-3.5 bg-surface-bg rounded-2xl border border-divider-hairline shadow-sm active:scale-[0.96] transition-transform" href="#">
+<div class="w-11 h-11 rounded-2xl bg-activity-routine-surface flex items-center justify-center text-activity-routine mb-2 shadow-xs">
+<span class="material-symbols-outlined text-[24px]">baby_changing_station</span>
+</div>
+<span class="font-bold text-[14px] text-text-primary leading-tight">Thay tã</span>
+<span class="text-[11px] text-text-secondary mt-1">Ướt / Bẩn / Vệ sinh</span>
+</a>
+<!-- Khác -->
+<a class="flex flex-col items-center text-center p-3.5 bg-surface-bg rounded-2xl border border-divider-hairline shadow-sm active:scale-[0.96] transition-transform" href="#">
+<div class="w-11 h-11 rounded-2xl bg-surface-card flex items-center justify-center text-text-secondary mb-2 shadow-xs">
+<span class="material-symbols-outlined text-[24px]">more_horiz</span>
+</div>
+<span class="font-bold text-[14px] text-text-primary leading-tight">Khác</span>
+<span class="text-[11px] text-text-secondary mt-1">Vận động, chơi</span>
+</a>
+</div>
+</div>
+<!-- Item 5: Thẻ 'Nói để ghi với Trợ lý AI' đồng bộ Màn B -->
+<div class="p-4 rounded-2xl bg-gradient-to-r from-[#146C60]/10 via-[#146C60]/5 to-transparent border border-[#146C60]/20 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-3">
+<div class="relative">
+<button class="w-12 h-12 rounded-2xl bg-action-primary text-white flex items-center justify-center shadow-[0_4px_14px_rgba(20,108,96,0.35)] active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[26px]">mic</span>
+</button>
+<span class="absolute -top-1 -right-1 flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-fixed-dim opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-[#106A5E]"></span>
+</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-bold text-[15px] text-text-primary">Nói để ghi với Trợ lý AI</span>
+<span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-primary/10 text-primary font-bold text-[10px] tracking-wide uppercase">
+<span class="material-symbols-outlined text-[12px]">auto_awesome</span> AI Voice
+              </span>
+</div>
+<p class="text-[12px] text-text-secondary mt-0.5">Ví dụ: "Bé An vừa sốt 38.5 độ, đã uống 5ml Hapacol"</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Tab Bar (đồng bộ với Screen B) -->
+<nav class="fixed bottom-0 inset-x-0 z-40 pb-safe bg-surface-card/95 backdrop-blur-xl border-t border-divider-hairline shadow-[0_-2px_12px_rgba(23,45,50,0.05)]">
+<div class="flex justify-around items-center h-16 px-4">
+<a aria-current="page" class="flex flex-col items-center justify-center gap-1 min-w-[56px] min-h-[48px] text-action-primary font-semibold transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">bolt</span>
+<span class="text-[12px]">Ghi nhanh</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 min-w-[56px] min-h-[48px] text-text-secondary hover:text-text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">auto_stories</span>
+<span class="text-[12px]">Nhật ký</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 min-w-[56px] min-h-[48px] text-text-secondary hover:text-text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">bar_chart</span>
+<span class="text-[12px]">Thống kê</span>
+</a>
+</div>
+</nav>
+<script>
+    function switchCategory(category) {
+      const medicalBtn = document.getElementById('tab-medical');
+      const nutritionBtn = document.getElementById('tab-nutrition');
+      const routineBtn = document.getElementById('tab-routine');
+      
+      const medicalSec = document.getElementById('content-medical');
+      const nutritionSec = document.getElementById('content-nutrition');
+      const routineSec = document.getElementById('content-routine');
+
+      // Reset tabs styling to inactive
+      [medicalBtn, nutritionBtn, routineBtn].forEach(btn => {
+        btn.className = 'flex-1 py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 font-semibold text-[14px] transition-all duration-200 text-text-secondary hover:text-text-primary bg-transparent border border-transparent shadow-none';
+      });
+
+      // Hide all contents
+      medicalSec.classList.add('hidden');
+      nutritionSec.classList.add('hidden');
+      routineSec.classList.add('hidden');
+
+      if (category === 'medical') {
+        medicalBtn.className = 'flex-1 py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 font-semibold text-[14px] transition-all duration-200 bg-activity-medical-surface text-activity-medical border border-[#F3B2B9]/60 shadow-sm';
+        medicalSec.classList.remove('hidden');
+      } else if (category === 'nutrition') {
+        nutritionBtn.className = 'flex-1 py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 font-semibold text-[14px] transition-all duration-200 bg-activity-nutrition-surface text-activity-nutrition border border-[#BDE0F5]/60 shadow-sm';
+        nutritionSec.classList.remove('hidden');
+      } else if (category === 'routine') {
+        routineBtn.className = 'flex-1 py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 font-semibold text-[14px] transition-all duration-200 bg-activity-routine-surface text-activity-routine border border-[#FFE199]/60 shadow-sm';
+        routineSec.classList.remove('hidden');
+      }
+    }
+
+    document.getElementById('close-modal-btn')?.addEventListener('click', () => {
+      if (window.history.length > 1) {
+        window.history.back();
+      }
+    });
+  </script>
+</body></html>

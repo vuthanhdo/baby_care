@@ -1,43 +1,64 @@
-//
-//  BabyCareUITests.swift
-//  BabyCareUITests
-//
-//  Created by Vu Thanh Do on 8/9/26.
-//
-
 import XCTest
 
 final class BabyCareUITests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+    override func setUpWithError() throws { continueAfterFailure = false }
 
     @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testCreateProfileAndRecordTemperatureInDiary() throws {
         let app = XCUIApplication()
+        // A unique on-disk SwiftData store for this test, isolated from real app data.
+        app.launchArguments = ["-ui-testing-store", UUID().uuidString]
         app.launch()
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // XCUIAutomation Documentation
-        // https://developer.apple.com/documentation/xcuiautomation
+        let name = app.textFields["babyNameField"]
+        XCTAssertTrue(name.waitForExistence(timeout: 10))
+        capture(app, name: "A – Hồ sơ đầu tiên")
+        name.tap()
+        name.typeText("Bé Kiểm thử")
+        let create = app.buttons["createBabyButton"]
+        XCTAssertTrue(create.isEnabled)
+        create.tap()
+
+        let medicalGroup = app.buttons["medicalGroupButton"]
+        XCTAssertTrue(medicalGroup.waitForExistence(timeout: 5))
+        medicalGroup.tap()
+        let temperatureChoice = app.buttons.containing(.staticText, identifier: "Nhiệt độ").firstMatch
+        XCTAssertTrue(temperatureChoice.waitForExistence(timeout: 5))
+        temperatureChoice.tap()
+        let temperature = app.textFields["temperatureField"]
+        XCTAssertTrue(temperature.waitForExistence(timeout: 5))
+        temperature.tap()
+        temperature.typeText("37,5")
+        let save = app.buttons["saveActivityButton"]
+        XCTAssertTrue(save.isEnabled)
+        save.tap()
+
+        // A pushed form returns to the activity picker; close that sheet if present.
+        let diaryTab = app.tabBars.buttons["Nhật ký"]
+        if !diaryTab.isHittable {
+            let close = app.buttons["Đóng"].firstMatch
+            if close.waitForExistence(timeout: 3) { close.tap() }
+        }
+        XCTAssertTrue(diaryTab.waitForExistence(timeout: 5))
+        diaryTab.tap()
+        XCTAssertTrue(app.staticTexts["Nhiệt độ"].firstMatch.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "37,5")).firstMatch.exists)
+        capture(app, name: "D – Nhiệt độ đã lưu trong nhật ký")
+
+        app.terminate()
+        app.launch()
+        XCTAssertTrue(app.tabBars.buttons["Nhật ký"].waitForExistence(timeout: 10))
+        app.tabBars.buttons["Nhật ký"].tap()
+        XCTAssertTrue(app.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "37,5")).firstMatch.waitForExistence(timeout: 5))
+        XCTAssertFalse(app.textFields["babyNameField"].exists)
+        capture(app, name: "D – Dữ liệu còn sau khi tắt và mở lại app")
     }
 
     @MainActor
-    func testLaunchPerformance() throws {
-        // This measures how long it takes to launch your application.
-        measure(metrics: [XCTApplicationLaunchMetric()]) {
-            XCUIApplication().launch()
-        }
+    private func capture(_ app: XCUIApplication, name: String) {
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = name
+        attachment.lifetime = .keepAlways
+        add(attachment)
     }
 }

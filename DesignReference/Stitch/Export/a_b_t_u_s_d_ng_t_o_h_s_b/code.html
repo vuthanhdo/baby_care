@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>A – Bắt đầu sử dụng (Tạo hồ sơ bé)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#146C60',
+              light: '#E2F7FD',
+              dark: '#0B463E',
+              subtle: '#E8F5F1'
+            },
+            surface: {
+              DEFAULT: '#F7F9F8',
+              card: '#FFFFFF',
+              dim: '#C8DEE3'
+            },
+            ink: {
+              main: '#172D32',
+              muted: '#52666B',
+              soft: '#88989C'
+            },
+            accent: {
+              warm: '#805B16',
+              warmBg: '#FFF3D7',
+              red: '#B63B48',
+              redBg: '#FBECEE',
+              blue: '#176B91',
+              blueBg: '#E8F3FA'
+            }
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+          },
+          borderRadius: {
+            'ios-card': '20px',
+            'ios-input': '14px',
+            'ios-btn': '16px'
+          },
+          boxShadow: {
+            'ios-soft': '0 4px 20px -2px rgba(20, 108, 96, 0.08), 0 2px 8px -1px rgba(0, 0, 0, 0.04)',
+            'ios-subtle': '0 2px 10px rgba(0, 0, 0, 0.03)',
+            'btn-shadow': '0 8px 24px -4px rgba(20, 108, 96, 0.35)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #F7F9F8;
+      color: #172D32;
+      overflow-x: hidden;
+    }
+    /* iOS input styling */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      opacity: 0.6;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#F7F9F8] flex justify-center selection:bg-teal-100">
+
+  <!-- iPhone Frame Mockup Container -->
+  <div class="w-full max-w-[390px] min-h-screen bg-[#F7F9F8] flex flex-col justify-between relative shadow-2xl border-x border-gray-100 pb-8">
+    
+    <!-- Top Status Bar Mockup for iOS -->
+    <header class="pt-3 px-7 flex justify-between items-center text-xs font-semibold text-ink-main select-none z-10">
+      <span class="tracking-tight text-[15px] font-bold">9:41</span>
+      <div class="flex items-center space-x-2">
+        <svg class="w-4 h-3.5 fill-current" viewBox="0 0 16 12">
+          <path d="M0 10h2.5V2H0v8zm4 0h2.5V4H4v6zm4 0h2.5V6H8v4zm4 0h2.5V0H12v10z"/>
+        </svg>
+        <svg class="w-4 h-3 fill-current" viewBox="0 0 16 12">
+          <path d="M8 2.5a11.9 11.9 0 0 1 7.2 2.4.75.75 0 0 1 .1 1.1l-6.8 6.9a.75.75 0 0 1-1 0L.7 6a.75.75 0 0 1 .1-1.1A11.9 11.9 0 0 1 8 2.5z"/>
+        </svg>
+        <div class="w-6 h-3 border border-ink-main/80 rounded-sm p-0.5 flex items-center">
+          <div class="w-full h-full bg-ink-main rounded-[1px]"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="px-5 pt-4 flex-1 flex flex-col">
+      
+      <!-- App Identity Badge -->
+      <div class="flex items-center space-x-2 mb-3">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-[#146C60] to-[#0D4B43] flex items-center justify-center text-white shadow-sm">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-xs font-bold tracking-wide uppercase text-brand">Bé Khỏe – Bố Mẹ An Tâm</h2>
+          <p class="text-[11px] text-ink-muted">Chăm sóc con khoa học & thảnh thơi</p>
+        </div>
+      </div>
+
+      <!-- Welcome Greeting -->
+      <div class="mt-2 mb-6">
+        <h1 class="text-[26px] font-extrabold text-ink-main tracking-tight leading-snug">
+          Ghi nhanh để chăm bé <span class="text-[#146C60] underline decoration-[#146C60]/30 decoration-2 underline-offset-4">an tâm hơn</span>
+        </h1>
+        <p class="text-[14px] text-ink-muted mt-2 leading-relaxed">
+          Tạo hồ sơ cho bé chỉ trong 30 giây để bắt đầu theo dõi cữ sữa, giấc ngủ và nhiệt độ ngay lập tức.
+        </p>
+      </div>
+
+      <!-- Form Card: Bắt đầu sử dụng -->
+      <div class="bg-white rounded-ios-card p-5 shadow-ios-soft border border-teal-900/5 space-y-5">
+        
+        <!-- Interactive Avatar Preview Section -->
+        <div class="flex flex-col items-center justify-center pt-1 pb-2">
+          <div class="relative group">
+            <div id="avatarPreview" class="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-100 via-rose-100 to-teal-100 border-4 border-white shadow-md flex items-center justify-center text-3xl font-extrabold text-brand transition-all duration-300 transform group-hover:scale-105">
+              <span>A</span>
+            </div>
+            <div class="absolute -bottom-1 -right-1 bg-brand text-white p-1.5 rounded-full shadow-sm border-2 border-white">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+          </div>
+          <span class="text-[12px] text-ink-soft font-medium mt-2">Avatar chữ cái tự động theo tên</span>
+        </div>
+
+        <!-- Input 1: Tên bé (Bắt buộc) -->
+        <div>
+          <div class="flex justify-between items-center mb-1.5">
+            <label for="babyName" class="text-[14px] font-bold text-ink-main">
+              Tên gọi ở nhà của bé <span class="text-rose-500">*</span>
+            </label>
+            <span class="text-[11px] font-medium text-ink-muted bg-gray-100 px-2 py-0.5 rounded-full">Bắt buộc</span>
+          </div>
+          <div class="relative">
+            <input 
+              type="text" 
+              id="babyName" 
+              value="Bé An" 
+              placeholder="Ví dụ: Bắp, Miu, Bo, An..." 
+              class="w-full h-12 px-4 rounded-ios-input bg-[#F7F9F8] border border-gray-200 text-ink-main text-[16px] font-semibold focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/10 transition-all placeholder:text-ink-soft placeholder:font-normal"
+            />
+            <div class="absolute right-3.5 top-1/2 -translate-y-1/2 text-teal-600">
+              <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+          <p class="text-[12px] text-ink-muted mt-1">Dùng để hiển thị trong các lời nhắc và ghi chú cữ ăn, giấc ngủ.</p>
+        </div>
+
+        <!-- Input 2: Ngày sinh (Bắt buộc) -->
+        <div>
+          <div class="flex justify-between items-center mb-1.5">
+            <label for="birthDate" class="text-[14px] font-bold text-ink-main">
+              Ngày sinh của bé <span class="text-rose-500">*</span>
+            </label>
+            <span class="text-[11px] font-medium text-ink-muted bg-gray-100 px-2 py-0.5 rounded-full">Bắt buộc</span>
+          </div>
+          <div class="relative">
+            <input 
+              type="date" 
+              id="birthDate" 
+              value="2025-09-08" 
+              max="2026-09-08"
+              class="w-full h-12 px-4 rounded-ios-input bg-[#F7F9F8] border border-gray-200 text-ink-main text-[15px] font-semibold focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/10 transition-all"
+            />
+          </div>
+          <div class="flex items-center justify-between mt-1.5 px-0.5">
+            <p class="text-[12px] text-teal-700 font-medium flex items-center">
+              <span class="inline-block w-1.5 h-1.5 rounded-full bg-teal-500 mr-1.5"></span>
+              Hiện tại: <strong class="ml-1 font-bold">12 tháng tuổi</strong>
+            </p>
+            <span class="text-[11px] text-ink-soft">Tự tính theo ngày sinh</span>
+          </div>
+        </div>
+
+        <!-- Input 3: Giới tính (Tùy chọn) -->
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <label class="text-[14px] font-bold text-ink-main">Giới tính của bé</label>
+            <span class="text-[11px] font-normal text-ink-soft">Tùy chọn</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2.5">
+            <!-- Bé Gái (Selected mặc định cho demo bé An) -->
+            <button type="button" class="gender-btn flex items-center justify-center space-x-1.5 py-2.5 px-3 rounded-ios-input border-2 border-rose-400 bg-rose-50 text-rose-800 font-semibold text-[13px] shadow-sm transition-all">
+              <span class="text-base">👧</span>
+              <span>Bé gái</span>
+            </button>
+            <!-- Bé Trai -->
+            <button type="button" class="gender-btn flex items-center justify-center space-x-1.5 py-2.5 px-3 rounded-ios-input border border-gray-200 bg-[#F7F9F8] text-ink-muted font-medium text-[13px] hover:bg-gray-100 transition-all">
+              <span class="text-base">👦</span>
+              <span>Bé trai</span>
+            </button>
+            <!-- Chưa chọn -->
+            <button type="button" class="gender-btn flex items-center justify-center py-2.5 px-2 rounded-ios-input border border-gray-200 bg-[#F7F9F8] text-ink-muted font-medium text-[13px] hover:bg-gray-100 transition-all">
+              <span>Để sau</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- An Tâm & Bảo Mật Callout (iOS Grouped Footnote) -->
+      <div class="mt-4 px-2 flex items-start space-x-2.5 text-ink-muted">
+        <svg class="w-4 h-4 text-brand shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+        <p class="text-[12px] leading-relaxed">
+          Dữ liệu của bé được lưu trực tiếp trên thiết bị của bạn. Không bắt buộc tài khoản hay mật khẩu rườm rà.
+        </p>
+      </div>
+
+    </main>
+
+    <!-- Bottom Action CTA (Sticky Above Safe Area) -->
+    <footer class="px-5 pt-3 pb-2 mt-auto">
+      <!-- Main CTA Button -->
+      <button 
+        id="btnSubmit" 
+        class="w-full h-14 bg-gradient-to-r from-[#146C60] to-[#0E544B] hover:from-[#115C52] hover:to-[#0B463E] active:scale-[0.98] text-white font-bold text-[17px] rounded-ios-btn shadow-btn-shadow flex items-center justify-center space-x-2 transition-all duration-200"
+      >
+        <span>Bắt đầu ghi nhận</span>
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </button>
+
+      <!-- Subtext -->
+      <p class="text-center text-[12px] text-ink-soft mt-2.5">
+        Có thể chỉnh sửa hoặc thêm bé thứ 2 bất cứ lúc nào trong <strong class="text-ink-muted">Cài đặt</strong>.
+      </p>
+
+      <!-- Home Indicator bar (iOS Standard) -->
+      <div class="w-32 h-1 bg-ink-main/20 rounded-full mx-auto mt-4"></div>
+    </footer>
+
+    <!-- Notification Toast (Đã xuất hiện khi tạo thành công - demo) -->
+    <div id="toastNotification" class="absolute top-14 left-5 right-5 bg-[#172D32] text-white px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-3 transition-all duration-500 transform -translate-y-24 opacity-0 pointer-events-none z-50">
+      <div class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <div class="flex-1 text-[13px]">
+        <p class="font-bold text-white">Đã tạo hồ sơ bé An</p>
+        <p class="text-white/70 text-[11px]">Chuyển đến màn hình Ghi nhanh...</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Dynamic Avatar update from Name
+    const babyNameInput = document.getElementById('babyName');
+    const avatarPreview = document.getElementById('avatarPreview');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const toast = document.getElementById('toastNotification');
+
+    function updateAvatar() {
+      const val = babyNameInput.value.trim();
+      if (val.length > 0) {
+        // Lấy chữ cái đầu tiên của từ cuối hoặc từ đầu
+        const words = val.split(' ');
+        const lastWord = words[words.length - 1];
+        avatarPreview.querySelector('span').textContent = lastWord.charAt(0).toUpperCase();
+        btnSubmit.classList.remove('opacity-50', 'pointer-events-none');
+      } else {
+        avatarPreview.querySelector('span').textContent = '?';
+        btnSubmit.classList.add('opacity-50', 'pointer-events-none');
+      }
+    }
+
+    babyNameInput.addEventListener('input', updateAvatar);
+
+    // Gender toggle
+    const genderBtns = document.querySelectorAll('.gender-btn');
+    genderBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        genderBtns.forEach(b => {
+          b.className = 'gender-btn flex items-center justify-center space-x-1.5 py-2.5 px-3 rounded-ios-input border border-gray-200 bg-[#F7F9F8] text-ink-muted font-medium text-[13px] hover:bg-gray-100 transition-all';
+        });
+        btn.className = 'gender-btn flex items-center justify-center space-x-1.5 py-2.5 px-3 rounded-ios-input border-2 border-brand bg-brand/5 text-brand font-semibold text-[13px] shadow-sm transition-all';
+      });
+    });
+
+    // Simulate Submit flow
+    btnSubmit.addEventListener('click', () => {
+      btnSubmit.innerHTML = `
+        <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Đang tạo hồ sơ...</span>
+      `;
+      btnSubmit.disabled = true;
+
+      setTimeout(() => {
+        toast.classList.remove('-translate-y-24', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+        
+        setTimeout(() => {
+          btnSubmit.innerHTML = `<span>Bắt đầu ghi nhận</span><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>`;
+          btnSubmit.disabled = false;
+        }, 1500);
+      }, 800);
+    });
+  </script>
+</body>
+</html>

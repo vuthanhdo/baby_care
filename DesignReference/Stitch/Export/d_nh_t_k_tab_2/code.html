@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        overscroll-behavior-y: none;
+        -webkit-tap-highlight-color: transparent;
+        font-family: 'Be Vietnam Pro', sans-serif;
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      .pt-safe {
+        padding-top: env(safe-area-inset-top, 0px);
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#005248",
+            "action-primary": "#146C60",
+            "action-primary-pressed": "#0E4E45",
+            "surface-bg": "#F7F9F8",
+            "surface-card": "#FFFFFF",
+            "surface-container": "#EDF2F1",
+            "surface-container-high": "#E2E9E7",
+            "surface-container-low": "#F2F5F4",
+            "text-primary": "#172D32",
+            "text-secondary": "#52666B",
+            "divider-hairline": "#E3E8E7",
+            "activity-medical": "#B63B48",
+            "activity-medical-surface": "#FBECEE",
+            "activity-nutrition": "#176B91",
+            "activity-nutrition-surface": "#E8F3FA",
+            "activity-routine": "#805B16",
+            "activity-routine-surface": "#FFF3D7",
+            "activity-sleep": "#5A4C94",
+            "activity-sleep-surface": "#F2EFFC",
+            "status-alert-border": "#F3B2B9"
+          },
+          borderRadius: {
+            "xl": "16px",
+            "2xl": "20px",
+            "full": "9999px"
+          },
+          spacing: {
+            "touch-target-min": "44px"
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface-bg text-text-primary antialiased min-h-screen flex flex-col selection:bg-action-primary/10">
+<!-- Fixed Top Header -->
+<header class="fixed top-0 inset-x-0 z-50 bg-surface-bg/90 backdrop-blur-xl border-b border-divider-hairline/60 pt-safe transition-all">
+<div class="h-16 px-5 flex items-center justify-between">
+<!-- Baby Selector: Avatar A peach gradient + name + 12 tháng pill -->
+<a class="flex items-center gap-3 py-1.5 px-1 rounded-2xl active:scale-[0.98] transition-transform" data-path="baby-profile" href="#">
+<div class="w-10 h-10 rounded-full bg-gradient-to-tr from-[#FF8A7A] to-[#FFB8A9] flex items-center justify-center text-white font-bold text-lg shadow-[0_3px_10px_rgba(255,138,122,0.35)] ring-2 ring-white">
+          A
+        </div>
+<div class="flex flex-col text-left">
+<div class="flex items-center gap-1">
+<span class="font-bold text-[18px] text-text-primary tracking-tight leading-tight">Bé An</span>
+<span class="material-symbols-outlined text-text-secondary text-[20px]">expand_more</span>
+</div>
+<span class="text-[12px] font-medium text-action-primary bg-action-primary/10 px-2 py-0.5 rounded-full inline-block mt-0.5 w-max">
+            12 tháng tuổi
+          </span>
+</div>
+</a>
+<!-- Right Action Icons: Notifications & Settings -->
+<div class="flex items-center gap-1.5">
+<a aria-label="Thông báo" class="w-10 h-10 flex items-center justify-center rounded-full text-text-secondary bg-surface-card border border-divider-hairline active:bg-surface-container active:scale-95 transition-all shadow-sm" href="#">
+<span class="material-symbols-outlined text-[21px]">notifications</span>
+</a>
+<a aria-label="Cài đặt" class="w-10 h-10 flex items-center justify-center rounded-full text-text-secondary bg-surface-card border border-divider-hairline active:bg-surface-container active:scale-95 transition-all shadow-sm" data-path="settings" href="#">
+<span class="material-symbols-outlined text-[21px]">settings</span>
+</a>
+</div>
+</div>
+</header>
+<!-- Main Scrollable Timeline Content -->
+<main class="flex-1 flex flex-col relative w-full pt-[calc(env(safe-area-inset-top,0px)+64px)] pb-32 bg-surface-bg">
+<!-- Search Bar & Filters Section -->
+<section class="px-5 pt-3 pb-2 space-y-3">
+<!-- iOS style Search Bar -->
+<div class="relative flex items-center bg-[#EAEFEF] rounded-xl px-3 h-11 border border-transparent focus-within:border-action-primary/30 focus-within:bg-surface-card focus-within:shadow-sm transition-all">
+<span class="material-symbols-outlined text-text-secondary/80 text-[22px] shrink-0">search</span>
+<input class="w-full h-full bg-transparent border-none outline-none px-2.5 text-[15px] text-text-primary placeholder:text-text-secondary/70 focus:ring-0" id="timeline-search-input" placeholder="Tìm hoạt động, thuốc, ghi chú..." type="text"/>
+<button aria-label="Xóa tìm kiếm" class="hidden w-8 h-8 items-center justify-center text-text-secondary/70 hover:text-text-primary" id="clear-search-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+</button>
+<button aria-label="Tìm kiếm bằng giọng nói" class="w-8 h-8 flex items-center justify-center text-text-secondary hover:text-action-primary active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</button>
+</div>
+<!-- Scope Chip & Events Counter -->
+<div class="flex items-center justify-between px-0.5">
+<button class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-card border border-divider-hairline text-text-secondary active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-action-primary text-[15px]">history</span>
+<span class="text-[12px] font-medium text-text-secondary">Phạm vi: <strong class="text-text-primary font-semibold">Tất cả thời gian</strong></span>
+<span class="material-symbols-outlined text-text-secondary text-[14px]">arrow_drop_down</span>
+</button>
+<span class="text-[12px] font-semibold text-action-primary bg-action-primary/10 px-2.5 py-0.5 rounded-full" id="event-counter">
+          4 sự kiện
+        </span>
+</div>
+<!-- Date Navigator -->
+<div class="flex items-center justify-between bg-surface-card rounded-xl p-1.5 border border-divider-hairline shadow-sm">
+<button aria-label="Ngày trước" class="w-10 h-10 flex items-center justify-center rounded-lg text-text-secondary hover:bg-surface-container active:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">chevron_left</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high active:scale-98 transition-all" type="button">
+<span class="material-symbols-outlined text-action-primary text-[18px]">calendar_today</span>
+<span class="text-[14px] font-semibold text-text-primary">Hôm nay, 08/09/2026</span>
+<span class="material-symbols-outlined text-text-secondary text-[16px]">arrow_drop_down</span>
+</button>
+<button aria-label="Ngày sau" class="w-10 h-10 flex items-center justify-center rounded-lg text-text-secondary hover:bg-surface-container active:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">chevron_right</span>
+</button>
+</div>
+<!-- 4 Filter Chips -->
+<div class="overflow-x-auto no-scrollbar -mx-5 px-5 pt-1 pb-1">
+<div class="flex items-center gap-2 min-w-max">
+<button class="filter-chip flex items-center gap-1.5 px-4 h-9 rounded-full bg-action-primary text-white font-semibold text-[13px] shadow-sm transition-all active:scale-95 border border-action-primary" data-filter="all" type="button">
+<span class="material-symbols-outlined text-[16px]">done</span>
+<span>Tất cả</span>
+</button>
+<button class="filter-chip flex items-center gap-1.5 px-3.5 h-9 rounded-full bg-activity-medical-surface text-activity-medical border border-activity-medical/30 font-semibold text-[13px] shadow-sm transition-all active:scale-95" data-filter="medical" type="button">
+<span class="text-[14px]">🩺</span>
+<span>Y tế</span>
+</button>
+<button class="filter-chip flex items-center gap-1.5 px-3.5 h-9 rounded-full bg-activity-nutrition-surface text-activity-nutrition border border-activity-nutrition/30 font-semibold text-[13px] shadow-sm transition-all active:scale-95" data-filter="nutrition" type="button">
+<span class="text-[14px]">🍼</span>
+<span>Ăn uống</span>
+</button>
+<button class="filter-chip flex items-center gap-1.5 px-3.5 h-9 rounded-full bg-activity-routine-surface text-activity-routine border border-activity-routine/30 font-semibold text-[13px] shadow-sm transition-all active:scale-95" data-filter="routine" type="button">
+<span class="text-[14px]">🌙</span>
+<span>Sinh hoạt</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Timeline Event Cards List -->
+<section class="px-5 flex flex-col space-y-3.5 pt-2">
+<div class="flex items-center justify-between pb-0.5">
+<h2 class="font-bold text-[18px] text-text-primary tracking-tight">Hôm nay</h2>
+<span class="text-[12px] font-medium text-text-secondary bg-surface-card border border-divider-hairline px-2.5 py-1 rounded-full">
+          Thứ Ba, 08/09
+        </span>
+</div>
+<!-- Card 1: 20:00 Đo thân nhiệt (Y tế) -->
+<article class="timeline-item bg-surface-card rounded-xl p-4 border border-[#F5C2C7] shadow-sm hover:shadow-md transition-all active:scale-[0.99]" data-category="medical">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-2xl bg-activity-medical-surface text-activity-medical flex items-center justify-center shrink-0 shadow-sm ring-1 ring-activity-medical/20">
+<span class="material-symbols-outlined text-[22px]">thermostat</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-[13px] font-medium text-text-secondary">20:00</span>
+<span class="w-1 h-1 rounded-full bg-divider-hairline"></span>
+<span class="text-[12px] font-semibold text-activity-medical bg-activity-medical-surface px-2 py-0.5 rounded-md">Y tế</span>
+</div>
+<h3 class="text-[16px] font-bold text-text-primary mt-0.5">Đo thân nhiệt</h3>
+</div>
+</div>
+<div class="flex items-center">
+<button aria-label="Tùy chọn" class="w-9 h-9 flex items-center justify-center text-text-secondary/70 hover:text-text-primary active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+<a aria-label="Chi tiết nhiệt độ" class="w-9 h-9 flex items-center justify-center text-text-secondary/70 hover:text-action-primary active:scale-95" data-path="temperature-detail" href="#">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</a>
+</div>
+</div>
+<div class="flex items-center justify-between bg-activity-medical-surface/40 border border-activity-medical/15 p-3 rounded-xl mt-3">
+<div class="flex items-baseline gap-1.5">
+<span class="text-[26px] font-bold text-activity-medical leading-none">37,7</span>
+<span class="text-[15px] font-medium text-text-secondary">°C</span>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-[#FFF0D4] border border-[#FCD594] text-[#8C5805] text-[12px] font-bold">
+            Sốt nhẹ
+          </span>
+</div>
+<div class="flex items-center gap-1.5 text-text-secondary text-[12px] pt-2.5">
+<span class="material-symbols-outlined text-[16px] text-activity-medical">sensors</span>
+<span>Đo nách • Nhiệt kế điện tử Omron</span>
+</div>
+</article>
+<!-- Card 2: 18:00 Tắm bé (Sinh hoạt) -->
+<article class="timeline-item bg-surface-card rounded-xl p-4 border border-[#FFE7A8] shadow-sm hover:shadow-md transition-all active:scale-[0.99]" data-category="routine">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-2xl bg-activity-routine-surface text-activity-routine flex items-center justify-center shrink-0 shadow-sm ring-1 ring-activity-routine/25">
+<span class="material-symbols-outlined text-[22px]">bathtub</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-[13px] font-medium text-text-secondary">18:00</span>
+<span class="w-1 h-1 rounded-full bg-divider-hairline"></span>
+<span class="text-[12px] font-semibold text-activity-routine bg-activity-routine-surface px-2 py-0.5 rounded-md">Sinh hoạt</span>
+</div>
+<h3 class="text-[16px] font-bold text-text-primary mt-0.5">Tắm bé</h3>
+</div>
+</div>
+<div class="flex items-center">
+<button aria-label="Tùy chọn" class="w-9 h-9 flex items-center justify-center text-text-secondary/70 hover:text-text-primary active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+<a aria-label="Chi tiết tắm bé" class="w-9 h-9 flex items-center justify-center text-text-secondary/70 hover:text-action-primary active:scale-95" data-path="activity-detail" href="#">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</a>
+</div>
+</div>
+<div class="flex items-center justify-between bg-activity-routine-surface/45 border border-activity-routine/20 p-3 rounded-xl mt-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#1B806A] text-[20px]">check_circle</span>
+<span class="text-[14px] font-medium text-text-primary">Tắm nước ấm thảo dược</span>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[12px] font-semibold">
+            Hoàn tất
+          </span>
+</div>
+<div class="flex items-center gap-1.5 text-text-secondary text-[12px] pt-2.5">
+<span class="material-symbols-outlined text-[16px] text-activity-routine">spa</span>
+<span>Thảo dược xông tắm ấm áp, bé thoải mái, da thơm dịu</span>
+</div>
+</article>
+<!-- Card 3: 12:30 – 14:00 Giấc ngủ trưa (Sinh hoạt/Giấc ngủ tím pastel) -->
+<article class="timeline-item bg-surface-card rounded-xl p-4 border border-[#DDD6FE] shadow-sm hover:shadow-md transition-all active:scale-[0.99]" data-category="routine">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-2xl bg-[#F5F3FF] text-[#6D28D9] flex items-center justify-center shrink-0 shadow-sm ring-1 ring-[#6D28D9]/20">
+<span class="material-symbols-outlined text-[22px]">bedtime</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-[13px] font-medium text-text-secondary">12:30 – 14:00</span>
+<span class="w-1 h-1 rounded-full bg-divider-hairline"></span>
+<span class="text-[12px] font-semibold text-[#6D28D9] bg-[#F5F3FF] px-2 py-0.5 rounded-md">Giấc ngủ</span>
+</div>
+<h3 class="text-[16px] font-bold text-text-primary mt-0.5">Giấc ngủ trưa</h3>
+</div>
+</div>
+<div class="flex items-center">
+<button aria-label="Tùy chọn" class="w-9 h-9 flex items-center justify-center text-text-secondary/70 hover:text-text-primary active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+<a aria-label="Chi tiết giấc ngủ" class="w-9 h-9 flex items-center justify-center text-text-secondary/70 hover:text-action-primary active:scale-95" data-path="sleep-detail" href="#">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</a>
+</div>
+</div>
+<div class="flex items-center justify-between bg-[#FAF5FF] border border-[#E9D5FF] p-3 rounded-xl mt-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#7C3AED] text-[20px]">pace</span>
+<span class="text-[15px] font-bold text-text-primary">1 giờ 30 phút</span>
+</div>
+<span class="text-[12px] font-medium text-[#6B21A8] bg-[#F3E8FF] px-2.5 py-1 rounded-full">
+            Ngủ ngoan
+          </span>
+</div>
+<div class="flex items-center gap-1.5 text-text-secondary text-[12px] pt-2.5">
+<span class="material-symbols-outlined text-[16px] text-[#7C3AED]">bed</span>
+<span>Ngủ tròn giấc trong nôi, không giật mình thức giấc</span>
+</div>
+</article>
+<!-- Card 4: 07:00 Sữa công thức (Ăn uống xanh pastel) -->
+<article class="timeline-item bg-surface-card rounded-xl p-4 border border-[#BCE1F5] shadow-sm hover:shadow-md transition-all active:scale-[0.99]" data-category="nutrition">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-2xl bg-activity-nutrition-surface text-activity-nutrition flex items-center justify-center shrink-0 shadow-sm ring-1 ring-activity-nutrition/25">
+<span class="material-symbols-outlined text-[22px]">baby_changing_station</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-[13px] font-medium text-text-secondary">07:00</span>
+<span class="w-1 h-1 rounded-full bg-divider-hairline"></span>
+<span class="text-[12px] font-semibold text-activity-nutrition bg-activity-nutrition-surface px-2 py-0.5 rounded-md">Ăn uống</span>
+</div>
+<h3 class="text-[16px] font-bold text-text-primary mt-0.5">Sữa công thức</h3>
+</div>
+</div>
+<div class="flex items-center">
+<button aria-label="Tùy chọn" class="w-9 h-9 flex items-center justify-center text-text-secondary/70 hover:text-text-primary active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+<a aria-label="Chi tiết bữa ăn" class="w-9 h-9 flex items-center justify-center text-text-secondary/70 hover:text-action-primary active:scale-95" data-path="feeding-detail" href="#">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</a>
+</div>
+</div>
+<div class="flex items-center justify-between bg-activity-nutrition-surface/45 border border-activity-nutrition/20 p-3 rounded-xl mt-3">
+<div class="flex items-baseline gap-1.5">
+<span class="text-[24px] font-bold text-activity-nutrition leading-none">120</span>
+<span class="text-[14px] font-semibold text-text-secondary">ml</span>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-sky-100 text-sky-800 border border-sky-200 text-[12px] font-semibold">
+            Hết bình
+          </span>
+</div>
+<div class="flex items-center gap-1.5 text-text-secondary text-[12px] pt-2.5">
+<span class="material-symbols-outlined text-[16px] text-activity-nutrition">water_drop</span>
+<span>Nhiệt độ ấm, bé bú hết nhanh chóng và vỗ ợ tốt</span>
+</div>
+</article>
+<!-- Empty State Container -->
+<div class="hidden flex-col items-center justify-center text-center py-12 px-4" id="empty-state">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-3 text-text-secondary">
+<span class="material-symbols-outlined text-[32px]">manage_search</span>
+</div>
+<p class="font-bold text-[16px] text-text-primary mb-1">Không tìm thấy hoạt động</p>
+<p class="text-[13px] text-text-secondary max-w-[260px] leading-relaxed">Thử tìm kiếm với từ khóa khác hoặc điều chỉnh bộ lọc để xem hoạt động của bé.</p>
+</div>
+</section>
+<!-- Floating Action Button (+ Ghi hoạt động) -->
+<div class="fixed bottom-24 right-5 z-40">
+<a class="flex items-center gap-2 h-13 px-5 py-3 rounded-full bg-gradient-to-r from-[#146C60] to-[#0D5248] active:from-[#0D5248] active:to-[#093C34] text-white shadow-[0_6px_20px_rgba(20,108,96,0.38)] ring-1 ring-white/20 transition-all active:scale-95" data-path="add-activity" href="#">
+<span class="material-symbols-outlined text-[22px]">add</span>
+<span class="text-[15px] font-bold tracking-tight">Ghi hoạt động</span>
+</a>
+</div>
+</main>
+<!-- Bottom Tab Bar (iOS Style, Tab 2 Active) -->
+<nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface-card/95 backdrop-blur-xl border-t border-divider-hairline shadow-[0_-4px_16px_rgba(23,45,50,0.04)]">
+<div class="flex justify-around items-center h-16 px-4">
+<!-- Tab 1: Ghi nhanh -->
+<a class="flex flex-col items-center justify-center gap-1 min-w-[64px] h-full text-text-secondary/70 hover:text-text-primary active:scale-95 transition-all" data-path="quick-log" href="#">
+<span class="material-symbols-outlined text-[24px]">bolt</span>
+<span class="text-[11px] font-medium">Ghi nhanh</span>
+</a>
+<!-- Tab 2: Nhật ký (Active) -->
+<a aria-current="page" class="flex flex-col items-center justify-center gap-1 min-w-[64px] h-full text-action-primary active:scale-95 transition-all" data-path="daily-timeline" href="#">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+<span class="text-[11px] font-bold">Nhật ký</span>
+</a>
+<!-- Tab 3: Thống kê -->
+<a class="flex flex-col items-center justify-center gap-1 min-w-[64px] h-full text-text-secondary/70 hover:text-text-primary active:scale-95 transition-all" data-path="insights-and-growth" href="#">
+<span class="material-symbols-outlined text-[24px]">bar_chart</span>
+<span class="text-[11px] font-medium">Thống kê</span>
+</a>
+</div>
+</nav>
+<!-- Interactive Search & Filtering Logic -->
+<script>
+    (function() {
+      const searchInput = document.getElementById('timeline-search-input');
+      const clearBtn = document.getElementById('clear-search-btn');
+      const filterChips = document.querySelectorAll('.filter-chip');
+      const timelineItems = document.querySelectorAll('.timeline-item');
+      const emptyState = document.getElementById('empty-state');
+      const eventCounter = document.getElementById('event-counter');
+      
+      let activeFilter = 'all';
+
+      function removeAccents(str) {
+        return str.normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/đ/g, 'd')
+          .replace(/Đ/g, 'D')
+          .toLowerCase();
+      }
+
+      function applyFilters() {
+        const query = removeAccents(searchInput.value.trim());
+        let visibleCount = 0;
+
+        timelineItems.forEach(item => {
+          const itemCategory = item.getAttribute('data-category');
+          const itemText = removeAccents(item.innerText);
+          
+          const matchesCategory = (activeFilter === 'all' || itemCategory === activeFilter);
+          const matchesQuery = query === '' || itemText.includes(query);
+
+          if (matchesCategory && matchesQuery) {
+            item.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+
+        if (eventCounter) {
+          eventCounter.textContent = visibleCount + ' sự kiện';
+        }
+
+        if (visibleCount === 0) {
+          emptyState.classList.remove('hidden');
+          emptyState.classList.add('flex');
+        } else {
+          emptyState.classList.add('hidden');
+          emptyState.classList.remove('flex');
+        }
+
+        if (searchInput.value.trim().length > 0) {
+          clearBtn.classList.remove('hidden');
+          clearBtn.classList.add('flex');
+        } else {
+          clearBtn.classList.add('hidden');
+          clearBtn.classList.remove('flex');
+        }
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', applyFilters);
+      }
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          searchInput.value = '';
+          applyFilters();
+          searchInput.focus();
+        });
+      }
+
+      filterChips.forEach(chip => {
+        chip.addEventListener('click', function() {
+          activeFilter = this.getAttribute('data-filter');
+
+          filterChips.forEach(c => {
+            const cat = c.getAttribute('data-filter');
+            if (cat === 'all') {
+              c.className = 'filter-chip flex items-center gap-1.5 px-4 h-9 rounded-full bg-surface-card text-text-secondary border border-divider-hairline font-semibold text-[13px] shadow-sm transition-all active:scale-95';
+              c.innerHTML = '<span>Tất cả</span>';
+            } else if (cat === 'medical') {
+              c.className = 'filter-chip flex items-center gap-1.5 px-3.5 h-9 rounded-full bg-activity-medical-surface text-activity-medical border border-activity-medical/30 font-semibold text-[13px] shadow-sm transition-all active:scale-95';
+            } else if (cat === 'nutrition') {
+              c.className = 'filter-chip flex items-center gap-1.5 px-3.5 h-9 rounded-full bg-activity-nutrition-surface text-activity-nutrition border border-activity-nutrition/30 font-semibold text-[13px] shadow-sm transition-all active:scale-95';
+            } else if (cat === 'routine') {
+              c.className = 'filter-chip flex items-center gap-1.5 px-3.5 h-9 rounded-full bg-activity-routine-surface text-activity-routine border border-activity-routine/30 font-semibold text-[13px] shadow-sm transition-all active:scale-95';
+            }
+          });
+
+          if (activeFilter === 'all') {
+            this.className = 'filter-chip flex items-center gap-1.5 px-4 h-9 rounded-full bg-action-primary text-white font-semibold text-[13px] shadow-sm transition-all active:scale-95 border border-action-primary';
+            this.innerHTML = '<span class="material-symbols-outlined text-[16px]">done</span><span>Tất cả</span>';
+          } else {
+            this.className = 'filter-chip flex items-center gap-1.5 px-3.5 h-9 rounded-full bg-action-primary text-white font-semibold text-[13px] shadow-sm transition-all active:scale-95 border border-action-primary';
+          }
+
+          applyFilters();
+        });
+      });
+    })();
+  </script>
+</body></html>
