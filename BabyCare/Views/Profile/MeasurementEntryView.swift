@@ -41,45 +41,47 @@ struct MeasurementEntryView: View {
         && date >= viewModel.baby.birthDate && date <= Date()
     }
 
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         ScrollView {
             VStack(spacing: 16) {
             CareFormCard {
                 HStack(spacing: 12) {
                     CareIcon(name: "Stitch_query_stats", color: CareTheme.feeding, size: 28)
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("THEO DÕI TĂNG TRƯỞNG").font(CareFont.caption).bold().foregroundStyle(CareTheme.feeding)
-                        Text("Số đo của bé được cập nhật vào hồ sơ và biểu đồ tăng trưởng.").font(CareFont.subheadline)
+                        Text(L10n.text("THEO DÕI TĂNG TRƯỞNG")).font(CareFont.caption).bold().foregroundStyle(CareTheme.feeding)
+                        Text(L10n.text("Số đo của bé được cập nhật vào hồ sơ và biểu đồ tăng trưởng.")).font(CareFont.subheadline)
                     }
                 }.padding(.vertical, 5)
             }.listRowBackground(CareTheme.feedingBackground)
 
             CareFormCard {
-                measurementField("Cân nặng của bé", value: $weight, unit: "kg", icon: "Stitch_scale", step: 0.05)
+                measurementField(L10n.text("Cân nặng của bé"), value: $weight, unit: "kg", icon: "Stitch_scale", step: 0.05)
                 if let last = viewModel.measurements.filter({ $0.weight != nil }).max(by: { $0.date < $1.date }), let lastWeight = last.weight {
-                    Text("Lần trước: \(lastWeight.formatted()) kg · \(last.date.careFormatted(date: .abbreviated, time: .omitted))")
+                    Text(L10n.text("Lần trước: {0} kg · {1}", "\(lastWeight.formatted(.number.locale(AppLanguage.current.locale)))", "\(last.date.careFormatted(date: .abbreviated, time: .omitted))"))
                         .font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
                 }
             }
 
             CareFormCard {
-                measurementField("Chiều dài / chiều cao", value: $height, unit: "cm", icon: "Stitch_straighten", step: 0.5)
-                Picker("Phương pháp đo", selection: $method) {
-                    Text("Nằm đo").tag("Nằm đo")
-                    Text("Đứng đo").tag("Đứng đo")
-                    Text("Chưa rõ").tag("Chưa rõ")
+                measurementField(L10n.text("Chiều dài / chiều cao"), value: $height, unit: "cm", icon: "Stitch_straighten", step: 0.5)
+                Picker(L10n.text("Phương pháp đo"), selection: $method) {
+                    Text(L10n.text("Nằm đo")).tag("Nằm đo")
+                    Text(L10n.text("Đứng đo")).tag("Đứng đo")
+                    Text(L10n.text("Chưa rõ")).tag("Chưa rõ")
                 }
                 .pickerStyle(.segmented)
             }
 
             CareFormCard {
-                CareDateTimeField(title: "Thời điểm đo", selection: $date, earliest: viewModel.baby.birthDate)
-                DisclosureGroup("Thêm chi tiết", isExpanded: $showDetails) {
-                    TextField("Vòng đầu (cm) · Tùy chọn", text: $headCircumference)
+                CareDateTimeField(title: L10n.text("Thời điểm đo"), selection: $date, earliest: viewModel.baby.birthDate)
+                DisclosureGroup(L10n.text("Thêm chi tiết"), isExpanded: $showDetails) {
+                    TextField(L10n.text("Vòng đầu (cm) · Tùy chọn"), text: $headCircumference)
                         .keyboardType(.decimalPad)
-                    TextField("Ghi chú · Tùy chọn", text: $notes, axis: .vertical).lineLimit(3...6)
+                    TextField(L10n.text("Ghi chú · Tùy chọn"), text: $notes, axis: .vertical).lineLimit(3...6)
                 }
-                Text("Nhập ít nhất một số đo dương.").font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
+                Text(L10n.text("Nhập ít nhất một số đo dương.")).font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
             }
             if let duplicateMessage {
                 CareFormCard { Text(duplicateMessage).font(CareFont.footnote).foregroundStyle(CareTheme.medical) }
@@ -90,31 +92,31 @@ struct MeasurementEntryView: View {
         .scrollContentBackground(.hidden)
         .background(CareTheme.background)
         .foregroundStyle(CareTheme.text)
-        .navigationTitle(existingMeasurement == nil ? "Nhập số đo cơ thể" : "Sửa số đo cơ thể")
+        .navigationTitle(existingMeasurement == nil ? L10n.text("Nhập số đo cơ thể") : L10n.text("Sửa số đo cơ thể"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)
-        .navigationSubtitle("Ghi cho \(viewModel.baby.name)")
+        .navigationSubtitle(L10n.text("Ghi cho {0}", "\(viewModel.baby.name)"))
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button("Hủy") { if hasChanges { confirmDiscard = true } else { dismiss() } }
+                Button(L10n.text("Hủy")) { if hasChanges { confirmDiscard = true } else { dismiss() } }
             }
-            ToolbarItem(placement: .confirmationAction) { Button("Lưu", action: save).disabled(!isValid) }
+            ToolbarItem(placement: .confirmationAction) { Button(action: save) { HStack { if viewModel.state.isSaving { ProgressView() }; Text(L10n.text("Lưu")) } }.disabled(viewModel.state.isSaving).disabled(!isValid) }
         }
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: 8) {
-                CarePrimaryButton(title: "Lưu số đo", icon: "Stitch_check_circle", action: save).disabled(!isValid)
+                CarePrimaryButton(title: L10n.text("Lưu số đo"), icon: "Stitch_check_circle", isLoading: viewModel.state.isSaving, action: save).disabled(!isValid)
                     .accessibilityIdentifier("saveMeasurementButton")
                 if !isValid {
-                    Text("Nhập ít nhất một số đo hợp lệ để lưu.")
+                    Text(L10n.text("Nhập ít nhất một số đo hợp lệ để lưu."))
                         .font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
                 }
             }.padding().background(CareTheme.background)
         }
         .interactiveDismissDisabled(hasChanges)
-        .confirmationDialog("Bỏ nội dung chưa lưu?", isPresented: $confirmDiscard, titleVisibility: .visible) {
-            Button("Bỏ nội dung", role: .destructive) { dismiss() }
-            Button("Tiếp tục nhập", role: .cancel) { }
+        .confirmationDialog(L10n.text("Bỏ nội dung chưa lưu?"), isPresented: $confirmDiscard, titleVisibility: .visible) {
+            Button(L10n.text("Bỏ nội dung"), role: .destructive) { dismiss() }
+            Button(L10n.text("Tiếp tục nhập"), role: .cancel) { }
         }
     }
 
@@ -128,7 +130,7 @@ struct MeasurementEntryView: View {
                 Button { adjust(value, step: -step) } label: {
                     Image(systemName: "minus").frame(width: 48, height: 48)
                 }.buttonStyle(.plain).background(CareTheme.background, in: .circle)
-                    .accessibilityLabel("Giảm " + title.lowercased()).disabled(number(value.wrappedValue) == nil)
+                    .accessibilityLabel(L10n.text("Giảm ") + title.lowercased()).disabled(number(value.wrappedValue) == nil)
                 TextField("—", text: value)
                     .keyboardType(.decimalPad)
                     .font(.custom("BeVietnamPro-Bold", size: 38, relativeTo: .largeTitle))
@@ -139,9 +141,9 @@ struct MeasurementEntryView: View {
                 Button { adjust(value, step: step) } label: {
                     Image(systemName: "plus").frame(width: 48, height: 48)
                 }.buttonStyle(.plain).background(CareTheme.background, in: .circle)
-                    .accessibilityLabel("Tăng " + title.lowercased()).disabled(number(value.wrappedValue) == nil)
+                    .accessibilityLabel(L10n.text("Tăng ") + title.lowercased()).disabled(number(value.wrappedValue) == nil)
             }
-            Text("Bước tinh chỉnh \(step.formatted()) \(unit)")
+            Text(L10n.text("Bước tinh chỉnh {0} {1}", "\(step.formatted(.number.locale(AppLanguage.current.locale)))", "\(unit)"))
                 .font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
                 .frame(maxWidth: .infinity)
         }.padding(.vertical, 8)
@@ -169,14 +171,14 @@ struct MeasurementEntryView: View {
             )
         }
         guard !duplicate else {
-            duplicateMessage = "Đã có số đo này tại cùng thời điểm. Hãy đổi giờ hoặc sửa bản ghi trong Lịch sử tăng trưởng."
+            duplicateMessage = L10n.text("Đã có số đo này tại cùng thời điểm. Hãy đổi giờ hoặc sửa bản ghi trong Lịch sử tăng trưởng.")
             return
         }
         duplicateMessage = nil
         let measurement = BodyMeasurement(id: existingMeasurement?.id ?? measurementID, date: date, weight: weightValue, height: heightValue, headCircumference: headValue, method: method, notes: notes)
         Task {
             guard await viewModel.send(.commit(.saveMeasurement(babyID: viewModel.baby.id, measurement: measurement),
-                message: existingMeasurement == nil ? "Đã lưu số đo" : "Đã cập nhật số đo")) else { return }
+                message: existingMeasurement == nil ? L10n.text("Đã lưu số đo") : L10n.text("Đã cập nhật số đo"))) else { return }
             dismiss()
         }
     }

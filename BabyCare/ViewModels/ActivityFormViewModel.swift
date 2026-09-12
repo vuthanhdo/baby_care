@@ -58,7 +58,7 @@ final class ActivityFormViewModel {
             state.detail = value
         case .adjust(let amount):
             guard let number else { return }
-            state.value = max(0.1, number + amount).formatted(.number.precision(.fractionLength(1)).locale(Locale(identifier: "vi_VN")))
+            state.value = max(0.1, number + amount).formatted(.number.grouping(.never).precision(.fractionLength(1)).locale(AppLanguage.current.locale))
         }
         if case .loadingPhotos = action { return }
         state.dirty = true
@@ -86,11 +86,11 @@ final class ActivityFormViewModel {
         return true
     }
     var validationMessage: String {
-        if loadingPhotos { return "Đang tải ảnh…" }
-        if kind == .medicine && detail.isEmpty { return "Nhập tên thuốc và lượng thực tế đã dùng." }
-        if kind == .symptom { return "Chọn ít nhất một triệu chứng; mô tả nếu chọn Khác." }
-        if kind == .sleep { return "Nhập số phút; thời gian kết thúc không được ở tương lai." }
-        return numeric ? "Nhập \(kind.title.lowercased()) bằng số dương để lưu." : "Nhập nội dung hoạt động để lưu."
+        if loadingPhotos { return L10n.text("Đang tải ảnh…") }
+        if kind == .medicine && detail.isEmpty { return L10n.text("Nhập tên thuốc và lượng thực tế đã dùng.") }
+        if kind == .symptom { return L10n.text("Chọn ít nhất một triệu chứng; mô tả nếu chọn Khác.") }
+        if kind == .sleep { return L10n.text("Nhập số phút; thời gian kết thúc không được ở tương lai.") }
+        return numeric ? L10n.text("Nhập {0} bằng số dương để lưu.", "\(kind.title.lowercased())") : L10n.text("Nhập nội dung hoạt động để lưu.")
     }
 
     func makeEntry() -> CareActivity? {

@@ -1,11 +1,37 @@
 import SwiftUI
 import WebKit
 
-enum AuthValidation {
+nonisolated enum AuthValidation {
+    static func emailError(_ raw: String) -> String? {
+        let email = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !email.isEmpty else { return L10n.text("Vui lòng nhập email.") }
+        let parts = email.split(separator: "@", omittingEmptySubsequences: false)
+        guard email.utf8.count <= 254, parts.count == 2 else { return L10n.text("Email không hợp lệ. Ví dụ: bome@gmail.com.") }
+        let local = String(parts[0]), domain = String(parts[1])
+        let localAllowed = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!#$%&'*+-/=?^_`{|}~")
+        let labels = domain.split(separator: ".", omittingEmptySubsequences: false)
+        let valid = !local.isEmpty && local.utf8.count <= 64 && !local.hasPrefix(".") && !local.hasSuffix(".") && !local.contains("..")
+            && local.unicodeScalars.allSatisfy { localAllowed.contains($0) }
+            && labels.count >= 2 && labels.allSatisfy { label in
+                !label.isEmpty && label.count <= 63 && !label.hasPrefix("-") && !label.hasSuffix("-")
+                    && label.unicodeScalars.allSatisfy { CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-").contains($0) }
+            } && (labels.last?.count ?? 0) >= 2
+        return valid ? nil : L10n.text("Email không hợp lệ. Ví dụ: bome@gmail.com.")
+    }
+    static func passwordError(_ password: String) -> String? {
+        if password.isEmpty { return L10n.text("Vui lòng nhập mật khẩu.") }
+        var missing: [String] = []
+        if password.count < 8 { missing.append(L10n.text("ít nhất 8 ký tự")) }
+        if !password.unicodeScalars.contains(where: CharacterSet.uppercaseLetters.contains) { missing.append(L10n.text("1 chữ hoa")) }
+        if !password.unicodeScalars.contains(where: CharacterSet(charactersIn: "!@#$%^&*()_+-=[]{};':\"\\|,.<>/?`~").contains) { missing.append(L10n.text("1 ký tự đặc biệt (ví dụ !, @, #)")) }
+        return missing.isEmpty ? nil : L10n.text("Mật khẩu cần ") + missing.joined(separator: ", ") + "."
+    }
+    static func confirmationError(password: String, confirmation: String) -> String? {
+        if confirmation.isEmpty { return L10n.text("Vui lòng nhập lại mật khẩu.") }
+        return password == confirmation ? nil : L10n.text("Mật khẩu nhập lại không khớp.")
+    }
     static func signupError(password: String, confirmation: String) -> String? {
-        if password.count < 8 { return "Mật khẩu cần ít nhất 8 ký tự." }
-        if password != confirmation { return "Mật khẩu nhập lại không khớp." }
-        return nil
+        passwordError(password) ?? confirmationError(password: password, confirmation: confirmation)
     }
 }
 

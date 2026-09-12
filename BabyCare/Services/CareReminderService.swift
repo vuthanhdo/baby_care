@@ -32,13 +32,13 @@ final class LocalCareReminderService: CareReminderService {
         guard !pending.isEmpty else { return nil }
         do {
             guard try await center.requestAuthorization(options: [.alert, .sound]) else {
-                return "Lịch đã lưu, chưa có quyền gửi thông báo"
+                return L10n.text("Lịch đã lưu, chưa có quyền gửi thông báo")
             }
             for reminder in pending {
                 guard active else { return nil }
                 let content = UNMutableNotificationContent()
-                content.title = "Bé Khỏe"
-                content.body = "Có lịch chăm sóc cần xem"
+                content.title = L10n.text("Bé Khỏe")
+                content.body = L10n.text("Có lịch chăm sóc cần xem")
                 content.sound = .default
                 let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: reminder.nextDate), repeats: false)
                 let id = prefix + reminder.id.uuidString
@@ -47,6 +47,6 @@ final class LocalCareReminderService: CareReminderService {
                 if !active { center.removePendingNotificationRequests(withIdentifiers: [id]); return nil }
             }
             return nil
-        } catch { return "Lịch đã lưu, chưa thể gửi thông báo" }
+        } catch { return L10n.text("Lịch đã lưu, chưa thể gửi thông báo") }
     }
 }

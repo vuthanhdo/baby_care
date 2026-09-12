@@ -44,36 +44,36 @@ struct CareReportSnapshot: Identifiable {
 
     var temperatureActivities: [CareActivity] { activities.filter { $0.kind == .temperature } }
     var medicineActivities: [CareActivity] { activities.filter { $0.kind == .medicine } }
-    var newestTemperature: String { temperatureActivities.first.map { "\($0.value) °C" } ?? "Chưa ghi nhận" }
-    var highestTemperature: String { temperatureActivities.compactMap { InsightData.number($0.value) }.max().map { "\(InsightData.format($0)) °C" } ?? "Chưa ghi nhận" }
+    var newestTemperature: String { temperatureActivities.first.map { "\($0.value) °C" } ?? L10n.text("Chưa ghi nhận") }
+    var highestTemperature: String { temperatureActivities.compactMap { InsightData.number($0.value) }.max().map { "\(InsightData.format($0)) °C" } ?? L10n.text("Chưa ghi nhận") }
 
     var documentLines: [String] {
-        var lines = ["BÉ KHỎE — BÁO CÁO CHĂM SÓC", "Khoảng dữ liệu: \(InsightData.intervalLabel(interval))", "Tạo lúc: \(createdAt.careFormatted(date: .abbreviated, time: .shortened))", ""]
+        var lines = [L10n.text("BÉ KHỎE — BÁO CÁO CHĂM SÓC"), L10n.text("Khoảng dữ liệu: {0}", "\(InsightData.intervalLabel(interval))"), L10n.text("Tạo lúc: {0}", "\(createdAt.careFormatted(date: .abbreviated, time: .shortened))"), ""]
         if includeProfile {
             lines += ["\(baby.name) · \(baby.ageDescription)"]
-            if includeBirthDate { lines += ["Ngày sinh: \(baby.birthDate.careFormatted(date: .abbreviated, time: .omitted)) · \(baby.gender.title)"] }
+            if includeBirthDate { lines += [L10n.text("Ngày sinh: {0} · {1}", "\(baby.birthDate.careFormatted(date: .abbreviated, time: .omitted))", "\(baby.gender.title)")] }
         }
         if includeHealthNotes {
-            lines += ["Lưu ý sức khỏe: \(baby.healthNotes.isEmpty ? "Chưa cung cấp" : baby.healthNotes)", "Thông tin dị ứng: \(baby.allergies.isEmpty ? "Chưa cung cấp" : baby.allergies)"]
+            lines += [L10n.text("Lưu ý sức khỏe: {0}", "\(baby.healthNotes.isEmpty ? L10n.text("Chưa cung cấp") : baby.healthNotes)"), L10n.text("Thông tin dị ứng: {0}", "\(baby.allergies.isEmpty ? L10n.text("Chưa cung cấp") : baby.allergies)")]
         }
-        if !illnessTitle.isEmpty { lines += ["Đợt theo dõi: \(illnessTitle)"] }
+        if !illnessTitle.isEmpty { lines += [L10n.text("Đợt theo dõi: {0}", "\(illnessTitle)")] }
         for section in ReportSection.allCases where sections.contains(section) {
-            lines += ["", section.rawValue.uppercased()]
+            lines += ["", L10n.text(section.rawValue).uppercased()]
             if section == .growth {
-                if measurements.isEmpty { lines += ["Chưa có số đo trong khoảng này"] }
+                if measurements.isEmpty { lines += [L10n.text("Chưa có số đo trong khoảng này")] }
                 for item in measurements {
-                    let values = [item.weight.map { "\(InsightData.format($0)) kg" }, item.height.map { "\(InsightData.format($0)) cm" }, item.headCircumference.map { "Vòng đầu \(InsightData.format($0)) cm" }].compactMap { $0 }.joined(separator: " · ")
+                    let values = [item.weight.map { "\(InsightData.format($0)) kg" }, item.height.map { "\(InsightData.format($0)) cm" }, item.headCircumference.map { L10n.text("Vòng đầu {0} cm", "\(InsightData.format($0))") }].compactMap { $0 }.joined(separator: " · ")
                     lines += ["\(item.date.careFormatted(date: .abbreviated, time: .shortened)): \(values)"]
                 }
             } else {
                 let items = activities.filter { $0.kind.group == section.group }
-                if items.isEmpty { lines += ["Chưa có ghi nhận trong khoảng này"] }
+                if items.isEmpty { lines += [L10n.text("Chưa có ghi nhận trong khoảng này")] }
                 for item in items {
-                    lines += ["\(item.date.careFormatted(date: .abbreviated, time: .shortened)) · \(item.kind.title)", [item.detail, item.formattedValue, item.note].filter { !$0.isEmpty }.joined(separator: " · ")]
+                    lines += ["\(item.date.careFormatted(date: .abbreviated, time: .shortened)) · \(item.kind.title)", [item.displayDetail, item.formattedValue, item.note].filter { !$0.isEmpty }.joined(separator: " · ")]
                 }
             }
         }
-        lines += ["", "Báo cáo do phụ huynh ghi nhận, phục vụ trao đổi với người chăm sóc hoặc bác sĩ. Không thay thế chẩn đoán của nhân viên y tế."]
+        lines += ["", L10n.text("Báo cáo do phụ huynh ghi nhận, phục vụ trao đổi với người chăm sóc hoặc bác sĩ. Không thay thế chẩn đoán của nhân viên y tế.")]
         return lines
     }
 }
@@ -95,30 +95,32 @@ struct ShareReportView: View {
     init(interval: DateInterval? = nil) { _interval = State(initialValue: interval ?? InsightRange.hours48.interval()) }
     private var canPreview: Bool { includeProfile || includeHealthNotes || !sections.isEmpty }
 
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 16) {
                 CareCard {
                     HStack(alignment: .top, spacing: 12) {
                         CareIcon(name: "Stitch_health_and_safety", color: CareTheme.accent, size: 25)
                         VStack(alignment: .leading, spacing: 5) {
-                            Text("Bạn chọn nội dung chia sẻ").font(CareFont.headline)
-                            Text("PDF được tạo từ dữ liệu đã lưu trên thiết bị. Kiểm tra bản xem trước trước khi gửi.").font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
+                            Text(L10n.text("Bạn chọn nội dung chia sẻ")).font(CareFont.headline)
+                            Text(L10n.text("PDF được tạo từ dữ liệu đã lưu trên thiết bị. Kiểm tra bản xem trước trước khi gửi.")).font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
                         }
                     }
                 }
                 CareCard {
                     VStack(alignment: .leading, spacing: 14) {
-                        stepTitle(1, "Chọn nội dung chia sẻ", badge: "\(sections.count)/4 mục")
+                        stepTitle(1, L10n.text("Chọn nội dung chia sẻ"), badge: L10n.text("{0}/4 mục", "\(sections.count)"))
                         Button { showRange = true } label: {
                             HStack(spacing: 12) {
                                 CareIcon(name: "Stitch_calendar_today", color: CareTheme.accent, size: 20)
                                 VStack(alignment: .leading, spacing: 5) {
-                                    Text("Khoảng thời gian tổng hợp").font(CareFont.subheadline.weight(.semibold)).foregroundStyle(CareTheme.text)
+                                    Text(L10n.text("Khoảng thời gian tổng hợp")).font(CareFont.subheadline.weight(.semibold)).foregroundStyle(CareTheme.text)
                                     Text(InsightData.intervalLabel(interval)).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                                 }
                                 Spacer()
-                                Text("Sửa").font(CareFont.subheadline)
+                                Text(L10n.text("Sửa")).font(CareFont.subheadline)
                             }.padding(12).background(CareTheme.background, in: RoundedRectangle(cornerRadius: 12))
                         }
                         ForEach(ReportSection.allCases) { section in
@@ -130,7 +132,7 @@ struct ShareReportView: View {
                                     VStack(alignment: .leading, spacing: 7) {
                                         HStack(spacing: 6) {
                                             CareIcon(name: section.icon, color: section.color, size: 16)
-                                            Text(section.rawValue).font(CareFont.subheadline.weight(.semibold))
+                                            Text(L10n.text(section.rawValue)).font(CareFont.subheadline.weight(.semibold))
                                         }
                                         Text(summary(for: section)).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                                     }
@@ -138,57 +140,57 @@ struct ShareReportView: View {
                                 }.foregroundStyle(section.color).frame(maxWidth: .infinity, alignment: .leading).padding(12)
                                     .background(section.color.opacity(sections.contains(section) ? 0.075 : 0.025), in: RoundedRectangle(cornerRadius: 12))
                                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(section.color.opacity(sections.contains(section) ? 0.25 : 0.08)))
-                            }.buttonStyle(.plain).accessibilityLabel(section.rawValue).accessibilityValue(sections.contains(section) ? "Đã chọn" : "Chưa chọn")
+                            }.buttonStyle(.plain).accessibilityLabel(L10n.text(section.rawValue)).accessibilityValue(sections.contains(section) ? L10n.text("Đã chọn") : L10n.text("Chưa chọn"))
                         }
-                        DisclosureGroup("Thông tin hồ sơ") {
+                        DisclosureGroup(L10n.text("Thông tin hồ sơ")) {
                             VStack(spacing: 14) {
-                                Toggle("Tên gọi và tuổi", isOn: $includeProfile)
-                                Toggle("Ngày sinh và giới tính", isOn: $includeBirthDate).disabled(!includeProfile)
-                                Toggle("Lưu ý sức khỏe và dị ứng", isOn: $includeHealthNotes)
+                                Toggle(L10n.text("Tên gọi và tuổi"), isOn: $includeProfile)
+                                Toggle(L10n.text("Ngày sinh và giới tính"), isOn: $includeBirthDate).disabled(!includeProfile)
+                                Toggle(L10n.text("Lưu ý sức khỏe và dị ứng"), isOn: $includeHealthNotes)
                             }.font(CareFont.subheadline).padding(.top, 12)
                         }.font(CareFont.subheadline.weight(.semibold))
                     }
                 }
                 CareCard {
                     VStack(alignment: .leading, spacing: 16) {
-                        stepTitle(2, "Xem trước phiếu tóm tắt", badge: "PDF")
+                        stepTitle(2, L10n.text("Xem trước phiếu tóm tắt"), badge: "PDF")
                         if let snapshot {
                             HStack(alignment: .top, spacing: 10) {
-                                miniMetric("Thân nhiệt cao nhất", value: snapshot.highestTemperature, color: CareTheme.medical)
-                                miniMetric("Nhiệt độ gần nhất", value: snapshot.newestTemperature, color: CareTheme.accent)
+                                miniMetric(L10n.text("Thân nhiệt cao nhất"), value: snapshot.highestTemperature, color: CareTheme.medical)
+                                miniMetric(L10n.text("Nhiệt độ gần nhất"), value: snapshot.newestTemperature, color: CareTheme.accent)
                             }
-                            Text("\(snapshot.activities.count) hoạt động · \(snapshot.measurements.count) số đo").font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                            Text(L10n.text("{0} hoạt động · {1} số đo", "\(snapshot.activities.count)", "\(snapshot.measurements.count)")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                             NavigationLink { ReportPreviewView(snapshot: snapshot) } label: {
-                                Text("Mở bản xem trước").font(CareFont.headline).frame(maxWidth: .infinity, minHeight: 48)
+                                Text(L10n.text("Mở bản xem trước")).font(CareFont.headline).frame(maxWidth: .infinity, minHeight: 48)
                             }
-                            Button("Cập nhật bản xem trước") { makePreview() }.font(CareFont.subheadline).disabled(!canPreview)
+                            Button(L10n.text("Cập nhật bản xem trước")) { makePreview() }.font(CareFont.subheadline).disabled(!canPreview)
                         } else {
-                            Text("Bản xem trước chỉ chứa những mục bạn đã chọn.").font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
-                            Button("Xem trước báo cáo") { makePreview() }.font(CareFont.headline).frame(maxWidth: .infinity, minHeight: 48).disabled(!canPreview)
+                            Text(L10n.text("Bản xem trước chỉ chứa những mục bạn đã chọn.")).font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
+                            Button(L10n.text("Xem trước báo cáo")) { makePreview() }.font(CareFont.headline).frame(maxWidth: .infinity, minHeight: 48).disabled(!canPreview)
                         }
                     }
                 }
                 CareCard {
                     VStack(alignment: .leading, spacing: 12) {
-                        stepTitle(3, "Mã QR & Liên kết", badge: "Chưa khả dụng")
-                        Text("Chia sẻ qua QR cần dịch vụ liên kết bảo mật. Bạn có thể xuất PDF và gửi bằng ứng dụng trên thiết bị.").font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
+                        stepTitle(3, L10n.text("Mã QR & Liên kết"), badge: L10n.text("Chưa khả dụng"))
+                        Text(L10n.text("Chia sẻ qua QR cần dịch vụ liên kết bảo mật. Bạn có thể xuất PDF và gửi bằng ứng dụng trên thiết bị.")).font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
                     }
                 }
                 if let error { Text(error).font(CareFont.subheadline).foregroundStyle(CareTheme.medical) }
             }.padding(20)
         }
         .background(CareTheme.background).foregroundStyle(CareTheme.text)
-        .navigationTitle("Chia sẻ báo cáo").navigationBarTitleDisplayMode(.inline).toolbar(.visible, for: .navigationBar)
+        .navigationTitle(L10n.text("Chia sẻ báo cáo")).navigationBarTitleDisplayMode(.inline).toolbar(.visible, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: 8) {
                 if let exportURL {
                     ShareLink(item: exportURL) {
-                        HStack(spacing: 8) { CareIcon(name: "Stitch_ios_share", color: .white, size: 20); Text("Chia sẻ file PDF").font(CareFont.headline) }
+                        HStack(spacing: 8) { CareIcon(name: "Stitch_ios_share", color: .white, size: 20); Text(L10n.text("Chia sẻ file PDF")).font(CareFont.headline) }
                             .foregroundStyle(.white).frame(maxWidth: .infinity, minHeight: 56).background(CareTheme.accent, in: RoundedRectangle(cornerRadius: 14))
                     }
                 } else {
-                    CarePrimaryButton(title: isGenerating ? "Đang tạo PDF…" : "Xuất file PDF & Chia sẻ") { export() }.disabled(!canPreview || isGenerating)
+                    CarePrimaryButton(title: isGenerating ? L10n.text("Đang tạo PDF…") : L10n.text("Xuất file PDF & Chia sẻ")) { export() }.disabled(!canPreview || isGenerating)
                 }
             }.padding(.horizontal, 20).padding(.vertical, 12).background(CareTheme.surface)
         }
@@ -220,9 +222,9 @@ struct ShareReportView: View {
             .frame(maxWidth: .infinity, alignment: .leading).padding(12).background(color.opacity(0.06), in: RoundedRectangle(cornerRadius: 12))
     }
     private func summary(for section: ReportSection) -> String {
-        if section == .growth { return "\(viewModel.measurements.filter { interval.contains($0.date) }.count) số đo trong khoảng" }
+        if section == .growth { return L10n.text("{0} số đo trong khoảng", "\(viewModel.measurements.filter { interval.contains($0.date) }.count)") }
         let count = viewModel.activities.filter { $0.kind.group == section.group && interval.contains($0.date) }.count
-        return count > 0 ? "\(count) hoạt động đã ghi trong khoảng" : "Chưa có ghi nhận trong khoảng này"
+        return count > 0 ? L10n.text("{0} hoạt động đã ghi trong khoảng", "\(count)") : L10n.text("Chưa có ghi nhận trong khoảng này")
     }
     private func invalidatePreview() { snapshot = nil; exportURL = nil; error = nil }
     private func makePreview() {
@@ -234,7 +236,7 @@ struct ShareReportView: View {
         isGenerating = true
         defer { isGenerating = false }
         do { exportURL = try CareReportPDF.create(snapshot); error = nil }
-        catch { self.error = "Chưa tạo được PDF. Hãy thử lại." }
+        catch { self.error = L10n.text("Chưa tạo được PDF. Hãy thử lại.") }
     }
 }
 
@@ -251,7 +253,7 @@ enum CareReportPDF {
             func beginPage() {
                 context.beginPage()
                 y = 48
-                ("Bé Khỏe · \(page)" as NSString).draw(at: CGPoint(x: 48, y: 800), withAttributes: [.font: UIFont.systemFont(ofSize: 9), .foregroundColor: UIColor.gray])
+                (L10n.text("Bé Khỏe · {0}", "\(page)") as NSString).draw(at: CGPoint(x: 48, y: 800), withAttributes: [.font: UIFont.systemFont(ofSize: 9), .foregroundColor: UIColor.gray])
                 page += 1
             }
             beginPage()

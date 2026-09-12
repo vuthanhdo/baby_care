@@ -16,62 +16,64 @@ struct DiaryView: View {
         viewModel.activities.filter { activity in
             (allDates || Calendar.current.isDate(activity.date, inSameDayAs: day)) &&
             (group == nil || activity.kind.group == group) &&
-            (query.isEmpty || [activity.kind.title, activity.value, activity.note, activity.detail].joined(separator: " ").localizedStandardContains(query))
+            (query.isEmpty || [activity.kind.title, activity.formattedValue, activity.note, activity.displayDetail, activity.value, activity.detail].joined(separator: " ").localizedStandardContains(query))
         }.sorted { $0.date > $1.date }
     }
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 14) {
                 HStack(spacing: 10) {
                     Image(systemName: "magnifyingglass").foregroundStyle(CareTheme.secondary)
-                    TextField("Tìm hoạt động, thuốc, ghi chú…", text: $query)
+                    TextField(L10n.text("Tìm hoạt động, thuốc, ghi chú…"), text: $query)
                         .accessibilityIdentifier("diarySearchField")
                     if !query.isEmpty {
-                        Button("Xóa tìm kiếm", systemImage: "xmark.circle.fill") { query = "" }.labelStyle(.iconOnly)
+                        Button(L10n.text("Xóa tìm kiếm"), systemImage: "xmark.circle.fill") { query = "" }.labelStyle(.iconOnly)
                     }
                     NavigationLink { VoiceEntryView() } label: { CareIcon(name: "Stitch_mic", color: CareTheme.secondary, size: 18) }
-                        .accessibilityLabel("Nhập bằng giọng nói").frame(minWidth: 44, minHeight: 44)
+                        .accessibilityLabel(L10n.text("Nhập bằng giọng nói")).frame(minWidth: 44, minHeight: 44)
                 }.padding(.leading, 12).background(CareTheme.border.opacity(0.55), in: .rect(cornerRadius: 12))
                 HStack {
                     Menu {
-                        Button("Ngày đang chọn") { allDates = false }
-                        Button("Tất cả thời gian") { allDates = true }
+                        Button(L10n.text("Ngày đang chọn")) { allDates = false }
+                        Button(L10n.text("Tất cả thời gian")) { allDates = true }
                     } label: {
-                        Text("Phạm vi: \(allDates ? "Tất cả thời gian" : "Theo ngày")").font(CareFont.caption.weight(.medium))
+                        Text(L10n.text("Phạm vi: {0}", "\(allDates ? L10n.text("Tất cả thời gian") : "Theo ngày")")).font(CareFont.caption.weight(.medium))
                     }.frame(minHeight: 44)
                     Spacer()
-                    CareBadge(title: "\(filtered.count) sự kiện")
+                    CareBadge(title: L10n.text("{0} sự kiện", "\(filtered.count)"))
                 }
                 HStack {
-                    Button("Ngày trước", systemImage: "chevron.left") { moveDay(-1) }.labelStyle(.iconOnly).frame(width: 44, height: 44)
+                    Button(L10n.text("Ngày trước"), systemImage: "chevron.left") { moveDay(-1) }.labelStyle(.iconOnly).frame(width: 44, height: 44)
                     Spacer()
                     Button { draftDay = day; showingDate = true } label: {
                         Label(day.careFormatted(date: .numeric, time: .omitted), systemImage: "calendar").font(CareFont.subheadline.weight(.semibold))
                     }
                     Spacer()
-                    Button("Ngày sau", systemImage: "chevron.right") { moveDay(1) }.labelStyle(.iconOnly).frame(width: 44, height: 44)
+                    Button(L10n.text("Ngày sau"), systemImage: "chevron.right") { moveDay(1) }.labelStyle(.iconOnly).frame(width: 44, height: 44)
                         .disabled(Calendar.current.isDateInToday(day))
                 }.padding(4).background(CareTheme.surface, in: .rect(cornerRadius: 14))
                     .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(CareTheme.border))
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
-                        filterButton("Tất cả", group: nil)
+                        filterButton(L10n.text("Tất cả"), group: nil)
                         ForEach(ActivityGroup.allCases) { filterButton($0.title, group: $0) }
                     }
                 }
                 HStack {
-                    Text(allDates ? "Nhật ký" : Calendar.current.isDateInToday(day) ? "Hôm nay" : "Hoạt động trong ngày").font(CareFont.title3.bold())
+                    Text(allDates ? L10n.text("Nhật ký") : Calendar.current.isDateInToday(day) ? L10n.text("Hôm nay") : L10n.text("Hoạt động trong ngày")).font(CareFont.title3.bold())
                     Spacer()
                 }.padding(.top, 4)
                 if filtered.isEmpty {
                     ContentUnavailableView {
-                        Label("Chưa có ghi nhận", systemImage: "book.closed")
+                        Label(L10n.text("Chưa có ghi nhận"), systemImage: "book.closed")
                     } description: {
-                        Text(query.isEmpty && group == nil ? "Ghi hoạt động đầu tiên cho bé trong ngày này." : "Thử đổi từ khóa hoặc xóa bộ lọc.")
+                        Text(query.isEmpty && group == nil ? L10n.text("Ghi hoạt động đầu tiên cho bé trong ngày này.") : L10n.text("Thử đổi từ khóa hoặc xóa bộ lọc."))
                     } actions: {
                         if !query.isEmpty || group != nil {
-                            Button("Xóa bộ lọc") { query = ""; group = nil; allDates = true }
-                        } else { Button("Ghi hoạt động") { showingPicker = true } }
+                            Button(L10n.text("Xóa bộ lọc")) { query = ""; group = nil; allDates = true }
+                        } else { Button(L10n.text("Ghi hoạt động")) { showingPicker = true } }
                     }
                 } else {
                     ForEach(filtered) { activity in
@@ -93,16 +95,16 @@ struct DiaryView: View {
             Button { showingPicker = true } label: {
                 HStack(spacing: 8) {
                     CareIcon(name: "Stitch_add", color: .white, size: 22)
-                    Text("Ghi hoạt động").font(CareFont.headline).foregroundStyle(.white)
+                    Text(L10n.text("Ghi hoạt động")).font(CareFont.headline).foregroundStyle(.white)
                 }.padding(.horizontal, 20).frame(minHeight: 52).background(CareTheme.accent, in: .capsule)
             }.buttonStyle(.plain).padding(.horizontal, 20).padding(.bottom, 8)
         }
         .sheet(isPresented: $showingPicker) { NavigationStack { ActivityPickerView(initialGroup: group ?? .medical) } }
         .sheet(isPresented: $showingDate) {
             NavigationStack {
-                DatePicker("Chọn ngày", selection: $draftDay, in: ...Date(), displayedComponents: .date)
-                    .datePickerStyle(.graphical).padding().navigationTitle("Ngày nhật ký")
-                    .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Áp dụng") { day = draftDay; allDates = false; showingDate = false } } }
+                DatePicker(L10n.text("Chọn ngày"), selection: $draftDay, in: ...Date(), displayedComponents: .date)
+                    .datePickerStyle(.graphical).padding().navigationTitle(L10n.text("Ngày nhật ký"))
+                    .toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.text("Áp dụng")) { day = draftDay; allDates = false; showingDate = false } } }
             }.presentationDetents([.medium, .large])
         }
     }
@@ -127,7 +129,9 @@ struct DiaryView: View {
 struct DiaryActivityCardView: View {
     let activity: CareActivity
     var showsDate = false
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         CareCard {
             VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 12) {
@@ -143,12 +147,12 @@ struct DiaryActivityCardView: View {
                     Spacer(minLength: 0)
                     Image(systemName: "chevron.right").font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                 }
-                Text(activity.formattedValue.isEmpty ? "Đã ghi nhận" : activity.formattedValue)
+                Text(activity.formattedValue.isEmpty ? L10n.text("Đã ghi nhận") : activity.formattedValue)
                     .font(activity.numericValue != nil ? CareFont.title2.bold() : CareFont.subheadline.weight(.semibold))
                     .foregroundStyle(activity.kind.group.color).frame(maxWidth: .infinity, alignment: .leading)
                     .padding(12).background(activity.kind.group.background.opacity(0.65), in: .rect(cornerRadius: 12))
                 if !activity.note.isEmpty || !activity.detail.isEmpty {
-                    Text([activity.detail, activity.note].filter { !$0.isEmpty }.joined(separator: " · "))
+                    Text([activity.displayDetail, activity.note].filter { !$0.isEmpty }.joined(separator: " · "))
                         .font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                 }
                 if showsDate { Text(activity.date, format: .dateTime.day().month().year()).font(CareFont.caption).foregroundStyle(CareTheme.secondary) }

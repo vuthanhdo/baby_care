@@ -16,26 +16,26 @@ nonisolated enum CloudError: Error, LocalizedError, Sendable, Equatable {
     case offline, accessDenied, signedOut, conflict, uncertain, busy
     var errorDescription: String? {
         switch self {
-        case .offline: "Không kết nối được cloud. Chỉ có thể xem bản lưu trên máy; hãy tải lại khi có mạng."
-        case .accessDenied: "Bạn không còn quyền truy cập gia đình này. Hãy chọn lại gia đình hoặc đăng nhập lại."
-        case .signedOut: "Phiên đăng nhập đã kết thúc. Hãy đăng nhập lại."
-        case .conflict: "Dữ liệu cloud đã thay đổi. Hãy tải lại trước khi lưu tiếp."
-        case .uncertain: "Chưa xác nhận được kết quả lưu. Hãy tải lại để đối soát yêu cầu cũ trước khi lưu tiếp."
-        case .busy: "Đang xử lý dữ liệu. Hãy chờ thao tác hiện tại hoàn tất."
+        case .offline: L10n.text("Không kết nối được cloud. Chỉ có thể xem bản lưu trên máy; hãy tải lại khi có mạng.")
+        case .accessDenied: L10n.text("Bạn không còn quyền truy cập gia đình này. Hãy chọn lại gia đình hoặc đăng nhập lại.")
+        case .signedOut: L10n.text("Phiên đăng nhập đã kết thúc. Hãy đăng nhập lại.")
+        case .conflict: L10n.text("Dữ liệu cloud đã thay đổi. Hãy tải lại trước khi lưu tiếp.")
+        case .uncertain: L10n.text("Chưa xác nhận được kết quả lưu. Hãy tải lại để đối soát yêu cầu cũ trước khi lưu tiếp.")
+        case .busy: L10n.text("Đang xử lý dữ liệu. Hãy chờ thao tác hiện tại hoàn tất.")
         }
     }
     static func normalize(_ error: Error) -> Error {
         if let e = error as? PostgrestError {
-            if e.code == "P0001", e.message == "Baby limit reached" { return CareDataError.invalidInput("Bạn chỉ có thể tạo tối đa 4 hồ sơ bé.") }
+            if e.code == "P0001", e.message == "Baby limit reached" { return CareDataError.invalidInput(L10n.text("Bạn chỉ có thể tạo tối đa 4 hồ sơ bé.")) }
             if e.code == "40001" || e.code == "23505" { return CloudError.conflict }
             if e.code == "42501" || e.code == "PGRST301" || e.code == "PGRST302" { return CloudError.accessDenied }
-            return CareDataError.invalidInput("Cloud từ chối dữ liệu (\(e.code ?? "unknown")). Hãy kiểm tra thông tin rồi thử lại.")
+            return CareDataError.invalidInput(L10n.text("Cloud từ chối dữ liệu ({0}). Hãy kiểm tra thông tin rồi thử lại.", "\(e.code ?? "unknown")"))
         }
         if error is AuthError { return CloudError.signedOut }
         if let e = error as? StorageError {
             if e.statusCode == "401" || e.statusCode == "403" { return CloudError.accessDenied }
             if e.statusCode == nil || e.statusCode?.hasPrefix("5") == true { return CloudError.offline }
-            return CareDataError.invalidInput("Không thể xử lý ảnh trên cloud (\(e.message)).")
+            return CareDataError.invalidInput(L10n.text("Không thể xử lý ảnh trên cloud ({0}).", "\(e.message)"))
         }
         if let e = error as? URLError, e.code != .cancelled { return CloudError.offline }
         return error

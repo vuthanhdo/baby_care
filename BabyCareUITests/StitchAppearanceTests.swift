@@ -7,6 +7,7 @@ final class StitchAppearanceTests: XCTestCase {
     func testRootTabsAndAllActivityGroups() throws {
         let app = XCUIApplication()
         app.launchArguments = ["-demo"]
+        app.launchArguments += ["-care.language", "vi"]
         app.launch()
         XCTAssertTrue(app.buttons["tab.quick"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.tabBars.firstMatch.isHittable, "Native tabs must not duplicate Stitch navigation")
@@ -33,6 +34,7 @@ final class StitchAppearanceTests: XCTestCase {
     func testEmailLoginAndSignUpLayouts() throws {
         let app = XCUIApplication()
         app.launchArguments = ["-ui-testing-auth"]
+        app.launchArguments += ["-care.language", "vi"]
         app.launch()
         let email = app.textFields["auth.email"]
         XCTAssertTrue(email.waitForExistence(timeout: 10))
@@ -58,9 +60,33 @@ final class StitchAppearanceTests: XCTestCase {
     }
 
     @MainActor
+    func testInlineSignupValidation() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-ui-testing-auth"]
+        app.launchArguments += ["-care.language", "vi"]
+        app.launch()
+        let email = app.textFields["auth.email"]
+        XCTAssertTrue(email.waitForExistence(timeout: 10))
+        email.tap(); email.typeText("invalid-email")
+        XCTAssertTrue(app.staticTexts["auth.emailError"].exists)
+        app.swipeUp()
+        app.buttons["auth.toggle"].tap()
+        let password = app.secureTextFields["auth.password"]
+        password.tap(); password.typeText("abcdefgh")
+        XCTAssertTrue(app.staticTexts["auth.passwordError"].exists)
+        password.typeText("A!")
+        XCTAssertFalse(app.staticTexts["auth.passwordError"].exists)
+        app.swipeUp()
+        let confirmation = app.secureTextFields["auth.confirmPassword"]
+        confirmation.tap(); confirmation.typeText("different")
+        XCTAssertTrue(app.staticTexts["auth.passwordMismatch"].exists)
+    }
+
+    @MainActor
     func testSignupEmailLinkInstructions() throws {
         let app = XCUIApplication()
         app.launchArguments = ["-ui-testing-auth", "-care.auth.pendingSignupEmail", "signup@example.com"]
+        app.launchArguments += ["-care.language", "vi"]
         app.launch()
         XCTAssertTrue(app.staticTexts["auth.checkEmail"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.textFields["auth.otp"].exists)
@@ -75,6 +101,7 @@ final class StitchAppearanceTests: XCTestCase {
     func testProfileMeasurementAndSettingsNavigation() throws {
         let app = XCUIApplication()
         app.launchArguments = ["-demo"]
+        app.launchArguments += ["-care.language", "vi"]
         app.launch()
         let profile = app.buttons["Hồ sơ Bé An"]
         XCTAssertTrue(profile.waitForExistence(timeout: 10))
@@ -95,6 +122,7 @@ final class StitchAppearanceTests: XCTestCase {
     func testMedicalDetailAndTemperatureLayouts() throws {
         let app = XCUIApplication()
         app.launchArguments = ["-demo"]
+        app.launchArguments += ["-care.language", "vi"]
         app.launch()
         XCTAssertTrue(app.buttons["tab.diary"].waitForExistence(timeout: 10))
         app.buttons["tab.diary"].tap()
@@ -117,6 +145,7 @@ final class StitchAppearanceTests: XCTestCase {
     func testIllnessAndReportNavigation() throws {
         let app = XCUIApplication()
         app.launchArguments = ["-demo"]
+        app.launchArguments += ["-care.language", "vi"]
         app.launch()
         let tracking = app.buttons["Theo dõi và lịch nhắc"]
         XCTAssertTrue(tracking.waitForExistence(timeout: 10))
@@ -143,6 +172,7 @@ final class StitchAppearanceTests: XCTestCase {
     func testActivityPickerAndVoiceLayout() throws {
         let app = XCUIApplication()
         app.launchArguments = ["-demo"]
+        app.launchArguments += ["-care.language", "vi"]
         app.launch()
         let group = app.buttons["medicalGroupButton"]
         XCTAssertTrue(group.waitForExistence(timeout: 10))

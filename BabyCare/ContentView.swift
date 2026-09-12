@@ -8,30 +8,32 @@ struct ContentView: View {
     @AppStorage("care.textSize") private var textSize = "system"
     @State private var selectedTab: CareTab = .quick
 
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         Group {
             if viewModel.state.phase == .idle || viewModel.state.phase == .loading {
                 CareSplashView()
             } else if viewModel.state.phase == .failed {
                 ContentUnavailableView {
-                    Label("Không đọc được dữ liệu", systemImage: "externaldrive.badge.exclamationmark")
-                } description: { Text(viewModel.state.error ?? "Hãy thử lại.") }
-                actions: { Button("Thử lại") { Task { await viewModel.send(.load) } } }
+                    Label(L10n.text("Không đọc được dữ liệu"), systemImage: "externaldrive.badge.exclamationmark")
+                } description: { Text(viewModel.state.error ?? L10n.text("Hãy thử lại.")) }
+                actions: { Button(L10n.text("Thử lại")) { Task { await viewModel.send(.load) } } }
             } else if viewModel.hasOnboarded {
                 TabView(selection: $selectedTab) {
                     Tab(value: .quick) {
                         NavigationStack { QuickLogView(selectedTab: $selectedTab).safeAreaInset(edge: .bottom, spacing: 0) { CareBottomTabs(selection: $selectedTab) } }
-                    } label: { Label("Ghi nhanh", systemImage: "bolt") }
+                    } label: { Label(L10n.text("Ghi nhanh"), systemImage: "bolt") }
                     Tab(value: .diary) {
                         NavigationStack { DiaryView().safeAreaInset(edge: .bottom, spacing: 0) { CareBottomTabs(selection: $selectedTab) } }
-                    } label: { Label("Nhật ký", systemImage: "book.pages") }
+                    } label: { Label(L10n.text("Nhật ký"), systemImage: "book.pages") }
                     Tab(value: .statistics) {
                         NavigationStack {
                             StatisticsView()
                                 .safeAreaInset(edge: .top, spacing: 0) { CareBabyHeaderView() }
                                 .safeAreaInset(edge: .bottom, spacing: 0) { CareBottomTabs(selection: $selectedTab) }
                         }
-                    } label: { Label("Thống kê", systemImage: "chart.bar") }
+                    } label: { Label(L10n.text("Thống kê"), systemImage: "chart.bar") }
                 }
                 .toolbar(.hidden, for: .tabBar)
                 .id(viewModel.baby.id)
@@ -52,13 +54,12 @@ struct ContentView: View {
 //            }
 //        }
         .task { if viewModel.state.phase == .idle { await viewModel.send(.load) } }
-        .alert("Chưa hoàn tất thao tác", isPresented: Binding(
+        .alert(L10n.text("Chưa hoàn tất thao tác"), isPresented: Binding(
             get: { viewModel.state.phase == .ready && viewModel.state.error != nil },
             set: { if !$0 { Task { await viewModel.send(.dismissError) } } }
         )) {
-            Button("Đóng", role: .cancel) { Task { await viewModel.send(.dismissError) } }
-        } message: { Text(viewModel.state.error ?? "Hãy thử lại.") }
-        .environment(\.locale, Locale(identifier: "vi_VN"))
+            Button(L10n.text("Đóng"), role: .cancel) { Task { await viewModel.send(.dismissError) } }
+        } message: { Text(viewModel.state.error ?? L10n.text("Hãy thử lại.")) }
         .dynamicTypeSize(textSize == "largest" ? .accessibility1 : textSize == "large" ? .xxxLarge : systemTextSize)
         .preferredColorScheme(.light)
         .overlay(alignment: .bottom) {
@@ -78,11 +79,13 @@ struct ContentView: View {
 /// Flat, full-width Stitch navigation; each root owns its inset so pushed forms hide it.
 struct CareBottomTabs: View {
     @Binding var selection: CareTab
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         HStack(spacing: 0) {
-            tab(.quick, title: "Ghi nhanh", symbol: "bolt", identifier: "tab.quick")
-            tab(.diary, title: "Nhật ký", symbol: "auto_stories", identifier: "tab.diary")
-            tab(.statistics, title: "Thống kê", symbol: "bar_chart", identifier: "tab.statistics")
+            tab(.quick, title: L10n.text("Ghi nhanh"), symbol: "bolt", identifier: "tab.quick")
+            tab(.diary, title: L10n.text("Nhật ký"), symbol: "auto_stories", identifier: "tab.diary")
+            tab(.statistics, title: L10n.text("Thống kê"), symbol: "bar_chart", identifier: "tab.statistics")
         }.padding(.top, 10).padding(.bottom, 4)
             .background(CareTheme.surface.ignoresSafeArea(edges: .bottom))
             .overlay(alignment: .top) { Rectangle().fill(CareTheme.border).frame(height: 0.5) }

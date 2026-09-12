@@ -12,17 +12,19 @@ struct QuickLogView: View {
     private var lastTemperature: CareActivity? { viewModel.activities.first { $0.kind == .temperature } }
     private var lastMilk: CareActivity? { viewModel.activities.first { $0.kind == .milk } }
 
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(Date.now, format: .dateTime.weekday(.wide).day().month())
                             .font(CareFont.caption).foregroundStyle(CareTheme.secondary)
-                        Text("Ghi nhanh").font(CareFont.title.bold())
+                        Text(L10n.text("Ghi nhanh")).font(CareFont.title.bold())
                     }
                     Spacer()
-                    CareBadge(title: viewModel.isDemo ? "Dữ liệu mẫu" : viewModel.state.storage == .device ? "Trên thiết bị" : "Cloud")
+                    CareBadge(title: viewModel.isDemo ? L10n.text("Dữ liệu mẫu") : viewModel.state.storage == .device ? L10n.text("Trên thiết bị") : "Cloud")
                 }
                 if viewModel.isTrackingIllness { illnessCard }
                 if let nextReminder = viewModel.medicationReminders.filter({ $0.enabled }).min(by: { $0.nextDate < $1.nextDate }) {
@@ -36,8 +38,8 @@ struct QuickLogView: View {
                         CareIcon(name: "Stitch_mic", color: CareTheme.accent, size: 24)
                             .frame(width: 48, height: 48).background(CareTheme.accent.opacity(0.1), in: .circle)
                         VStack(alignment: .leading, spacing: 5) {
-                            Text("Nói để ghi").font(CareFont.headline)
-                            Text("Ví dụ: “Bé uống 120 ml sữa lúc 7 giờ sáng”")
+                            Text(L10n.text("Nói để ghi")).font(CareFont.headline)
+                            Text(L10n.text("Ví dụ: “Bé uống 120 ml sữa lúc 7 giờ sáng”"))
                                 .font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                         }
                         Spacer(minLength: 0)
@@ -45,15 +47,15 @@ struct QuickLogView: View {
                         .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(CareTheme.accent.opacity(0.2)))
                 }.buttonStyle(.plain)
                 HStack {
-                    Text("Hoạt động gần đây").font(CareFont.headline)
+                    Text(L10n.text("Hoạt động gần đây")).font(CareFont.headline)
                     Spacer()
-                    Button("Xem tất cả") { selectedTab = .diary }.font(CareFont.subheadline.weight(.semibold))
+                    Button(L10n.text("Xem tất cả")) { selectedTab = .diary }.font(CareFont.subheadline.weight(.semibold))
                 }
                 if recent.isEmpty {
                     CareCard {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Chưa có ghi nhận").font(CareFont.headline)
-                            Text("Chọn một hoạt động phía trên để bắt đầu chăm sóc bé mỗi ngày.")
+                            Text(L10n.text("Chưa có ghi nhận")).font(CareFont.headline)
+                            Text(L10n.text("Chọn một hoạt động phía trên để bắt đầu chăm sóc bé mỗi ngày."))
                                 .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
                         }
                     }
@@ -70,7 +72,7 @@ struct QuickLogView: View {
                     }
                 }
                 if !viewModel.isTrackingIllness {
-                    NavigationLink("Bắt đầu theo dõi ốm") { IllnessTrackingView() }
+                    NavigationLink(L10n.text("Bắt đầu theo dõi ốm")) { IllnessTrackingView() }
                         .font(CareFont.subheadline.weight(.semibold)).frame(maxWidth: .infinity, minHeight: 44)
                 }
             }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
@@ -94,20 +96,20 @@ struct QuickLogView: View {
                     .frame(width: 44, height: 44).background(CareTheme.medicalBackground, in: .rect(cornerRadius: 12))
                 VStack(alignment: .leading, spacing: 5) {
                     Text(reminder.name).font(CareFont.headline)
-                    Text("\(reminder.amount) \(reminder.unit) · Theo lịch đã lưu").font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                    Text(L10n.text("{0} {1} · Theo lịch đã lưu", "\(reminder.amount)", "\(reminder.unit)")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                 }
             }
             TimelineView(.periodic(from: .now, by: 1)) { context in
                 VStack(alignment: .leading, spacing: 8) {
-                    Label("MỐC TIẾP THEO: \(reminder.nextDate.careFormatted(date: .omitted, time: .shortened))", systemImage: "calendar")
+                    Label(L10n.text("MỐC TIẾP THEO: {0}", "\(reminder.nextDate.careFormatted(date: .omitted, time: .shortened))"), systemImage: "calendar")
                         .font(CareFont.caption)
                     if reminder.nextDate > context.date {
                         HStack {
                             Image(systemName: "hourglass")
-                            Text("Còn")
+                            Text(L10n.text("Còn"))
                             Text(timerInterval: context.date...reminder.nextDate, countsDown: true).monospacedDigit()
                         }.font(CareFont.headline)
-                    } else { Text("Đã đến mốc theo lịch").font(CareFont.headline) }
+                    } else { Text(L10n.text("Đã đến mốc theo lịch")).font(CareFont.headline) }
                 }.foregroundStyle(CareTheme.accent).frame(maxWidth: .infinity, alignment: .leading)
                     .padding(12).background(CareTheme.feedingBackground, in: .rect(cornerRadius: 12))
             }
@@ -123,34 +125,34 @@ struct QuickLogView: View {
             ActivityFormView(kind: .medicine,
                 activity: CareActivity(kind: .medicine, value: reminder.amount, unit: reminder.unit, detail: reminder.name),
                 completingReminderID: reminder.id)
-        } label: { Label("Ghi đã dùng", systemImage: "checkmark.circle").font(CareFont.subheadline.weight(.semibold)).padding(12) }
+        } label: { Label(L10n.text("Ghi đã dùng"), systemImage: "checkmark.circle").font(CareFont.subheadline.weight(.semibold)).padding(12) }
             .buttonStyle(.plain).foregroundStyle(.white)
             .background(CareTheme.accent, in: .rect(cornerRadius: 12))
     }
 
     private var reminderScheduleLink: some View {
         NavigationLink { IllnessTrackingView() } label: {
-            Label("Xem lịch thuốc", systemImage: "calendar").font(CareFont.subheadline).padding(12)
+            Label(L10n.text("Xem lịch thuốc"), systemImage: "calendar").font(CareFont.subheadline).padding(12)
         }.buttonStyle(.plain).foregroundStyle(CareTheme.text)
             .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(CareTheme.border))
     }
 
     private var illnessCard: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("TRẠNG THÁI ĐANG DIỄN RA").font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.secondary)
+            Text(L10n.text("TRẠNG THÁI ĐANG DIỄN RA")).font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.secondary)
             CareCard {
                 VStack(alignment: .leading, spacing: 14) {
                     HStack(spacing: 12) {
                         CareIcon(name: "Stitch_thermostat", color: CareTheme.medical)
                             .frame(width: 44, height: 44).background(CareTheme.medicalBackground, in: .rect(cornerRadius: 12))
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Đang theo dõi ốm").font(CareFont.headline).foregroundStyle(CareTheme.medical)
+                            Text(L10n.text("Đang theo dõi ốm")).font(CareFont.headline).foregroundStyle(CareTheme.medical)
                             Text(viewModel.illnessTitle).font(CareFont.subheadline)
                         }
                     }
                     if let temperature = lastTemperature {
                         VStack(alignment: .leading, spacing: 6) {
-                            Text("Nhiệt độ gần nhất").font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                            Text(L10n.text("Nhiệt độ gần nhất")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                             HStack(alignment: .firstTextBaseline) {
                                 Text(temperature.formattedValue).font(CareFont.title2.bold()).foregroundStyle(CareTheme.medical)
                                 Spacer()
@@ -168,12 +170,12 @@ struct QuickLogView: View {
     }
     private var temperatureLink: some View {
         NavigationLink { ActivityFormView(kind: .temperature) } label: {
-            Label { Text("Đo nhiệt độ") } icon: { CareIcon(name: "Stitch_device_thermostat", color: .white, size: 20) }
+            Label { Text(L10n.text("Đo nhiệt độ")) } icon: { CareIcon(name: "Stitch_device_thermostat", color: .white, size: 20) }
         }.buttonStyle(CareActionStyle())
     }
     private var illnessLink: some View {
         NavigationLink { IllnessTrackingView() } label: {
-            Text("Xem theo dõi").font(CareFont.subheadline.weight(.semibold)).frame(maxWidth: .infinity, minHeight: 32)
+            Text(L10n.text("Xem theo dõi")).font(CareFont.subheadline.weight(.semibold)).frame(maxWidth: .infinity, minHeight: 32)
         }.buttonStyle(.plain).padding(12).foregroundStyle(CareTheme.medical)
             .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(CareTheme.medical))
     }
@@ -182,35 +184,35 @@ struct QuickLogView: View {
             HStack(spacing: 14) {
                 CareIcon(name: "Stitch_bedtime", color: CareTheme.routine)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Bé đang ngủ").font(CareFont.headline)
+                    Text(L10n.text("Bé đang ngủ")).font(CareFont.headline)
                     Text(start, style: .timer).monospacedDigit().foregroundStyle(CareTheme.routine)
                 }
                 Spacer()
-                Button("Kết thúc") {
+                Button(L10n.text("Kết thúc")) {
                     guard let minutes = Int(exactly: (Date.now.timeIntervalSince(start) / 60).rounded(.towardZero)) else {
-                        Task { await viewModel.send(.showMessage("Thời điểm bắt đầu giấc ngủ không hợp lệ.")) }
+                        Task { await viewModel.send(.showMessage(L10n.text("Thời điểm bắt đầu giấc ngủ không hợp lệ."))) }
                         return
                     }
                     sleepReview = CareActivity(kind: .sleep, date: start,
-                        value: String(max(1, minutes)), unit: "phút", detail: "Giấc ngủ")
+                        value: String(max(1, minutes)), unit: "phút", detail: L10n.text("Giấc ngủ"))
                 }.buttonStyle(.bordered)
             }
         }
     }
     private var suggestions: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("GỢI Ý LÚC NÀY").font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.secondary)
+            Text(L10n.text("GỢI Ý LÚC NÀY")).font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.secondary)
             CareCard {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack(spacing: 12) {
                         CareIcon(name: "Stitch_water_bottle", color: CareTheme.feeding)
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Ghi cữ sữa").font(CareFont.headline)
-                            if let lastMilk { Text("Lần trước: \(lastMilk.formattedValue). Kiểm tra lượng mới trước khi lưu.").font(CareFont.caption).foregroundStyle(CareTheme.secondary) }
+                            Text(L10n.text("Ghi cữ sữa")).font(CareFont.headline)
+                            if let lastMilk { Text(L10n.text("Lần trước: {0}. Kiểm tra lượng mới trước khi lưu.", "\(lastMilk.formattedValue)")).font(CareFont.caption).foregroundStyle(CareTheme.secondary) }
                         }
                     }
                     NavigationLink { ActivityFormView(kind: .milk) } label: {
-                        Label { Text("Ghi cữ sữa") } icon: { CareIcon(name: "Stitch_add_circle", color: .white, size: 20) }
+                        Label { Text(L10n.text("Ghi cữ sữa")) } icon: { CareIcon(name: "Stitch_add_circle", color: .white, size: 20) }
                     }.buttonStyle(CareActionStyle(color: CareTheme.feeding))
                 }
             }
@@ -220,11 +222,11 @@ struct QuickLogView: View {
                         HStack(spacing: 12) {
                             CareIcon(name: "Stitch_bedtime", color: CareTheme.routine)
                             VStack(alignment: .leading, spacing: 4) {
-                                Text("Giấc ngủ của bé").font(CareFont.headline)
-                                Text("Bấm khi bé bắt đầu ngủ để tính thời gian.").font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                                Text(L10n.text("Giấc ngủ của bé")).font(CareFont.headline)
+                                Text(L10n.text("Bấm khi bé bắt đầu ngủ để tính thời gian.")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                             }
                         }
-                        CarePrimaryButton(title: "Bắt đầu ngủ", color: CareTheme.routine, icon: "Stitch_play_arrow") {
+                        CarePrimaryButton(title: L10n.text("Bắt đầu ngủ"), color: CareTheme.routine, icon: "Stitch_play_arrow") {
                             Task { await viewModel.send(.commit(.startSleep(babyID: viewModel.baby.id, date: Date()))) }
                         }.tint(CareTheme.routine)
                     }
@@ -234,7 +236,7 @@ struct QuickLogView: View {
     }
     private var categories: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("DANH MỤC GHI CHÉP").font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.secondary)
+            Text(L10n.text("DANH MỤC GHI CHÉP")).font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.secondary)
             ForEach(ActivityGroup.allCases) { group in
                 Button { selectedGroup = group } label: {
                     CareCard {
@@ -242,8 +244,8 @@ struct QuickLogView: View {
                             CareIcon(name: group.assetName, color: group.color, size: 24)
                                 .frame(width: 48, height: 48).background(group.background, in: .rect(cornerRadius: 12))
                             VStack(alignment: .leading, spacing: 5) {
-                                Text(group == .medical ? "Y tế & Triệu chứng" : group == .feeding ? "Ăn uống & Dinh dưỡng" : "Ngủ & Sinh hoạt").font(CareFont.headline)
-                                Text(group == .medical ? "Uống thuốc, nhiệt độ, triệu chứng, khám bệnh" : group == .feeding ? "Sữa, bữa ăn, uống nước" : "Giấc ngủ, tắm, thay tã / vệ sinh")
+                                Text(group == .medical ? L10n.text("Y tế & Triệu chứng") : group == .feeding ? L10n.text("Ăn uống & Dinh dưỡng") : L10n.text("Ngủ & Sinh hoạt")).font(CareFont.headline)
+                                Text(group == .medical ? L10n.text("Uống thuốc, nhiệt độ, triệu chứng, khám bệnh") : group == .feeding ? L10n.text("Sữa, bữa ăn, uống nước") : L10n.text("Giấc ngủ, tắm, thay tã / vệ sinh"))
                                     .font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                             }
                             Spacer(minLength: 0)

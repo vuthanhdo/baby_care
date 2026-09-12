@@ -133,40 +133,39 @@ import UserNotifications
         busy = true; error = nil; message = nil
         defer { busy = false }
         let email = email.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard email.contains("@"), !email.contains(" ") else { error = "Nhập email hợp lệ."; return }
+        if let validation = AuthValidation.emailError(email) { error = validation; return }
         if case .signUp = action {
             if let validation = AuthValidation.signupError(password: password, confirmation: confirmation) { error = validation; return }
-            guard !AuthCaptchaConfiguration.isEnabled || AuthCaptchaConfiguration.pageURL != nil else { error = "Đăng ký chưa khả dụng: cần cấu hình xác minh chống spam."; return }
+            guard !AuthCaptchaConfiguration.isEnabled || AuthCaptchaConfiguration.pageURL != nil else { error = L10n.text("Đăng ký chưa khả dụng: cần cấu hình xác minh chống spam."); return }
         }
         if AuthCaptchaConfiguration.isEnabled && (captchaToken?.isEmpty ?? true) {
-            error = "Vui lòng hoàn tất xác minh chống spam."; return
+            error = L10n.text("Vui lòng hoàn tất xác minh chống spam."); return
         }
         do {
             switch action {
             case .signIn:
                 _ = try await client.auth.signIn(email: email, password: password, captchaToken: AuthCaptchaConfiguration.isEnabled ? captchaToken : nil)
             case .signUp:
-                guard password.count >= 8 else { error = "Mật khẩu cần ít nhất 8 ký tự."; return }
                 let response = try await client.auth.signUp(email: email, password: password, redirectTo: Self.callback, captchaToken: AuthCaptchaConfiguration.isEnabled ? captchaToken : nil)
                 if response.session == nil {
                     pendingSignupEmail = email
                     defaults.set(email, forKey: Self.pendingSignupKey)
-                    message = "Đã gửi email tới \(email). Bấm liên kết trong email để xác minh tài khoản."
+                    message = L10n.text("Đã gửi email tới {0}. Bấm liên kết trong email để xác minh tài khoản.", "\(email)")
                 }
             case .resetPassword:
                 try await client.auth.resetPasswordForEmail(email, redirectTo: Self.callback, captchaToken: AuthCaptchaConfiguration.isEnabled ? captchaToken : nil)
-                message = "Nếu tài khoản tồn tại, bạn sẽ nhận được email đặt lại mật khẩu."
+                message = L10n.text("Nếu tài khoản tồn tại, bạn sẽ nhận được email đặt lại mật khẩu.")
             }
         } catch { self.error = authMessage(error) }
     }
     func resendSignupConfirmation(captchaToken: String? = nil) async {
         guard !busy, let email = pendingSignupEmail else { return }
-        guard !AuthCaptchaConfiguration.isEnabled || !(captchaToken?.isEmpty ?? true) else { error = "Vui lòng hoàn tất xác minh chống spam."; return }
+        guard !AuthCaptchaConfiguration.isEnabled || !(captchaToken?.isEmpty ?? true) else { error = L10n.text("Vui lòng hoàn tất xác minh chống spam."); return }
         busy = true; error = nil; message = nil
         defer { busy = false }
         do {
             try await client.auth.resend(email: email, type: .signup, emailRedirectTo: Self.callback, captchaToken: AuthCaptchaConfiguration.isEnabled ? captchaToken : nil)
-            message = "Đã gửi lại email xác thực tới \(email)."
+            message = L10n.text("Đã gửi lại email xác thực tới {0}.", "\(email)")
         } catch { self.error = authMessage(error) }
     }
     func cancelSignupVerification() {
@@ -182,19 +181,19 @@ import UserNotifications
         } catch {
             let nsError = error as NSError
             if nsError.domain == "com.apple.AuthenticationServices.WebAuthenticationSession", nsError.code == 1 { return }
-            self.error = "Không thể đăng nhập bằng Google. Hãy thử lại hoặc dùng email và mật khẩu."
+            self.error = L10n.text("Không thể đăng nhập bằng Google. Hãy thử lại hoặc dùng email và mật khẩu.")
         }
     }
     func handleCallback(_ url: URL) async {
         guard url.scheme == "babycare", url.host == "auth-callback" else { return }
         do { _ = try await client.auth.session(from: url) }
-        catch { self.error = "Liên kết không còn hiệu lực. Hãy yêu cầu email mới." }
+        catch { self.error = L10n.text("Liên kết không còn hiệu lực. Hãy yêu cầu email mới.") }
     }
     func updatePassword(_ password: String) async {
         guard !busy else { return }; busy = true; error = nil
         defer { busy = false }
-        guard password.count >= 8 else { error = "Mật khẩu cần ít nhất 8 ký tự."; return }
-        do { _ = try await client.auth.update(user: UserAttributes(password: password)); needsNewPassword = false; message = "Đã đổi mật khẩu." }
+        if let validation = AuthValidation.passwordError(password) { error = validation; return }
+        do { _ = try await client.auth.update(user: UserAttributes(password: password)); needsNewPassword = false; message = L10n.text("Đã đổi mật khẩu.") }
         catch { self.error = authMessage(error) }
     }
     func signOut() async {
@@ -205,10 +204,10 @@ import UserNotifications
         defaults.set("cloud", forKey: "care.mode")
         defer { busy = false }
         do { try await client.auth.signOut(scope: .local) }
-        catch { message = "Đã thoát trên thiết bị. Chưa liên hệ được server để thu hồi phiên từ xa." }
+        catch { message = L10n.text("Đã thoát trên thiết bị. Chưa liên hệ được server để thu hồi phiên từ xa.") }
     }
     private func authMessage(_ error: Error) -> String {
-        if error is URLError { return "Không kết nối được dịch vụ đăng nhập. Hãy kiểm tra mạng." }
-        return "Chưa hoàn tất đăng nhập. Kiểm tra email, mật khẩu hoặc xác nhận email. Nếu gửi email thất bại, hãy thử lại sau hoặc kiểm tra cấu hình gửi email của project."
+        if error is URLError { return L10n.text("Không kết nối được dịch vụ đăng nhập. Hãy kiểm tra mạng.") }
+        return L10n.text("Chưa hoàn tất đăng nhập. Kiểm tra email, mật khẩu hoặc xác nhận email. Nếu gửi email thất bại, hãy thử lại sau hoặc kiểm tra cấu hình gửi email của project.")
     }
 }

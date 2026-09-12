@@ -17,7 +17,9 @@ enum CareTheme {
 
 struct CareCard<Content: View>: View {
     @ViewBuilder var content: Content
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         content
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(16)
@@ -31,7 +33,9 @@ struct CareIcon: View {
     let name: String
     var color: Color = CareTheme.accent
     var size: CGFloat = 22
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         Image(name).resizable().renderingMode(.template).scaledToFit()
             .foregroundStyle(color).frame(width: size, height: size)
             .accessibilityHidden(true)
@@ -42,21 +46,29 @@ struct CarePrimaryButton: View {
     let title: String
     var color: Color = CareTheme.accent
     var icon: String? = nil
+    var isLoading = false
     let action: () -> Void
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         Button(action: action) {
             HStack(spacing: 8) {
-                if let icon { CareIcon(name: icon, color: .white, size: 22) }
+                if isLoading { ProgressView().tint(.white) }
+                else if let icon { CareIcon(name: icon, color: .white, size: 22) }
                 Text(title).multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
             }
         }.buttonStyle(CareActionStyle(color: color))
+            .disabled(isLoading)
+            .accessibilityValue(isLoading ? L10n.text("Đang xử lý") : "")
     }
 }
 
 struct CareSectionTitle: View {
     let title: String
     var subtitle: String? = nil
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         VStack(alignment: .leading, spacing: 4) {
             Text(title).font(CareFont.headline).foregroundStyle(CareTheme.text)
             if let subtitle { Text(subtitle).font(CareFont.subheadline).foregroundStyle(CareTheme.secondary) }
@@ -67,7 +79,9 @@ struct CareSectionTitle: View {
 struct CareBadge: View {
     let title: String
     var color: Color = CareTheme.accent
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         Text(title).font(CareFont.caption.weight(.semibold)).foregroundStyle(color)
             .padding(.horizontal, 9).padding(.vertical, 5)
             .background(color.opacity(0.09), in: .capsule)
@@ -76,7 +90,9 @@ struct CareBadge: View {
 
 struct CareActivityRow: View {
     let activity: CareActivity
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         HStack(spacing: 12) {
             CareIcon(name: activity.kind.assetName, color: activity.kind.group.color)
                 .frame(width: 44, height: 44)
@@ -95,7 +111,9 @@ struct CareActivityRow: View {
 
 struct CareBabyHeaderView: View {
     @Environment(BabyCareViewModel.self) private var viewModel
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         HStack(spacing: 12) {
             NavigationLink { BabyProfileView() } label: {
                 HStack(spacing: 10) {
@@ -105,26 +123,26 @@ struct CareBabyHeaderView: View {
                         Text(viewModel.baby.ageDescription).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                     }
                 }
-            }.buttonStyle(.plain).accessibilityLabel("Hồ sơ \(viewModel.baby.name)")
+            }.buttonStyle(.plain).accessibilityLabel(L10n.text("Hồ sơ {0}", "\(viewModel.baby.name)"))
             if viewModel.babies.count > 1 {
                 Menu {
                     ForEach(viewModel.babies) { baby in
                         Button(baby.name) { Task { await viewModel.send(.commit(.selectBaby(baby.id))) } }
                     }
                 } label: { Image(systemName: "chevron.down").font(CareFont.caption) }
-                .accessibilityLabel("Chọn bé")
+                .accessibilityLabel(L10n.text("Chọn bé"))
             }
             Spacer()
             NavigationLink { SettingsView() } label: {
                 CareIcon(name: "Stitch_settings", color: CareTheme.text, size: 24)
             }.buttonStyle(.plain).frame(width: 48, height: 48)
                 .background(CareTheme.surface, in: .circle)
-                .overlay(Circle().strokeBorder(CareTheme.border)).accessibilityLabel("Cài đặt")
+                .overlay(Circle().strokeBorder(CareTheme.border)).accessibilityLabel(L10n.text("Cài đặt")).accessibilityIdentifier("app.settings")
             NavigationLink { IllnessTrackingView() } label: {
                 CareIcon(name: "Stitch_notifications", color: CareTheme.text, size: 24)
             }.buttonStyle(.plain).frame(width: 48, height: 48)
                 .background(CareTheme.surface, in: .circle)
-                .overlay(Circle().strokeBorder(CareTheme.border)).accessibilityLabel("Theo dõi và lịch nhắc")
+                .overlay(Circle().strokeBorder(CareTheme.border)).accessibilityLabel(L10n.text("Theo dõi và lịch nhắc"))
         }.padding(.horizontal, 20).padding(.vertical, 8)
             .background(CareTheme.background)
             .overlay(alignment: .bottom) { Rectangle().fill(CareTheme.border).frame(height: 0.5) }
@@ -139,7 +157,7 @@ extension View {
 
 extension Date {
     func careFormatted(date: Date.FormatStyle.DateStyle, time: Date.FormatStyle.TimeStyle) -> String {
-        formatted(Date.FormatStyle(date: date, time: time).locale(Locale(identifier: "vi_VN")))
+        formatted(Date.FormatStyle(date: date, time: time).locale(AppLanguage.current.locale))
     }
 }
 
@@ -149,5 +167,39 @@ extension ActivityGroup {
     }
     var background: Color {
         switch self { case .medical: CareTheme.medicalBackground; case .feeding: CareTheme.feedingBackground; case .routine: CareTheme.routineBackground }
+    }
+}
+
+/// Keeps progress local to the button whose asynchronous action is running.
+struct CareAsyncButton: View {
+    let title: String
+    var role: ButtonRole? = nil
+    let action: @MainActor () async -> Void
+    @State private var isLoading = false
+
+    init(_ title: String, role: ButtonRole? = nil, action: @escaping @MainActor () async -> Void) {
+        self.title = title
+        self.role = role
+        self.action = action
+    }
+
+    @Environment(\.locale) private var appLocale
+    var body: some View {
+        let _ = appLocale
+        Button(role: role) {
+            guard !isLoading else { return }
+            isLoading = true
+            Task { @MainActor in
+                defer { isLoading = false }
+                await action()
+            }
+        } label: {
+            HStack(spacing: 8) {
+                if isLoading { ProgressView() }
+                Text(title)
+            }
+        }
+        .disabled(isLoading)
+        .accessibilityValue(isLoading ? L10n.text("Đang xử lý") : "")
     }
 }

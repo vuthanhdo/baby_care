@@ -12,11 +12,11 @@ nonisolated struct VoiceActivityParser {
             .replacingOccurrences(of: "[.!]\\s+(?=[\\p{L}])", with: ";", options: .regularExpression)
         let clauses = separated.components(separatedBy: CharacterSet(charactersIn: ";\n"))
         guard !transcript.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, clauses.count <= 10 else {
-            throw ParseError(message: "Chưa nghe rõ nội dung hoặc câu quá dài. Hãy nói lại từng hoạt động.")
+            throw ParseError(message: L10n.text("Chưa nghe rõ nội dung hoặc câu quá dài. Hãy nói lại từng hoạt động."))
         }
         return try clauses.enumerated().map { index, raw in
             do { return try parseOne(raw, now: now, calendar: calendar) }
-            catch { throw ParseError(message: "Câu \(index + 1): \(error.localizedDescription) Chưa lưu hoạt động nào.") }
+            catch { throw ParseError(message: L10n.text("Câu {0}: {1} Chưa lưu hoạt động nào.", "\(index + 1)", "\(error.localizedDescription)")) }
         }
     }
 
@@ -29,7 +29,7 @@ nonisolated struct VoiceActivityParser {
     private func parseOne(_ raw: String, now: Date, calendar: Calendar) throws -> CareActivity {
         let lowered = raw.lowercased()
         if lowered.range(of: "\\b(không(?! (?:phẩy|trăm))|chưa|đừng|sẽ|nên|cần|hoặc|hay là|định)\\b", options: .regularExpression) != nil {
-            throw ParseError(message: "Câu có phủ định, dự định hoặc lựa chọn chưa rõ. Hãy nói hoạt động đã xảy ra.")
+            throw ParseError(message: L10n.text("Câu có phủ định, dự định hoặc lựa chọn chưa rõ. Hãy nói hoạt động đã xảy ra."))
         }
         var text = VoicePhraseNormalizer.normalize(raw)
         if text.hasSuffix(".") { text.removeLast() }
@@ -102,10 +102,10 @@ nonisolated struct VoiceActivityParser {
         }
         guard var result = entry else {
             if text.contains("sữa") || text.contains("nước") || text.contains("bú") {
-                throw ParseError(message: "Đã nghe hoạt động ăn uống nhưng chưa rõ lượng hoặc đơn vị. Bạn có thể nói: Uống sữa một trăm hai mươi ml, hoặc bú mẹ mười phút.")
+                throw ParseError(message: L10n.text("Đã nghe hoạt động ăn uống nhưng chưa rõ lượng hoặc đơn vị. Bạn có thể nói: Uống sữa một trăm hai mươi ml, hoặc bú mẹ mười phút."))
             }
-            if text.contains("thuốc") { throw ParseError(message: "Cần tên thuốc, lượng thực tế và đơn vị, ví dụ ml hoặc viên. Không tự suy ra liều thuốc.") }
-            if text.contains("ngủ") { throw ParseError(message: "Đã nghe hoạt động ngủ. Hãy bổ sung thời lượng, chẳng hạn ngủ nửa tiếng hoặc ngủ một giờ rưỡi.") }
+            if text.contains("thuốc") { throw ParseError(message: L10n.text("Cần tên thuốc, lượng thực tế và đơn vị, ví dụ ml hoặc viên. Không tự suy ra liều thuốc.")) }
+            if text.contains("ngủ") { throw ParseError(message: L10n.text("Đã nghe hoạt động ngủ. Hãy bổ sung thời lượng, chẳng hạn ngủ nửa tiếng hoặc ngủ một giờ rưỡi.")) }
             throw unrecognized()
         }
         if let value = result.numericValue {
@@ -117,9 +117,9 @@ nonisolated struct VoiceActivityParser {
     }
 
     private func invalidTime() -> ParseError {
-        ParseError(message: "Thời điểm không hợp lệ hoặc nằm ở tương lai. Hãy nói rõ giờ và ngày; với giấc ngủ, giờ là lúc bắt đầu.")
+        ParseError(message: L10n.text("Thời điểm không hợp lệ hoặc nằm ở tương lai. Hãy nói rõ giờ và ngày; với giấc ngủ, giờ là lúc bắt đầu."))
     }
     private func unrecognized() -> ParseError {
-        ParseError(message: "Không xác định đủ hoạt động, số lượng và đơn vị. Ví dụ: Bé uống 120 ml sữa; Bé đo nhiệt độ 37,5 độ; Bé thay tã.")
+        ParseError(message: L10n.text("Không xác định đủ hoạt động, số lượng và đơn vị. Ví dụ: Bé uống 120 ml sữa; Bé đo nhiệt độ 37,5 độ; Bé thay tã."))
     }
 }

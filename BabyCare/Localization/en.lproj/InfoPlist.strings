@@ -1,0 +1,2 @@
+"NSMicrophoneUsageDescription" = "BabyCare uses the microphone when you record a care activity by voice.";
+"NSSpeechRecognitionUsageDescription" = "BabyCare converts Vietnamese speech into activity text. Audio may be sent to Apple for recognition.";

@@ -20,10 +20,10 @@ enum InsightData {
         CareValidation.number(text)
     }
     static func format(_ value: Double, digits: Int = 1) -> String {
-        value.formatted(.number.locale(Locale(identifier: "vi_VN")).precision(.fractionLength(0...digits)))
+        value.formatted(.number.locale(AppLanguage.current.locale).precision(.fractionLength(0...digits)))
     }
     static func intervalLabel(_ interval: DateInterval) -> String {
-        let style = Date.FormatStyle().day().month().hour().minute().locale(Locale(identifier: "vi_VN"))
+        let style = Date.FormatStyle().day().month().hour().minute().locale(AppLanguage.current.locale)
         return "\(interval.start.formatted(style)) – \(interval.end.formatted(style))"
     }
     static func sum(_ activities: [CareActivity], kind: ActivityKind, unit: String) -> Double? {
@@ -48,7 +48,9 @@ enum InsightData {
 struct InsightBadge: View {
     let title: String
     var color = CareTheme.accent
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         Text(title).font(CareFont.caption.weight(.semibold)).foregroundStyle(color)
             .padding(.horizontal, 10).padding(.vertical, 5)
             .background(color.opacity(0.09), in: Capsule())
@@ -61,7 +63,9 @@ struct InsightMetricView: View {
     let subtitle: String
     let icon: String
     let color: Color
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         CareCard {
             VStack(alignment: .leading, spacing: 10) {
                 CareIcon(name: icon, color: color, size: 20)
@@ -76,7 +80,9 @@ struct InsightMetricView: View {
 
 struct InsightActivityRow: View {
     let activity: CareActivity
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         HStack(spacing: 12) {
             CareIcon(name: activity.kind.assetName, color: activity.kind.group.color, size: 20)
                 .padding(9).background(activity.kind.group.background, in: Circle())
@@ -107,21 +113,23 @@ struct TemperatureChartView: View {
         let values = points.compactMap { InsightData.number($0.value) }
         return ((values.min() ?? 37) - 0.5)...((values.max() ?? 38) + 0.5)
     }
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         VStack(alignment: .leading, spacing: 14) {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Diễn biến thân nhiệt").font(CareFont.headline)
-                    Text("Các điểm là lần đo đã ghi").font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                    Text(L10n.text("Diễn biến thân nhiệt")).font(CareFont.headline)
+                    Text(L10n.text("Các điểm là lần đo đã ghi")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                 }
                 Spacer()
                 Button { showList.toggle() } label: {
                     CareIcon(name: showList ? "Stitch_show_chart" : "Stitch_format_list_bulleted", color: CareTheme.accent, size: 20)
                 }.frame(minWidth: 44, minHeight: 44)
-                    .accessibilityLabel(showList ? "Xem biểu đồ" : "Xem dạng danh sách")
+                    .accessibilityLabel(showList ? L10n.text("Xem biểu đồ") : L10n.text("Xem dạng danh sách"))
             }
             if points.isEmpty {
-                Text("Chưa ghi nhận nhiệt độ trong khoảng này").font(CareFont.subheadline).foregroundStyle(CareTheme.secondary).frame(maxWidth: .infinity, minHeight: 120)
+                Text(L10n.text("Chưa ghi nhận nhiệt độ trong khoảng này")).font(CareFont.subheadline).foregroundStyle(CareTheme.secondary).frame(maxWidth: .infinity, minHeight: 120)
             } else if showList {
                 ForEach(points) { point in
                     NavigationLink { ActivityDetailView(activity: point) } label: { InsightActivityRow(activity: point) }
@@ -129,9 +137,9 @@ struct TemperatureChartView: View {
             } else {
                 Chart(points) { point in
                     if let value = InsightData.number(point.value) {
-                        LineMark(x: .value("Thời điểm", point.date), y: .value("Nhiệt độ °C", value))
+                        LineMark(x: .value(L10n.text("Thời điểm"), point.date), y: .value(L10n.text("Nhiệt độ °C"), value))
                             .foregroundStyle(CareTheme.accent).interpolationMethod(.linear)
-                        PointMark(x: .value("Thời điểm", point.date), y: .value("Nhiệt độ °C", value))
+                        PointMark(x: .value(L10n.text("Thời điểm"), point.date), y: .value(L10n.text("Nhiệt độ °C"), value))
                             .foregroundStyle(CareTheme.accent).symbolSize(selected?.id == point.id ? 90 : 35)
                     }
                 }
@@ -140,16 +148,16 @@ struct TemperatureChartView: View {
                 .chartXAxis { AxisMarks(values: .automatic(desiredCount: 3)) { _ in AxisValueLabel(format: .dateTime.day().month().hour()) } }
                 .chartXSelection(value: $selectedDate)
                 .frame(height: compact ? 150 : 195)
-                .accessibilityLabel("Biểu đồ nhiệt độ, \(points.count) lần đo. Có thể chuyển sang danh sách.")
+                .accessibilityLabel(L10n.text("Biểu đồ nhiệt độ, {0} lần đo. Có thể chuyển sang danh sách.", "\(points.count)"))
                 if points.count == 1 {
-                    Text("Cần thêm số đo để xem diễn biến").font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                    Text(L10n.text("Cần thêm số đo để xem diễn biến")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                 }
                 if let selected {
                     NavigationLink { ActivityDetailView(activity: selected) } label: {
                         HStack {
                             Text("\(selected.date.careFormatted(date: .abbreviated, time: .shortened)) · \(selected.value) °C")
                             Spacer()
-                            Text("Xem bản ghi").fontWeight(.semibold)
+                            Text(L10n.text("Xem bản ghi")).fontWeight(.semibold)
                         }.font(CareFont.caption).foregroundStyle(CareTheme.accent)
                     }
                 }
@@ -163,18 +171,20 @@ struct InsightDateRangeView: View {
     @State var start: Date
     @State var end: Date
     let apply: (DateInterval) -> Void
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         NavigationStack {
             Form {
-                DatePicker("Từ", selection: $start, in: ...Date.now)
-                DatePicker("Đến", selection: $end, in: ...Date.now)
-                if start > end { Text("Ngày bắt đầu phải trước ngày kết thúc").foregroundStyle(CareTheme.medical) }
+                DatePicker(L10n.text("Từ"), selection: $start, in: ...Date.now)
+                DatePicker(L10n.text("Đến"), selection: $end, in: ...Date.now)
+                if start > end { Text(L10n.text("Ngày bắt đầu phải trước ngày kết thúc")).foregroundStyle(CareTheme.medical) }
             }
-            .navigationTitle("Khoảng thời gian").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(L10n.text("Khoảng thời gian")).navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("Hủy") { dismiss() } }
+                ToolbarItem(placement: .cancellationAction) { Button(L10n.text("Hủy")) { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Áp dụng") { apply(DateInterval(start: start, end: end)); dismiss() }.disabled(start > end)
+                    Button(L10n.text("Áp dụng")) { apply(DateInterval(start: start, end: end)); dismiss() }.disabled(start > end)
                 }
             }
         }.presentationDetents([.medium, .large])

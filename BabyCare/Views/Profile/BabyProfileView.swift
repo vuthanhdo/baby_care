@@ -20,7 +20,9 @@ struct BabyProfileView: View {
         viewModel.measurements.filter { $0.height != nil }.max { $0.date < $1.date }
     }
 
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         ScrollView {
             VStack(spacing: 20) {
             CareFormCard {
@@ -31,7 +33,7 @@ struct BabyProfileView: View {
                                 CareIcon(name: "Stitch_photo_camera", color: .white, size: 16)
                                     .padding(8).background(CareTheme.accent, in: Circle())
                             }
-                    }.buttonStyle(.plain).accessibilityLabel("Đổi ảnh và chỉnh sửa hồ sơ bé")
+                    }.buttonStyle(.plain).accessibilityLabel(L10n.text("Đổi ảnh và chỉnh sửa hồ sơ bé"))
                     Text(viewModel.baby.name).font(CareFont.title2.bold())
                     ViewThatFits(in: .horizontal) {
                         HStack(spacing: 8) { birthdayLabel; genderLabel }
@@ -40,7 +42,7 @@ struct BabyProfileView: View {
                     Button { editingProfile = true } label: {
                         HStack(spacing: 8) {
                             CareIcon(name: "Stitch_edit", color: CareTheme.text, size: 18)
-                            Text("Chỉnh sửa thông tin hồ sơ").font(CareFont.subheadline.weight(.semibold))
+                            Text(L10n.text("Chỉnh sửa thông tin hồ sơ")).font(CareFont.subheadline.weight(.semibold))
                         }.frame(maxWidth: .infinity).padding(.vertical, 6)
                     }
                     .buttonStyle(CareActionStyle(color: CareTheme.text, outlined: true))
@@ -50,48 +52,48 @@ struct BabyProfileView: View {
 
             CareFormCard {
                 VStack(alignment: .leading, spacing: 16) {
-                    CareSectionTitle(title: "Chỉ số thể chất mới nhất", subtitle: "Theo ngày đo của từng chỉ số")
+                    CareSectionTitle(title: L10n.text("Chỉ số thể chất mới nhất"), subtitle: L10n.text("Theo ngày đo của từng chỉ số"))
                     HStack(alignment: .top, spacing: 12) {
-                        metric("Cân nặng", value: latestWeight?.weight, unit: "kg", date: latestWeight?.date, icon: "Stitch_scale")
-                        metric("Chiều dài", value: latestHeight?.height, unit: "cm", date: latestHeight?.date, icon: "Stitch_straighten")
+                        metric(L10n.text("Cân nặng"), value: latestWeight?.weight, unit: "kg", date: latestWeight?.date, icon: "Stitch_scale")
+                        metric(L10n.text("Chiều dài"), value: latestHeight?.height, unit: "cm", date: latestHeight?.date, icon: "Stitch_straighten")
                     }
                     Button { addingMeasurement = true } label: {
                         HStack {
                             CareIcon(name: "Stitch_add_circle", color: .white, size: 20)
-                            Text("Thêm số đo mới").font(CareFont.headline)
+                            Text(L10n.text("Thêm số đo mới")).font(CareFont.headline)
                         }.frame(maxWidth: .infinity).padding(.vertical, 6)
                     }.buttonStyle(CareActionStyle())
                 }.padding(.vertical, 8)
                 NavigationLink {
                     MeasurementHistoryView()
                 } label: {
-                    profileRow("Biểu đồ & lịch sử tăng trưởng", icon: "Stitch_query_stats", color: CareTheme.accent)
+                    profileRow(L10n.text("Biểu đồ & lịch sử tăng trưởng"), icon: "Stitch_query_stats", color: CareTheme.accent)
                 }
             }
 
-            CareFormCard(title: "Lưu ý Y tế & Chăm sóc") {
+            CareFormCard(title: L10n.text("Lưu ý Y tế & Chăm sóc")) {
                 Button { editingHealth = true } label: {
                     VStack(alignment: .leading, spacing: 12) {
-                        profileRow("Dị ứng & Phản ứng thuốc", icon: "Stitch_healing", color: CareTheme.medical)
-                        Text(viewModel.baby.allergies.isEmpty ? "Chưa cung cấp thông tin dị ứng" : viewModel.baby.allergies)
+                        profileRow(L10n.text("Dị ứng & Phản ứng thuốc"), icon: "Stitch_healing", color: CareTheme.medical)
+                        Text(viewModel.baby.allergies.isEmpty ? L10n.text("Chưa cung cấp thông tin dị ứng") : viewModel.baby.allergies)
                             .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
                     }.padding(.vertical, 6)
                 }.buttonStyle(.plain)
                 Button { editingHealth = true } label: {
                     VStack(alignment: .leading, spacing: 12) {
-                        profileRow("Thói quen & Lưu ý chăm sóc", icon: "Stitch_bedtime", color: CareTheme.routine)
-                        Text(viewModel.baby.healthNotes.isEmpty ? "Thêm thói quen hoặc lời dặn chăm sóc bé." : viewModel.baby.healthNotes)
+                        profileRow(L10n.text("Thói quen & Lưu ý chăm sóc"), icon: "Stitch_bedtime", color: CareTheme.routine)
+                        Text(viewModel.baby.healthNotes.isEmpty ? L10n.text("Thêm thói quen hoặc lời dặn chăm sóc bé.") : viewModel.baby.healthNotes)
                             .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
                     }.padding(.vertical, 6)
                 }.buttonStyle(.plain)
-                LabeledContent("Nhóm máu", value: viewModel.baby.bloodType.isEmpty ? "Chưa rõ" : viewModel.baby.bloodType)
+                LabeledContent(L10n.text("Nhóm máu"), value: L10n.text(viewModel.baby.bloodType.isEmpty ? "Chưa rõ" : viewModel.baby.bloodType))
                     .font(CareFont.subheadline)
             }
 
-            CareFormCard(title: "Bé trong gia đình · \(viewModel.babies.count) bé") {
+            CareFormCard(title: L10n.text("Bé trong gia đình · {0} bé", "\(viewModel.babies.count)")) {
                 ForEach(viewModel.babies) { baby in
                     Button {
-                        Task { await viewModel.send(.commit(.selectBaby(baby.id), message: "Đang xem bé \(baby.name)")) }
+                        Task { await viewModel.send(.commit(.selectBaby(baby.id), message: L10n.text("Đang xem bé {0}", "\(baby.name)"))) }
                     } label: {
                         HStack(spacing: 12) {
                             ProfileAvatarView(name: baby.name, imageData: baby.avatarData, size: 42)
@@ -103,23 +105,23 @@ struct BabyProfileView: View {
                             Spacer(minLength: 4)
                             if baby.id == viewModel.baby.id {
                                 CareIcon(name: "Stitch_check_circle", color: CareTheme.accent, size: 24)
-                                    .accessibilityLabel("Đang chọn")
+                                    .accessibilityLabel(L10n.text("Đang chọn"))
                             }
                         }.padding(12).background(baby.id == viewModel.baby.id ? CareTheme.accent.opacity(0.05) : CareTheme.background, in: .rect(cornerRadius: 12))
                             .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(baby.id == viewModel.baby.id ? CareTheme.accent.opacity(0.25) : CareTheme.border))
                     }.buttonStyle(.plain)
                 }
                 Button { addingBaby = true } label: {
-                    profileRow("Thêm hồ sơ bé", icon: "Stitch_add_circle", color: CareTheme.accent)
+                    profileRow(L10n.text("Thêm hồ sơ bé"), icon: "Stitch_add_circle", color: CareTheme.accent)
                 }.disabled(viewModel.babies.count >= CareDatabase.maximumBabies)
-                Text("\(viewModel.babies.count)/4 hồ sơ bé").font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
+                Text(L10n.text("{0}/4 hồ sơ bé", "\(viewModel.babies.count)")).font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
             }
             }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
         }
         .scrollContentBackground(.hidden)
         .background(CareTheme.background)
         .foregroundStyle(CareTheme.text)
-        .navigationTitle("Hồ sơ của bé")
+        .navigationTitle(L10n.text("Hồ sơ của bé"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)
@@ -127,7 +129,7 @@ struct BabyProfileView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink { SettingsView() } label: {
                     CareIcon(name: "Stitch_tune", color: CareTheme.accent, size: 22)
-                }.accessibilityLabel("Cài đặt")
+                }.accessibilityLabel(L10n.text("Cài đặt"))
             }
         }
         .sheet(isPresented: $editingProfile) { NavigationStack { ProfileEditorView(profile: viewModel.baby) } }
@@ -157,10 +159,10 @@ struct BabyProfileView: View {
                 CareIcon(name: icon, color: CareTheme.accent, size: 19)
             }
             if let value {
-                Text("\(value.formatted(.number.precision(.fractionLength(0...2)))) \(unit)")
+                Text("\(value.formatted(.number.precision(.fractionLength(0...2)).locale(AppLanguage.current.locale))) \(unit)")
                     .font(CareFont.title2.bold())
             } else {
-                Text("Chưa ghi nhận").font(CareFont.subheadline)
+                Text(L10n.text("Chưa ghi nhận")).font(CareFont.subheadline)
             }
             if let date { Text(date.careFormatted(date: .numeric, time: .omitted)).font(CareFont.caption).foregroundStyle(CareTheme.secondary) }
         }.frame(maxWidth: .infinity, alignment: .leading)
@@ -181,7 +183,9 @@ private struct ProfileEditorView: View {
         min(Date(), viewModel.activities.map(\.date).min() ?? Date(), viewModel.measurements.map(\.date).min() ?? Date())
     }
 
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         Form {
             Section {
                 PhotosPicker(selection: $photo, matching: .images) {
@@ -189,27 +193,27 @@ private struct ProfileEditorView: View {
                         ProfileAvatarView(name: profile.name, imageData: profile.avatarData, size: 80)
                         HStack {
                             CareIcon(name: "Stitch_photo_camera", color: CareTheme.accent, size: 18)
-                            Text("Chọn ảnh đại diện")
+                            Text(L10n.text("Chọn ảnh đại diện"))
                         }
                     }.frame(maxWidth: .infinity).padding(.vertical, 8)
                 }
                 if profile.avatarData != nil {
-                    Button("Dùng avatar chữ cái", role: .destructive) { profile.avatarData = nil; photo = nil }
+                    Button(L10n.text("Dùng avatar chữ cái"), role: .destructive) { profile.avatarData = nil; photo = nil }
                 }
                 if let photoError { Text(photoError).font(CareFont.footnote).foregroundStyle(CareTheme.medical) }
-                TextField("Tên gọi ở nhà · Bắt buộc", text: $profile.name)
-                DatePicker("Ngày sinh", selection: $profile.birthDate, in: ...latestAllowedBirthDate, displayedComponents: .date)
-                Picker("Giới tính", selection: $profile.gender) {
+                TextField(L10n.text("Tên gọi ở nhà · Bắt buộc"), text: $profile.name)
+                DatePicker(L10n.text("Ngày sinh"), selection: $profile.birthDate, in: ...latestAllowedBirthDate, displayedComponents: .date)
+                Picker(L10n.text("Giới tính"), selection: $profile.gender) {
                     ForEach(BabyGender.allCases) { Text($0.title).tag($0) }
                 }
-            } footer: { Text("Ngày sinh không được sau hoạt động hoặc số đo đã lưu.") }
+            } footer: { Text(L10n.text("Ngày sinh không được sau hoạt động hoặc số đo đã lưu.")) }
         }
         .scrollContentBackground(.hidden).background(CareTheme.background)
-        .navigationTitle("Sửa hồ sơ bé").navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(L10n.text("Sửa hồ sơ bé")).navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) { Button("Hủy") { dismiss() } }
+            ToolbarItem(placement: .cancellationAction) { Button(L10n.text("Hủy")) { dismiss() } }
             ToolbarItem(placement: .confirmationAction) {
-                Button("Lưu", action: save).disabled(loadingPhoto || viewModel.state.isSaving || profile.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                Button(action: save) { HStack { if viewModel.state.isSaving { ProgressView() }; Text(L10n.text("Lưu")) } }.disabled(viewModel.state.isSaving).disabled(loadingPhoto || viewModel.state.isSaving || profile.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
         }
         .task(id: photo) {
@@ -221,14 +225,14 @@ private struct ProfileEditorView: View {
                 let data = try await selection.loadTransferable(type: Data.self)
                 guard !Task.isCancelled else { return }
                 guard let data, let prepared = CareImageProcessor.jpeg(data, avatar: true) else {
-                    photoError = "Không đọc được ảnh này. Hãy chọn ảnh khác."
+                    photoError = L10n.text("Không đọc được ảnh này. Hãy chọn ảnh khác.")
                     return
                 }
                 profile.avatarData = prepared
                 photoError = nil
             } catch {
                 guard !Task.isCancelled else { return }
-                photoError = "Chưa tải được ảnh. Hãy chọn lại."
+                photoError = L10n.text("Chưa tải được ảnh. Hãy chọn lại.")
             }
         }
     }
@@ -236,7 +240,7 @@ private struct ProfileEditorView: View {
     private func save() {
         profile.name = profile.name.trimmingCharacters(in: .whitespacesAndNewlines)
         Task {
-            guard await viewModel.send(.commit(.updateBaby(profile), message: "Đã cập nhật hồ sơ bé")) else { return }
+            guard await viewModel.send(.commit(.updateBaby(profile), message: L10n.text("Đã cập nhật hồ sơ bé"))) else { return }
             dismiss()
         }
     }
@@ -247,29 +251,29 @@ private struct ProfileHealthEditorView: View {
     @Environment(\.dismiss) private var dismiss
     @State var profile: BabyProfile
 
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         Form {
-            Section("Dị ứng & Phản ứng thuốc") {
-                TextField("Thông tin gia đình cung cấp", text: $profile.allergies, axis: .vertical).lineLimit(3...6)
+            Section(L10n.text("Dị ứng & Phản ứng thuốc")) {
+                TextField(L10n.text("Thông tin gia đình cung cấp"), text: $profile.allergies, axis: .vertical).lineLimit(3...6)
             }
-            Section("Thói quen & Lưu ý chăm sóc") {
-                TextField("Thói quen, lời dặn hoặc thông tin cần lưu ý", text: $profile.healthNotes, axis: .vertical).lineLimit(4...8)
+            Section(L10n.text("Thói quen & Lưu ý chăm sóc")) {
+                TextField(L10n.text("Thói quen, lời dặn hoặc thông tin cần lưu ý"), text: $profile.healthNotes, axis: .vertical).lineLimit(4...8)
             }
             Section {
-                TextField("Nhóm máu nếu biết", text: $profile.bloodType)
-            } footer: { Text("Để trống thông tin chưa biết. Ghi chú do gia đình cung cấp không phải chẩn đoán.") }
+                TextField(L10n.text("Nhóm máu nếu biết"), text: $profile.bloodType)
+            } footer: { Text(L10n.text("Để trống thông tin chưa biết. Ghi chú do gia đình cung cấp không phải chẩn đoán.")) }
         }
         .scrollContentBackground(.hidden).background(CareTheme.background)
-        .navigationTitle("Lưu ý sức khỏe").navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(L10n.text("Lưu ý sức khỏe")).navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) { Button("Hủy") { dismiss() } }
+            ToolbarItem(placement: .cancellationAction) { Button(L10n.text("Hủy")) { dismiss() } }
             ToolbarItem(placement: .confirmationAction) {
-                Button("Lưu") {
-                    Task {
-                        guard await viewModel.send(.commit(.updateBaby(profile), message: "Đã cập nhật lưu ý sức khỏe")) else { return }
+                CareAsyncButton(L10n.text("Lưu")) {
+                        guard await viewModel.send(.commit(.updateBaby(profile), message: L10n.text("Đã cập nhật lưu ý sức khỏe"))) else { return }
                         dismiss()
-                    }
-                }
+                }.disabled(viewModel.state.isSaving)
             }
         }
     }
@@ -282,33 +286,35 @@ struct MeasurementHistoryView: View {
     @State private var selectedMeasurement: BodyMeasurement?
     private var sorted: [BodyMeasurement] { viewModel.measurements.sorted { $0.date > $1.date } }
 
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         List {
             if sorted.isEmpty {
                 ContentUnavailableView {
-                    Text("Chưa có số đo")
+                    Text(L10n.text("Chưa có số đo"))
                 } description: {
-                    Text("Thêm cân nặng hoặc chiều cao đầu tiên của bé.")
+                    Text(L10n.text("Thêm cân nặng hoặc chiều cao đầu tiên của bé."))
                 } actions: {
-                    Button("Thêm số đo") { addingMeasurement = true }.buttonStyle(.borderedProminent)
+                    Button(L10n.text("Thêm số đo")) { addingMeasurement = true }.buttonStyle(.borderedProminent)
                 }
             } else {
                 Section {
-                    Picker("Chỉ số", selection: $metric) {
-                        Text("Cân nặng").tag("Cân nặng")
-                        Text("Chiều cao").tag("Chiều cao")
+                    Picker(L10n.text("Chỉ số"), selection: $metric) {
+                        Text(L10n.text("Cân nặng")).tag("Cân nặng")
+                        Text(L10n.text("Chiều cao")).tag("Chiều cao")
                     }.pickerStyle(.segmented)
                     Chart(sorted.reversed()) { measurement in
                         if let value = metric == "Cân nặng" ? measurement.weight : measurement.height, value.isFinite {
-                            LineMark(x: .value("Ngày", measurement.date), y: .value(metric, value))
+                            LineMark(x: .value(L10n.text("Ngày"), measurement.date), y: .value(metric, value))
                                 .foregroundStyle(CareTheme.accent).interpolationMethod(.monotone)
-                            PointMark(x: .value("Ngày", measurement.date), y: .value(metric, value))
+                            PointMark(x: .value(L10n.text("Ngày"), measurement.date), y: .value(metric, value))
                                 .foregroundStyle(CareTheme.accent)
                         }
                     }.frame(height: 200).padding(.vertical, 8)
-                        .accessibilityLabel("Biểu đồ \(metric). Các số đo có trong danh sách bên dưới.")
+                        .accessibilityLabel(L10n.text("Biểu đồ {0}. Các số đo có trong danh sách bên dưới.", "\(metric)"))
                 }
-                Section("Tất cả số đo") {
+                Section(L10n.text("Tất cả số đo")) {
                     ForEach(sorted) { measurement in
                         Button { selectedMeasurement = measurement } label: {
                             VStack(alignment: .leading, spacing: 7) {
@@ -316,16 +322,16 @@ struct MeasurementHistoryView: View {
                                 Text(measurementDescription(measurement)).font(CareFont.body).foregroundStyle(CareTheme.accent)
                                 if !measurement.notes.isEmpty { Text(measurement.notes).font(CareFont.footnote).foregroundStyle(CareTheme.secondary) }
                             }.padding(.vertical, 5)
-                        }.buttonStyle(.plain).accessibilityHint("Chạm để sửa số đo")
+                        }.buttonStyle(.plain).accessibilityHint(L10n.text("Chạm để sửa số đo"))
                     }
                 }
             }
         }
         .listStyle(.insetGrouped).scrollContentBackground(.hidden).background(CareTheme.background)
-        .navigationTitle("Lịch sử tăng trưởng").navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(L10n.text("Lịch sử tăng trưởng")).navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)
-        .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Thêm") { addingMeasurement = true } } }
+        .toolbar { ToolbarItem(placement: .topBarTrailing) { Button(L10n.text("Thêm")) { addingMeasurement = true } } }
         .sheet(isPresented: $addingMeasurement) { NavigationStack { MeasurementEntryView() } }
         .sheet(item: $selectedMeasurement) { measurement in
             NavigationStack { MeasurementEntryView(measurement: measurement) }
@@ -333,7 +339,7 @@ struct MeasurementHistoryView: View {
     }
 
     private func measurementDescription(_ item: BodyMeasurement) -> String {
-        [item.weight.map { "\($0.formatted()) kg" }, item.height.map { "\($0.formatted()) cm" }, item.headCircumference.map { "Vòng đầu \($0.formatted()) cm" }]
+        [item.weight.map { "\($0.formatted(.number.locale(AppLanguage.current.locale))) kg" }, item.height.map { "\($0.formatted(.number.locale(AppLanguage.current.locale))) cm" }, item.headCircumference.map { L10n.text("Vòng đầu {0} cm", "\($0.formatted(.number.locale(AppLanguage.current.locale)))") }]
             .compactMap { $0 }.joined(separator: " · ")
     }
 }

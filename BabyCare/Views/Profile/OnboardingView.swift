@@ -23,7 +23,9 @@ struct OnboardingView: View {
 
     private var validName: String { name.trimmingCharacters(in: .whitespacesAndNewlines) }
 
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         ScrollView {
             VStack(spacing: 20) {
             Group {
@@ -32,13 +34,13 @@ struct OnboardingView: View {
                         CareIcon(name: "Stitch_favorite", color: .white, size: 18)
                             .frame(width: 32, height: 32).background(CareTheme.accent, in: .rect(cornerRadius: 10))
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("BÉ KHỎE – BỐ MẸ AN TÂM").font(CareFont.caption).bold().foregroundStyle(CareTheme.accent)
-                            Text("Chăm sóc con khoa học & thảnh thơi").font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                            Text(L10n.text("BÉ KHỎE – BỐ MẸ AN TÂM")).font(CareFont.caption).bold().foregroundStyle(CareTheme.accent)
+                            Text(L10n.text("Chăm sóc con khoa học & thảnh thơi")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                         }
                     }
-                    (isAddingBaby ? Text("Thêm một hồ sơ bé") : Text("Ghi nhanh để chăm bé ") + Text("an tâm hơn").foregroundColor(CareTheme.accent).underline(color: CareTheme.accent.opacity(0.3)))
+                    (isAddingBaby ? Text(L10n.text("Thêm một hồ sơ bé")) : Text(L10n.text("Ghi nhanh để chăm bé ")) + Text(L10n.text("an tâm hơn")).foregroundColor(CareTheme.accent).underline(color: CareTheme.accent.opacity(0.3)))
                         .font(.custom("BeVietnamPro-Bold", size: 26, relativeTo: .title)).foregroundStyle(CareTheme.text)
-                    Text("Tạo hồ sơ cho bé để bắt đầu theo dõi cữ sữa, giấc ngủ và nhiệt độ.")
+                    Text(L10n.text("Tạo hồ sơ cho bé để bắt đầu theo dõi cữ sữa, giấc ngủ và nhiệt độ."))
                         .font(CareFont.callout).foregroundStyle(CareTheme.secondary)
                 }
                 .padding(.vertical, 8)
@@ -56,16 +58,16 @@ struct OnboardingView: View {
                                     .overlay(Circle().strokeBorder(.white, lineWidth: 2))
                             }
                     }.buttonStyle(.plain).disabled(viewModel.state.isSaving)
-                        .accessibilityLabel(avatarData == nil ? "Chọn ảnh đại diện" : "Đổi ảnh đại diện")
+                        .accessibilityLabel(avatarData == nil ? L10n.text("Chọn ảnh đại diện") : L10n.text("Đổi ảnh đại diện"))
                         .accessibilityIdentifier("babyAvatarPicker")
                     if photoLoadID != nil {
-                        ProgressView("Đang xử lý ảnh…").font(CareFont.footnote)
+                        ProgressView(L10n.text("Đang xử lý ảnh…")).font(CareFont.footnote)
                     } else {
-                        Text(avatarData == nil ? "Chọn ảnh hoặc dùng avatar chữ cái theo tên" : "Ảnh đại diện của bé")
+                        Text(avatarData == nil ? L10n.text("Chọn ảnh hoặc dùng avatar chữ cái theo tên") : L10n.text("Ảnh đại diện của bé"))
                             .font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
                     }
                     if avatarData != nil {
-                        Button("Dùng avatar chữ cái") { photo = nil; avatarData = nil; photoError = nil }
+                        Button(L10n.text("Dùng avatar chữ cái")) { photo = nil; avatarData = nil; photoError = nil }
                             .font(CareFont.footnote).disabled(viewModel.state.isSaving)
                     }
                     if let photoError { Text(photoError).font(CareFont.footnote).foregroundStyle(CareTheme.medical) }
@@ -73,39 +75,39 @@ struct OnboardingView: View {
                 }
                 .frame(maxWidth: .infinity).padding(.vertical, 4)
                 VStack(alignment: .leading, spacing: 8) {
-                    requiredLabel("Tên gọi ở nhà của bé")
-                    TextField("Ví dụ: Bé An", text: $name)
+                    requiredLabel(L10n.text("Tên gọi ở nhà của bé"))
+                    TextField(L10n.text("Ví dụ: Bé An"), text: $name)
                         .textContentType(.nickname)
                         .textFieldStyle(EntryInputStyle(shaded: true))
                         .overlay(alignment: .trailing) {
                             if !validName.isEmpty { CareIcon(name: "Stitch_check_circle", color: CareTheme.accent, size: 18).padding(.trailing, 12).allowsHitTesting(false) }
                         }
                         .accessibilityIdentifier("babyNameField")
-                    Text("Dùng để hiển thị trong lời nhắc và nhật ký của bé.")
+                    Text(L10n.text("Dùng để hiển thị trong lời nhắc và nhật ký của bé."))
                         .font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
                 }.padding(.vertical, 4)
                 VStack(alignment: .leading, spacing: 8) {
-                    requiredLabel("Ngày sinh của bé")
+                    requiredLabel(L10n.text("Ngày sinh của bé"))
                     HStack {
                         CareIcon(name: "Stitch_calendar_month", color: CareTheme.secondary, size: 20)
-                        DatePicker("Ngày sinh", selection: $birthDate, in: ...Date(), displayedComponents: .date)
+                        DatePicker(L10n.text("Ngày sinh"), selection: $birthDate, in: ...Date(), displayedComponents: .date)
                             .labelsHidden().frame(maxWidth: .infinity, alignment: .leading)
                     }.padding(10).frame(maxWidth: .infinity, minHeight: 48)
                         .background(CareTheme.background, in: .rect(cornerRadius: 14))
                         .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(CareTheme.border))
-                    Text("Hiện tại: \(profileAge(birthDate))")
+                    Text(L10n.text("Hiện tại: {0}", "\(profileAge(birthDate))"))
                         .font(CareFont.caption).foregroundStyle(CareTheme.accent)
                 }
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
-                        Text("Giới tính của bé").font(CareFont.callout.weight(.semibold))
+                        Text(L10n.text("Giới tính của bé")).font(CareFont.callout.weight(.semibold))
                         Spacer()
-                        Text("Tùy chọn").font(CareFont.caption2).foregroundStyle(CareTheme.secondary)
+                        Text(L10n.text("Tùy chọn")).font(CareFont.caption2).foregroundStyle(CareTheme.secondary)
                     }
                     HStack(spacing: 10) {
-                        genderButton(.girl, title: "👧 Bé gái")
-                        genderButton(.boy, title: "👦 Bé trai")
-                        genderButton(.unspecified, title: "Để sau")
+                        genderButton(.girl, title: L10n.text("👧 Bé gái"))
+                        genderButton(.boy, title: L10n.text("👦 Bé trai"))
+                        genderButton(.unspecified, title: L10n.text("Để sau"))
                     }
                 }
             }
@@ -114,8 +116,8 @@ struct OnboardingView: View {
                 HStack(alignment: .top, spacing: 10) {
                     CareIcon(name: "Stitch_shield", color: CareTheme.accent, size: 20)
                     Text(viewModel.state.storage == .device
-                         ? "Dữ liệu của bé được lưu trên thiết bị. Bạn có thể đăng nhập trong Cài đặt khi cần dùng cloud."
-                         : "Tài khoản của bạn có thể lưu tối đa 4 hồ sơ bé.")
+                         ? L10n.text("Dữ liệu của bé được lưu trên thiết bị. Bạn có thể đăng nhập trong Cài đặt khi cần dùng cloud.")
+                         : L10n.text("Tài khoản của bạn có thể lưu tối đa 4 hồ sơ bé."))
                         .font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
                 }
             }
@@ -127,16 +129,16 @@ struct OnboardingView: View {
         .scrollContentBackground(.hidden)
         .background(CareTheme.background)
         .foregroundStyle(CareTheme.text)
-        .navigationTitle(isAddingBaby ? "Thêm bé" : "")
+        .navigationTitle(isAddingBaby ? L10n.text("Thêm bé") : "")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(isAddingBaby ? .visible : .hidden, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: 8) {
-                CarePrimaryButton(title: isAddingBaby ? "Tạo hồ sơ bé" : "Bắt đầu ghi nhận", icon: "Stitch_arrow_forward", action: createProfile)
+                CarePrimaryButton(title: isAddingBaby ? L10n.text("Tạo hồ sơ bé") : L10n.text("Bắt đầu ghi nhận"), icon: "Stitch_arrow_forward", isLoading: viewModel.state.isSaving, action: createProfile)
                     .disabled(validName.isEmpty || photoLoadID != nil || viewModel.state.isSaving || viewModel.babies.count >= CareDatabase.maximumBabies)
                     .accessibilityIdentifier("createBabyButton")
-                Text(viewModel.babies.count >= CareDatabase.maximumBabies ? "Bạn đã có đủ 4 hồ sơ bé." : validName.isEmpty ? "Nhập tên bé để bắt đầu." : "Có thể chỉnh sửa hoặc thêm bé trong Hồ sơ bé.")
+                Text(viewModel.babies.count >= CareDatabase.maximumBabies ? L10n.text("Bạn đã có đủ 4 hồ sơ bé.") : validName.isEmpty ? L10n.text("Nhập tên bé để bắt đầu.") : L10n.text("Có thể chỉnh sửa hoặc thêm bé trong Hồ sơ bé."))
                     .font(CareFont.footnote).foregroundStyle(CareTheme.secondary).multilineTextAlignment(.center)
             }
             .padding().background(CareTheme.background)
@@ -144,7 +146,7 @@ struct OnboardingView: View {
         .toolbar {
             if isAddingBaby {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Hủy") { if !hasDraft { dismiss() } else { confirmDiscard = true } }
+                    Button(L10n.text("Hủy")) { if !hasDraft { dismiss() } else { confirmDiscard = true } }
                 }
             }
         }
@@ -159,18 +161,18 @@ struct OnboardingView: View {
                 let data = try await selection.loadTransferable(type: Data.self)
                 guard !Task.isCancelled else { return }
                 guard let data, let prepared = CareImageProcessor.jpeg(data, avatar: true) else {
-                    photoError = "Không đọc được ảnh này. Hãy chọn ảnh khác."
+                    photoError = L10n.text("Không đọc được ảnh này. Hãy chọn ảnh khác.")
                     return
                 }
                 avatarData = prepared
             } catch {
                 guard !Task.isCancelled else { return }
-                photoError = "Chưa tải được ảnh. Hãy kiểm tra mạng hoặc chọn lại."
+                photoError = L10n.text("Chưa tải được ảnh. Hãy kiểm tra mạng hoặc chọn lại.")
             }
         }
-        .confirmationDialog("Bỏ nội dung chưa lưu?", isPresented: $confirmDiscard, titleVisibility: .visible) {
-            Button("Bỏ nội dung", role: .destructive) { dismiss() }
-            Button("Tiếp tục nhập", role: .cancel) { }
+        .confirmationDialog(L10n.text("Bỏ nội dung chưa lưu?"), isPresented: $confirmDiscard, titleVisibility: .visible) {
+            Button(L10n.text("Bỏ nội dung"), role: .destructive) { dismiss() }
+            Button(L10n.text("Tiếp tục nhập"), role: .cancel) { }
         }
     }
 
@@ -178,7 +180,7 @@ struct OnboardingView: View {
         HStack {
             (Text(title) + Text(" *").foregroundColor(CareTheme.medical)).font(CareFont.callout.weight(.semibold))
             Spacer(minLength: 4)
-            Text("Bắt buộc").font(CareFont.caption2).foregroundStyle(CareTheme.secondary)
+            Text(L10n.text("Bắt buộc")).font(CareFont.caption2).foregroundStyle(CareTheme.secondary)
                 .padding(.horizontal, 8).padding(.vertical, 3).background(CareTheme.background, in: .capsule)
         }
     }
@@ -198,7 +200,7 @@ struct OnboardingView: View {
         guard photoLoadID == nil, !viewModel.state.isSaving else { return }
         let baby = BabyProfile(id: profileID, name: validName, birthDate: Calendar.current.startOfDay(for: birthDate), gender: gender, avatarData: avatarData)
         Task {
-            guard await viewModel.send(.commit(.createBaby(baby), message: "Đã tạo hồ sơ bé \(validName)")) else { return }
+            guard await viewModel.send(.commit(.createBaby(baby), message: L10n.text("Đã tạo hồ sơ bé {0}", "\(validName)"))) else { return }
             if isAddingBaby { dismiss() }
         }
     }
@@ -209,7 +211,9 @@ struct ProfileAvatarView: View {
     var imageData: Data? = nil
     var size: CGFloat = 76
 
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         Group {
             #if canImport(UIKit)
             if let imageData, let image = CareImageProcessor.thumbnail(imageData, maximumPixels: 400) {
@@ -223,7 +227,7 @@ struct ProfileAvatarView: View {
         .background(CareTheme.accent.opacity(0.12), in: Circle())
         .clipShape(Circle())
         .overlay(Circle().strokeBorder(.white, lineWidth: 2))
-        .accessibilityLabel("Ảnh đại diện \(name)")
+        .accessibilityLabel(L10n.text("Ảnh đại diện {0}", "\(name)"))
     }
 
     private var initial: some View {
@@ -236,9 +240,9 @@ struct ProfileAvatarView: View {
 func profileAge(_ birthDate: Date, at date: Date = Date()) -> String {
     let components = Calendar.current.dateComponents([.month, .day], from: birthDate, to: date)
     let months = max(0, components.month ?? 0)
-    if months >= 24 { return "\(months / 12) tuổi \(months % 12) tháng" }
-    if months == 0 { return "\(max(0, components.day ?? 0)) ngày tuổi" }
-    return "\(months) tháng tuổi"
+    if months >= 24 { return L10n.text("{0} tuổi {1} tháng", "\(months / 12)", "\(months % 12)") }
+    if months == 0 { return L10n.text("{0} ngày tuổi", "\(max(0, components.day ?? 0))") }
+    return L10n.text("{0} tháng tuổi", "\(months)")
 }
 
 #Preview {

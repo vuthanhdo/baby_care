@@ -73,10 +73,10 @@ nonisolated enum CloudMediaPlan {
                                babyID: UUID, activityID: UUID?, position: Int, operationID: UUID?,
                                existing: [CloudMediaAsset]) throws -> CloudMediaUpload {
         guard !data.isEmpty, data.count <= maximumBytes else {
-            throw CareDataError.invalidInput("Mỗi ảnh cần nhỏ hơn 5 MB.")
+            throw CareDataError.invalidInput(L10n.text("Mỗi ảnh cần nhỏ hơn 5 MB."))
         }
         guard let mimeType = mimeType(of: data) else {
-            throw CareDataError.invalidInput("Ảnh phải có định dạng JPEG, PNG, HEIC hoặc WebP.")
+            throw CareDataError.invalidInput(L10n.text("Ảnh phải có định dạng JPEG, PNG, HEIC hoặc WebP."))
         }
         let owner = activityID?.uuidString ?? babyID.uuidString
         let hash = contentHash(data)

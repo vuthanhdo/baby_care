@@ -10,7 +10,9 @@ struct ActivityDetailView: View {
     @State private var recordingAgain = false
     private var current: CareActivity { viewModel.activities.first { $0.id == activity.id } ?? activity }
 
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 CareCard {
@@ -24,22 +26,22 @@ struct ActivityDetailView: View {
                                     .font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                             }
                             Spacer(minLength: 0)
-                            CareBadge(title: "Đã ghi")
+                            CareBadge(title: L10n.text("Đã ghi"))
                         }
                         VStack(alignment: .leading, spacing: 8) {
-                            Text(current.kind == .temperature ? "NHIỆT ĐỘ CƠ THỂ" : "NỘI DUNG GHI NHẬN")
+                            Text(current.kind == .temperature ? L10n.text("NHIỆT ĐỘ CƠ THỂ") : L10n.text("NỘI DUNG GHI NHẬN"))
                                 .font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                             Text(current.formattedValue).font(CareFont.largeTitle.bold()).foregroundStyle(current.kind.group.color)
                         }.padding(14).frame(maxWidth: .infinity, alignment: .leading)
                             .background(current.kind.group.background.opacity(0.6), in: .rect(cornerRadius: 14))
-                        LabeledContent("Đối tượng", value: "\(viewModel.baby.name) · \(viewModel.baby.ageDescription)").font(CareFont.subheadline)
-                        if !current.detail.isEmpty { LabeledContent("Thông tin thêm", value: current.detail).font(CareFont.subheadline) }
+                        LabeledContent(L10n.text("Đối tượng"), value: "\(viewModel.baby.name) · \(viewModel.baby.ageDescription)").font(CareFont.subheadline)
+                        if !current.detail.isEmpty { LabeledContent(L10n.text("Thông tin thêm"), value: current.displayDetail).font(CareFont.subheadline) }
                     }
                 }
                 CareCard {
                     VStack(alignment: .leading, spacing: 12) {
-                        CareSectionTitle(title: "Ghi chú")
-                        Text(current.note.isEmpty ? "Chưa có ghi chú" : current.note)
+                        CareSectionTitle(title: L10n.text("Ghi chú"))
+                        Text(current.note.isEmpty ? L10n.text("Chưa có ghi chú") : current.note)
                             .font(CareFont.body).foregroundStyle(CareTheme.secondary)
                         if !current.attachments.isEmpty {
                             ScrollView(.horizontal) {
@@ -48,7 +50,7 @@ struct ActivityDetailView: View {
                                         #if canImport(UIKit)
                                         if let image = CareImageProcessor.thumbnail(data, maximumPixels: 1200) {
                                             Image(uiImage: image).resizable().scaledToFit().frame(width: 220, height: 200)
-                                                .clipShape(.rect(cornerRadius: 12)).accessibilityLabel("Ảnh đính kèm \(index + 1)")
+                                                .clipShape(.rect(cornerRadius: 12)).accessibilityLabel(L10n.text("Ảnh đính kèm {0}", "\(index + 1)"))
                                         }
                                         #endif
                                     }
@@ -63,16 +65,16 @@ struct ActivityDetailView: View {
                     }
                 }
                 Button { editing = true } label: {
-                    Label { Text("Sửa hoạt động") } icon: { CareIcon(name: "Stitch_edit", color: .white) }
+                    Label { Text(L10n.text("Sửa hoạt động")) } icon: { CareIcon(name: "Stitch_edit", color: .white) }
                 }.buttonStyle(CareActionStyle())
-                CarePrimaryButton(title: current.kind == .temperature ? "Ghi tương tự (Đo lại bây giờ)" : "Ghi tương tự", icon: "Stitch_add_circle") { recordingAgain = true }
+                CarePrimaryButton(title: current.kind == .temperature ? L10n.text("Ghi tương tự (Đo lại bây giờ)") : L10n.text("Ghi tương tự"), icon: "Stitch_add_circle") { recordingAgain = true }
                 Button(role: .destructive) { deleting = true } label: {
-                    HStack { CareIcon(name: "Stitch_delete", color: CareTheme.medical); Text("Xóa hoạt động này") }
+                    HStack { CareIcon(name: "Stitch_delete", color: CareTheme.medical); Text(L10n.text("Xóa hoạt động này")) }
                 }
                     .frame(maxWidth: .infinity, minHeight: 48)
             }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
         }
-        .careScreen().navigationTitle("Chi tiết hoạt động").navigationBarTitleDisplayMode(.inline)
+        .careScreen().navigationTitle(L10n.text("Chi tiết hoạt động")).navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar).toolbar(.hidden, for: .tabBar)
         .sheet(isPresented: $editing) { NavigationStack { ActivityFormView(kind: current.kind, activity: current) } }
         .sheet(isPresented: $recordingAgain) {
@@ -80,15 +82,15 @@ struct ActivityDetailView: View {
                 ActivityFormView(kind: current.kind, activity: repeatedEntry)
             }
         }
-        .alert("Xóa \(current.kind.title.lowercased())?", isPresented: $deleting) {
-            Button("Hủy", role: .cancel) { }
-            Button("Xóa", role: .destructive) {
+        .alert(L10n.text("Xóa {0}?", "\(current.kind.title.lowercased())"), isPresented: $deleting) {
+            Button(L10n.text("Hủy"), role: .cancel) { }
+            Button(L10n.text("Xóa"), role: .destructive) {
                 Task {
-                    guard await viewModel.send(.commit(.deleteActivity(babyID: viewModel.baby.id, activityID: current.id), message: "Đã xóa hoạt động")) else { return }
+                    guard await viewModel.send(.commit(.deleteActivity(babyID: viewModel.baby.id, activityID: current.id), message: L10n.text("Đã xóa hoạt động"))) else { return }
                     dismiss()
                 }
             }
-        } message: { Text("Hoạt động này sẽ được bỏ khỏi nhật ký và thống kê.") }
+        } message: { Text(L10n.text("Hoạt động này sẽ được bỏ khỏi nhật ký và thống kê.")) }
     }
 
     private var repeatedEntry: CareActivity {

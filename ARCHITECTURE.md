@@ -55,3 +55,12 @@ Các bảng/khóa family giữ làm namespace nội bộ để tương thích RL
 CareDatabase kiểm tra giới hạn 4 bé cho các provider, kể cả offline. Retry cùng ID không tính thành bé mới. Hồ sơ bé hiển thị số lượng /4 và vô hiệu hóa thêm khi đủ; menu Chọn bé và danh sách hồ sơ vẫn chuyển bé bằng selectBaby.
 
 Kiểm chứng: 19/19 test iOS đạt (BabyLimitTests, CloudProviderTests, BabyCareUITests). SQL thử nghiệm trên Supabase xác nhận tạo namespace lặp lại trả cùng ID và bé thứ 5 bị từ chối; toàn bộ bản ghi thử nghiệm rollback. Preflight không có tài khoản nhiều namespace, thành viên chia sẻ hoặc hồ sơ bé cần chuyển đổi. Chưa kiểm thử đăng nhập Google thật trong đợt thay đổi này.
+
+## App language
+
+- `AppLanguage` selects the device's primary language on first launch: Vietnamese for `vi`, English for `en` and all unsupported languages. The choice is persisted in `care.language`; later device language changes do not overwrite an explicit app preference.
+- The same language picker appears on Sign In and Settings. It updates the root locale without recreating the session, navigation stack or form drafts.
+- `L10n` loads explicit `en.lproj` / `vi.lproj` bundles. Reviewed translations live in `Tools/Localization/translations.json`; run `python3 Tools/Localization/generate.py` from this project to regenerate `Localizable.strings`. Numbered placeholders are substituted once so user input is never interpreted as a format string.
+- Persisted activity kinds, option values, units, picker tags and speech parser vocabulary remain stable. Translation happens only when displaying those values; free-form names, notes and medicine names are not translated.
+- Date/number presentation follows the selected app locale. iOS permission dialogs use the OS-selected app language through `InfoPlist.strings`.
+- Voice recognition and parsing still support Vietnamese. English UI explicitly labels Vietnamese voice examples. Switching UI language does not change the parser or infer new voice commands.

@@ -40,7 +40,7 @@ final class VoiceInputViewModel {
             guard let self, self.generation == token else { return }
             self.isListening = false
             self.isFinishing = false
-            self.message = error ?? (receivedText ? nil : "Chưa nghe rõ nội dung. Hãy nói lại; chưa lưu hoạt động nào.")
+            self.message = error ?? (receivedText ? nil : L10n.text("Chưa nghe rõ nội dung. Hãy nói lại; chưa lưu hoạt động nào."))
             self.generation = UUID()
             if error == nil && receivedText { self.completedRecognition += 1 }
         })
@@ -56,7 +56,7 @@ final class VoiceInputViewModel {
                 let entries = try VoiceActivityParser().parse(transcript, now: now, calendar: calendar)
                 // Reuse manual validation in addition to the complete-statement parser.
                 guard entries.allSatisfy({ ActivityFormViewModel(kind: $0.kind, activity: $0).valid }) else {
-                    throw VoiceActivityParser.ParseError(message: "Dữ liệu hoạt động chưa hợp lệ. Hãy kiểm tra số liệu và thời gian; chưa lưu hoạt động nào.")
+                    throw VoiceActivityParser.ParseError(message: L10n.text("Dữ liệu hoạt động chưa hợp lệ. Hãy kiểm tra số liệu và thời gian; chưa lưu hoạt động nào."))
                 }
                 pending = (transcript, babyID, entries)
             }
@@ -64,7 +64,7 @@ final class VoiceInputViewModel {
             isSaving = true
             defer { isSaving = false }
             guard await save(pending.entries) else {
-                message = "Chưa lưu được dữ liệu. Hãy thử lại; nội dung và mã hoạt động được giữ để tránh tạo bản ghi trùng."
+                message = L10n.text("Chưa lưu được dữ liệu. Hãy thử lại; nội dung và mã hoạt động được giữ để tránh tạo bản ghi trùng.")
                 return
             }
             savedActivities = pending.entries

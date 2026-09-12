@@ -4,7 +4,7 @@ nonisolated enum BabyGender: String, Codable, Sendable, CaseIterable, Identifiab
     case girl, boy, unspecified
     var id: Self { self }
     var title: String {
-        switch self { case .girl: "Bé gái"; case .boy: "Bé trai"; case .unspecified: "Chưa chọn" }
+        switch self { case .girl: L10n.text("Bé gái"); case .boy: L10n.text("Bé trai"); case .unspecified: L10n.text("Chưa chọn") }
     }
 }
 
@@ -22,9 +22,9 @@ nonisolated struct BabyProfile: Identifiable, Codable, Sendable, Equatable {
         let months = Calendar.current.dateComponents([.month], from: birthDate, to: Date()).month ?? 0
         if months == 0 {
             let days = Calendar.current.dateComponents([.day], from: birthDate, to: Date()).day ?? 0
-            return "\(max(0, days)) ngày tuổi"
+            return L10n.text("{0} ngày tuổi", "\(max(0, days))")
         }
-        return "\(months) tháng tuổi"
+        return L10n.text("{0} tháng tuổi", "\(months)")
     }
     var initial: String { String(name.split(separator: " ").last?.prefix(1) ?? "B").uppercased() }
 }
@@ -33,7 +33,7 @@ nonisolated enum ActivityGroup: String, Codable, Sendable, CaseIterable, Identif
     case medical, feeding, routine
     var id: Self { self }
     var title: String {
-        switch self { case .medical: "Y tế"; case .feeding: "Ăn uống"; case .routine: "Sinh hoạt" }
+        switch self { case .medical: L10n.text("Y tế"); case .feeding: L10n.text("Ăn uống"); case .routine: L10n.text("Sinh hoạt") }
     }
     var assetName: String {
         switch self { case .medical: "Stitch_stethoscope"; case .feeding: "Stitch_restaurant"; case .routine: "Stitch_nightlight_round" }
@@ -45,18 +45,18 @@ nonisolated enum ActivityKind: String, Codable, Sendable, CaseIterable, Identifi
     var id: Self { self }
     var title: String {
         switch self {
-        case .temperature: "Nhiệt độ"
-        case .medicine: "Uống thuốc"
-        case .symptom: "Triệu chứng"
-        case .doctor: "Đi khám"
-        case .allergy: "Dị ứng"
-        case .milk: "Sữa"
-        case .meal: "Bữa ăn"
-        case .water: "Nước"
-        case .sleep: "Ngủ"
-        case .bath: "Tắm bé"
-        case .diaper: "Thay tã / Vệ sinh"
-        case .other: "Hoạt động khác"
+        case .temperature: L10n.text("Nhiệt độ")
+        case .medicine: L10n.text("Uống thuốc")
+        case .symptom: L10n.text("Triệu chứng")
+        case .doctor: L10n.text("Đi khám")
+        case .allergy: L10n.text("Dị ứng")
+        case .milk: L10n.text("Sữa")
+        case .meal: L10n.text("Bữa ăn")
+        case .water: L10n.text("Nước")
+        case .sleep: L10n.text("Ngủ")
+        case .bath: L10n.text("Tắm bé")
+        case .diaper: L10n.text("Thay tã / Vệ sinh")
+        case .other: L10n.text("Hoạt động khác")
         }
     }
     var group: ActivityGroup {
@@ -98,7 +98,21 @@ nonisolated struct CareActivity: Identifiable, Codable, Sendable, Equatable {
     var detail = ""
     var attachments: [Data] = []
     var numericValue: Double? { CareValidation.number(value) }
-    var formattedValue: String { [value, unit].filter { !$0.isEmpty }.joined(separator: " ") }
+    var formattedValue: String {
+        let displayValue: String
+        switch kind {
+        case .symptom: displayValue = value.components(separatedBy: ", ").map { L10n.text($0) }.joined(separator: ", ")
+        case .diaper: displayValue = L10n.text(value)
+        default: displayValue = value == "Đã ghi nhận" ? L10n.text(value) : value
+        }
+        return [displayValue, L10n.text(unit)].filter { !$0.isEmpty }.joined(separator: " ")
+    }
+    var displayDetail: String {
+        switch kind {
+        case .temperature, .milk, .sleep: L10n.text(detail)
+        default: detail
+        }
+    }
 }
 
 nonisolated struct BodyMeasurement: Identifiable, Codable, Sendable, Equatable {

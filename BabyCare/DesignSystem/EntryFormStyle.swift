@@ -4,7 +4,9 @@ import SwiftUI
 struct EntryFormCard<Content: View>: View {
     var cornerRadius: CGFloat = 16
     @ViewBuilder var content: Content
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         VStack(alignment: .leading, spacing: 20) { content }
             .frame(maxWidth: .infinity, alignment: .leading).padding(20)
             .background(CareTheme.surface, in: .rect(cornerRadius: cornerRadius))
@@ -16,7 +18,9 @@ struct EntryFormCard<Content: View>: View {
 struct EntryFieldLabel: View {
     let title: String
     let icon: String
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         HStack(spacing: 6) {
             CareIcon(name: "Stitch_" + icon, color: CareTheme.accent, size: 18)
             Text(title).font(CareFont.footnote.weight(.semibold))

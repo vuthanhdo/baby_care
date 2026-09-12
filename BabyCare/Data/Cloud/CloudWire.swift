@@ -100,7 +100,7 @@ nonisolated enum CloudMapping {
                     expected_version: old.versions[CloudSnapshot.key(entity, id)] ?? 0, data: b[id] ?? [:], deleted: b[id] == nil))
             }
         }
-        guard changes.count <= 100 else { throw CareDataError.invalidInput("Thao tác vượt quá 100 bản ghi. Hãy chia thành các lần lưu nhỏ hơn.") }
+        guard changes.count <= 100 else { throw CareDataError.invalidInput(L10n.text("Thao tác vượt quá 100 bản ghi. Hãy chia thành các lần lưu nhỏ hơn.")) }
         return changes
     }
 

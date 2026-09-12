@@ -5,10 +5,10 @@ nonisolated enum CareStorageStatus: Equatable, Sendable {
     var message: String? {
         switch self {
         case .device: nil
-        case .cloud: "Dữ liệu cloud"
-        case .cached: "Đang xem bản lưu trên máy"
-        case .pending: "Đã lưu trên máy · Đang chờ đồng bộ cloud"
-        case .cacheWarning: "Đã lưu cloud · Chưa cập nhật được bản lưu trên máy"
+        case .cloud: L10n.text("Dữ liệu cloud")
+        case .cached: L10n.text("Đang xem bản lưu trên máy")
+        case .pending: L10n.text("Đã lưu trên máy · Đang chờ đồng bộ cloud")
+        case .cacheWarning: L10n.text("Đã lưu cloud · Chưa cập nhật được bản lưu trên máy")
         }
     }
 }

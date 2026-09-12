@@ -33,7 +33,7 @@ nonisolated struct CareDatabase: Codable, Sendable, Equatable {
                 guard existing.profile == profile else { throw CareDataError.conflict }
             } else {
                 guard next.babies.count < Self.maximumBabies else {
-                    throw CareDataError.invalidInput("Bạn chỉ có thể tạo tối đa 4 hồ sơ bé.")
+                    throw CareDataError.invalidInput(L10n.text("Bạn chỉ có thể tạo tối đa 4 hồ sơ bé."))
                 }
                 next.babies.append(BabyData(profile: profile))
             }
@@ -50,10 +50,10 @@ nonisolated struct CareDatabase: Codable, Sendable, Equatable {
             case .updateBaby(let profile):
                 try CareValidation.profile(profile)
                 let firstEntry = (baby.activities.map(\.date) + baby.measurements.map(\.date)).min() ?? Date()
-                guard profile.birthDate <= firstEntry else { throw CareDataError.invalidInput("Ngày sinh không được sau dữ liệu đã ghi.") }
+                guard profile.birthDate <= firstEntry else { throw CareDataError.invalidInput(L10n.text("Ngày sinh không được sau dữ liệu đã ghi.")) }
                 baby.profile = profile
             case .saveActivities(_, let entries, let finishingSleep, let reminderID):
-                guard !entries.isEmpty, Set(entries.map(\.id)).count == entries.count else { throw CareDataError.invalidInput("Danh sách hoạt động không hợp lệ.") }
+                guard !entries.isEmpty, Set(entries.map(\.id)).count == entries.count else { throw CareDataError.invalidInput(L10n.text("Danh sách hoạt động không hợp lệ.")) }
                 for entry in entries {
                     try CareValidation.activity(entry)
                     guard !next.babies.contains(where: { $0.profile.id != babyID && $0.activities.contains(where: { $0.id == entry.id }) }) else { throw CareDataError.conflict }
@@ -78,10 +78,10 @@ nonisolated struct CareDatabase: Codable, Sendable, Equatable {
                 else { baby.measurements.append(measurement) }
                 baby.measurements.sort { $0.date > $1.date }
             case .startSleep(_, let date):
-                guard date <= Date(), baby.sleepStartDate == nil || baby.sleepStartDate == date else { throw CareDataError.invalidInput("Bé đã có giấc ngủ đang diễn ra.") }
+                guard date <= Date(), baby.sleepStartDate == nil || baby.sleepStartDate == date else { throw CareDataError.invalidInput(L10n.text("Bé đã có giấc ngủ đang diễn ra.")) }
                 baby.sleepStartDate = date
             case .startIllness(_, let title, let date):
-                guard date >= baby.profile.birthDate, date <= Date() else { throw CareDataError.invalidInput("Ngày bắt đầu theo dõi không hợp lệ.") }
+                guard date >= baby.profile.birthDate, date <= Date() else { throw CareDataError.invalidInput(L10n.text("Ngày bắt đầu theo dõi không hợp lệ.")) }
                 baby.isTrackingIllness = true
                 baby.illnessTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
                 baby.illnessStartDate = date
@@ -132,9 +132,9 @@ nonisolated enum CareDataError: Error, LocalizedError, Sendable {
     case babyNotFound, conflict, corruptData, invalidInput(String)
     var errorDescription: String? {
         switch self {
-        case .babyNotFound: "Không tìm thấy hồ sơ bé. Hãy tải lại dữ liệu."
-        case .conflict: "Dữ liệu đã thay đổi hoặc trùng mã bản ghi. Hãy tải lại trước khi lưu."
-        case .corruptData: "Không đọc được dữ liệu đã lưu. Dữ liệu gốc vẫn được giữ."
+        case .babyNotFound: L10n.text("Không tìm thấy hồ sơ bé. Hãy tải lại dữ liệu.")
+        case .conflict: L10n.text("Dữ liệu đã thay đổi hoặc trùng mã bản ghi. Hãy tải lại trước khi lưu.")
+        case .corruptData: L10n.text("Không đọc được dữ liệu đã lưu. Dữ liệu gốc vẫn được giữ.")
         case .invalidInput(let message): message
         }
     }
@@ -146,24 +146,24 @@ nonisolated enum CareValidation {
         return number
     }
     static func profile(_ profile: BabyProfile) throws {
-        guard !profile.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, profile.birthDate <= Date() else { throw CareDataError.invalidInput("Nhập tên và ngày sinh hợp lệ.") }
+        guard !profile.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, profile.birthDate <= Date() else { throw CareDataError.invalidInput(L10n.text("Nhập tên và ngày sinh hợp lệ.")) }
     }
     static func activity(_ entry: CareActivity) throws {
-        guard entry.date <= Date(), !entry.value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { throw CareDataError.invalidInput("Nhập nội dung và thời điểm hợp lệ.") }
+        guard entry.date <= Date(), !entry.value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { throw CareDataError.invalidInput(L10n.text("Nhập nội dung và thời điểm hợp lệ.")) }
         if [.temperature, .medicine, .milk, .water, .sleep].contains(entry.kind) {
-            guard let value = number(entry.value), value > 0, !entry.unit.isEmpty else { throw CareDataError.invalidInput("Nhập số dương và đơn vị để lưu.") }
-            if entry.kind == .sleep && entry.detail != CareActivity.recordedSleepDetail && entry.date.addingTimeInterval(value * 60) > Date().addingTimeInterval(60) { throw CareDataError.invalidInput("Giấc ngủ không được kết thúc trong tương lai.") }
+            guard let value = number(entry.value), value > 0, !entry.unit.isEmpty else { throw CareDataError.invalidInput(L10n.text("Nhập số dương và đơn vị để lưu.")) }
+            if entry.kind == .sleep && entry.detail != CareActivity.recordedSleepDetail && entry.date.addingTimeInterval(value * 60) > Date().addingTimeInterval(60) { throw CareDataError.invalidInput(L10n.text("Giấc ngủ không được kết thúc trong tương lai.")) }
         }
-        if entry.kind == .medicine && entry.detail.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { throw CareDataError.invalidInput("Nhập tên thuốc đã dùng.") }
-        guard entry.attachments.count <= 3 else { throw CareDataError.invalidInput("Mỗi hoạt động tối đa 3 ảnh.") }
+        if entry.kind == .medicine && entry.detail.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { throw CareDataError.invalidInput(L10n.text("Nhập tên thuốc đã dùng.")) }
+        guard entry.attachments.count <= 3 else { throw CareDataError.invalidInput(L10n.text("Mỗi hoạt động tối đa 3 ảnh.")) }
     }
     static func measurement(_ entry: BodyMeasurement, birthDate: Date) throws {
         let values = [entry.weight, entry.height, entry.headCircumference].compactMap { $0 }
-        guard !values.isEmpty, values.allSatisfy({ $0.isFinite && $0 > 0 }), entry.date >= birthDate, entry.date <= Date() else { throw CareDataError.invalidInput("Nhập ít nhất một số đo dương và thời điểm hợp lệ.") }
+        guard !values.isEmpty, values.allSatisfy({ $0.isFinite && $0 > 0 }), entry.date >= birthDate, entry.date <= Date() else { throw CareDataError.invalidInput(L10n.text("Nhập ít nhất một số đo dương và thời điểm hợp lệ.")) }
     }
     static func reminder(_ reminder: MedicationReminder) throws {
         guard !reminder.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               (number(reminder.amount) ?? 0) > 0, !reminder.unit.isEmpty,
-              !reminder.enabled || reminder.nextDate > Date() else { throw CareDataError.invalidInput("Nhập tên thuốc, lượng dương và mốc nhắc hợp lệ.") }
+              !reminder.enabled || reminder.nextDate > Date() else { throw CareDataError.invalidInput(L10n.text("Nhập tên thuốc, lượng dương và mốc nhắc hợp lệ.")) }
     }
 }

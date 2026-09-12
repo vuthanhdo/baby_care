@@ -7,6 +7,7 @@ final class BabyCareUITestsLaunchTests: XCTestCase {
     func testDemoTabScreenshots() throws {
         let app = XCUIApplication()
         app.launchArguments = ["-demo"]
+        app.launchArguments += ["-care.language", "vi"]
         app.launch()
         let tabs = app.tabBars
         XCTAssertTrue(tabs.buttons["Ghi nhanh"].waitForExistence(timeout: 10))

@@ -39,11 +39,13 @@ struct StatisticsView: View {
         viewModel.measurements.filter { growthMetric.value($0) != nil }.max { $0.date < $1.date }
     }
 
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 16) {
-                Picker("Khoảng thống kê", selection: $range) {
-                    ForEach(InsightRange.allCases) { Text($0.rawValue).tag($0) }
+                Picker(L10n.text("Khoảng thống kê"), selection: $range) {
+                    ForEach(InsightRange.allCases) { Text(L10n.text($0.rawValue)).tag($0) }
                 }.pickerStyle(.segmented)
                     .onChange(of: range) { _, value in if value == .custom { showRange = true } }
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -52,7 +54,7 @@ struct StatisticsView: View {
                             Button { mode = item } label: {
                                 HStack(spacing: 6) {
                                     CareIcon(name: item.icon, color: item.color, size: 16)
-                                    Text(item.rawValue).font(CareFont.subheadline.weight(mode == item ? .semibold : .medium))
+                                    Text(L10n.text(item.rawValue)).font(CareFont.subheadline.weight(mode == item ? .semibold : .medium))
                                     if mode == item { Circle().fill(item.color).frame(width: 5, height: 5) }
                                 }.padding(.horizontal, 14).frame(minHeight: 44)
                                     .foregroundStyle(item.color).background(item.color.opacity(0.08), in: Capsule())
@@ -72,11 +74,11 @@ struct StatisticsView: View {
                 NavigationLink { ShareReportView(interval: interval) } label: {
                     HStack(spacing: 8) {
                         CareIcon(name: "Stitch_ios_share", color: .white, size: 20)
-                        Text("Chia sẻ báo cáo (PDF / QR)").font(CareFont.callout.weight(.semibold))
+                        Text(L10n.text("Chia sẻ báo cáo (PDF / QR)")).font(CareFont.callout.weight(.semibold))
                     }.foregroundStyle(.white).frame(maxWidth: .infinity, minHeight: 56)
                         .background(CareTheme.accent, in: RoundedRectangle(cornerRadius: 16))
                 }
-                Text("\(InsightData.intervalLabel(interval)) · Dữ liệu do bố mẹ ghi nhận")
+                Text(L10n.text("{0} · Dữ liệu do bố mẹ ghi nhận", "\(InsightData.intervalLabel(interval))"))
                     .font(CareFont.caption).foregroundStyle(CareTheme.secondary).frame(maxWidth: .infinity)
             }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
         }
@@ -93,13 +95,13 @@ struct StatisticsView: View {
             CareCard {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
-                        InsightBadge(title: viewModel.isTrackingIllness ? "Đợt theo dõi" : "Theo dõi sức khỏe", color: CareTheme.medical)
+                        InsightBadge(title: viewModel.isTrackingIllness ? L10n.text("Đợt theo dõi") : L10n.text("Theo dõi sức khỏe"), color: CareTheme.medical)
                         Spacer()
                         CareIcon(name: "Stitch_health_and_safety", color: CareTheme.medical, size: 24)
                     }
-                    Text(viewModel.isTrackingIllness ? (viewModel.illnessTitle.isEmpty ? "Đang theo dõi ốm" : viewModel.illnessTitle) : "Bắt đầu theo dõi ốm")
+                    Text(viewModel.isTrackingIllness ? (viewModel.illnessTitle.isEmpty ? L10n.text("Đang theo dõi ốm") : viewModel.illnessTitle) : L10n.text("Bắt đầu theo dõi ốm"))
                         .font(CareFont.headline).foregroundStyle(CareTheme.text)
-                    Text(viewModel.isTrackingIllness ? "Bắt đầu \(viewModel.illnessStartDate.careFormatted(date: .abbreviated, time: .omitted)) · Xem lịch thuốc và nhật ký" : "Tập trung nhiệt độ, thuốc và triệu chứng khi bé không khỏe.")
+                    Text(viewModel.isTrackingIllness ? L10n.text("Bắt đầu {0} · Xem lịch thuốc và nhật ký", "\(viewModel.illnessStartDate.careFormatted(date: .abbreviated, time: .omitted))") : L10n.text("Tập trung nhiệt độ, thuốc và triệu chứng khi bé không khỏe."))
                         .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
                 }
             }.overlay(alignment: .leading) { UnevenRoundedRectangle(topLeadingRadius: 16, bottomLeadingRadius: 16).fill(CareTheme.medical).frame(width: 5) }
@@ -110,21 +112,21 @@ struct StatisticsView: View {
                     CareIcon(name: "Stitch_device_thermostat", color: CareTheme.medical, size: 23)
                         .padding(10).background(CareTheme.medicalBackground, in: RoundedRectangle(cornerRadius: 12))
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("THÂN NHIỆT GẦN NHẤT").font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.secondary)
-                        Text(temperatures.first.map { "\($0.value) °C" } ?? "Chưa ghi nhận").font(CareFont.title.bold())
+                        Text(L10n.text("THÂN NHIỆT GẦN NHẤT")).font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.secondary)
+                        Text(temperatures.first.map { "\($0.value) °C" } ?? L10n.text("Chưa ghi nhận")).font(CareFont.title.bold())
                         if let latest = temperatures.first {
                             Text(latest.date, format: .dateTime.day().month().hour().minute()).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                         }
                     }
                 }
                 NavigationLink { ActivityFormView(kind: .temperature) } label: {
-                    Text("+ Ghi nhiệt độ").font(CareFont.subheadline.weight(.semibold)).frame(maxWidth: .infinity, minHeight: 44)
+                    Text(L10n.text("+ Ghi nhiệt độ")).font(CareFont.subheadline.weight(.semibold)).frame(maxWidth: .infinity, minHeight: 44)
                         .background(CareTheme.accent.opacity(0.09), in: Capsule())
                 }
                 TemperatureChartView(activities: activities)
                 if !medicines.isEmpty {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Các lần dùng thuốc").font(CareFont.subheadline.weight(.semibold))
+                        Text(L10n.text("Các lần dùng thuốc")).font(CareFont.subheadline.weight(.semibold))
                         ForEach(medicines.prefix(3)) { item in
                             NavigationLink { ActivityDetailView(activity: item) } label: { InsightActivityRow(activity: item) }
                         }
@@ -132,7 +134,7 @@ struct StatisticsView: View {
                 }
             }.foregroundStyle(CareTheme.text)
         }
-        CareSectionTitle(title: "Tổng quan", subtitle: range.rawValue)
+        CareSectionTitle(title: L10n.text("Tổng quan"), subtitle: L10n.text(range.rawValue))
         nutritionMetrics
         if let latest = viewModel.measurements.max(by: { $0.date < $1.date }) {
             Button { mode = .growth } label: {
@@ -141,7 +143,7 @@ struct StatisticsView: View {
                         CareIcon(name: "Stitch_straighten", color: CareTheme.accent, size: 24)
                         VStack(alignment: .leading, spacing: 4) {
                             Text(measurementText(latest)).font(CareFont.headline).foregroundStyle(CareTheme.text)
-                            Text("Đo \(latest.date.careFormatted(date: .abbreviated, time: .omitted))").font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                            Text(L10n.text("Đo {0}", "\(latest.date.careFormatted(date: .abbreviated, time: .omitted))")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                         }
                         Spacer()
                     }
@@ -152,33 +154,33 @@ struct StatisticsView: View {
 
     private var nutritionMetrics: some View {
         HStack(alignment: .top, spacing: 12) {
-            InsightMetricView(title: "Lượng sữa đã ghi", value: InsightData.sum(activities, kind: .milk, unit: "ml").map { "\(InsightData.format($0)) ml" } ?? "Chưa ghi nhận", subtitle: "Chưa gồm bú mẹ trực tiếp", icon: "Stitch_water_bottle", color: CareTheme.feeding)
-            InsightMetricView(title: "Thời gian ngủ", value: InsightData.sleepHours(viewModel.activities, in: interval).map { "\(InsightData.format($0)) giờ" } ?? "Chưa ghi nhận", subtitle: "Giấc ngủ đã kết thúc", icon: "Stitch_bedtime", color: CareTheme.routine)
+            InsightMetricView(title: L10n.text("Lượng sữa đã ghi"), value: InsightData.sum(activities, kind: .milk, unit: "ml").map { "\(InsightData.format($0)) ml" } ?? L10n.text("Chưa ghi nhận"), subtitle: L10n.text("Chưa gồm bú mẹ trực tiếp"), icon: "Stitch_water_bottle", color: CareTheme.feeding)
+            InsightMetricView(title: L10n.text("Thời gian ngủ"), value: InsightData.sleepHours(viewModel.activities, in: interval).map { L10n.text("{0} giờ", "\(InsightData.format($0))") } ?? L10n.text("Chưa ghi nhận"), subtitle: L10n.text("Giấc ngủ đã kết thúc"), icon: "Stitch_bedtime", color: CareTheme.routine)
         }
     }
 
     @ViewBuilder private var foodContent: some View {
-        CareSectionTitle(title: "Ăn uống & giấc ngủ", subtitle: InsightData.intervalLabel(interval))
+        CareSectionTitle(title: L10n.text("Ăn uống & giấc ngủ"), subtitle: InsightData.intervalLabel(interval))
         nutritionMetrics
         HStack(alignment: .top, spacing: 12) {
-            InsightMetricView(title: "Nước", value: InsightData.sum(activities, kind: .water, unit: "ml").map { "\(InsightData.format($0)) ml" } ?? "Chưa ghi nhận", subtitle: "Tổng trong khoảng", icon: "Stitch_water_drop", color: CareTheme.feeding)
-            InsightMetricView(title: "Bữa ăn", value: activities.filter { $0.kind == .meal }.isEmpty ? "Chưa ghi nhận" : "\(activities.filter { $0.kind == .meal }.count) bữa", subtitle: "Theo nhật ký đã lưu", icon: "Stitch_ramen_dining", color: CareTheme.routine)
+            InsightMetricView(title: L10n.text("Nước"), value: InsightData.sum(activities, kind: .water, unit: "ml").map { "\(InsightData.format($0)) ml" } ?? L10n.text("Chưa ghi nhận"), subtitle: L10n.text("Tổng trong khoảng"), icon: "Stitch_water_drop", color: CareTheme.feeding)
+            InsightMetricView(title: L10n.text("Bữa ăn"), value: activities.filter { $0.kind == .meal }.isEmpty ? L10n.text("Chưa ghi nhận") : L10n.text("{0} bữa", "\(activities.filter { $0.kind == .meal }.count)"), subtitle: L10n.text("Theo nhật ký đã lưu"), icon: "Stitch_ramen_dining", color: CareTheme.routine)
         }
         CareCard {
             VStack(alignment: .leading, spacing: 16) {
-                Toggle("Xem dạng danh sách", isOn: $foodList).font(CareFont.subheadline)
+                Toggle(L10n.text("Xem dạng danh sách"), isOn: $foodList).font(CareFont.subheadline)
                 if foodList {
                     ForEach(activities.filter { $0.kind.group != .medical }) { item in
                         NavigationLink { ActivityDetailView(activity: item) } label: { InsightActivityRow(activity: item) }
                     }
-                    if !activities.contains(where: { $0.kind.group != .medical }) { Text("Chưa ghi nhận trong khoảng này").foregroundStyle(CareTheme.secondary) }
+                    if !activities.contains(where: { $0.kind.group != .medical }) { Text(L10n.text("Chưa ghi nhận trong khoảng này")).foregroundStyle(CareTheme.secondary) }
                 } else {
-                    dailyChart(kind: .milk, title: "Sữa theo ngày · ml", color: CareTheme.feeding)
-                    dailyChart(kind: .sleep, title: "Ngủ theo ngày · giờ", color: CareTheme.routine)
+                    dailyChart(kind: .milk, title: L10n.text("Sữa theo ngày · ml"), color: CareTheme.feeding)
+                    dailyChart(kind: .sleep, title: L10n.text("Ngủ theo ngày · giờ"), color: CareTheme.routine)
                 }
             }
         }
-        NavigationLink { ActivityFormView(kind: .milk) } label: { Text("Ghi cữ sữa").font(CareFont.headline).frame(maxWidth: .infinity, minHeight: 48) }
+        NavigationLink { ActivityFormView(kind: .milk) } label: { Text(L10n.text("Ghi cữ sữa")).font(CareFont.headline).frame(maxWidth: .infinity, minHeight: 48) }
     }
 
     private func dailyChart(kind: ActivityKind, title: String, color: Color) -> some View {
@@ -193,28 +195,28 @@ struct StatisticsView: View {
         return VStack(alignment: .leading, spacing: 10) {
             Text(title).font(CareFont.headline)
             if values.isEmpty {
-                Text("Chưa ghi nhận").foregroundStyle(CareTheme.secondary).frame(maxWidth: .infinity, minHeight: 100)
+                Text(L10n.text("Chưa ghi nhận")).foregroundStyle(CareTheme.secondary).frame(maxWidth: .infinity, minHeight: 100)
             } else {
                 Chart(values, id: \.date) { value in
-                    BarMark(x: .value("Ngày", value.date, unit: .day), y: .value(title, value.value)).foregroundStyle(color).cornerRadius(5)
+                    BarMark(x: .value(L10n.text("Ngày"), value.date, unit: .day), y: .value(title, value.value)).foregroundStyle(color).cornerRadius(5)
                 }.frame(height: 160).chartXAxis { AxisMarks(values: .automatic(desiredCount: 4)) { _ in AxisValueLabel(format: .dateTime.day().month()) } }
             }
         }
     }
 
     @ViewBuilder private var growthContent: some View {
-        Picker("Chỉ số", selection: $growthMetric) { ForEach(GrowthMetric.allCases) { Text($0.rawValue).tag($0) } }.pickerStyle(.segmented)
+        Picker(L10n.text("Chỉ số"), selection: $growthMetric) { ForEach(GrowthMetric.allCases) { Text(L10n.text($0.rawValue)).tag($0) } }.pickerStyle(.segmented)
         CareCard {
             VStack(alignment: .leading, spacing: 16) {
-                Text("MỚI NHẤT ĐÃ GHI").font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.secondary)
+                Text(L10n.text("MỚI NHẤT ĐÃ GHI")).font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.secondary)
                 if let latest = newestMeasurement, let value = growthMetric.value(latest) {
                     Text("\(InsightData.format(value)) \(growthMetric.unit)").font(CareFont.largeTitle.bold())
                     Text(latest.date, format: .dateTime.day().month().year()).font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
-                } else { Text("Chưa ghi nhận").font(CareFont.title2.bold()) }
-                Toggle("Xem dạng danh sách", isOn: $growthList).font(CareFont.subheadline)
-                Text(allGrowth ? "Toàn bộ lịch sử" : InsightData.intervalLabel(interval)).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                } else { Text(L10n.text("Chưa ghi nhận")).font(CareFont.title2.bold()) }
+                Toggle(L10n.text("Xem dạng danh sách"), isOn: $growthList).font(CareFont.subheadline)
+                Text(allGrowth ? L10n.text("Toàn bộ lịch sử") : InsightData.intervalLabel(interval)).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                 if growth.isEmpty {
-                    Text("Chưa có số đo trong khoảng này").foregroundStyle(CareTheme.secondary).frame(maxWidth: .infinity, minHeight: 100)
+                    Text(L10n.text("Chưa có số đo trong khoảng này")).foregroundStyle(CareTheme.secondary).frame(maxWidth: .infinity, minHeight: 100)
                 } else if growthList {
                     ForEach(growth) { item in
                         NavigationLink { MeasurementEntryView(measurement: item) } label: {
@@ -228,22 +230,22 @@ struct StatisticsView: View {
                 } else {
                     Chart(growth) { item in
                         if let value = growthMetric.value(item) {
-                            LineMark(x: .value("Ngày", item.date), y: .value(growthMetric.unit, value)).foregroundStyle(CareTheme.accent)
-                            PointMark(x: .value("Ngày", item.date), y: .value(growthMetric.unit, value)).foregroundStyle(CareTheme.accent)
+                            LineMark(x: .value(L10n.text("Ngày"), item.date), y: .value(growthMetric.unit, value)).foregroundStyle(CareTheme.accent)
+                            PointMark(x: .value(L10n.text("Ngày"), item.date), y: .value(growthMetric.unit, value)).foregroundStyle(CareTheme.accent)
                         }
                     }.frame(height: 195).chartYScale(domain: .automatic(includesZero: false))
                     .chartXSelection(value: $selectedGrowthDate)
                     .chartXAxis { AxisMarks(values: .automatic(desiredCount: 3)) { _ in AxisValueLabel(format: .dateTime.day().month()) } }
                     if let date = selectedGrowthDate, let selected = growth.min(by: { abs($0.date.timeIntervalSince(date)) < abs($1.date.timeIntervalSince(date)) }) {
                         NavigationLink { MeasurementEntryView(measurement: selected) } label: {
-                            Text("\(selected.date.careFormatted(date: .abbreviated, time: .omitted)) · \(InsightData.format(growthMetric.value(selected) ?? 0)) \(growthMetric.unit) · Xem / sửa số đo")
+                            Text(L10n.text("{0} · {1} {2} · Xem / sửa số đo", "\(selected.date.careFormatted(date: .abbreviated, time: .omitted))", "\(InsightData.format(growthMetric.value(selected) ?? 0))", "\(growthMetric.unit)"))
                                 .font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.accent)
                         }
                     }
                 }
-                Button(allGrowth ? "Dùng khoảng đã chọn" : "Xem toàn bộ lịch sử") { allGrowth.toggle() }.font(CareFont.subheadline.weight(.semibold))
+                Button(allGrowth ? L10n.text("Dùng khoảng đã chọn") : L10n.text("Xem toàn bộ lịch sử")) { allGrowth.toggle() }.font(CareFont.subheadline.weight(.semibold))
                 NavigationLink { MeasurementEntryView() } label: {
-                    Text("+ Thêm số đo").font(CareFont.headline).frame(maxWidth: .infinity, minHeight: 48)
+                    Text(L10n.text("+ Thêm số đo")).font(CareFont.headline).frame(maxWidth: .infinity, minHeight: 48)
                         .background(CareTheme.accent.opacity(0.09), in: RoundedRectangle(cornerRadius: 12))
                 }
             }.foregroundStyle(CareTheme.text)

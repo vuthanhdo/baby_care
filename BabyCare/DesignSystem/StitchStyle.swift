@@ -34,27 +34,31 @@ struct CareActionStyle: ButtonStyle {
 
 struct CareBrandView: View {
     var size: CGFloat = 88
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         Image("BeKhoeLogo").resizable().scaledToFit()
             .frame(width: size, height: size)
             .clipShape(.rect(cornerRadius: size * 0.2))
             .shadow(color: CareTheme.accent.opacity(0.1), radius: 12, y: 4)
-            .accessibilityLabel("Logo Bé Khỏe")
+            .accessibilityLabel(L10n.text("Logo Bé Khỏe"))
     }
 }
 
 struct CareSplashView: View {
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         VStack(spacing: 20) {
             Spacer()
             CareBrandView(size: 160)
-            Text("Bé Khỏe").font(CareFont.largeTitle).foregroundStyle(CareTheme.accent)
-            Text("Bố Mẹ An Tâm").font(CareFont.title3)
-            Text("Ghi nhanh nhật ký · Theo dõi sát sao\nĐồng hành cùng bé yêu")
+            Text(L10n.text("Bé Khỏe")).font(CareFont.largeTitle).foregroundStyle(CareTheme.accent)
+            Text(L10n.text("Bố Mẹ An Tâm")).font(CareFont.title3)
+            Text(L10n.text("Ghi nhanh nhật ký · Theo dõi sát sao\nĐồng hành cùng bé yêu"))
                 .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
                 .multilineTextAlignment(.center)
             Spacer()
-            ProgressView("Đang chuẩn bị dữ liệu…").font(CareFont.footnote)
+            ProgressView(L10n.text("Đang chuẩn bị dữ liệu…")).font(CareFont.footnote)
             Spacer().frame(height: 32)
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(CareTheme.background).accessibilityIdentifier("care.splash")
@@ -72,7 +76,9 @@ struct CareInputStyle: TextFieldStyle {
 struct CareFormCard<Content: View>: View {
     var title: String? = nil
     @ViewBuilder var content: Content
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         CareCard {
             VStack(alignment: .leading, spacing: 16) {
                 if let title { Text(title).font(CareFont.headline) }
@@ -84,18 +90,20 @@ struct CareFormCard<Content: View>: View {
 
 /// Keeps the form compact; dates are edited as a draft until the user applies them.
 struct CareDateTimeField: View {
-    var title = "Thời điểm"
+    var title = L10n.text("Thời điểm")
     @Binding var selection: Date
     var earliest: Date = .distantPast
     @State private var showingPicker = false
     @State private var draft = Date()
 
+    @Environment(\.locale) private var appLocale
     var body: some View {
+        let _ = appLocale
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Label(title, systemImage: "clock").font(CareFont.headline)
                 Spacer()
-                Button("Bây giờ", systemImage: "arrow.clockwise") { selection = Date() }
+                Button(L10n.text("Bây giờ"), systemImage: "arrow.clockwise") { selection = Date() }
                     .font(CareFont.caption).padding(.horizontal, 10).frame(minHeight: 44)
                     .background(CareTheme.accent.opacity(0.07), in: .capsule)
             }
@@ -112,19 +120,19 @@ struct CareDateTimeField: View {
                 }.padding(14).frame(maxWidth: .infinity, alignment: .leading)
                     .background(CareTheme.background, in: .rect(cornerRadius: 12))
                     .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(CareTheme.border))
-            }.buttonStyle(.plain).accessibilityLabel("Chọn " + title.lowercased())
+            }.buttonStyle(.plain).accessibilityLabel(L10n.text("Chọn ") + title.lowercased())
         }
         .sheet(isPresented: $showingPicker) {
             NavigationStack {
                 Form {
                     DatePicker(title, selection: $draft, in: min(earliest, Date.now)...Date.now, displayedComponents: .date)
                         .datePickerStyle(.graphical)
-                    DatePicker("Giờ", selection: $draft, in: min(earliest, Date.now)...Date.now, displayedComponents: .hourAndMinute)
+                    DatePicker(L10n.text("Giờ"), selection: $draft, in: min(earliest, Date.now)...Date.now, displayedComponents: .hourAndMinute)
                 }.careScreen().navigationTitle(title).navigationBarTitleDisplayMode(.inline)
                     .toolbar {
-                        ToolbarItem(placement: .cancellationAction) { Button("Hủy") { showingPicker = false } }
+                        ToolbarItem(placement: .cancellationAction) { Button(L10n.text("Hủy")) { showingPicker = false } }
                         ToolbarItem(placement: .confirmationAction) {
-                            Button("Áp dụng") { selection = draft; showingPicker = false }
+                            Button(L10n.text("Áp dụng")) { selection = draft; showingPicker = false }
                         }
                     }
             }.presentationDetents([.large])

@@ -8,6 +8,7 @@ final class BabyCareUITests: XCTestCase {
         let app = XCUIApplication()
         // A unique on-disk SwiftData store for this test, isolated from real app data.
         app.launchArguments = ["-ui-testing-store", UUID().uuidString]
+        app.launchArguments += ["-care.language", "vi"]
         app.launch()
 
         let name = app.textFields["babyNameField"]
@@ -46,6 +47,7 @@ final class BabyCareUITests: XCTestCase {
         capture(app, name: "D – Nhiệt độ đã lưu trong nhật ký")
 
         app.terminate()
+        app.launchArguments += ["-care.language", "vi"]
         app.launch()
         XCTAssertTrue(app.buttons["tab.diary"].waitForExistence(timeout: 10))
         app.buttons["tab.diary"].tap()
