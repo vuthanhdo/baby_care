@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="vi">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Xác minh BabyCare</title>
+<style>body{font:14px system-ui;margin:8px;color:#176d64}p{margin:8px 0}</style>
+<div id="captcha"></div><p id="status">Đang tải xác minh…</p>
+<script>
+const SITE_KEY = 'REPLACE_WITH_PUBLIC_TURNSTILE_SITE_KEY';
+let expiry;
+function send(token) { window.webkit?.messageHandlers?.captcha?.postMessage(token); }
+function clearToken(message) { clearTimeout(expiry); send(''); document.getElementById('status').textContent = message; }
+window.startCaptcha = () => {
+  turnstile.render('#captcha', {
+    sitekey: SITE_KEY, theme: 'light', size: 'flexible',
+    callback(token) {
+      send(token); document.getElementById('status').textContent = 'Đã xác minh';
+      clearTimeout(expiry);
+      expiry = setTimeout(() => { clearToken('Vui lòng xác minh lại.'); turnstile.reset(); }, 240000);
+    },
+    'expired-callback': () => clearToken('Xác minh hết hạn. Vui lòng thử lại.'),
+    'error-callback': () => { clearToken('Không tải được xác minh. Kiểm tra mạng hoặc bấm tải lại.'); return true; }
+  });
+};
+</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=startCaptcha&render=explicit" async defer></script>
+</html>

@@ -13,6 +13,7 @@ nonisolated struct BabyData: Codable, Sendable, Equatable {
 }
 
 nonisolated struct CareDatabase: Codable, Sendable, Equatable {
+    static let maximumBabies = 4
     var babies: [BabyData] = []
     var selectedBabyID: UUID?
     var hasOnboarded = false
@@ -30,7 +31,12 @@ nonisolated struct CareDatabase: Codable, Sendable, Equatable {
             try CareValidation.profile(profile)
             if let existing = next.babies.first(where: { $0.profile.id == profile.id }) {
                 guard existing.profile == profile else { throw CareDataError.conflict }
-            } else { next.babies.append(BabyData(profile: profile)) }
+            } else {
+                guard next.babies.count < Self.maximumBabies else {
+                    throw CareDataError.invalidInput("Bạn chỉ có thể tạo tối đa 4 hồ sơ bé.")
+                }
+                next.babies.append(BabyData(profile: profile))
+            }
             next.selectedBabyID = profile.id
             next.hasOnboarded = true
         case .selectBaby(let id):

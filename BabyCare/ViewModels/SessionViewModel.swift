@@ -4,10 +4,9 @@ import Supabase
 import UserNotifications
 
 @MainActor @Observable final class SessionViewModel {
-    enum Phase { case starting, signedOut, families, content }
+    enum Phase { case starting, signedOut, accountError, content }
     private(set) var phase: Phase = .starting
     private(set) var viewModel: BabyCareViewModel?
-    private(set) var families: [CloudFamily] = []
     private(set) var email = ""
     private(set) var isLocal = false
     private(set) var busy = false
@@ -72,16 +71,16 @@ import UserNotifications
     private func accept(_ session: Session?) async {
         let ticket = await detach(); guard generation == ticket else { return }
         userID = session?.user.id; email = session?.user.email ?? ""
-        families = []; error = nil
+        error = nil
         guard session != nil else { phase = .signedOut; return }
         pendingSignupEmail = nil
         defaults.removeObject(forKey: Self.pendingSignupKey)
         // Keep the splash visible while the previous family is restored. Publishing
-        // `.families` here makes the family picker flash on every app launch.
+        // `.accountError` here makes the family picker flash on every app launch.
         phase = .starting
-        await loadFamilies()
+        await loadAccount()
     }
-    func loadFamilies() async {
+    func loadAccount() async {
         guard let userID else { return }
         let ticket = generation
         busy = true; error = nil
@@ -95,16 +94,17 @@ import UserNotifications
                 if page.count < 200 { break }; offset += 200
             }
             guard generation == ticket else { return }
-            families = result
             let key = "care.family.\(userID)"
             if let last = defaults.string(forKey: key), let family = result.first(where: { $0.id.uuidString.caseInsensitiveCompare(last) == .orderedSame }) {
                 await selectFamily(family.id)
-            } else if result.count == 1 {
-                await selectFamily(result[0].id)
+            } else if let first = result.first {
+                await selectFamily(first.id)
             } else {
-                // A missing/stale choice must not be retried on every launch.
-                defaults.removeObject(forKey: key)
-                phase = .families
+                // A stable ID makes automatic setup retryable after network interruption.
+                struct Params: Encodable { let p_id: UUID; let p_name: String }
+                let id: UUID = try await client.rpc("babycare_create_family", params: Params(p_id: userID, p_name: "Hồ sơ của tôi")).execute().value
+                guard generation == ticket else { return }
+                await selectFamily(id)
             }
         } catch {
             guard generation == ticket else { return }
@@ -114,7 +114,7 @@ import UserNotifications
                 await selectFamily(id) // Provider only returns this account's confirmed cache on network errors.
             } else {
                 self.error = normalized.localizedDescription
-                phase = .families
+                phase = .accountError
             }
         }
     }
@@ -127,80 +127,46 @@ import UserNotifications
         defaults.set(id.uuidString, forKey: "care.family.\(userID)")
         phase = .content; busy = false
     }
-    func chooseFamily() async {
-        let ticket = await detach(); guard generation == ticket else { return }
-        phase = .families
-        if let userID { defaults.removeObject(forKey: "care.family.\(userID)") }
-        await loadFamilies()
-    }
-    func createFamily(name: String) async {
-        guard !busy, let userID else { return }
-        let ticket = generation; busy = true; error = nil
-        defer { if generation == ticket { busy = false } }
-        struct Params: Encodable { var p_id: UUID; var p_name: String }
-        // Durable ID and name make creation retryable after an app/network interruption.
-        let key = "care.newFamily.\(userID)"
-        let id = defaults.string(forKey: key).flatMap(UUID.init(uuidString:)) ?? UUID()
-        let savedName = defaults.string(forKey: key + ".name") ?? name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !savedName.isEmpty else { error = "Nhập tên gia đình."; return }
-        defaults.set(id.uuidString, forKey: key); defaults.set(savedName, forKey: key + ".name")
-        do {
-            guard try await client.auth.session.user.id == userID else { throw CloudError.signedOut }
-            let _: UUID = try await client.rpc("babycare_create_family", params: Params(p_id: id, p_name: savedName)).execute().value
-            guard generation == ticket else { return }
-            defaults.removeObject(forKey: key); defaults.removeObject(forKey: key + ".name")
-            await selectFamily(id)
-        } catch { if generation == ticket { self.error = CloudError.normalize(error).localizedDescription } }
-    }
-
     enum AuthAction { case signIn, signUp, resetPassword }
-    func authenticate(_ action: AuthAction, email: String, password: String) async {
+    func authenticate(_ action: AuthAction, email: String, password: String, confirmation: String = "", captchaToken: String? = nil) async {
         guard !busy else { return }
         busy = true; error = nil; message = nil
         defer { busy = false }
         let email = email.trimmingCharacters(in: .whitespacesAndNewlines)
         guard email.contains("@"), !email.contains(" ") else { error = "Nhập email hợp lệ."; return }
+        if case .signUp = action {
+            if let validation = AuthValidation.signupError(password: password, confirmation: confirmation) { error = validation; return }
+            guard !AuthCaptchaConfiguration.isEnabled || AuthCaptchaConfiguration.pageURL != nil else { error = "Đăng ký chưa khả dụng: cần cấu hình xác minh chống spam."; return }
+        }
+        if AuthCaptchaConfiguration.isEnabled && (captchaToken?.isEmpty ?? true) {
+            error = "Vui lòng hoàn tất xác minh chống spam."; return
+        }
         do {
             switch action {
             case .signIn:
-                _ = try await client.auth.signIn(email: email, password: password)
+                _ = try await client.auth.signIn(email: email, password: password, captchaToken: AuthCaptchaConfiguration.isEnabled ? captchaToken : nil)
             case .signUp:
                 guard password.count >= 8 else { error = "Mật khẩu cần ít nhất 8 ký tự."; return }
-                let response = try await client.auth.signUp(email: email, password: password, redirectTo: Self.callback)
+                let response = try await client.auth.signUp(email: email, password: password, redirectTo: Self.callback, captchaToken: AuthCaptchaConfiguration.isEnabled ? captchaToken : nil)
                 if response.session == nil {
                     pendingSignupEmail = email
                     defaults.set(email, forKey: Self.pendingSignupKey)
-                    message = "Kiểm tra email xác minh gửi tới \(email). Nếu email có liên kết xác nhận, bạn có thể mở liên kết đó."
+                    message = "Đã gửi email tới \(email). Bấm liên kết trong email để xác minh tài khoản."
                 }
             case .resetPassword:
-                try await client.auth.resetPasswordForEmail(email, redirectTo: Self.callback)
+                try await client.auth.resetPasswordForEmail(email, redirectTo: Self.callback, captchaToken: AuthCaptchaConfiguration.isEnabled ? captchaToken : nil)
                 message = "Nếu tài khoản tồn tại, bạn sẽ nhận được email đặt lại mật khẩu."
             }
         } catch { self.error = authMessage(error) }
     }
-    func verifySignupOTP(_ token: String) async {
+    func resendSignupConfirmation(captchaToken: String? = nil) async {
         guard !busy, let email = pendingSignupEmail else { return }
-        let token = token.filter(\.isNumber)
-        guard token.count == 6 else { error = "Nhập đủ mã xác minh gồm 6 chữ số."; return }
+        guard !AuthCaptchaConfiguration.isEnabled || !(captchaToken?.isEmpty ?? true) else { error = "Vui lòng hoàn tất xác minh chống spam."; return }
         busy = true; error = nil; message = nil
         defer { busy = false }
         do {
-            _ = try await client.auth.verifyOTP(email: email, token: token, type: .signup, redirectTo: Self.callback)
-            pendingSignupEmail = nil
-            defaults.removeObject(forKey: Self.pendingSignupKey)
-            message = "Email đã được xác minh."
-        } catch {
-            self.error = error is URLError ? "Không kết nối được dịch vụ xác minh. Hãy kiểm tra mạng rồi thử lại."
-                : "Mã xác minh không đúng hoặc đã hết hạn. Hãy kiểm tra email hoặc gửi lại mã."
-        }
-    }
-    func resendSignupOTP() async {
-        guard !busy, let email = pendingSignupEmail else { return }
-        busy = true; error = nil; message = nil
-        defer { busy = false }
-        do {
-            try await client.auth.resend(email: email, type: .signup, emailRedirectTo: Self.callback)
-            message = "Đã gửi lại mã xác minh tới \(email)."
+            try await client.auth.resend(email: email, type: .signup, emailRedirectTo: Self.callback, captchaToken: AuthCaptchaConfiguration.isEnabled ? captchaToken : nil)
+            message = "Đã gửi lại email xác thực tới \(email)."
         } catch { self.error = authMessage(error) }
     }
     func cancelSignupVerification() {

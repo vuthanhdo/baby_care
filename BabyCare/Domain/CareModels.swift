@@ -36,7 +36,7 @@ nonisolated enum ActivityGroup: String, Codable, Sendable, CaseIterable, Identif
         switch self { case .medical: "Y tế"; case .feeding: "Ăn uống"; case .routine: "Sinh hoạt" }
     }
     var assetName: String {
-        switch self { case .medical: "HomeIcon12"; case .feeding: "HomeIcon14"; case .routine: "HomeIcon16" }
+        switch self { case .medical: "Stitch_stethoscope"; case .feeding: "Stitch_restaurant"; case .routine: "Stitch_nightlight_round" }
     }
 }
 
@@ -68,12 +68,18 @@ nonisolated enum ActivityKind: String, Codable, Sendable, CaseIterable, Identifi
     }
     var assetName: String {
         switch self {
-        case .temperature: "HomeIcon20"
-        case .medicine: "HomeIcon21"
-        case .milk: "HomeIcon8"
-        case .sleep: "HomeIcon10"
-        case .bath: "DiaryIcon13"
-        default: group.assetName
+        case .temperature: "Stitch_device_thermostat"
+        case .medicine: "Stitch_medication"
+        case .milk: "Stitch_water_bottle"
+        case .sleep: "Stitch_bedtime"
+        case .bath: "Stitch_bathtub"
+        case .symptom: "Stitch_sick"
+        case .doctor: "Stitch_local_hospital"
+        case .allergy: "Stitch_warning_amber"
+        case .meal: "Stitch_ramen_dining"
+        case .water: "Stitch_water_drop"
+        case .diaper: "Stitch_baby_changing_station"
+        case .other: "Stitch_more_horiz"
         }
     }
     var defaultUnit: String {

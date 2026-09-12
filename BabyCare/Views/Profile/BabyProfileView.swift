@@ -28,7 +28,7 @@ struct BabyProfileView: View {
                     Button { editingProfile = true } label: {
                         ProfileAvatarView(name: viewModel.baby.name, imageData: viewModel.baby.avatarData, size: 88)
                             .overlay(alignment: .bottomTrailing) {
-                                CareIcon(name: "ProfileCamera", color: .white, size: 16)
+                                CareIcon(name: "Stitch_photo_camera", color: .white, size: 16)
                                     .padding(8).background(CareTheme.accent, in: Circle())
                             }
                     }.buttonStyle(.plain).accessibilityLabel("Đổi ảnh và chỉnh sửa hồ sơ bé")
@@ -39,7 +39,7 @@ struct BabyProfileView: View {
                     }
                     Button { editingProfile = true } label: {
                         HStack(spacing: 8) {
-                            CareIcon(name: "ProfileEdit", color: CareTheme.text, size: 18)
+                            CareIcon(name: "Stitch_edit", color: CareTheme.text, size: 18)
                             Text("Chỉnh sửa thông tin hồ sơ").font(CareFont.subheadline.weight(.semibold))
                         }.frame(maxWidth: .infinity).padding(.vertical, 6)
                     }
@@ -52,12 +52,12 @@ struct BabyProfileView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     CareSectionTitle(title: "Chỉ số thể chất mới nhất", subtitle: "Theo ngày đo của từng chỉ số")
                     HStack(alignment: .top, spacing: 12) {
-                        metric("Cân nặng", value: latestWeight?.weight, unit: "kg", date: latestWeight?.date, icon: "ProfileWeight")
-                        metric("Chiều dài", value: latestHeight?.height, unit: "cm", date: latestHeight?.date, icon: "ProfileHeight")
+                        metric("Cân nặng", value: latestWeight?.weight, unit: "kg", date: latestWeight?.date, icon: "Stitch_scale")
+                        metric("Chiều dài", value: latestHeight?.height, unit: "cm", date: latestHeight?.date, icon: "Stitch_straighten")
                     }
                     Button { addingMeasurement = true } label: {
                         HStack {
-                            CareIcon(name: "ProfileAdd", color: CareTheme.accent, size: 20)
+                            CareIcon(name: "Stitch_add_circle", color: .white, size: 20)
                             Text("Thêm số đo mới").font(CareFont.headline)
                         }.frame(maxWidth: .infinity).padding(.vertical, 6)
                     }.buttonStyle(CareActionStyle())
@@ -65,21 +65,21 @@ struct BabyProfileView: View {
                 NavigationLink {
                     MeasurementHistoryView()
                 } label: {
-                    profileRow("Biểu đồ & lịch sử tăng trưởng", icon: "ProfileGrowth", color: CareTheme.accent)
+                    profileRow("Biểu đồ & lịch sử tăng trưởng", icon: "Stitch_query_stats", color: CareTheme.accent)
                 }
             }
 
             CareFormCard(title: "Lưu ý Y tế & Chăm sóc") {
                 Button { editingHealth = true } label: {
                     VStack(alignment: .leading, spacing: 12) {
-                        profileRow("Dị ứng & Phản ứng thuốc", icon: "ProfileAllergy", color: CareTheme.medical)
+                        profileRow("Dị ứng & Phản ứng thuốc", icon: "Stitch_healing", color: CareTheme.medical)
                         Text(viewModel.baby.allergies.isEmpty ? "Chưa cung cấp thông tin dị ứng" : viewModel.baby.allergies)
                             .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
                     }.padding(.vertical, 6)
                 }.buttonStyle(.plain)
                 Button { editingHealth = true } label: {
                     VStack(alignment: .leading, spacing: 12) {
-                        profileRow("Thói quen & Lưu ý chăm sóc", icon: "ProfileMoon", color: CareTheme.routine)
+                        profileRow("Thói quen & Lưu ý chăm sóc", icon: "Stitch_bedtime", color: CareTheme.routine)
                         Text(viewModel.baby.healthNotes.isEmpty ? "Thêm thói quen hoặc lời dặn chăm sóc bé." : viewModel.baby.healthNotes)
                             .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
                     }.padding(.vertical, 6)
@@ -102,7 +102,7 @@ struct BabyProfileView: View {
                             }
                             Spacer(minLength: 4)
                             if baby.id == viewModel.baby.id {
-                                CareIcon(name: "ProfileSelected", color: CareTheme.accent, size: 24)
+                                CareIcon(name: "Stitch_check_circle", color: CareTheme.accent, size: 24)
                                     .accessibilityLabel("Đang chọn")
                             }
                         }.padding(12).background(baby.id == viewModel.baby.id ? CareTheme.accent.opacity(0.05) : CareTheme.background, in: .rect(cornerRadius: 12))
@@ -110,8 +110,9 @@ struct BabyProfileView: View {
                     }.buttonStyle(.plain)
                 }
                 Button { addingBaby = true } label: {
-                    profileRow("Thêm hồ sơ bé", icon: "ProfileAdd", color: CareTheme.accent)
-                }
+                    profileRow("Thêm hồ sơ bé", icon: "Stitch_add_circle", color: CareTheme.accent)
+                }.disabled(viewModel.babies.count >= CareDatabase.maximumBabies)
+                Text("\(viewModel.babies.count)/4 hồ sơ bé").font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
             }
             }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
         }
@@ -125,7 +126,7 @@ struct BabyProfileView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink { SettingsView() } label: {
-                    CareIcon(name: "ProfileSettings", color: CareTheme.accent, size: 22)
+                    CareIcon(name: "Stitch_tune", color: CareTheme.accent, size: 22)
                 }.accessibilityLabel("Cài đặt")
             }
         }
@@ -187,7 +188,7 @@ private struct ProfileEditorView: View {
                     VStack(spacing: 12) {
                         ProfileAvatarView(name: profile.name, imageData: profile.avatarData, size: 80)
                         HStack {
-                            CareIcon(name: "ProfileCamera", color: CareTheme.accent, size: 18)
+                            CareIcon(name: "Stitch_photo_camera", color: CareTheme.accent, size: 18)
                             Text("Chọn ảnh đại diện")
                         }
                     }.frame(maxWidth: .infinity).padding(.vertical, 8)

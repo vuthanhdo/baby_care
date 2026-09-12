@@ -28,7 +28,7 @@ struct AppRootView: View {
             } else if let model = session.viewModel, session.phase == .content {
                 ContentView().environment(model).id(ObjectIdentifier(model))
             } else if session.phase == .starting { CareSplashView() }
-            else if session.phase == .families { FamilySelectionView() }
+            else if session.phase == .accountError { AccountLoadingErrorView() }
             else { SignInView() }
         }
         .environment(session)
@@ -46,67 +46,53 @@ struct SignInView: View {
     @Environment(SessionViewModel.self) private var session
     @State private var email = ""
     @State private var password = ""
+    @State private var confirmation = ""
+    @State private var captchaToken: String?
+    @State private var captchaID = UUID()
     @State private var registering = false
     @State private var showingPassword = false
     @State private var resetting = false
-    @State private var otp = ""
     @FocusState private var focus: Field?
-    private enum Field { case email, password, otp }
+    private enum Field { case email, password, confirmation }
 
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 24) {
-                    VStack(spacing: 12) {
-                        CareBrandView(size: 96)
-                        Text(session.pendingSignupEmail != nil ? "Xác minh email" : resetting ? "Quên mật khẩu?" : registering ? "Tạo tài khoản" : "Đăng nhập")
-                            .font(CareFont.largeTitle).accessibilityAddTraits(.isHeader)
-                        Text(session.pendingSignupEmail.map { "Nhập mã 6 số đã gửi tới \($0)." }
-                             ?? (resetting ? "Nhập email để nhận liên kết đặt lại mật khẩu."
-                             : registering ? "Bắt đầu đồng hành cùng bé yêu."
-                             : "Chào mừng bố mẹ quay trở lại với Bé Khỏe"))
-                            .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
-                            .multilineTextAlignment(.center)
-                    }.padding(.top, 24)
-
-                    CareFormCard {
+                VStack(spacing: 20) {
+                    if !registering || session.pendingSignupEmail != nil || resetting {
+                        entryHeader
+                        if session.pendingSignupEmail == nil && !resetting { googleButton; emailDivider }
+                    }
+                    EntryFormCard {
+                        if registering && session.pendingSignupEmail == nil && !resetting {
+                            entryHeader
+                            googleButton
+                            emailDivider
+                        }
                         if session.pendingSignupEmail != nil {
-                            VStack(alignment: .leading, spacing: 8) {
-                                Label("Mã xác minh", systemImage: "number.square").font(CareFont.subheadline.weight(.semibold))
-                                TextField("000000", text: $otp)
-                                    .keyboardType(.numberPad).textContentType(.oneTimeCode)
-                                    .textFieldStyle(CareInputStyle()).focused($focus, equals: .otp)
-                                    .accessibilityIdentifier("auth.otp")
-                                    .onChange(of: otp) { _, value in otp = String(value.filter(\.isNumber).prefix(6)) }
-                            }
-                            Button {
-                                focus = nil
-                                Task { await session.verifySignupOTP(otp) }
-                            } label: {
-                                HStack {
-                                    if session.busy { ProgressView().tint(.white) }
-                                    Text("Xác minh và đăng nhập")
-                                    Image(systemName: "checkmark.circle")
-                                }
-                            }.buttonStyle(CareActionStyle()).disabled(session.busy || otp.count != 6)
-                                .accessibilityIdentifier("auth.verifyOTP")
-                            Button("Gửi lại mã") { Task { await session.resendSignupOTP() } }
+                            Label("Kiểm tra hộp thư của bạn", systemImage: "envelope.badge")
+                                .font(CareFont.body.weight(.semibold))
+                                .accessibilityIdentifier("auth.checkEmail")
+                            Text("Bấm liên kết xác thực trong email để quay lại Bé Khỏe và hoàn tất đăng ký. Nếu chưa thấy email, hãy kiểm tra thư rác.")
+                                .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
+                            captchaSection
+                            Button("Gửi lại email xác thực") { Task { await session.resendSignupConfirmation(captchaToken: captchaToken); resetCaptcha() } }
                                 .frame(minHeight: 44).disabled(session.busy)
                             AccountFeedback()
                         } else {
                         VStack(alignment: .leading, spacing: 8) {
-                            Label("Email", systemImage: "person").font(CareFont.subheadline.weight(.semibold))
+                            EntryFieldLabel(title: "Email", icon: "person")
                             TextField("Email", text: $email, prompt: Text(verbatim: "Ví dụ: bome@email.com"))
                                 .textContentType(.username).keyboardType(.emailAddress)
                                 .textInputAutocapitalization(.never).autocorrectionDisabled()
-                                .textFieldStyle(CareInputStyle()).focused($focus, equals: .email)
+                                .textFieldStyle(EntryInputStyle()).focused($focus, equals: .email)
                                 .submitLabel(resetting ? .go : .next)
                                 .accessibilityIdentifier("auth.email")
                                 .onSubmit { if resetting { submit() } else { focus = .password } }
                         }
                         if !resetting {
                             VStack(alignment: .leading, spacing: 8) {
-                                Label("Mật khẩu", systemImage: "lock").font(CareFont.subheadline.weight(.semibold))
+                                EntryFieldLabel(title: "Mật khẩu", icon: "lock")
                                 HStack {
                                     Group {
                                         if showingPassword { TextField("Nhập mật khẩu", text: $password) }
@@ -114,19 +100,32 @@ struct SignInView: View {
                                     }
                                     .textContentType(registering ? .newPassword : .password)
                                     .textInputAutocapitalization(.never).autocorrectionDisabled()
-                                    .focused($focus, equals: .password).submitLabel(.go)
-                                    .accessibilityIdentifier("auth.password").onSubmit(submit)
+                                    .focused($focus, equals: .password).submitLabel(registering ? .next : .go)
+                                    .accessibilityIdentifier("auth.password").onSubmit { if registering { focus = .confirmation } else { submit() } }
                                     Button { showingPassword.toggle() } label: {
-                                        Image(systemName: showingPassword ? "eye" : "eye.slash")
+                                        CareIcon(name: showingPassword ? "Stitch_visibility" : "Stitch_visibility_off", color: CareTheme.secondary, size: 20)
                                             .frame(width: 44, height: 44)
                                     }.buttonStyle(.plain).foregroundStyle(CareTheme.secondary)
                                         .accessibilityLabel(showingPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu")
                                 }.padding(.leading, 14).padding(.trailing, 4)
-                                    .frame(minHeight: 52)
+                                    .frame(minHeight: 48)
                                     .background(CareTheme.surface, in: .rect(cornerRadius: 12))
                                     .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(CareTheme.border))
                                 if registering {
                                     Text("Tối thiểu 8 ký tự").font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
+                                }
+                            }
+                            if registering {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    EntryFieldLabel(title: "Nhập lại mật khẩu", icon: "lock")
+                                    SecureField("Nhập lại mật khẩu", text: $confirmation)
+                                        .textContentType(.newPassword).textInputAutocapitalization(.never).autocorrectionDisabled()
+                                        .textFieldStyle(EntryInputStyle()).focused($focus, equals: .confirmation)
+                                        .submitLabel(.go).onSubmit(submit).accessibilityIdentifier("auth.confirmPassword")
+                                    if !confirmation.isEmpty && password != confirmation {
+                                        Text("Mật khẩu nhập lại không khớp.").font(CareFont.footnote)
+                                            .foregroundStyle(CareTheme.medical).accessibilityIdentifier("auth.passwordMismatch")
+                                    }
                                 }
                             }
                             if !registering {
@@ -139,11 +138,12 @@ struct SignInView: View {
                                 }
                             }
                         }
+                        captchaSection
                         Button(action: submit) {
                             HStack {
                                 if session.busy { ProgressView().tint(.white) }
                                 Text(resetting ? "Gửi liên kết đặt lại" : registering ? "Đăng ký & Bắt đầu" : "Đăng nhập")
-                                Image(systemName: "arrow.right")
+                                CareIcon(name: "Stitch_arrow_forward", color: .white, size: 20)
                             }
                         }.buttonStyle(CareActionStyle())
                             .disabled(session.busy || email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || (!resetting && password.isEmpty))
@@ -152,16 +152,18 @@ struct SignInView: View {
                         }
                     }
                     if session.pendingSignupEmail != nil {
-                        Button("Dùng email khác") { otp = ""; session.cancelSignupVerification() }
+                        Button("Dùng email khác") { session.cancelSignupVerification() }
+                            .font(CareFont.subheadline.weight(.semibold)).frame(minHeight: 44)
+                        Button("Đã xác minh? Đăng nhập") { session.cancelSignupVerification(); registering = false; password = ""; confirmation = "" }
                             .font(CareFont.subheadline.weight(.semibold)).frame(minHeight: 44)
                     } else if resetting {
                         Button("Quay lại đăng nhập") { resetting = false }
                             .font(CareFont.subheadline.weight(.semibold)).frame(minHeight: 44)
                     } else {
                         Button {
-                            registering.toggle(); password = ""; showingPassword = false
+                            registering.toggle(); password = ""; confirmation = ""; showingPassword = false; resetCaptcha()
                         } label: {
-                            VStack(spacing: 4) {
+                            HStack(spacing: 4) {
                                 Text(registering ? "Đã có tài khoản?" : "Chưa có tài khoản?")
                                     .foregroundStyle(CareTheme.secondary)
                                 Text(registering ? "Đăng nhập" : "Đăng ký ngay").bold().underline()
@@ -169,69 +171,108 @@ struct SignInView: View {
                             }
                         }.font(CareFont.subheadline).frame(minHeight: 44).accessibilityIdentifier("auth.toggle")
                     }
-                    if session.pendingSignupEmail == nil && !resetting {
-                        HStack { Rectangle().frame(height: 1); Text("hoặc").font(CareFont.footnote); Rectangle().frame(height: 1) }
-                            .foregroundStyle(CareTheme.border)
-                        Button {
-                            focus = nil
-                            Task { await session.signInWithGoogle() }
-                        } label: {
-                            HStack(spacing: 10) {
-                                Image(systemName: "g.circle.fill")
-                                Text("Tiếp tục với Google").font(CareFont.body.weight(.semibold))
-                            }.frame(maxWidth: .infinity).frame(minHeight: 50)
-                                .background(CareTheme.surface, in: .rect(cornerRadius: 12))
-                                .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(CareTheme.border))
-                        }.buttonStyle(.plain).disabled(session.busy).accessibilityIdentifier("auth.google")
-                    }
                     Button("Tiếp tục với dữ liệu trên máy") { Task { await session.openDevice() } }
                         .font(CareFont.subheadline.weight(.semibold)).frame(minHeight: 48).disabled(session.busy)
                     Label("Hồ sơ và nhật ký được lưu theo tài khoản của bạn. Dữ liệu trên máy chỉ được tải lên khi bạn chủ động nhập.",
                           systemImage: "checkmark.shield")
                         .font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
-                        .padding(16).frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(12).frame(maxWidth: .infinity, alignment: .leading)
                         .background(CareTheme.feedingBackground, in: .rect(cornerRadius: 14))
-                }.padding(.horizontal, 20).padding(.bottom, 24).frame(maxWidth: 500).frame(maxWidth: .infinity)
+                }.font(CareFont.subheadline).padding(.horizontal, 20).padding(.top, 16).padding(.bottom, 24).frame(maxWidth: 500).frame(maxWidth: .infinity)
             }.careScreen().scrollDismissesKeyboard(.interactively)
+                .id(registering)
                 .toolbar(.hidden, for: .navigationBar)
+                .safeAreaInset(edge: .top, spacing: 0) {
+                    if registering {
+                        HStack {
+                            Button { registering = false; password = ""; confirmation = ""; resetCaptcha() } label: {
+                                HStack(spacing: 2) {
+                                    CareIcon(name: "Stitch_chevron_left", color: CareTheme.accent, size: 24)
+                                    Text("Đăng nhập").font(CareFont.subheadline).foregroundStyle(CareTheme.accent)
+                                }
+                            }.buttonStyle(.plain).frame(minHeight: 48)
+                            Spacer()
+                        }.padding(.horizontal, 20).background(CareTheme.background)
+                            .overlay(alignment: .bottom) { Rectangle().fill(CareTheme.border).frame(height: 0.5) }
+                    }
+                }
         }
     }
+    private var entryHeader: some View {
+        VStack(alignment: registering ? .leading : .center, spacing: 8) {
+            CareBrandView(size: registering ? 64 : 80)
+            if registering && session.pendingSignupEmail == nil {
+                HStack(spacing: 5) {
+                    CareIcon(name: "Stitch_favorite", color: CareTheme.accent, size: 14)
+                    Text("Bước đầu tiên").font(CareFont.caption)
+                }.padding(.horizontal, 10).padding(.vertical, 5)
+                    .background(CareTheme.accent.opacity(0.07), in: .capsule)
+            }
+            Text(session.pendingSignupEmail != nil ? "Xác minh email" : resetting ? "Quên mật khẩu?" : registering ? "Tạo tài khoản" : "Đăng nhập")
+                .font(CareFont.title).accessibilityAddTraits(.isHeader)
+            Text(session.pendingSignupEmail.map { "Mở email gửi tới \($0) và bấm liên kết để xác minh tài khoản." }
+                 ?? (resetting ? "Nhập email để nhận liên kết đặt lại mật khẩu." : registering ? "Bắt đầu đồng hành cùng bé yêu." : "Chào mừng bố mẹ quay trở lại với Bé Khỏe"))
+                .font(CareFont.callout).foregroundStyle(CareTheme.secondary)
+                .multilineTextAlignment(registering ? .leading : .center)
+        }.frame(maxWidth: .infinity, alignment: registering ? .leading : .center)
+    }
+    private var googleButton: some View {
+        Button {
+            focus = nil
+            Task { await session.signInWithGoogle() }
+        } label: {
+            HStack(spacing: 10) {
+                Image("GoogleSignInMark").resizable().scaledToFit().frame(width: 20, height: 20)
+                Text(registering ? "Đăng ký nhanh với Google" : "Tiếp tục với Google")
+                    .font(CareFont.subheadline.weight(.semibold))
+            }.frame(maxWidth: .infinity, minHeight: 48)
+                .background(CareTheme.surface, in: .rect(cornerRadius: 12))
+                .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(CareTheme.border))
+        }.buttonStyle(.plain).disabled(session.busy).accessibilityIdentifier("auth.google")
+    }
+    private var emailDivider: some View {
+        HStack(spacing: 10) {
+            Rectangle().fill(CareTheme.border).frame(height: 1)
+            Text(registering ? "Hoặc điền thông tin bên dưới" : "hoặc đăng nhập bằng email")
+                .font(CareFont.caption).foregroundStyle(CareTheme.secondary).fixedSize(horizontal: false, vertical: true).layoutPriority(1)
+            Rectangle().fill(CareTheme.border).frame(height: 1)
+        }
+    }
+    @ViewBuilder private var captchaSection: some View {
+        if AuthCaptchaConfiguration.isEnabled, let url = AuthCaptchaConfiguration.pageURL {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Xác minh bảo mật").font(CareFont.subheadline.weight(.semibold))
+                AuthCaptchaView(url: url, token: $captchaToken).id(captchaID).frame(height: 150)
+                Button("Tải lại xác minh") { resetCaptcha() }.font(CareFont.footnote).disabled(session.busy)
+            }
+        } else if registering && AuthCaptchaConfiguration.isEnabled {
+            Text("Xác minh chống spam chưa được cấu hình. Vui lòng thử đăng ký sau.")
+                .font(CareFont.footnote).foregroundStyle(CareTheme.medical)
+        }
+    }
+    private func resetCaptcha() { captchaToken = nil; captchaID = UUID() }
     private func submit() {
         guard !session.busy, !email.isEmpty, resetting || !password.isEmpty else { return }
         focus = nil
         let value = password
         let action: SessionViewModel.AuthAction = resetting ? .resetPassword : registering ? .signUp : .signIn
-        Task { await session.authenticate(action, email: email, password: value); password = "" }
+        Task { await session.authenticate(action, email: email, password: value, confirmation: confirmation, captchaToken: captchaToken); resetCaptcha()
+            if session.pendingSignupEmail != nil { password = ""; confirmation = "" }
+        }
     }
 }
 
-private struct FamilySelectionView: View {
+/// Recovery screen shown only when account data cannot be loaded.
+private struct AccountLoadingErrorView: View {
     @Environment(SessionViewModel.self) private var session
-    @State private var name = "Gia đình của bé"
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    CareBrandView(size: 80)
-                    CareSectionTitle(title: "Gia đình của bạn", subtitle: session.email)
-                    CareFormCard {
-                        ForEach(session.families) { family in
-                            Button { Task { await session.selectFamily(family.id) } } label: {
-                                Label(family.name, systemImage: "house").frame(maxWidth: .infinity, alignment: .leading).padding(.vertical, 12)
-                            }
-                        }
-                        Button("Tải lại danh sách") { Task { await session.loadFamilies() } }
-                    }
-                    CareFormCard(title: "Tạo gia đình mới") {
-                        TextField("Tên gia đình", text: $name).textFieldStyle(CareInputStyle())
-                        CarePrimaryButton(title: "Tạo gia đình") { Task { await session.createFamily(name: name) } }
-                            .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                    }
-                    AccountFeedback()
-                    Button("Đăng xuất", role: .destructive) { Task { await session.signOut() } }.frame(minHeight: 48)
-                }.padding(20).frame(maxWidth: 500).frame(maxWidth: .infinity)
-            }.careScreen().disabled(session.busy).navigationBarTitleDisplayMode(.inline)
-        }
+        VStack(spacing: 20) {
+            CareBrandView()
+            Text("Chưa tải được hồ sơ của bạn").font(CareFont.title)
+            AccountFeedback()
+            CarePrimaryButton(title: "Thử lại") { Task { await session.loadAccount() } }
+            Button("Đăng xuất") { Task { await session.signOut() } }
+        }.padding(24).disabled(session.busy)
     }
 }
 
@@ -264,13 +305,12 @@ struct CareAccountSection: View {
     @Environment(SessionViewModel.self) private var session: SessionViewModel?
     var body: some View {
         if let session, session.phase == .content {
-            Section("Tài khoản & Gia đình") {
+            Section("Tài khoản") {
                 Label(session.isLocal ? "Đang dùng dữ liệu trên máy" : session.email, systemImage: "person.crop.circle")
                     .font(CareFont.subheadline)
                 if session.isLocal {
                     Button("Đăng nhập để lưu trên cloud") { Task { await session.openCloud() } }
                 } else {
-                    Button("Chọn gia đình") { Task { await session.chooseFamily() } }
                     Button("Đăng xuất", role: .destructive) { Task { await session.signOut() } }
                 }
             }.disabled(session.busy)

@@ -13,7 +13,7 @@ struct VoiceEntryView: View {
             VStack(alignment: .leading, spacing: 18) {
                 CareCard {
                     VStack(spacing: 18) {
-                        CareIcon(name: "ActivityMic", color: CareTheme.accent, size: 32)
+                        CareIcon(name: "Stitch_mic", color: CareTheme.accent, size: 32)
                             .frame(width: 88, height: 88)
                             .background(CareTheme.accent.opacity(0.08), in: .circle)
                         Text("Nói để ghi").font(CareFont.title2.bold())
@@ -65,7 +65,7 @@ struct VoiceEntryView: View {
         }
         .careScreen().navigationTitle("Nói để ghi").navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar).toolbar(.hidden, for: .tabBar)
-        .navigationBarBackButtonHidden(voice.isSaving)
+        .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Đóng", systemImage: "xmark") {

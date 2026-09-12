@@ -46,7 +46,7 @@ struct MeasurementEntryView: View {
             VStack(spacing: 16) {
             CareFormCard {
                 HStack(spacing: 12) {
-                    CareIcon(name: "ProfileGrowth", color: CareTheme.feeding, size: 28)
+                    CareIcon(name: "Stitch_query_stats", color: CareTheme.feeding, size: 28)
                     VStack(alignment: .leading, spacing: 5) {
                         Text("THEO DÕI TĂNG TRƯỞNG").font(CareFont.caption).bold().foregroundStyle(CareTheme.feeding)
                         Text("Số đo của bé được cập nhật vào hồ sơ và biểu đồ tăng trưởng.").font(CareFont.subheadline)
@@ -55,7 +55,7 @@ struct MeasurementEntryView: View {
             }.listRowBackground(CareTheme.feedingBackground)
 
             CareFormCard {
-                measurementField("Cân nặng của bé", value: $weight, unit: "kg", icon: "ProfileWeight", step: 0.05)
+                measurementField("Cân nặng của bé", value: $weight, unit: "kg", icon: "Stitch_scale", step: 0.05)
                 if let last = viewModel.measurements.filter({ $0.weight != nil }).max(by: { $0.date < $1.date }), let lastWeight = last.weight {
                     Text("Lần trước: \(lastWeight.formatted()) kg · \(last.date.careFormatted(date: .abbreviated, time: .omitted))")
                         .font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
@@ -63,7 +63,7 @@ struct MeasurementEntryView: View {
             }
 
             CareFormCard {
-                measurementField("Chiều dài / chiều cao", value: $height, unit: "cm", icon: "ProfileHeight", step: 0.5)
+                measurementField("Chiều dài / chiều cao", value: $height, unit: "cm", icon: "Stitch_straighten", step: 0.5)
                 Picker("Phương pháp đo", selection: $method) {
                     Text("Nằm đo").tag("Nằm đo")
                     Text("Đứng đo").tag("Đứng đo")
@@ -103,7 +103,7 @@ struct MeasurementEntryView: View {
         }
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: 8) {
-                CarePrimaryButton(title: "Lưu số đo", action: save).disabled(!isValid)
+                CarePrimaryButton(title: "Lưu số đo", icon: "Stitch_check_circle", action: save).disabled(!isValid)
                     .accessibilityIdentifier("saveMeasurementButton")
                 if !isValid {
                     Text("Nhập ít nhất một số đo hợp lệ để lưu.")

@@ -63,10 +63,12 @@ struct ActivityDetailView: View {
                     }
                 }
                 Button { editing = true } label: {
-                    Label("Sửa hoạt động", systemImage: "pencil").font(CareFont.headline).frame(maxWidth: .infinity, minHeight: 40)
-                }.buttonStyle(.bordered)
-                CarePrimaryButton(title: current.kind == .temperature ? "Ghi tương tự (Đo lại bây giờ)" : "Ghi tương tự") { recordingAgain = true }
-                Button("Xóa hoạt động này", role: .destructive) { deleting = true }
+                    Label { Text("Sửa hoạt động") } icon: { CareIcon(name: "Stitch_edit", color: .white) }
+                }.buttonStyle(CareActionStyle())
+                CarePrimaryButton(title: current.kind == .temperature ? "Ghi tương tự (Đo lại bây giờ)" : "Ghi tương tự", icon: "Stitch_add_circle") { recordingAgain = true }
+                Button(role: .destructive) { deleting = true } label: {
+                    HStack { CareIcon(name: "Stitch_delete", color: CareTheme.medical); Text("Xóa hoạt động này") }
+                }
                     .frame(maxWidth: .infinity, minHeight: 48)
             }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
         }

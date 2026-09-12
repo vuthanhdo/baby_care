@@ -116,7 +116,7 @@ struct TemperatureChartView: View {
                 }
                 Spacer()
                 Button { showList.toggle() } label: {
-                    CareIcon(name: showList ? "InsightsChart" : "InsightsList", color: CareTheme.accent, size: 20)
+                    CareIcon(name: showList ? "Stitch_show_chart" : "Stitch_format_list_bulleted", color: CareTheme.accent, size: 20)
                 }.frame(minWidth: 44, minHeight: 44)
                     .accessibilityLabel(showList ? "Xem biểu đồ" : "Xem dạng danh sách")
             }

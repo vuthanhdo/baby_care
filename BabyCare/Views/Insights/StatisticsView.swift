@@ -17,7 +17,7 @@ struct StatisticsView: View {
         case medical = "Y tế", food = "Ăn & ngủ", growth = "Tăng trưởng"
         var id: Self { self }
         var color: Color { self == .medical ? CareTheme.medical : self == .food ? CareTheme.feeding : CareTheme.accent }
-        var icon: String { self == .medical ? "InsightsMedical" : self == .food ? "InsightsMilk" : "InsightsGrowth" }
+        var icon: String { self == .medical ? "Stitch_stethoscope" : self == .food ? "Stitch_water_bottle" : "Stitch_trending_up" }
     }
     private enum GrowthMetric: String, CaseIterable, Identifiable {
         case weight = "Cân nặng", height = "Chiều cao"
@@ -71,7 +71,7 @@ struct StatisticsView: View {
                 }
                 NavigationLink { ShareReportView(interval: interval) } label: {
                     HStack(spacing: 8) {
-                        CareIcon(name: "InsightsShare", color: .white, size: 20)
+                        CareIcon(name: "Stitch_ios_share", color: .white, size: 20)
                         Text("Chia sẻ báo cáo (PDF / QR)").font(CareFont.callout.weight(.semibold))
                     }.foregroundStyle(.white).frame(maxWidth: .infinity, minHeight: 56)
                         .background(CareTheme.accent, in: RoundedRectangle(cornerRadius: 16))
@@ -82,6 +82,7 @@ struct StatisticsView: View {
         }
         .background(CareTheme.background)
         .toolbar(.hidden, for: .navigationBar)
+        .toolbar(.hidden, for: .tabBar)
         .sheet(isPresented: $showRange) {
             InsightDateRangeView(start: customInterval.start, end: customInterval.end) { customInterval = $0 }
         }
@@ -94,7 +95,7 @@ struct StatisticsView: View {
                     HStack {
                         InsightBadge(title: viewModel.isTrackingIllness ? "Đợt theo dõi" : "Theo dõi sức khỏe", color: CareTheme.medical)
                         Spacer()
-                        CareIcon(name: "InsightsShield", color: CareTheme.medical, size: 24)
+                        CareIcon(name: "Stitch_health_and_safety", color: CareTheme.medical, size: 24)
                     }
                     Text(viewModel.isTrackingIllness ? (viewModel.illnessTitle.isEmpty ? "Đang theo dõi ốm" : viewModel.illnessTitle) : "Bắt đầu theo dõi ốm")
                         .font(CareFont.headline).foregroundStyle(CareTheme.text)
@@ -106,7 +107,7 @@ struct StatisticsView: View {
         CareCard {
             VStack(alignment: .leading, spacing: 18) {
                 HStack(alignment: .top, spacing: 12) {
-                    CareIcon(name: "InsightsTemperature", color: CareTheme.medical, size: 23)
+                    CareIcon(name: "Stitch_device_thermostat", color: CareTheme.medical, size: 23)
                         .padding(10).background(CareTheme.medicalBackground, in: RoundedRectangle(cornerRadius: 12))
                     VStack(alignment: .leading, spacing: 4) {
                         Text("THÂN NHIỆT GẦN NHẤT").font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.secondary)
@@ -137,7 +138,7 @@ struct StatisticsView: View {
             Button { mode = .growth } label: {
                 CareCard {
                     HStack(spacing: 12) {
-                        CareIcon(name: "InsightsRuler", color: CareTheme.accent, size: 24)
+                        CareIcon(name: "Stitch_straighten", color: CareTheme.accent, size: 24)
                         VStack(alignment: .leading, spacing: 4) {
                             Text(measurementText(latest)).font(CareFont.headline).foregroundStyle(CareTheme.text)
                             Text("Đo \(latest.date.careFormatted(date: .abbreviated, time: .omitted))").font(CareFont.caption).foregroundStyle(CareTheme.secondary)
@@ -151,8 +152,8 @@ struct StatisticsView: View {
 
     private var nutritionMetrics: some View {
         HStack(alignment: .top, spacing: 12) {
-            InsightMetricView(title: "Lượng sữa đã ghi", value: InsightData.sum(activities, kind: .milk, unit: "ml").map { "\(InsightData.format($0)) ml" } ?? "Chưa ghi nhận", subtitle: "Chưa gồm bú mẹ trực tiếp", icon: "InsightsMilk", color: CareTheme.feeding)
-            InsightMetricView(title: "Thời gian ngủ", value: InsightData.sleepHours(viewModel.activities, in: interval).map { "\(InsightData.format($0)) giờ" } ?? "Chưa ghi nhận", subtitle: "Giấc ngủ đã kết thúc", icon: "InsightsSleep", color: CareTheme.routine)
+            InsightMetricView(title: "Lượng sữa đã ghi", value: InsightData.sum(activities, kind: .milk, unit: "ml").map { "\(InsightData.format($0)) ml" } ?? "Chưa ghi nhận", subtitle: "Chưa gồm bú mẹ trực tiếp", icon: "Stitch_water_bottle", color: CareTheme.feeding)
+            InsightMetricView(title: "Thời gian ngủ", value: InsightData.sleepHours(viewModel.activities, in: interval).map { "\(InsightData.format($0)) giờ" } ?? "Chưa ghi nhận", subtitle: "Giấc ngủ đã kết thúc", icon: "Stitch_bedtime", color: CareTheme.routine)
         }
     }
 
@@ -160,8 +161,8 @@ struct StatisticsView: View {
         CareSectionTitle(title: "Ăn uống & giấc ngủ", subtitle: InsightData.intervalLabel(interval))
         nutritionMetrics
         HStack(alignment: .top, spacing: 12) {
-            InsightMetricView(title: "Nước", value: InsightData.sum(activities, kind: .water, unit: "ml").map { "\(InsightData.format($0)) ml" } ?? "Chưa ghi nhận", subtitle: "Tổng trong khoảng", icon: "InsightsMilk", color: CareTheme.feeding)
-            InsightMetricView(title: "Bữa ăn", value: activities.filter { $0.kind == .meal }.isEmpty ? "Chưa ghi nhận" : "\(activities.filter { $0.kind == .meal }.count) bữa", subtitle: "Theo nhật ký đã lưu", icon: "InsightsList", color: CareTheme.routine)
+            InsightMetricView(title: "Nước", value: InsightData.sum(activities, kind: .water, unit: "ml").map { "\(InsightData.format($0)) ml" } ?? "Chưa ghi nhận", subtitle: "Tổng trong khoảng", icon: "Stitch_water_drop", color: CareTheme.feeding)
+            InsightMetricView(title: "Bữa ăn", value: activities.filter { $0.kind == .meal }.isEmpty ? "Chưa ghi nhận" : "\(activities.filter { $0.kind == .meal }.count) bữa", subtitle: "Theo nhật ký đã lưu", icon: "Stitch_ramen_dining", color: CareTheme.routine)
         }
         CareCard {
             VStack(alignment: .leading, spacing: 16) {

@@ -34,7 +34,7 @@ final class BabyCareUITests: XCTestCase {
         save.tap()
 
         // A pushed form returns to the activity picker; close that sheet if present.
-        let diaryTab = app.tabBars.buttons["Nhật ký"]
+        let diaryTab = app.buttons["tab.diary"]
         if !diaryTab.isHittable {
             let close = app.buttons["Đóng"].firstMatch
             if close.waitForExistence(timeout: 3) { close.tap() }
@@ -47,8 +47,8 @@ final class BabyCareUITests: XCTestCase {
 
         app.terminate()
         app.launch()
-        XCTAssertTrue(app.tabBars.buttons["Nhật ký"].waitForExistence(timeout: 10))
-        app.tabBars.buttons["Nhật ký"].tap()
+        XCTAssertTrue(app.buttons["tab.diary"].waitForExistence(timeout: 10))
+        app.buttons["tab.diary"].tap()
         XCTAssertTrue(app.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "37,5")).firstMatch.waitForExistence(timeout: 5))
         XCTAssertFalse(app.textFields["babyNameField"].exists)
         capture(app, name: "D – Dữ liệu còn sau khi tắt và mở lại app")

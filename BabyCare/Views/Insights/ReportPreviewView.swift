@@ -41,7 +41,7 @@ struct ReportPreviewView: View {
                     if let exportURL {
                         ShareLink(item: exportURL) {
                             HStack(spacing: 8) {
-                                CareIcon(name: "InsightsPDF", color: .white, size: 21)
+                                CareIcon(name: "Stitch_picture_as_pdf", color: .white, size: 21)
                                 Text("Lưu / chia sẻ PDF").font(CareFont.headline)
                             }.foregroundStyle(.white).frame(maxWidth: .infinity, minHeight: 56).background(CareTheme.accent, in: RoundedRectangle(cornerRadius: 14))
                         }
@@ -50,14 +50,14 @@ struct ReportPreviewView: View {
                     }
                     #if canImport(UIKit)
                     Button { printReport(snapshot) } label: {
-                        HStack(spacing: 8) { CareIcon(name: "InsightsPrint", color: CareTheme.text, size: 20); Text("In báo cáo trực tiếp").font(CareFont.subheadline.weight(.semibold)) }
+                        HStack(spacing: 8) { CareIcon(name: "Stitch_print", color: CareTheme.text, size: 20); Text("In báo cáo trực tiếp").font(CareFont.subheadline.weight(.semibold)) }
                             .frame(maxWidth: .infinity, minHeight: 48).background(CareTheme.surface, in: RoundedRectangle(cornerRadius: 12))
                             .overlay(RoundedRectangle(cornerRadius: 12).stroke(CareTheme.border))
                     }.foregroundStyle(CareTheme.text)
                     #endif
                     if let error { Text(error).font(CareFont.subheadline).foregroundStyle(CareTheme.medical) }
                     HStack(alignment: .top, spacing: 10) {
-                        CareIcon(name: "InsightsShield", color: CareTheme.secondary, size: 18)
+                        CareIcon(name: "Stitch_health_and_safety", color: CareTheme.secondary, size: 18)
                         Text("Báo cáo do phụ huynh ghi nhận, phục vụ trao đổi với người chăm sóc hoặc bác sĩ. Không thay thế chẩn đoán của nhân viên y tế.").font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                     }.padding(14).background(CareTheme.border.opacity(0.25), in: RoundedRectangle(cornerRadius: 12))
                     Text("Tạo lúc \(snapshot.createdAt.careFormatted(date: .abbreviated, time: .shortened)) · Bản chụp dữ liệu tại thời điểm tạo")
@@ -78,7 +78,7 @@ struct ReportPreviewView: View {
             VStack(alignment: .leading, spacing: 16) {
                 if report.includeProfile {
                     HStack(spacing: 12) {
-                        CareIcon(name: "InsightsBaby", color: CareTheme.accent, size: 28).padding(12).background(CareTheme.accent.opacity(0.06), in: Circle())
+                        CareIcon(name: "Stitch_child_care", color: CareTheme.accent, size: 28).padding(12).background(CareTheme.accent.opacity(0.06), in: Circle())
                         VStack(alignment: .leading, spacing: 5) {
                             Text(report.baby.name).font(CareFont.title2.bold())
                             Text(report.baby.ageDescription).font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
@@ -96,7 +96,7 @@ struct ReportPreviewView: View {
                 }
                 if !report.illnessTitle.isEmpty {
                     HStack(alignment: .top, spacing: 10) {
-                        CareIcon(name: "InsightsDoctor", color: CareTheme.routine, size: 20)
+                        CareIcon(name: "Stitch_clinical_notes", color: CareTheme.routine, size: 20)
                         VStack(alignment: .leading, spacing: 5) {
                             Text("TÌNH TRẠNG ĐANG THEO DÕI").font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.routine)
                             Text(report.illnessTitle).font(CareFont.subheadline.weight(.medium))
@@ -113,10 +113,10 @@ struct ReportPreviewView: View {
         return CareCard {
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
-                    CareIcon(name: "InsightsChart", color: CareTheme.medical, size: 20)
+                    CareIcon(name: "Stitch_show_chart", color: CareTheme.medical, size: 20)
                     Text("Diễn biến thân nhiệt").font(CareFont.headline)
                     Spacer()
-                    Button { chartList.toggle() } label: { CareIcon(name: chartList ? "InsightsChart" : "InsightsList", color: CareTheme.accent, size: 20) }
+                    Button { chartList.toggle() } label: { CareIcon(name: chartList ? "Stitch_show_chart" : "Stitch_format_list_bulleted", color: CareTheme.accent, size: 20) }
                         .frame(minWidth: 44, minHeight: 44).accessibilityLabel(chartList ? "Xem biểu đồ" : "Xem dạng danh sách")
                 }
                 if points.isEmpty { Text("Chưa ghi nhận nhiệt độ trong khoảng này").font(CareFont.subheadline).foregroundStyle(CareTheme.secondary) }
@@ -134,7 +134,7 @@ struct ReportPreviewView: View {
                     .chartXSelection(value: $selectedDate)
                     if let selected { Text("\(selected.date.careFormatted(date: .abbreviated, time: .shortened)) · \(selected.value) °C").font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.accent) }
                 }
-                HStack(spacing: 8) { CareIcon(name: "InsightsMedicine", color: CareTheme.accent, size: 18); Text("Nhật ký dùng thuốc").font(CareFont.subheadline.weight(.semibold)) }
+                HStack(spacing: 8) { CareIcon(name: "Stitch_medication", color: CareTheme.accent, size: 18); Text("Nhật ký dùng thuốc").font(CareFont.subheadline.weight(.semibold)) }
                 if report.medicineActivities.isEmpty { Text("Chưa ghi nhận dùng thuốc").font(CareFont.subheadline).foregroundStyle(CareTheme.secondary) }
                 ForEach(report.medicineActivities) { item in
                     VStack(alignment: .leading, spacing: 5) {

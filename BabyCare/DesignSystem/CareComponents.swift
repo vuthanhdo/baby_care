@@ -41,10 +41,14 @@ struct CareIcon: View {
 struct CarePrimaryButton: View {
     let title: String
     var color: Color = CareTheme.accent
+    var icon: String? = nil
     let action: () -> Void
     var body: some View {
         Button(action: action) {
-            Text(title).multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
+            HStack(spacing: 8) {
+                if let icon { CareIcon(name: icon, color: .white, size: 22) }
+                Text(title).multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
+            }
         }.buttonStyle(CareActionStyle(color: color))
     }
 }
@@ -112,12 +116,12 @@ struct CareBabyHeaderView: View {
             }
             Spacer()
             NavigationLink { SettingsView() } label: {
-                Image(systemName: "gearshape").font(.system(size: 19)).foregroundStyle(CareTheme.text)
+                CareIcon(name: "Stitch_settings", color: CareTheme.text, size: 24)
             }.buttonStyle(.plain).frame(width: 48, height: 48)
                 .background(CareTheme.surface, in: .circle)
                 .overlay(Circle().strokeBorder(CareTheme.border)).accessibilityLabel("Cài đặt")
             NavigationLink { IllnessTrackingView() } label: {
-                Image(systemName: "bell").font(.system(size: 19)).foregroundStyle(CareTheme.text)
+                CareIcon(name: "Stitch_notifications", color: CareTheme.text, size: 24)
             }.buttonStyle(.plain).frame(width: 48, height: 48)
                 .background(CareTheme.surface, in: .circle)
                 .overlay(Circle().strokeBorder(CareTheme.border)).accessibilityLabel("Theo dõi và lịch nhắc")

@@ -91,7 +91,10 @@ struct ActivityFormView: View {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 84))], spacing: 8) {
                             ForEach(["Chưa rõ", "Nách", "Tai", "Trán", "Khác"], id: \.self) { site in
                                 Button { detail = site } label: {
-                                    Text(site).font(CareFont.subheadline.weight(.semibold))
+                                    VStack(spacing: 6) {
+                                        CareIcon(name: siteIcon(site), color: detail == site ? CareTheme.accent : CareTheme.secondary, size: 24)
+                                        Text(site).font(CareFont.footnote.weight(.semibold))
+                                    }
                                         .padding(.horizontal, 16).frame(minHeight: 48)
                                         .foregroundStyle(detail == site ? CareTheme.accent : CareTheme.secondary)
                                         .background(detail == site ? CareTheme.accent.opacity(0.1) : CareTheme.background, in: .rect(cornerRadius: 12))
@@ -106,7 +109,7 @@ struct ActivityFormView: View {
 
             CareFormCard {
                 HStack(alignment: .top, spacing: 10) {
-                    CareIcon(name: "ActivityHelp", color: CareTheme.accent, size: 20)
+                    CareIcon(name: "Stitch_help_outline", color: CareTheme.accent, size: 20)
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Kiểm tra trước khi lưu").font(CareFont.subheadline.weight(.semibold))
                         Text(kind == .medicine ? "Ghi đúng tên, đơn vị và lượng đã dùng theo hướng dẫn bạn đang có." : kind == .temperature ? "Nhập số đang hiển thị trên nhiệt kế và chọn đúng vị trí đo. Số đo trước chỉ dùng để tham khảo." : "Kiểm tra thời gian và nội dung đã nhập cho bé.")
@@ -166,7 +169,7 @@ struct ActivityFormView: View {
         }
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: 6) {
-                CarePrimaryButton(title: isEditing ? "Lưu thay đổi" : "Lưu \(kind.title.lowercased())", action: save)
+                CarePrimaryButton(title: isEditing ? "Lưu thay đổi" : "Lưu \(kind.title.lowercased())", icon: "Stitch_check_circle", action: save)
                     .disabled(!valid).accessibilityIdentifier("saveActivityButton")
                 if !valid { Text(validationMessage).font(CareFont.caption).foregroundStyle(CareTheme.secondary).multilineTextAlignment(.center) }
             }.padding().background(CareTheme.background)
@@ -193,6 +196,16 @@ struct ActivityFormView: View {
                 }
             }
             selectedPhotos = []
+        }
+    }
+
+    private func siteIcon(_ site: String) -> String {
+        switch site {
+        case "Nách": "Stitch_accessibility_new"
+        case "Tai": "Stitch_hearing"
+        case "Trán": "Stitch_face"
+        case "Khác": "Stitch_more_horiz"
+        default: "Stitch_help_outline"
         }
     }
 

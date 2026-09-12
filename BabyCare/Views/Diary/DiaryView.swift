@@ -29,7 +29,7 @@ struct DiaryView: View {
                     if !query.isEmpty {
                         Button("Xóa tìm kiếm", systemImage: "xmark.circle.fill") { query = "" }.labelStyle(.iconOnly)
                     }
-                    NavigationLink { VoiceEntryView() } label: { CareIcon(name: "HomeIcon18", color: CareTheme.secondary, size: 18) }
+                    NavigationLink { VoiceEntryView() } label: { CareIcon(name: "Stitch_mic", color: CareTheme.secondary, size: 18) }
                         .accessibilityLabel("Nhập bằng giọng nói").frame(minWidth: 44, minHeight: 44)
                 }.padding(.leading, 12).background(CareTheme.border.opacity(0.55), in: .rect(cornerRadius: 12))
                 HStack {
@@ -87,10 +87,15 @@ struct DiaryView: View {
             else if !old.isEmpty && new.isEmpty { allDates = scopeBeforeSearch }
         }
         .careScreen().toolbar(.hidden, for: .navigationBar)
+        .toolbar(.hidden, for: .tabBar)
         .safeAreaInset(edge: .top, spacing: 0) { CareBabyHeaderView() }
         .safeAreaInset(edge: .bottom, alignment: .trailing) {
-            Button { showingPicker = true } label: { Label("Ghi hoạt động", systemImage: "plus").font(CareFont.headline).padding(.vertical, 6) }
-                .buttonStyle(.borderedProminent).buttonBorderShape(.capsule).padding(.horizontal, 20).padding(.bottom, 8)
+            Button { showingPicker = true } label: {
+                HStack(spacing: 8) {
+                    CareIcon(name: "Stitch_add", color: .white, size: 22)
+                    Text("Ghi hoạt động").font(CareFont.headline).foregroundStyle(.white)
+                }.padding(.horizontal, 20).frame(minHeight: 52).background(CareTheme.accent, in: .capsule)
+            }.buttonStyle(.plain).padding(.horizontal, 20).padding(.bottom, 8)
         }
         .sheet(isPresented: $showingPicker) { NavigationStack { ActivityPickerView(initialGroup: group ?? .medical) } }
         .sheet(isPresented: $showingDate) {
@@ -108,7 +113,9 @@ struct DiaryView: View {
     private func filterButton(_ title: String, group option: ActivityGroup?) -> some View {
         Button { group = option } label: {
             HStack(spacing: 5) {
-                if group == option { Image(systemName: "checkmark") }
+                if let option {
+                    CareIcon(name: option.assetName, color: group == option ? .white : option.color, size: 18)
+                } else if group == nil { CareIcon(name: "Stitch_done", color: .white, size: 18) }
                 Text(title)
             }.font(CareFont.subheadline.weight(.medium)).padding(.horizontal, 14).frame(minHeight: 44)
                 .foregroundStyle(group == option ? .white : option?.color ?? CareTheme.accent)

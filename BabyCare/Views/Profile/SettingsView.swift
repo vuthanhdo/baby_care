@@ -29,20 +29,20 @@ struct SettingsView: View {
             }
             Section("Trải nghiệm & Hiển thị") {
                 Button { showingTextSize = true } label: {
-                    settingsRow("Cỡ chữ", subtitle: textSizeTitle, icon: "ProfileTextSize", color: CareTheme.accent)
+                    settingsRow("Cỡ chữ", subtitle: textSizeTitle, icon: "Stitch_format_size", color: CareTheme.accent)
                 }.buttonStyle(.plain)
                 Toggle(isOn: $habitSuggestions) {
-                    settingsRow("Gợi ý theo thói quen", subtitle: "Gợi ý từ lần ghi gần đây; lịch đã đặt vẫn được giữ.", icon: "ProfileSparkles", color: CareTheme.routine)
+                    settingsRow("Gợi ý theo thói quen", subtitle: "Gợi ý từ lần ghi gần đây; lịch đã đặt vẫn được giữ.", icon: "Stitch_auto_awesome", color: CareTheme.routine)
                 }
-                settingsRow("Đơn vị đo", subtitle: "°C, kg, cm, ml · Hệ đo lường tiêu chuẩn Việt Nam", icon: "ProfileUnits", color: CareTheme.feeding)
+                settingsRow("Đơn vị đo", subtitle: "°C, kg, cm, ml · Hệ đo lường tiêu chuẩn Việt Nam", icon: "Stitch_straighten", color: CareTheme.feeding)
             }
 
             Section("Theo dõi & Nhắc nhở") {
                 NavigationLink { IllnessTrackingView() } label: {
-                    settingsRow("Lịch nhắc thuốc", subtitle: "Kiểm tra lịch đã nhập cho bé", icon: "ProfileReminder", color: CareTheme.medical)
+                    settingsRow("Lịch nhắc thuốc", subtitle: "Kiểm tra lịch đã nhập cho bé", icon: "Stitch_alarm", color: CareTheme.medical)
                 }
                 Button { showingPermissions = true } label: {
-                    settingsRow("Quyền thông báo & Mic", subtitle: "Xem trạng thái quyền trên thiết bị", icon: "ProfileNotifications", color: CareTheme.accent)
+                    settingsRow("Quyền thông báo & Mic", subtitle: "Xem trạng thái quyền trên thiết bị", icon: "Stitch_notifications_active", color: CareTheme.accent)
                 }.buttonStyle(.plain)
             }
 
@@ -50,16 +50,16 @@ struct SettingsView: View {
 
             Section("Dữ liệu & Báo cáo") {
                 NavigationLink { SharedReportSettingsView() } label: {
-                    settingsRow("Liên kết báo cáo đã chia sẻ", subtitle: "Báo cáo PDF trên thiết bị", icon: "ProfileQR", color: CareTheme.feeding)
+                    settingsRow("Liên kết báo cáo đã chia sẻ", subtitle: "Báo cáo PDF trên thiết bị", icon: "Stitch_qr_code_2", color: CareTheme.feeding)
                 }
                 Button { showingStorage = true } label: {
-                    settingsRow(viewModel.state.storage == .device ? "Bộ nhớ trên thiết bị" : "Dữ liệu cloud & cache", subtitle: "\(viewModel.activities.count) hoạt động · \(viewModel.measurements.count) số đo của bé", icon: "ProfileStorage", color: CareTheme.accent)
+                    settingsRow(viewModel.state.storage == .device ? "Bộ nhớ trên thiết bị" : "Dữ liệu cloud & cache", subtitle: "\(viewModel.activities.count) hoạt động · \(viewModel.measurements.count) số đo của bé", icon: "Stitch_sd_storage", color: CareTheme.accent)
                 }.buttonStyle(.plain)
             }
 
             Section("Hướng dẫn & Giới thiệu") {
                 Button { showingGuide = true } label: {
-                    settingsRow("Hướng dẫn sử dụng 4 bước", subtitle: "Ghi nhanh, Tìm lại, Lịch thuốc, Chia sẻ", icon: "ProfileGuide", color: CareTheme.accent)
+                    settingsRow("Hướng dẫn sử dụng 4 bước", subtitle: "Ghi nhanh, Tìm lại, Lịch thuốc, Chia sẻ", icon: "Stitch_menu_book", color: CareTheme.accent)
                 }.buttonStyle(.plain)
                 Button { showingAbout = true } label: {
                     HStack(spacing: 13) {
@@ -71,7 +71,7 @@ struct SettingsView: View {
                     }.padding(.vertical, 5)
                 }.buttonStyle(.plain)
                 HStack(alignment: .top, spacing: 10) {
-                    CareIcon(name: "ProfileMedicalInfo", color: CareTheme.medical, size: 18)
+                    CareIcon(name: "Stitch_medical_information", color: CareTheme.medical, size: 18)
                     Text("Dữ liệu dùng để ghi nhận và trao đổi khi chăm sóc bé, không thay thế chẩn đoán hoặc chỉ định của nhân viên y tế.")
                         .font(CareFont.footnote).foregroundStyle(CareTheme.medical)
                 }.padding(.vertical, 6).listRowBackground(CareTheme.medicalBackground)
@@ -243,7 +243,7 @@ private struct SharedReportSettingsView: View {
         List {
             Section {
                 VStack(alignment: .leading, spacing: 12) {
-                    CareIcon(name: "ProfileQR", color: CareTheme.feeding, size: 32)
+                    CareIcon(name: "Stitch_qr_code_2", color: CareTheme.feeding, size: 32)
                     Text("Chưa có liên kết báo cáo").font(CareFont.title3.bold())
                     Text("Phiên bản hiện tại cho phép tạo và chia sẻ PDF trên thiết bị. Tạo liên kết QR cần dịch vụ chia sẻ trực tuyến chưa được kết nối.")
                         .font(CareFont.body).foregroundStyle(CareTheme.secondary)

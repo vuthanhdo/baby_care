@@ -6,7 +6,7 @@ import UIKit
 enum ReportSection: String, CaseIterable, Identifiable {
     case medical = "Y tế & Diễn tiến", feeding = "Lượng sữa & Ăn uống", routine = "Giấc ngủ & Sinh hoạt", growth = "Tăng trưởng"
     var id: Self { self }
-    var icon: String { switch self { case .medical: "InsightsMedical"; case .feeding: "InsightsMilk"; case .routine: "InsightsSleep"; case .growth: "InsightsGrowth" } }
+    var icon: String { switch self { case .medical: "Stitch_stethoscope"; case .feeding: "Stitch_water_bottle"; case .routine: "Stitch_bedtime"; case .growth: "Stitch_trending_up" } }
     var color: Color { switch self { case .medical: CareTheme.medical; case .feeding: CareTheme.feeding; case .routine: CareTheme.routine; case .growth: CareTheme.accent } }
     var group: ActivityGroup? { switch self { case .medical: .medical; case .feeding: .feeding; case .routine: .routine; case .growth: nil } }
 }
@@ -100,7 +100,7 @@ struct ShareReportView: View {
             LazyVStack(alignment: .leading, spacing: 16) {
                 CareCard {
                     HStack(alignment: .top, spacing: 12) {
-                        CareIcon(name: "InsightsShield", color: CareTheme.accent, size: 25)
+                        CareIcon(name: "Stitch_health_and_safety", color: CareTheme.accent, size: 25)
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Bạn chọn nội dung chia sẻ").font(CareFont.headline)
                             Text("PDF được tạo từ dữ liệu đã lưu trên thiết bị. Kiểm tra bản xem trước trước khi gửi.").font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
@@ -112,7 +112,7 @@ struct ShareReportView: View {
                         stepTitle(1, "Chọn nội dung chia sẻ", badge: "\(sections.count)/4 mục")
                         Button { showRange = true } label: {
                             HStack(spacing: 12) {
-                                CareIcon(name: "InsightsCalendar", color: CareTheme.accent, size: 20)
+                                CareIcon(name: "Stitch_calendar_today", color: CareTheme.accent, size: 20)
                                 VStack(alignment: .leading, spacing: 5) {
                                     Text("Khoảng thời gian tổng hợp").font(CareFont.subheadline.weight(.semibold)).foregroundStyle(CareTheme.text)
                                     Text(InsightData.intervalLabel(interval)).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
@@ -126,7 +126,7 @@ struct ShareReportView: View {
                                 if sections.contains(section) { sections.remove(section) } else { sections.insert(section) }
                             } label: {
                                 HStack(alignment: .top, spacing: 10) {
-                                    CareIcon(name: "InsightsCheck", color: sections.contains(section) ? section.color : CareTheme.border, size: 18)
+                                    CareIcon(name: "Stitch_check_circle", color: sections.contains(section) ? section.color : CareTheme.border, size: 18)
                                     VStack(alignment: .leading, spacing: 7) {
                                         HStack(spacing: 6) {
                                             CareIcon(name: section.icon, color: section.color, size: 16)
@@ -184,7 +184,7 @@ struct ShareReportView: View {
             VStack(spacing: 8) {
                 if let exportURL {
                     ShareLink(item: exportURL) {
-                        HStack(spacing: 8) { CareIcon(name: "InsightsShare", color: .white, size: 20); Text("Chia sẻ file PDF").font(CareFont.headline) }
+                        HStack(spacing: 8) { CareIcon(name: "Stitch_ios_share", color: .white, size: 20); Text("Chia sẻ file PDF").font(CareFont.headline) }
                             .foregroundStyle(.white).frame(maxWidth: .infinity, minHeight: 56).background(CareTheme.accent, in: RoundedRectangle(cornerRadius: 14))
                     }
                 } else {

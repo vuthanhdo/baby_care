@@ -33,7 +33,7 @@ struct QuickLogView: View {
                 categories
                 NavigationLink { VoiceEntryView() } label: {
                     HStack(spacing: 14) {
-                        CareIcon(name: "HomeIcon18", color: CareTheme.accent, size: 24)
+                        CareIcon(name: "Stitch_mic", color: CareTheme.accent, size: 24)
                             .frame(width: 48, height: 48).background(CareTheme.accent.opacity(0.1), in: .circle)
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Nói để ghi").font(CareFont.headline)
@@ -77,6 +77,7 @@ struct QuickLogView: View {
         }
         .careScreen()
         .toolbar(.hidden, for: .navigationBar)
+        .toolbar(.hidden, for: .tabBar)
         .safeAreaInset(edge: .top, spacing: 0) { CareBabyHeaderView() }
         .sheet(item: $selectedGroup) { group in
             NavigationStack { ActivityPickerView(initialGroup: group) }.presentationDetents([.large])
@@ -89,7 +90,7 @@ struct QuickLogView: View {
     private func upcomingReminder(_ reminder: MedicationReminder) -> some View {
         CareFormCard {
             HStack(spacing: 12) {
-                CareIcon(name: "InsightsMedicine", color: CareTheme.medical)
+                CareIcon(name: "Stitch_medication", color: CareTheme.medical)
                     .frame(width: 44, height: 44).background(CareTheme.medicalBackground, in: .rect(cornerRadius: 12))
                 VStack(alignment: .leading, spacing: 5) {
                     Text(reminder.name).font(CareFont.headline)
@@ -140,7 +141,7 @@ struct QuickLogView: View {
             CareCard {
                 VStack(alignment: .leading, spacing: 14) {
                     HStack(spacing: 12) {
-                        CareIcon(name: "HomeIcon1", color: CareTheme.medical)
+                        CareIcon(name: "Stitch_thermostat", color: CareTheme.medical)
                             .frame(width: 44, height: 44).background(CareTheme.medicalBackground, in: .rect(cornerRadius: 12))
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Đang theo dõi ốm").font(CareFont.headline).foregroundStyle(CareTheme.medical)
@@ -167,8 +168,8 @@ struct QuickLogView: View {
     }
     private var temperatureLink: some View {
         NavigationLink { ActivityFormView(kind: .temperature) } label: {
-            Text("Đo nhiệt độ").font(CareFont.subheadline.weight(.semibold)).foregroundStyle(.white).frame(maxWidth: .infinity, minHeight: 32)
-        }.buttonStyle(.borderedProminent).buttonBorderShape(.roundedRectangle(radius: 10))
+            Label { Text("Đo nhiệt độ") } icon: { CareIcon(name: "Stitch_device_thermostat", color: .white, size: 20) }
+        }.buttonStyle(CareActionStyle())
     }
     private var illnessLink: some View {
         NavigationLink { IllnessTrackingView() } label: {
@@ -179,7 +180,7 @@ struct QuickLogView: View {
     private func sleepCard(start: Date) -> some View {
         CareCard {
             HStack(spacing: 14) {
-                CareIcon(name: "HomeIcon10", color: CareTheme.routine)
+                CareIcon(name: "Stitch_bedtime", color: CareTheme.routine)
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Bé đang ngủ").font(CareFont.headline)
                     Text(start, style: .timer).monospacedDigit().foregroundStyle(CareTheme.routine)
@@ -202,28 +203,28 @@ struct QuickLogView: View {
             CareCard {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack(spacing: 12) {
-                        CareIcon(name: "HomeIcon8", color: CareTheme.feeding)
+                        CareIcon(name: "Stitch_water_bottle", color: CareTheme.feeding)
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Ghi cữ sữa").font(CareFont.headline)
                             if let lastMilk { Text("Lần trước: \(lastMilk.formattedValue). Kiểm tra lượng mới trước khi lưu.").font(CareFont.caption).foregroundStyle(CareTheme.secondary) }
                         }
                     }
                     NavigationLink { ActivityFormView(kind: .milk) } label: {
-                        Text("Ghi cữ sữa").font(CareFont.subheadline.weight(.semibold)).foregroundStyle(.white).frame(maxWidth: .infinity, minHeight: 32)
-                    }.buttonStyle(.borderedProminent).tint(CareTheme.feeding).buttonBorderShape(.roundedRectangle(radius: 12))
+                        Label { Text("Ghi cữ sữa") } icon: { CareIcon(name: "Stitch_add_circle", color: .white, size: 20) }
+                    }.buttonStyle(CareActionStyle(color: CareTheme.feeding))
                 }
             }
             if viewModel.sleepStartDate == nil {
                 CareCard {
                     VStack(alignment: .leading, spacing: 12) {
                         HStack(spacing: 12) {
-                            CareIcon(name: "HomeIcon10", color: CareTheme.routine)
+                            CareIcon(name: "Stitch_bedtime", color: CareTheme.routine)
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("Giấc ngủ của bé").font(CareFont.headline)
                                 Text("Bấm khi bé bắt đầu ngủ để tính thời gian.").font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                             }
                         }
-                        CarePrimaryButton(title: "Bắt đầu ngủ", color: CareTheme.routine) {
+                        CarePrimaryButton(title: "Bắt đầu ngủ", color: CareTheme.routine, icon: "Stitch_play_arrow") {
                             Task { await viewModel.send(.commit(.startSleep(babyID: viewModel.baby.id, date: Date()))) }
                         }.tint(CareTheme.routine)
                     }

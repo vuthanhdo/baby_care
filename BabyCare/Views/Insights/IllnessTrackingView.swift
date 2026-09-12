@@ -20,7 +20,7 @@ struct IllnessTrackingView: View {
                     CareSectionTitle(title: "Lịch nhắc thuốc của bé")
                     Spacer()
                     Button { reminder = MedicationReminder(episodeOnly: viewModel.isTrackingIllness) } label: {
-                        HStack(spacing: 5) { CareIcon(name: "InsightsAdd", color: CareTheme.accent, size: 18); Text("Thêm nhắc").font(CareFont.subheadline) }
+                        HStack(spacing: 5) { CareIcon(name: "Stitch_add", color: CareTheme.accent, size: 18); Text("Thêm nhắc").font(CareFont.subheadline) }
                     }.frame(minHeight: 44)
                 }
                 if viewModel.medicationReminders.isEmpty {
@@ -35,7 +35,7 @@ struct IllnessTrackingView: View {
                     ForEach(viewModel.medicationReminders) { item in reminderCard(item) }
                 }
                 HStack(alignment: .top, spacing: 12) {
-                    CareIcon(name: "InsightsShield", color: CareTheme.accent, size: 24)
+                    CareIcon(name: "Stitch_health_and_safety", color: CareTheme.accent, size: 24)
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Lưu ý khi ghi thuốc").font(CareFont.subheadline.weight(.semibold))
                         Text("Kiểm tra tên thuốc, lượng thực tế và thời điểm theo hướng dẫn đang có trước khi lưu.").font(CareFont.subheadline)
@@ -52,7 +52,7 @@ struct IllnessTrackingView: View {
                 }
                 NavigationLink { ShareReportView() } label: {
                     HStack(spacing: 8) {
-                        CareIcon(name: "InsightsShare", color: .white, size: 20)
+                        CareIcon(name: "Stitch_ios_share", color: .white, size: 20)
                         Text("Xuất báo cáo 48 giờ (PDF / QR)").font(CareFont.callout.weight(.semibold))
                     }.foregroundStyle(.white).frame(maxWidth: .infinity, minHeight: 56)
                         .background(CareTheme.accent, in: RoundedRectangle(cornerRadius: 16))
@@ -91,7 +91,7 @@ struct IllnessTrackingView: View {
                     Text(viewModel.illnessTitle.isEmpty ? "Đang theo dõi ốm" : viewModel.illnessTitle).font(CareFont.title3.bold())
                     Text("Khởi phát: \(viewModel.illnessStartDate.careFormatted(date: .abbreviated, time: .omitted))").font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
                     HStack(spacing: 12) {
-                        CareIcon(name: "InsightsTemperature", color: CareTheme.medical, size: 26)
+                        CareIcon(name: "Stitch_device_thermostat", color: CareTheme.medical, size: 26)
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Nhiệt độ gần nhất").font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                             Text(latestTemperature.map { "\($0.value) °C" } ?? "Chưa ghi nhận").font(CareFont.title2.bold()).foregroundStyle(CareTheme.medical)
@@ -123,7 +123,7 @@ struct IllnessTrackingView: View {
         CareCard {
             VStack(alignment: .leading, spacing: 14) {
                 HStack(alignment: .top, spacing: 12) {
-                    CareIcon(name: "InsightsMedicine", color: CareTheme.medical, size: 25)
+                    CareIcon(name: "Stitch_medication", color: CareTheme.medical, size: 25)
                     VStack(alignment: .leading, spacing: 5) {
                         Text(item.name).font(CareFont.headline)
                         Text("Lượng đã nhập: \(item.amount) \(item.unit)").font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
@@ -132,12 +132,12 @@ struct IllnessTrackingView: View {
                     Menu {
                         Button("Sửa lịch") { reminder = item }
                         Button("Xóa lịch", role: .destructive) { deleteReminder = item }
-                    } label: { CareIcon(name: "InsightsEdit", color: CareTheme.secondary, size: 20) }.frame(minWidth: 44, minHeight: 44)
+                    } label: { CareIcon(name: "Stitch_edit", color: CareTheme.secondary, size: 20) }.frame(minWidth: 44, minHeight: 44)
                 }
                 TimelineView(.periodic(from: .now, by: 1)) { context in
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            CareIcon(name: "InsightsClock", color: CareTheme.accent, size: 17)
+                            CareIcon(name: "Stitch_schedule", color: CareTheme.accent, size: 17)
                             Text(item.enabled ? "MỐC ĐÃ ĐẶT: \(item.nextDate.careFormatted(date: .omitted, time: .shortened))" : "ĐÃ TẠM DỪNG").font(CareFont.caption.weight(.bold))
                         }
                         if item.enabled {

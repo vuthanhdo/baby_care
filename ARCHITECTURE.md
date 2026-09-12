@@ -44,3 +44,14 @@ Cache nằm tại:
 Khi RLS thu hồi quyền family, provider xóa cache của family đó trước khi báo lỗi. Đăng xuất vô hiệu hóa token lease, hủy network session và xóa dữ liệu đang hiển thị. Lịch thông báo được tạo lại từ snapshot của account/family hiện tại và gỡ khi rời phiên.
 
 Ảnh cloud và import dữ liệu SwiftData cũ chưa thuộc giai đoạn này. Provider từ chối mutation có ảnh để tránh báo lưu thành công trong khi byte ảnh chưa được upload. Dữ liệu trên máy không tự được gửi lên khi đăng nhập.
+
+
+## Tài khoản và tối đa 4 bé (12/09/2026)
+
+App không còn màn chọn/tạo family hay thao tác chọn family trong Cài đặt. Sau đăng nhập, SessionViewModel tự mở vùng dữ liệu trước đó; tài khoản mới tự tạo vùng dữ liệu rồi vào bước tạo bé. Lỗi tải tài khoản hiển thị Thử lại/Đăng xuất.
+
+Các bảng/khóa family giữ làm namespace nội bộ để tương thích RLS, Storage và outbox; không xóa dữ liệu hoặc thay ID. Supabase đã được áp dụng migration `202609110005_account_babies.sql`: tạo namespace tài khoản theo cách idempotent và trigger giới hạn 4 bé sống trên tổng namespace do tài khoản sở hữu. Dữ liệu legacy vượt giới hạn không bị xóa; không cho thêm bé mới.
+
+CareDatabase kiểm tra giới hạn 4 bé cho các provider, kể cả offline. Retry cùng ID không tính thành bé mới. Hồ sơ bé hiển thị số lượng /4 và vô hiệu hóa thêm khi đủ; menu Chọn bé và danh sách hồ sơ vẫn chuyển bé bằng selectBaby.
+
+Kiểm chứng: 19/19 test iOS đạt (BabyLimitTests, CloudProviderTests, BabyCareUITests). SQL thử nghiệm trên Supabase xác nhận tạo namespace lặp lại trả cùng ID và bé thứ 5 bị từ chối; toàn bộ bản ghi thử nghiệm rollback. Preflight không có tài khoản nhiều namespace, thành viên chia sẻ hoặc hồ sơ bé cần chuyển đổi. Chưa kiểm thử đăng nhập Google thật trong đợt thay đổi này.

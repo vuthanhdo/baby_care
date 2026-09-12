@@ -1,6 +1,6 @@
-# Thiết lập Google và xác minh OTP cho BabyCare
+# Thiết lập xác thực BabyCare
 
-Trạng thái ngày 11/09/2026: code iOS đã tích hợp Google OAuth và xác minh đăng ký bằng email OTP. Google provider chưa được bật; chủ project chưa có OAuth credentials hoặc SMTP. Mẫu email bên dưới chưa được triển khai. Không xem việc build/test app thành công là xác nhận đăng nhập Google hay gửi email thật hoạt động.
+Đăng ký email/mật khẩu hiện xác minh bằng link trong email mặc định Supabase. Google provider đã được chủ project bật.
 
 ## 1. Google OAuth
 
@@ -18,17 +18,16 @@ Client Secret chỉ nằm trong Supabase Dashboard; không đưa vào source iOS
 
 Tài liệu: https://supabase.com/docs/guides/auth/social-login/auth-google
 
-## 2. SMTP và OTP khi đăng ký email/mật khẩu
+## 2. Xác minh đăng ký bằng liên kết email
 
-1. Chuẩn bị dịch vụ SMTP và địa chỉ người gửi được dịch vụ xác minh. Nếu nhà cung cấp yêu cầu domain, chủ domain cần cấu hình DNS theo hướng dẫn của họ. Chưa lựa chọn hoặc đăng ký dịch vụ trả phí cho project.
-2. Trong [SMTP Settings](https://supabase.com/dashboard/project/cxlqvuqloaokzmaewvdy/auth/smtp), nhập Host, Port, Username, Password, Sender email và Sender name `Bé Khỏe` từ dịch vụ SMTP. Không dùng mật khẩu đăng nhập Gmail thông thường.
-3. Giữ **Confirm email** bật trong Authentication → Sign In / Providers.
-4. Trong Emails → Confirm sign up, đặt subject `Mã xác minh đăng ký Bé Khỏe` và copy nội dung file `templates/confirm-sign-up.html`. Biến `{{ .Token }}` sẽ được Supabase thay bằng mã xác minh. Cấu hình OTP length là 6 để khớp app.
-5. Đăng ký một email thử nghiệm do bạn kiểm soát. Kiểm tra mã sai/hết hạn báo lỗi, mã đúng tạo session, gửi lại mã, và kill app khi đang ở bước nhập mã rồi mở lại.
+- Giữ **Confirm email** bật và dùng template **Confirm sign up** mặc định có liên kết xác thực.
+- Trong URL Configuration → Redirect URLs, cho phép `babycare://auth-callback`.
+- App gọi signUp với callback trên, hiển thị màn kiểm tra email và nút gửi lại email xác thực. Không còn ô nhập OTP.
+- Khi bấm link trên thiết bị cài app, callback được SDK xử lý để tạo phiên và chuyển vào ứng dụng.
+- Nếu xác minh trên thiết bị khác, quay lại chọn “Đã xác minh? Đăng nhập” và nhập email/mật khẩu.
+- Kiểm tra link mới, link hết hạn, gửi lại, kill/mở app khi đang chờ xác minh. Không gửi email thử nghiệm tự động trong đợt sửa UI.
 
-Dashboard hiện yêu cầu custom SMTP để chỉnh email template. SMTP mặc định của Supabase chỉ phục vụ thử nghiệm với các địa chỉ thuộc team project; không đủ cho người dùng thông thường. Khi SMTP/template chưa cấu hình xong, email mặc định có thể vẫn chứa link xác minh; app vẫn nhận callback từ link đó.
-
-Tài liệu: https://supabase.com/docs/guides/auth/auth-smtp và https://supabase.com/docs/guides/auth/auth-email-templates
+`templates/confirm-sign-up.html` là mẫu OTP của phương án cũ, hiện **không triển khai**. Email mặc định vẫn chịu giới hạn dịch vụ Supabase; trước khi phát hành cần cấu hình dịch vụ gửi mail phù hợp.
 
 ## 3. Storage
 

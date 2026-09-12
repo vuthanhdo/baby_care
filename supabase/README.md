@@ -9,7 +9,7 @@
 
 ## Trạng thái
 
-Backend có 10 bảng, RLS theo family, 3 public RPC và private bucket `babycare-media`. App iOS đã có đăng nhập email/mật khẩu, provider Supabase, SwiftData cache/outbox và upload ảnh. Google OAuth/OTP đã có code nhưng còn chờ chủ project thiết lập OAuth credentials và SMTP. Xem [hướng dẫn thiết lập](AUTH_SETUP.md).
+Backend có 10 bảng, RLS theo family, 3 public RPC và private bucket `babycare-media`. App iOS đã có đăng nhập email/mật khẩu, provider Supabase, SwiftData cache/outbox và upload ảnh. Google OAuth/OTP đã có code; chủ project đã xác nhận bật Google provider. Cần kiểm chứng Google login thực tế và cấu hình SMTP cho email. Xem [hướng dẫn thiết lập](AUTH_SETUP.md).
 
 Các file migration được áp dụng bằng SQL Editor, theo thứ tự tên file. Không chạy lại trên project này vì schema đã tồn tại. Chưa đăng ký vào lịch sử migration của Supabase CLI: khi chuyển sang CLI, link đúng project và dùng `supabase migration repair --status applied` cho từng version đã đối chiếu, trước khi dùng `db push` ([CLI migration repair](https://supabase.com/docs/reference/cli/supabase-migration-repair)). Một project mới rỗng có thể chạy cả bốn file theo thứ tự. Không chạy reset database để đồng bộ lịch sử.
 

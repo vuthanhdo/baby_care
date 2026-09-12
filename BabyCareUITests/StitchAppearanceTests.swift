@@ -4,6 +4,32 @@ final class StitchAppearanceTests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
     @MainActor
+    func testRootTabsAndAllActivityGroups() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-demo"]
+        app.launch()
+        XCTAssertTrue(app.buttons["tab.quick"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.tabBars.firstMatch.isHittable, "Native tabs must not duplicate Stitch navigation")
+        capture(app, "Stitch — Ghi nhanh đầu màn")
+        app.swipeUp()
+        capture(app, "Stitch — Ghi nhanh danh mục")
+        app.buttons["tab.diary"].tap()
+        capture(app, "Stitch — Nhật ký")
+        app.buttons["tab.statistics"].tap()
+        capture(app, "Stitch — Thống kê")
+        app.buttons["tab.quick"].tap()
+        let medical = app.buttons["medicalGroupButton"]
+        for _ in 0..<6 where !medical.isHittable { app.swipeUp() }
+        medical.tap()
+        XCTAssertTrue(app.buttons["picker.group.medical"].waitForExistence(timeout: 5))
+        capture(app, "Stitch — Chọn Y tế")
+        app.buttons["picker.group.feeding"].tap()
+        capture(app, "Stitch — Chọn Ăn uống")
+        app.buttons["picker.group.routine"].tap()
+        capture(app, "Stitch — Chọn Sinh hoạt")
+    }
+
+    @MainActor
     func testEmailLoginAndSignUpLayouts() throws {
         let app = XCUIApplication()
         app.launchArguments = ["-ui-testing-auth"]
@@ -26,8 +52,23 @@ final class StitchAppearanceTests: XCTestCase {
         app.swipeUp()
         app.buttons["auth.toggle"].tap()
         XCTAssertTrue(app.staticTexts["Tạo tài khoản"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.secureTextFields["auth.confirmPassword"].exists)
         XCTAssertFalse(app.buttons["auth.submit"].isEnabled)
         capture(app, "Stitch — Đăng ký")
+    }
+
+    @MainActor
+    func testSignupEmailLinkInstructions() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-ui-testing-auth", "-care.auth.pendingSignupEmail", "signup@example.com"]
+        app.launch()
+        XCTAssertTrue(app.staticTexts["auth.checkEmail"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.textFields["auth.otp"].exists)
+        XCTAssertFalse(app.buttons["auth.verifyOTP"].exists)
+        XCTAssertTrue(app.buttons["Gửi lại email xác thực"].exists)
+        app.swipeUp()
+        app.buttons["Đã xác minh? Đăng nhập"].tap()
+        XCTAssertTrue(app.textFields["auth.email"].waitForExistence(timeout: 3))
     }
 
     @MainActor
@@ -55,8 +96,8 @@ final class StitchAppearanceTests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["-demo"]
         app.launch()
-        XCTAssertTrue(app.tabBars.buttons["Nhật ký"].waitForExistence(timeout: 10))
-        app.tabBars.buttons["Nhật ký"].tap()
+        XCTAssertTrue(app.buttons["tab.diary"].waitForExistence(timeout: 10))
+        app.buttons["tab.diary"].tap()
         let entry = app.buttons.containing(.staticText, identifier: "Nhiệt độ").firstMatch
         XCTAssertTrue(entry.waitForExistence(timeout: 5))
         entry.tap()

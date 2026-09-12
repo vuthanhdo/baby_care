@@ -26,6 +26,7 @@ nonisolated enum CloudError: Error, LocalizedError, Sendable, Equatable {
     }
     static func normalize(_ error: Error) -> Error {
         if let e = error as? PostgrestError {
+            if e.code == "P0001", e.message == "Baby limit reached" { return CareDataError.invalidInput("Bạn chỉ có thể tạo tối đa 4 hồ sơ bé.") }
             if e.code == "40001" || e.code == "23505" { return CloudError.conflict }
             if e.code == "42501" || e.code == "PGRST301" || e.code == "PGRST302" { return CloudError.accessDenied }
             return CareDataError.invalidInput("Cloud từ chối dữ liệu (\(e.code ?? "unknown")). Hãy kiểm tra thông tin rồi thử lại.")

@@ -20,18 +20,20 @@ struct ContentView: View {
             } else if viewModel.hasOnboarded {
                 TabView(selection: $selectedTab) {
                     Tab(value: .quick) {
-                        NavigationStack { QuickLogView(selectedTab: $selectedTab) }
+                        NavigationStack { QuickLogView(selectedTab: $selectedTab).safeAreaInset(edge: .bottom, spacing: 0) { CareBottomTabs(selection: $selectedTab) } }
                     } label: { Label("Ghi nhanh", systemImage: "bolt") }
                     Tab(value: .diary) {
-                        NavigationStack { DiaryView() }
+                        NavigationStack { DiaryView().safeAreaInset(edge: .bottom, spacing: 0) { CareBottomTabs(selection: $selectedTab) } }
                     } label: { Label("Nhật ký", systemImage: "book.pages") }
                     Tab(value: .statistics) {
                         NavigationStack {
                             StatisticsView()
                                 .safeAreaInset(edge: .top, spacing: 0) { CareBabyHeaderView() }
+                                .safeAreaInset(edge: .bottom, spacing: 0) { CareBottomTabs(selection: $selectedTab) }
                         }
                     } label: { Label("Thống kê", systemImage: "chart.bar") }
                 }
+                .toolbar(.hidden, for: .tabBar)
                 .id(viewModel.baby.id)
                 .onChange(of: viewModel.baby.id) { _, _ in selectedTab = .quick }
             } else {
@@ -72,3 +74,28 @@ struct ContentView: View {
     }
 }
 #Preview { ContentView().environment(BabyCareViewModel.preview()) }
+
+/// Flat, full-width Stitch navigation; each root owns its inset so pushed forms hide it.
+struct CareBottomTabs: View {
+    @Binding var selection: CareTab
+    var body: some View {
+        HStack(spacing: 0) {
+            tab(.quick, title: "Ghi nhanh", symbol: "bolt", identifier: "tab.quick")
+            tab(.diary, title: "Nhật ký", symbol: "auto_stories", identifier: "tab.diary")
+            tab(.statistics, title: "Thống kê", symbol: "bar_chart", identifier: "tab.statistics")
+        }.padding(.top, 10).padding(.bottom, 4)
+            .background(CareTheme.surface.ignoresSafeArea(edges: .bottom))
+            .overlay(alignment: .top) { Rectangle().fill(CareTheme.border).frame(height: 0.5) }
+    }
+    private func tab(_ value: CareTab, title: String, symbol: String, identifier: String) -> some View {
+        Button { selection = value } label: {
+            VStack(spacing: 5) {
+                CareIcon(name: "Stitch_" + symbol, color: selection == value ? CareTheme.accent : CareTheme.secondary, size: 26)
+                Text(title).font(CareFont.caption).fontWeight(selection == value ? .bold : .medium)
+            }.foregroundStyle(selection == value ? CareTheme.accent : CareTheme.secondary)
+                .frame(maxWidth: .infinity, minHeight: 48)
+                .contentShape(Rectangle())
+        }.buttonStyle(.plain).accessibilityIdentifier(identifier)
+            .accessibilityAddTraits(selection == value ? .isSelected : [])
+    }
+}
