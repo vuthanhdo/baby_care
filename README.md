@@ -59,7 +59,7 @@ xcodebuild -project BabyCare.xcodeproj -scheme BabyCare \
   -derivedDataPath /tmp/BabyCareDerivedData CODE_SIGNING_ALLOWED=NO test
 ```
 
-Bộ test kiểm tra SwiftData qua nhiều lần mở database, transaction, migration JSON; đồng thời kiểm tra DTO cloud, tombstone, cache/outbox tách account/family, nhiều lệnh ghi offline theo thứ tự, thu hồi quyền, retry đúng operation ID và vô hiệu hóa response muộn sau đăng xuất. UI test kiểm tra tạo hồ sơ → ghi nhiệt độ → kill/mở lại app → dữ liệu vẫn còn, cùng ba tab dữ liệu mẫu. Project dùng filesystem synchronized groups nên Xcode tự nhận các Swift file và asset mới.
+`AdaptiveLayoutUITests` kiểm tra tab, sheet và form ở cả portrait/landscape; chạy thêm với destination iPad mini để mô phỏng màn trong của iPhone Duo (regular width). Bộ test kiểm tra SwiftData qua nhiều lần mở database, transaction, migration JSON; đồng thời kiểm tra DTO cloud, tombstone, cache/outbox tách account/family, nhiều lệnh ghi offline theo thứ tự, thu hồi quyền, retry đúng operation ID và vô hiệu hóa response muộn sau đăng xuất. UI test kiểm tra tạo hồ sơ → ghi nhiệt độ → kill/mở lại app → dữ liệu vẫn còn, cùng ba tab dữ liệu mẫu. Project dùng filesystem synchronized groups nên Xcode tự nhận các Swift file và asset mới.
 
 
 Nguồn tham chiếu hiện tại: `DesignReference/Stitch/Export` (HTML, PNG và DESIGN.md xuất ngày 09/09/2026). Xem `DesignReference/Stitch/IMPLEMENTATION.md` để đối chiếu màn hình và các điều chỉnh theo tính năng thực tế.

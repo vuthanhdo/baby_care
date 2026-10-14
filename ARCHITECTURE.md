@@ -66,3 +66,16 @@ Kiểm chứng: 19/19 test iOS đạt (BabyLimitTests, CloudProviderTests, BabyC
 - Persisted activity kinds, option values, units, picker tags and speech parser vocabulary remain stable. Translation happens only when displaying those values; free-form names, notes and medicine names are not translated.
 - Date/number presentation follows the selected app locale. iOS permission dialogs use the OS-selected app language through `InfoPlist.strings`.
 - Voice recognition and parsing still support Vietnamese. English UI explicitly labels Vietnamese voice examples. Switching UI language does not change the parser or infer new voice commands.
+
+## iPhone Duo (14/10/2026)
+
+Apple công bố iPhone Duo (09/2026). Số liệu đo trên simulator iOS 27.1: màn ngoài khi gập **466 × 678 pt**, size class compact/regular (ngang: compact/compact) — như iPhone thường; màn trong khi mở **669 × 951 pt**, **regular/regular** ở cả hai hướng — như iPad, và màn trong **bỏ qua** `UISupportedInterfaceOrientations`. App cũ chạy được không cần build lại; build bằng SDK 27.1 mới tràn hết mép màn trong.
+
+Nguyên tắc đã áp dụng:
+
+- Layout chỉ phụ thuộc size class; không dùng `UIScreen.main`, `userInterfaceIdiom` hay orientation (đã rà soát, không có chỗ nào).
+- Nội dung cuộn giới hạn `.frame(maxWidth: 620).frame(maxWidth: .infinity)` ở mọi màn `ScrollView`; `CareBottomTabs` cũng gom về 620 pt. Màn dùng `List`/`Form` hệ thống giữ nguyên vì iPadOS tự inset.
+- Safe area dùng đúng từng cạnh (header/tab bar là `safeAreaInset`, chỉ nền tab bar `ignoresSafeArea(edges: .bottom)`), nên vùng camera/status bar lệch một bên trên Duo không che nội dung.
+- Sheet trên regular width là form sheet giữa màn; banner toast đã gắn trong sheet.
+
+Kiểm thử: `AdaptiveLayoutUITests` chạy cùng luồng (tab → chọn hoạt động → form nhiệt độ có bàn phím → lưu) ở portrait và landscape; chạy với destination iPhone (compact width, landscape = compact height) và iPad mini (regular width). Khi có Xcode 27.1: mở Device Hub → iPhone Duo simulator, thử open/close/rotate/fold và Split View; build lại bằng SDK 27.1. Chưa dùng `ReservedRegion`/`ArrangementView` (iOS 27.1) vì app không có UI tự dựng sát mép và chưa có bố cục hai pane.

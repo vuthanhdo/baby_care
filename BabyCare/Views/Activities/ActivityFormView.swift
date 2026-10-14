@@ -68,10 +68,13 @@ struct ActivityFormView: View {
     private var validationMessage: String { form.validationMessage }
 
     @Environment(\.locale) private var appLocale
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
     var body: some View {
         let _ = appLocale
         ScrollView {
             VStack(spacing: 16) {
+            // Compact height (folded iPhone Duo or any iPhone in landscape) keeps the input above the fold.
+            if verticalSizeClass != .compact {
             CareFormCard {
                 HStack(spacing: 12) {
                     CareIcon(name: kind.assetName, color: kind.group.color, size: 25)
@@ -82,6 +85,7 @@ struct ActivityFormView: View {
                     }
                 }
             }.listRowBackground(Color.clear)
+            }
 
             if kind == .temperature { temperatureSection }
             else { fieldsSection }
@@ -167,14 +171,23 @@ struct ActivityFormView: View {
             }
             ToolbarItem(placement: .confirmationAction) {
                 Button(action: save) { HStack { if viewModel.state.isSaving { ProgressView() }; Text(L10n.text("Lưu")) } }.disabled(!valid)
+                    .accessibilityIdentifier(verticalSizeClass == .compact ? "saveActivityButton" : "saveActivityToolbarButton")
             }
         }
         .safeAreaInset(edge: .bottom) {
-            VStack(spacing: 6) {
-                CarePrimaryButton(title: isEditing ? L10n.text("Lưu thay đổi") : L10n.text("Lưu {0}", "\(kind.title.lowercased())"), icon: "Stitch_check_circle", isLoading: viewModel.state.isSaving, action: save)
-                    .disabled(!valid).accessibilityIdentifier("saveActivityButton")
-                if !valid { Text(validationMessage).font(CareFont.caption).foregroundStyle(CareTheme.secondary).multilineTextAlignment(.center) }
-            }.padding().background(CareTheme.background)
+            // Compact height: the toolbar Save is enough, so only the validation hint stays at the bottom.
+            if verticalSizeClass == .compact {
+                if !valid {
+                    Text(validationMessage).font(CareFont.caption).foregroundStyle(CareTheme.secondary).multilineTextAlignment(.center)
+                        .padding(8).frame(maxWidth: .infinity).background(CareTheme.background)
+                }
+            } else {
+                VStack(spacing: 6) {
+                    CarePrimaryButton(title: isEditing ? L10n.text("Lưu thay đổi") : L10n.text("Lưu {0}", "\(kind.title.lowercased())"), icon: "Stitch_check_circle", isLoading: viewModel.state.isSaving, action: save)
+                        .disabled(!valid).accessibilityIdentifier("saveActivityButton")
+                    if !valid { Text(validationMessage).font(CareFont.caption).foregroundStyle(CareTheme.secondary).multilineTextAlignment(.center) }
+                }.padding().background(CareTheme.background)
+            }
         }
         .interactiveDismissDisabled(dirty || viewModel.state.isSaving)
         .navigationBarBackButtonHidden(dirty)

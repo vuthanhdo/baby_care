@@ -57,7 +57,7 @@ struct ActivityPickerView: View {
                             CareIcon(name: "Stitch_chevron_right", color: CareTheme.medical, size: 22)
                         }.padding(16).background(CareTheme.medicalBackground, in: .rect(cornerRadius: 16))
                             .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(CareTheme.medical.opacity(0.25)))
-                    }.buttonStyle(.plain)
+                    }.buttonStyle(.plain).accessibilityIdentifier("picker.kind.temperature")
                 }
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: textSize.isAccessibilitySize ? 1 : 2), spacing: 10) {
                     ForEach(kinds.filter { selectedGroup != .medical || $0 != .temperature }) { kind in
@@ -72,7 +72,7 @@ struct ActivityPickerView: View {
                             }.frame(maxWidth: .infinity, minHeight: 132, alignment: .topLeading).padding(16)
                                 .background(CareTheme.background, in: .rect(cornerRadius: 16))
                                 .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(CareTheme.border))
-                        }.buttonStyle(.plain)
+                        }.buttonStyle(.plain).accessibilityIdentifier("picker.kind.\(kind.rawValue)")
                     }
                 }
                 NavigationLink { VoiceEntryView() } label: {

@@ -177,7 +177,7 @@ struct ShareReportView: View {
                     }
                 }
                 if let error { Text(error).font(CareFont.subheadline).foregroundStyle(CareTheme.medical) }
-            }.padding(20)
+            }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
         }
         .background(CareTheme.background).foregroundStyle(CareTheme.text)
         .navigationTitle(L10n.text("Chia sẻ báo cáo")).navigationBarTitleDisplayMode(.inline).toolbar(.visible, for: .navigationBar)

@@ -59,7 +59,7 @@ struct IllnessTrackingView: View {
                     }.foregroundStyle(.white).frame(maxWidth: .infinity, minHeight: 56)
                         .background(CareTheme.accent, in: RoundedRectangle(cornerRadius: 16))
                 }
-            }.padding(20)
+            }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
         }
         .background(CareTheme.background).foregroundStyle(CareTheme.text)
         .navigationTitle(L10n.text("Theo dõi ốm & Lịch thuốc")).navigationBarTitleDisplayMode(.inline)

@@ -81,7 +81,7 @@ struct CareBottomTabs: View {
             tab(.quick, title: L10n.text("Ghi nhanh"), symbol: "bolt", identifier: "tab.quick")
             tab(.diary, title: L10n.text("Nhật ký"), symbol: "auto_stories", identifier: "tab.diary")
             tab(.statistics, title: L10n.text("Thống kê"), symbol: "bar_chart", identifier: "tab.statistics")
-        }.padding(.top, 10).padding(.bottom, 4)
+        }.frame(maxWidth: 620).frame(maxWidth: .infinity).padding(.top, 10).padding(.bottom, 4)
             .background(CareTheme.surface.ignoresSafeArea(edges: .bottom))
             .overlay(alignment: .top) { Rectangle().fill(CareTheme.border).frame(height: 0.5) }
     }

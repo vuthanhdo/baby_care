@@ -64,7 +64,7 @@ struct ReportPreviewView: View {
                     }.padding(14).background(CareTheme.border.opacity(0.25), in: RoundedRectangle(cornerRadius: 12))
                     Text(L10n.text("Tạo lúc {0} · Bản chụp dữ liệu tại thời điểm tạo", "\(snapshot.createdAt.careFormatted(date: .abbreviated, time: .shortened))"))
                         .font(CareFont.caption).foregroundStyle(CareTheme.secondary).frame(maxWidth: .infinity)
-                }.padding(20)
+                }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
             } else { ProgressView(L10n.text("Đang chuẩn bị bản xem trước…")).padding(40) }
         }
         .background(CareTheme.background).foregroundStyle(CareTheme.text)
