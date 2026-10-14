@@ -89,6 +89,14 @@ enum InsightData {
         return summary
     }
     /// Quick choices after a dose, counted from the logged time; moments already past are not offered.
+    /// Minute-level countdown ("1 giờ 45 phút"); seconds would only churn for a reminder hours away.
+    static func remainingText(until date: Date, now: Date = .now) -> String {
+        let minutes = max(1, Int((date.timeIntervalSince(now) / 60).rounded(.up)))
+        let days = minutes / 1440, hours = minutes % 1440 / 60, rest = minutes % 60
+        if days > 0 { return L10n.text("{0} ngày {1} giờ", "\(days)", "\(hours)") }
+        if hours > 0 { return L10n.text("{0} giờ {1} phút", "\(hours)", "\(rest)") }
+        return L10n.text("{0} phút", "\(rest)")
+    }
     static func nextDoseOptions(after takenAt: Date, now: Date = .now) -> [(hours: Int, date: Date)] {
         [4, 6, 8, 12].map { (hours: $0, date: takenAt.addingTimeInterval(Double($0) * 3600)) }.filter { $0.date > now }
     }

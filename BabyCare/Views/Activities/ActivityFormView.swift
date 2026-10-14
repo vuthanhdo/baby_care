@@ -200,7 +200,7 @@ struct ActivityFormView: View {
         .sheet(item: $nextDose) { prompt in
             NextDoseView(prompt: prompt) { nextDose = nil; dismiss() }
         }
-        .confirmationDialog(L10n.text("Bắt đầu theo dõi ốm?"), isPresented: Binding(get: { episodeOffer != nil }, set: { if !$0 { episodeOffer = nil; dismiss() } }), titleVisibility: .visible) {
+        .alert(L10n.text("Bắt đầu theo dõi ốm?"), isPresented: Binding(get: { episodeOffer != nil }, set: { if !$0 { episodeOffer = nil; dismiss() } })) {
             Button(L10n.text("Bắt đầu theo dõi")) {
                 let start = Calendar.current.startOfDay(for: episodeOffer ?? Date())
                 Task { _ = await viewModel.send(.commit(.startIllness(babyID: viewModel.baby.id, title: "", date: start), message: L10n.text("Đã bắt đầu theo dõi"))) }

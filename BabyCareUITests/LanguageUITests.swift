@@ -60,8 +60,13 @@ final class LanguageUITests: XCTestCase {
         let skipEpisode = app.buttons["No, just log the temperature"]
         XCTAssertTrue(skipEpisode.waitForExistence(timeout: 3))
         skipEpisode.tap()
+        // Declining pops the form back to the picker sheet; close it so the tabs are reachable again.
         let diary = app.buttons["tab.diary"]
-        if !diary.isHittable { app.buttons["Close"].firstMatch.tap() }
+        if !diary.isHittable {
+            let close = app.buttons["Close"].firstMatch
+            if close.waitForExistence(timeout: 3) { close.tap() }
+        }
+        XCTAssertTrue(diary.waitForExistence(timeout: 5))
         diary.tap()
         XCTAssertTrue(app.staticTexts["Temperature"].firstMatch.waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "37.5")).firstMatch.exists)

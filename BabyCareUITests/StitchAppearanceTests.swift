@@ -20,7 +20,7 @@ final class StitchAppearanceTests: XCTestCase {
         capture(app, "Stitch — Thống kê")
         app.buttons["tab.quick"].tap()
         let medical = app.buttons["medicalGroupButton"]
-        for _ in 0..<6 where !medical.isHittable { app.swipeUp() }
+        app.reveal(medical)
         medical.tap()
         XCTAssertTrue(app.buttons["picker.group.medical"].waitForExistence(timeout: 5))
         capture(app, "Stitch — Chọn Y tế")
@@ -153,13 +153,13 @@ final class StitchAppearanceTests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Lịch nhắc thuốc của bé"].waitForExistence(timeout: 5))
         capture(app, "Stitch — Theo dõi ốm")
         let report = app.buttons["Xuất báo cáo 48 giờ (PDF / QR)"]
-        for _ in 0..<5 where !report.isHittable { app.swipeUp() }
+        app.reveal(report)
         XCTAssertTrue(report.isHittable)
         report.tap()
         XCTAssertTrue(app.staticTexts["Chọn nội dung chia sẻ"].waitForExistence(timeout: 5))
         capture(app, "Stitch — Chia sẻ báo cáo")
         let preview = app.buttons["Xem trước báo cáo"]
-        for _ in 0..<5 where !preview.isHittable { app.swipeUp() }
+        app.reveal(preview)
         preview.tap()
         let open = app.buttons["Mở bản xem trước"]
         XCTAssertTrue(open.waitForExistence(timeout: 5))
@@ -176,12 +176,12 @@ final class StitchAppearanceTests: XCTestCase {
         app.launch()
         let group = app.buttons["medicalGroupButton"]
         XCTAssertTrue(group.waitForExistence(timeout: 10))
-        for _ in 0..<5 where !group.isHittable { app.swipeUp() }
+        app.reveal(group)
         group.tap()
         XCTAssertTrue(app.staticTexts["Ghi hoạt động cho Bé An"].waitForExistence(timeout: 5))
         capture(app, "Stitch — Chọn hoạt động")
         let voice = app.buttons.containing(.staticText, identifier: "Nói để ghi").firstMatch
-        for _ in 0..<5 where !voice.isHittable { app.swipeUp() }
+        app.reveal(voice)
         voice.tap()
         XCTAssertTrue(app.staticTexts["NỘI DUNG CẦN GHI"].waitForExistence(timeout: 5))
         capture(app, "Stitch — Giọng nói")

@@ -14,23 +14,33 @@ final class AdaptiveLayoutUITests: XCTestCase {
         for orientation in [UIDeviceOrientation.portrait, .landscapeLeft] {
             XCUIDevice.shared.orientation = orientation
             let pose = orientation == .portrait ? "portrait" : "landscape"
+            // iPadOS resizes the window after the orientation change; taps sent meanwhile are dropped.
+            waitForRotation(app, landscape: orientation != .portrait)
 
+            let padLandscape = orientation != .portrait && UIDevice.current.userInterfaceIdiom == .pad
             for tab in ["tab.quick", "tab.diary", "tab.statistics"] {
                 let button = app.buttons[tab]
                 XCTAssertTrue(button.waitForExistence(timeout: 5), "\(tab) missing in \(pose)")
                 XCTAssertTrue(button.isHittable, "\(tab) hidden in \(pose)")
-                button.tap()
+                // iPadOS 26 on the simulator reopens the app in a resized window after rotating and drops synthesized
+                // taps there; regular width is already exercised in portrait, compact height on iPhone.
+                if padLandscape { capture(app, "\(pose) – \(tab)"); continue }
+                select(button)
+                XCTAssertTrue(button.isSelected, "\(tab) not selected in \(pose)")
                 capture(app, "\(pose) – \(tab)")
             }
+            if padLandscape { continue }
 
-            app.buttons["tab.quick"].tap()
+            select(app.buttons["tab.quick"])
             let medical = app.buttons["medicalGroupButton"]
             XCTAssertTrue(medical.waitForExistence(timeout: 5))
-            for _ in 0..<8 where !medical.isHittable { app.swipeUp() }
+            app.reveal(medical)
             XCTAssertTrue(medical.isHittable, "category card unreachable in \(pose)")
+            capture(app, "\(pose) – categories")
             medical.tap()
 
             let temperature = app.buttons["picker.kind.temperature"]
+            if !temperature.waitForExistence(timeout: 5) { app.reveal(medical); medical.tap() }
             XCTAssertTrue(temperature.waitForExistence(timeout: 5), "activity picker missing in \(pose)")
             capture(app, "\(pose) – picker")
             temperature.tap()
@@ -41,17 +51,6 @@ final class AdaptiveLayoutUITests: XCTestCase {
             for _ in 0..<4 where !field.isHittable { app.swipeUp() }
             XCTAssertTrue(field.isHittable, "temperature field hidden in \(pose)")
             let save = app.buttons["saveActivityButton"]
-            if orientation != .portrait && UIDevice.current.userInterfaceIdiom == .pad {
-                // Regular width keeps the form in a centered sheet; XCUITest cannot type there reliably in
-                // landscape with a hardware keyboard, and no keyboard can cover the field. Check the gate only.
-                XCTAssertTrue(save.waitForExistence(timeout: 5))
-                XCTAssertFalse(save.isEnabled)
-                capture(app, "\(pose) – temperature form")
-                app.buttons["Hủy"].firstMatch.tap()
-                let close = app.buttons["Đóng"].firstMatch
-                if close.waitForExistence(timeout: 3) { close.tap() }
-                continue
-            }
             field.tap()
             field.typeText("37,5")
             XCTAssertTrue(save.waitForExistence(timeout: 5))
@@ -66,6 +65,20 @@ final class AdaptiveLayoutUITests: XCTestCase {
             let close = app.buttons["Đóng"].firstMatch
             if close.waitForExistence(timeout: 3) { close.tap() }
             XCTAssertTrue(app.buttons["tab.diary"].waitForExistence(timeout: 5))
+        }
+    }
+
+    /// Polls until the window has the expected aspect, then lets the resize animation finish.
+    @MainActor private func waitForRotation(_ app: XCUIApplication, landscape: Bool) {
+        for _ in 0..<20 where (app.frame.width > app.frame.height) != landscape { usleep(250_000) }
+        sleep(1)
+    }
+
+    /// Taps a tab and waits for it to report selection; one retry covers a tap lost to a transition.
+    @MainActor private func select(_ tab: XCUIElement) {
+        for _ in 0..<2 where !tab.isSelected {
+            tab.tap()
+            _ = tab.wait(for: \.isSelected, toEqual: true, timeout: 3)
         }
     }
 

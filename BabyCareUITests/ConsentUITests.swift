@@ -68,12 +68,10 @@ final class ConsentUITests: XCTestCase {
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = "Three explicit confirmations"; attachment.lifetime = .keepAlways; add(attachment)
     }
+    /// Scrolls until the row sits above the sticky consent footer; plain swipes overshoot and never come back.
     @MainActor private func reveal(_ element: XCUIElement, in app: XCUIApplication) {
-        for _ in 0..<7 {
-            let footerTop = app.buttons["onboardingConsentButton"].frame.minY
-            if element.isHittable && element.frame.maxY < footerTop { return }
-            app.swipeUp()
-        }
-        XCTAssertTrue(element.isHittable && element.frame.maxY < app.buttons["onboardingConsentButton"].frame.minY)
+        let footer = app.buttons["onboardingConsentButton"].frame
+        app.reveal(element, topInset: 90, bottomInset: app.frame.maxY - footer.minY + 60)
+        XCTAssertTrue(element.isHittable && element.frame.maxY < footer.minY, "\(element) is hidden behind the consent footer")
     }
 }

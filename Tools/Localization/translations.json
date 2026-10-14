@@ -258,7 +258,6 @@
   "Sửa lịch": "Edit reminder",
   "MỐC ĐÃ ĐẶT: {0}": "SCHEDULED: {0}",
   "ĐÃ TẠM DỪNG": "PAUSED",
-  "Còn": "Remaining",
   "Đã đến mốc theo lịch": "Scheduled time reached",
   "Ghi đã dùng": "Log dose given",
   "Đã kết thúc theo dõi": "Tracking ended",
@@ -871,5 +870,9 @@
   "Lần gần nhất: {0} · {1}": "Last dose: {0} · {1}",
   "Chưa ghi lần nào": "No dose logged yet",
   "Cloud từ chối dữ liệu ({0}: {1}). Hãy kiểm tra thông tin rồi thử lại.": "The cloud rejected the data ({0}: {1}). Check the details and try again.",
-  "Server chưa có hàm mà app cần. Hãy áp dụng migration Supabase mới nhất rồi thử lại. ({0})": "The server is missing a function this app needs. Apply the latest Supabase migration and try again. ({0})"
+  "Server chưa có hàm mà app cần. Hãy áp dụng migration Supabase mới nhất rồi thử lại. ({0})": "The server is missing a function this app needs. Apply the latest Supabase migration and try again. ({0})",
+  "Còn {0}": "{0} left",
+  "{0} ngày {1} giờ": "{0} d {1} h",
+  "{0} giờ {1} phút": "{0} h {1} min",
+  "{0} phút": "{0} min"
 }

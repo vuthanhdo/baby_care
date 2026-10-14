@@ -101,16 +101,13 @@ struct QuickLogView: View {
                     Text(L10n.text("{0} {1} · Theo lịch đã lưu", "\(reminder.amount)", "\(reminder.unit)")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                 }
             }
-            TimelineView(.periodic(from: .now, by: 1)) { context in
+            TimelineView(.periodic(from: .now, by: 60)) { context in
                 VStack(alignment: .leading, spacing: 8) {
                     Label(L10n.text("MỐC TIẾP THEO: {0}", "\(reminder.nextDate.careFormatted(date: .omitted, time: .shortened))"), systemImage: "calendar")
                         .font(CareFont.caption)
                     if reminder.nextDate > context.date {
-                        HStack {
-                            Image(systemName: "hourglass")
-                            Text(L10n.text("Còn"))
-                            Text(timerInterval: context.date...reminder.nextDate, countsDown: true).monospacedDigit()
-                        }.font(CareFont.headline)
+                        Label(L10n.text("Còn {0}", InsightData.remainingText(until: reminder.nextDate, now: context.date)), systemImage: "hourglass")
+                            .font(CareFont.headline)
                     } else { Text(L10n.text("Đã đến mốc theo lịch")).font(CareFont.headline).foregroundStyle(CareTheme.medical) }
                 }.foregroundStyle(CareTheme.accent).frame(maxWidth: .infinity, alignment: .leading)
                     .padding(12).background(CareTheme.feedingBackground, in: .rect(cornerRadius: 12))

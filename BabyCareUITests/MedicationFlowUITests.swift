@@ -14,11 +14,11 @@ final class MedicationFlowUITests: XCTestCase {
 
         let add = app.buttons["illness.addReminder"]
         XCTAssertTrue(add.waitForExistence(timeout: 5))
-        for _ in 0..<6 where !add.isHittable { app.swipeUp() }
+        app.reveal(add)
         add.tap()
         let name = app.textFields["reminder.name"]
         XCTAssertTrue(name.waitForExistence(timeout: 5))
-        name.tap(); name.typeText("Paracetamol")
+        name.tap(); name.typeText("Ibuprofen") // not in the demo fixture, so no earlier dose matches
         let amount = app.textFields["reminder.amount"]
         amount.tap(); amount.typeText("5")
         app.buttons["reminder.save"].tap()
@@ -27,7 +27,7 @@ final class MedicationFlowUITests: XCTestCase {
 
         let logDose = app.buttons["reminder.logDose"]
         XCTAssertTrue(logDose.waitForExistence(timeout: 5))
-        for _ in 0..<6 where !logDose.isHittable { app.swipeUp() }
+        app.reveal(logDose)
         logDose.tap()
         let save = app.buttons["saveActivityButton"]
         XCTAssertTrue(save.waitForExistence(timeout: 5))

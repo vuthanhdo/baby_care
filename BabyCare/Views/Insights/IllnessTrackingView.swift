@@ -168,7 +168,7 @@ struct IllnessTrackingView: View {
                         Button(L10n.text("Xóa lịch"), role: .destructive) { deleteReminder = item }
                     } label: { CareIcon(name: "Stitch_edit", color: CareTheme.secondary, size: 20) }.frame(minWidth: 44, minHeight: 44)
                 }
-                TimelineView(.periodic(from: .now, by: 1)) { context in
+                TimelineView(.periodic(from: .now, by: 60)) { context in
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
                             CareIcon(name: "Stitch_schedule", color: CareTheme.accent, size: 17)
@@ -176,7 +176,7 @@ struct IllnessTrackingView: View {
                         }
                         if item.enabled {
                             if item.nextDate > context.date {
-                                HStack { Text(L10n.text("Còn")); Text(timerInterval: context.date...item.nextDate, countsDown: true).monospacedDigit() }.font(CareFont.subheadline.weight(.semibold))
+                                Text(L10n.text("Còn {0}", InsightData.remainingText(until: item.nextDate, now: context.date))).font(CareFont.subheadline.weight(.semibold))
                             } else { Text(L10n.text("Đã đến mốc theo lịch")).font(CareFont.subheadline.weight(.semibold)).foregroundStyle(CareTheme.medical) }
                         }
                         if !item.note.isEmpty { Text(item.note).font(CareFont.caption) }
@@ -243,6 +243,7 @@ struct MedicationReminderView: View {
     @State var reminder: MedicationReminder
     @State private var isSaving = false
     @State private var error: String?
+    @FocusState private var editing: Bool
     private var valid: Bool { !reminder.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && (InsightData.number(reminder.amount) ?? 0) > 0 && !reminder.unit.isEmpty && (!reminder.enabled || reminder.nextDate > Date()) }
     @Environment(\.locale) private var appLocale
     var body: some View {
@@ -250,8 +251,8 @@ struct MedicationReminderView: View {
         NavigationStack {
             Form {
                 Section(L10n.text("Thuốc theo hướng dẫn đã có")) {
-                    TextField(L10n.text("Tên thuốc · Bắt buộc"), text: $reminder.name).accessibilityIdentifier("reminder.name")
-                    TextField(L10n.text("Lượng thực tế · Bắt buộc"), text: $reminder.amount).keyboardType(.decimalPad).accessibilityIdentifier("reminder.amount")
+                    TextField(L10n.text("Tên thuốc · Bắt buộc"), text: $reminder.name).focused($editing).accessibilityIdentifier("reminder.name")
+                    TextField(L10n.text("Lượng thực tế · Bắt buộc"), text: $reminder.amount).keyboardType(.decimalPad).focused($editing).accessibilityIdentifier("reminder.amount")
                     Picker(L10n.text("Đơn vị"), selection: $reminder.unit) { ForEach(["ml", "mg", "viên", "gói", "giọt"], id: \.self) { Text(L10n.text($0)).tag($0) } }
                 }
                 Section {
@@ -259,7 +260,7 @@ struct MedicationReminderView: View {
                     Toggle(L10n.text("Bật nhắc"), isOn: $reminder.enabled)
                     if viewModel.isTrackingIllness { Toggle(L10n.text("Chỉ trong đợt theo dõi này"), isOn: $reminder.episodeOnly) }
                 } header: { Text(L10n.text("Mốc do bạn đặt")) } footer: { Text(L10n.text("Lịch này nhắc một lần tại mốc đã chọn. Sau khi ghi đã dùng, đặt mốc tiếp theo theo hướng dẫn của bạn.")) }
-                Section(L10n.text("Ghi chú")) { TextField(L10n.text("Lời dặn hoặc ghi chú"), text: $reminder.note, axis: .vertical).lineLimit(3...6) }
+                Section(L10n.text("Ghi chú")) { TextField(L10n.text("Lời dặn hoặc ghi chú"), text: $reminder.note, axis: .vertical).lineLimit(3...6).focused($editing) }
                 if let error { Text(error).foregroundStyle(CareTheme.medical) }
                 if !valid { Text(L10n.text("Nhập tên, lượng dương và mốc trong tương lai để lưu nhắc.")).foregroundStyle(CareTheme.secondary) }
             }
@@ -273,10 +274,14 @@ struct MedicationReminderView: View {
     @MainActor private func save() async {
         isSaving = true
         defer { isSaving = false }
+        // Let the keyboard go first: dismissing the sheet while it is still animating away leaves it stuck on iOS 26.
+        let wasEditing = editing
+        editing = false
         guard await viewModel.send(.commit(.saveReminder(babyID: viewModel.baby.id, reminder: reminder), message: L10n.text("Đã lưu lịch nhắc"))) else {
             error = viewModel.state.error ?? L10n.text("Chưa lưu được. Hãy thử lại.")
             return
         }
+        if wasEditing { try? await Task.sleep(for: .milliseconds(150)) }
         dismiss()
     }
 }

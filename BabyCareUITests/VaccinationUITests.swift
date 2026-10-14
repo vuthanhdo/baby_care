@@ -9,8 +9,8 @@ final class VaccinationUITests: XCTestCase {
         let profile = app.buttons["Hồ sơ Bé An"]
         XCTAssertTrue(profile.waitForExistence(timeout: 10)); profile.tap()
         let history = app.buttons["vaccinationHistoryLink"]
-        for _ in 0..<4 where !history.isHittable { app.swipeUp() }
-        XCTAssertTrue(history.waitForExistence(timeout: 5)); history.tap()
+        XCTAssertTrue(history.waitForExistence(timeout: 5))
+        app.reveal(history); history.tap()
         app.buttons["addVaccinationButton"].tap()
         let name = app.textFields["vaccineNameField"]
         XCTAssertTrue(name.waitForExistence(timeout: 5))

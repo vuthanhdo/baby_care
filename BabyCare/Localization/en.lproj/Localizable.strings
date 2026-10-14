@@ -196,7 +196,7 @@
 "Cân nặng của bé" = "Baby's weight";
 "Câu có phủ định, dự định hoặc lựa chọn chưa rõ. Hãy nói hoạt động đã xảy ra." = "The sentence contains a negative, a plan or an unclear choice. State an activity that has happened.";
 "Câu {0}: {1} Chưa lưu hoạt động nào." = "Sentence {0}: {1} No activities were saved.";
-"Còn" = "Remaining";
+"Còn {0}" = "{0} left";
 "Có lịch chăm sóc cần xem" = "A care reminder is ready to review";
 "Có lịch hẹn tiếp theo" = "Next appointment scheduled";
 "Có thể chỉnh sửa hoặc thêm bé trong Hồ sơ bé." = "You can edit or add babies in Baby Profile.";
@@ -735,6 +735,7 @@
 "{0} cữ" = "{0} feeds";
 "{0} ghi nhận" = "{0} entries";
 "{0} giờ" = "{0} hours";
+"{0} giờ {1} phút" = "{0} h {1} min";
 "{0} hoạt động" = "{0} activities";
 "{0} hoạt động · {1} số đo" = "{0} activities · {1} measurements";
 "{0} hoạt động · {1} số đo của bé" = "{0} activities · {1} measurements for your baby";
@@ -742,6 +743,8 @@
 "{0} lần" = "{0} times";
 "{0} mục theo dõi" = "{0} tracked items";
 "{0} ngày tuổi" = "{0} days old";
+"{0} ngày {1} giờ" = "{0} d {1} h";
+"{0} phút" = "{0} min";
 "{0} phút bú mẹ" = "{0} min breastfeeding";
 "{0} số đo" = "{0} measurements";
 "{0} số đo trong khoảng" = "{0} measurements in this period";
