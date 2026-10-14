@@ -23,6 +23,10 @@ nonisolated struct CloudCacheState: Codable, Sendable {
 nonisolated protocol CareCloudCache: Sendable {
     func read() async throws -> CloudCacheState
     func write(_ state: CloudCacheState) async throws
+    func clear() async throws
+}
+extension CareCloudCache {
+    func clear() async throws { try await write(CloudCacheState()) }
 }
 
 @Model final class CloudCacheRecord {
@@ -57,6 +61,11 @@ actor SwiftDataCloudCache: CareCloudCache {
         let data = try JSONEncoder().encode(state)
         if let record = try context.fetch(FetchDescriptor<CloudCacheRecord>()).first { record.payload = data }
         else { context.insert(CloudCacheRecord(payload: data)) }
+        try context.save()
+    }
+    func clear() throws {
+        let context = try context()
+        for record in try context.fetch(FetchDescriptor<CloudCacheRecord>()) { context.delete(record) }
         try context.save()
     }
 }

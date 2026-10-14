@@ -34,6 +34,7 @@ actor SupabaseCareDataProvider: CareDataProvider {
     deinit { retryTask?.cancel() }
 
     func status() async -> CareStorageStatus { storage }
+    func supportsVaccinations() async -> Bool { state.snapshot?.supportsVaccinations == true }
     func invalidate() async {
         active = false; retryTask?.cancel(); retryTask = nil
         await remote.invalidate()
@@ -52,12 +53,25 @@ actor SupabaseCareDataProvider: CareDataProvider {
     }
     private var visibleDatabase: CareDatabase? { state.queuedWrites.last?.proposed ?? state.snapshot?.database }
 
+    private func preserveUnavailableVaccinations(in fetched: inout CloudSnapshot) {
+        guard fetched.supportsVaccinations == false else { return }
+        // A legacy backend must not erase previously cached vaccination records.
+        for index in fetched.database.babies.indices {
+            let id = fetched.database.babies[index].profile.id
+            fetched.database.babies[index].vaccinations = visibleDatabase?.babies.first { $0.profile.id == id }?.vaccinations ?? []
+        }
+        for (key, value) in state.snapshot?.versions ?? [:] where key.hasPrefix("vaccinations:") {
+            fetched.versions[key] = value
+        }
+    }
+
     func load() async throws -> CareDatabase {
         guard !busy else { throw CloudError.busy }; busy = true; defer { busy = false }
         try await prepare()
         do {
             try await flushQueuedWrites(allowRebase: true)
-            let fetched = try await remote.fetch(selected: visibleDatabase?.selectedBabyID)
+            var fetched = try await remote.fetch(selected: visibleDatabase?.selectedBabyID)
+            preserveUnavailableVaccinations(in: &fetched)
             try check()
             state.snapshot = fetched; state.queuedWrites = []; storage = .cloud
             do { try await cache.write(state) } catch { storage = .cacheWarning }
@@ -67,6 +81,12 @@ actor SupabaseCareDataProvider: CareDataProvider {
             try check()
             if error as? CloudError == .accessDenied {
                 state = CloudCacheState(); try await cache.write(state)
+            }
+            if error as? CloudError == .vaccinationsUnavailable, let visibleDatabase {
+                state.snapshot?.supportsVaccinations = false
+                storage = .pending
+                try await cache.write(state)
+                return visibleDatabase
             }
             if error as? CloudError == .offline, let visibleDatabase {
                 storage = state.queuedWrites.isEmpty ? .cached : .pending
@@ -81,6 +101,21 @@ actor SupabaseCareDataProvider: CareDataProvider {
         guard !busy else { throw CloudError.busy }; busy = true; defer { busy = false }
         try await prepare()
         guard let committed = state.snapshot, let current = visibleDatabase else { throw CloudError.offline }
+        if case .deleteBaby(let id) = mutation {
+            guard state.queuedWrites.isEmpty else { throw CloudError.busy }
+            let next = try current.applying(mutation)
+            try await remote.deleteBaby(id)
+            try check()
+            state = CloudCacheState()
+            storage = .cloud
+            do { try await cache.clear() } catch { storage = .cacheWarning }
+            return next
+        }
+        switch mutation {
+        case .saveVaccination, .deleteVaccination:
+            guard committed.supportsVaccinations == true else { throw CloudError.vaccinationsUnavailable }
+        default: break
+        }
         let next = try current.applying(mutation)
         if case .selectBaby = mutation {
             state.snapshot?.database.selectedBabyID = next.selectedBabyID
@@ -186,7 +221,15 @@ actor SupabaseCareDataProvider: CareDataProvider {
     }
 
     private func rebaseQueue() async throws {
-        let fetched = try await remote.fetch(selected: visibleDatabase?.selectedBabyID)
+        var fetched = try await remote.fetch(selected: visibleDatabase?.selectedBabyID)
+        preserveUnavailableVaccinations(in: &fetched)
+        if fetched.supportsVaccinations == false,
+           state.queuedWrites.contains(where: { pending in
+               switch pending.mutation {
+               case .saveVaccination, .deleteVaccination: true
+               default: false
+               }
+           }) { throw CloudError.vaccinationsUnavailable }
         var database = fetched.database
         var queue = state.queuedWrites
         for index in queue.indices {
@@ -215,7 +258,7 @@ actor SupabaseCareDataProvider: CareDataProvider {
         do {
             _ = try await syncPendingWrites()
             if state.queuedWrites.isEmpty { retryTask = nil; return true }
-        } catch let error as CloudError where error == .accessDenied || error == .signedOut {
+        } catch let error as CloudError where error == .accessDenied || error == .signedOut || error == .consentRequired {
             retryTask = nil; return true
         } catch { }
         return false

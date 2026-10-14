@@ -2,8 +2,16 @@ import SwiftUI
 
 struct AppRootView: View {
     @AppStorage(AppLanguage.preferenceKey) private var language = AppLanguage.current.rawValue
-    @State private var session = SessionViewModel()
+    @State private var session: SessionViewModel
     @State private var testingModel: BabyCareViewModel?
+    @Environment(\.scenePhase) private var scenePhase
+    init() {
+        #if DEBUG
+        _session = State(initialValue: ConsentUITestFixture.enabled ? ConsentUITestFixture.makeSession() : SessionViewModel())
+        #else
+        _session = State(initialValue: SessionViewModel())
+        #endif
+    }
     private var bypass: Bool {
         #if DEBUG
         ProcessInfo.processInfo.arguments.contains { ["-demo", "-ui-testing", "-ui-testing-store"].contains($0) }
@@ -28,6 +36,10 @@ struct AppRootView: View {
                 else { CareSplashView().task { testingModel = AppDependencies.makeViewModel() } }
             } else if session.needsNewPassword {
                 NewPasswordView()
+            } else if session.phase == .consent {
+                OnboardingConsentView(model: session.consent,
+                    onAccept: { await session.completeConsent() }, onBack: { await session.signOut() },
+                    onRetry: { await session.checkConsent() })
             } else if let model = session.viewModel, session.phase == .content {
                 ContentView().environment(model).id(ObjectIdentifier(model))
             } else if session.phase == .starting { CareSplashView() }
@@ -39,8 +51,19 @@ struct AppRootView: View {
         .font(CareFont.body)
         .foregroundStyle(CareTheme.text)
         .preferredColorScheme(.light)
-        .task { if !bypass && !authPreview { session.start() } }
+        .task {
+            #if DEBUG
+            if ConsentUITestFixture.enabled { session.start(events: ConsentUITestFixture.events()); return }
+            #endif
+            if !bypass && !authPreview { session.start() }
+        }
         .onOpenURL { url in Task { await session.handleCallback(url) } }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active && !bypass && !authPreview { Task { await session.checkConsent() } }
+        }
+        .onChange(of: session.viewModel?.state.requiresConsent) { _, required in
+            if required == true { Task { await session.checkConsent() } }
+        }
         .tint(CareTheme.accent)
     }
 }

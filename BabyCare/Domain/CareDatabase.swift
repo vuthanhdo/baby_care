@@ -10,6 +10,7 @@ nonisolated struct BabyData: Codable, Sendable, Equatable {
     var illnessTitle = ""
     var illnessStartDate = Date()
     var sleepStartDate: Date?
+    var vaccinations: [VaccinationRecord] = []
 }
 
 nonisolated struct CareDatabase: Codable, Sendable, Equatable {
@@ -39,6 +40,11 @@ nonisolated struct CareDatabase: Codable, Sendable, Equatable {
             }
             next.selectedBabyID = profile.id
             next.hasOnboarded = true
+        case .deleteBaby(let id):
+            guard next.babies.contains(where: { $0.profile.id == id }) else { throw CareDataError.babyNotFound }
+            next.babies.removeAll { $0.profile.id == id }
+            next.selectedBabyID = next.babies.first?.profile.id
+            next.hasOnboarded = !next.babies.isEmpty
         case .selectBaby(let id):
             guard next.babies.contains(where: { $0.profile.id == id }) else { throw CareDataError.babyNotFound }
             next.selectedBabyID = id
@@ -49,7 +55,7 @@ nonisolated struct CareDatabase: Codable, Sendable, Equatable {
             switch mutation {
             case .updateBaby(let profile):
                 try CareValidation.profile(profile)
-                let firstEntry = (baby.activities.map(\.date) + baby.measurements.map(\.date)).min() ?? Date()
+                let firstEntry = (baby.activities.map(\.date) + baby.measurements.map(\.date) + baby.vaccinations.map(\.date)).min() ?? Date()
                 guard profile.birthDate <= firstEntry else { throw CareDataError.invalidInput(L10n.text("Ngày sinh không được sau dữ liệu đã ghi.")) }
                 baby.profile = profile
             case .saveActivities(_, let entries, let finishingSleep, let reminderID):
@@ -77,6 +83,22 @@ nonisolated struct CareDatabase: Codable, Sendable, Equatable {
                 if let position = baby.measurements.firstIndex(where: { $0.id == measurement.id }) { baby.measurements[position] = measurement }
                 else { baby.measurements.append(measurement) }
                 baby.measurements.sort { $0.date > $1.date }
+            case .saveVaccination(_, let record, let completingID):
+                try CareValidation.vaccination(record, birthDate: baby.profile.birthDate)
+                guard !next.babies.contains(where: { $0.profile.id != babyID && $0.vaccinations.contains(where: { $0.id == record.id }) }) else { throw CareDataError.conflict }
+                if let completingID {
+                    guard completingID != record.id,
+                          let previous = baby.vaccinations.firstIndex(where: { $0.id == completingID }),
+                          baby.vaccinations[previous].date <= record.date else { throw CareDataError.conflict }
+                    baby.vaccinations[previous].reminderEnabled = false
+                    baby.vaccinations[previous].nextDoseDate = nil
+                    baby.vaccinations[previous].reminderDate = nil
+                }
+                if let position = baby.vaccinations.firstIndex(where: { $0.id == record.id }) { baby.vaccinations[position] = record }
+                else { baby.vaccinations.append(record) }
+                baby.vaccinations.sort { $0.date == $1.date ? $0.id.uuidString < $1.id.uuidString : $0.date > $1.date }
+            case .deleteVaccination(_, let id):
+                baby.vaccinations.removeAll { $0.id == id }
             case .startSleep(_, let date):
                 guard date <= Date(), baby.sleepStartDate == nil || baby.sleepStartDate == date else { throw CareDataError.invalidInput(L10n.text("Bé đã có giấc ngủ đang diễn ra.")) }
                 baby.sleepStartDate = date
@@ -97,7 +119,7 @@ nonisolated struct CareDatabase: Codable, Sendable, Equatable {
                 else { baby.medicationReminders.append(reminder) }
             case .deleteReminder(_, let id):
                 baby.medicationReminders.removeAll { $0.id == id }
-            case .createBaby, .selectBaby: break
+            case .createBaby, .deleteBaby, .selectBaby: break
             }
             next.babies[index] = baby
         }
@@ -107,11 +129,14 @@ nonisolated struct CareDatabase: Codable, Sendable, Equatable {
 
 nonisolated enum CareDataMutation: Codable, Sendable, Equatable {
     case createBaby(BabyProfile)
+    case deleteBaby(UUID)
     case updateBaby(BabyProfile)
     case selectBaby(UUID)
     case saveActivities(babyID: UUID, entries: [CareActivity], finishingSleep: Date? = nil, completingReminderID: UUID? = nil)
     case deleteActivity(babyID: UUID, activityID: UUID)
     case saveMeasurement(babyID: UUID, measurement: BodyMeasurement)
+    case saveVaccination(babyID: UUID, record: VaccinationRecord, completingID: UUID? = nil)
+    case deleteVaccination(babyID: UUID, vaccinationID: UUID)
     case startSleep(babyID: UUID, date: Date)
     case startIllness(babyID: UUID, title: String, date: Date)
     case endIllness(babyID: UUID)
@@ -121,7 +146,8 @@ nonisolated enum CareDataMutation: Codable, Sendable, Equatable {
     var babyID: UUID? {
         switch self {
         case .createBaby(let baby), .updateBaby(let baby): baby.id
-        case .selectBaby(let id), .endIllness(let id): id
+        case .deleteBaby(let id), .selectBaby(let id), .endIllness(let id): id
+        case .saveVaccination(let id, _, _), .deleteVaccination(let id, _): id
         case .saveActivities(let id, _, _, _), .deleteActivity(let id, _), .saveMeasurement(let id, _),
              .startSleep(let id, _), .startIllness(let id, _, _), .saveReminder(let id, _), .deleteReminder(let id, _): id
         }
@@ -161,9 +187,41 @@ nonisolated enum CareValidation {
         let values = [entry.weight, entry.height, entry.headCircumference].compactMap { $0 }
         guard !values.isEmpty, values.allSatisfy({ $0.isFinite && $0 > 0 }), entry.date >= birthDate, entry.date <= Date() else { throw CareDataError.invalidInput(L10n.text("Nhập ít nhất một số đo dương và thời điểm hợp lệ.")) }
     }
+    static func vaccination(_ record: VaccinationRecord, birthDate: Date) throws {
+        guard !record.vaccineName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              record.vaccineName.count <= 200, record.doseNumber > 0, record.doseNumber <= 1000,
+              record.date.timeIntervalSince1970.isFinite, record.date >= birthDate, record.date <= Date(),
+              record.nextDoseDate.map({ $0.timeIntervalSince1970.isFinite && $0 > record.date }) ?? true,
+              record.reminderDate.map({ date in date.timeIntervalSince1970.isFinite && record.nextDoseDate.map { date < $0 } == true }) ?? true,
+              !record.reminderEnabled || (record.nextDoseDate != nil && record.reminderDate != nil) else {
+            throw CareDataError.invalidInput(L10n.text("Thông tin tiêm chủng hoặc lịch nhắc không hợp lệ."))
+        }
+        // Do not reject elapsed reminders: durable offline mutations must remain replayable.
+    }
     static func reminder(_ reminder: MedicationReminder) throws {
         guard !reminder.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               (number(reminder.amount) ?? 0) > 0, !reminder.unit.isEmpty,
               !reminder.enabled || reminder.nextDate > Date() else { throw CareDataError.invalidInput(L10n.text("Nhập tên thuốc, lượng dương và mốc nhắc hợp lệ.")) }
+    }
+}
+
+// Old cloud snapshots and queued proposals predate vaccinations. Keep all old
+// required fields strict; only the new collection has a missing-key default.
+extension BabyData {
+    nonisolated enum CodingKeys: String, CodingKey {
+        case profile, activities, measurements, medicationReminders, isTrackingIllness
+        case illnessTitle, illnessStartDate, sleepStartDate, vaccinations
+    }
+    nonisolated init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        profile = try c.decode(BabyProfile.self, forKey: .profile)
+        activities = try c.decode([CareActivity].self, forKey: .activities)
+        measurements = try c.decode([BodyMeasurement].self, forKey: .measurements)
+        medicationReminders = try c.decode([MedicationReminder].self, forKey: .medicationReminders)
+        isTrackingIllness = try c.decode(Bool.self, forKey: .isTrackingIllness)
+        illnessTitle = try c.decode(String.self, forKey: .illnessTitle)
+        illnessStartDate = try c.decode(Date.self, forKey: .illnessStartDate)
+        sleepStartDate = try c.decodeIfPresent(Date.self, forKey: .sleepStartDate)
+        vaccinations = c.contains(.vaccinations) ? try c.decode([VaccinationRecord].self, forKey: .vaccinations) : []
     }
 }

@@ -51,6 +51,21 @@ struct SettingsView: View {
 
             CareAccountSection()
 
+            Section(L10n.text("Quyền riêng tư & dữ liệu")) {
+                NavigationLink { ConsentStatusView() } label: {
+                    settingsRow(L10n.text("Trạng thái đồng ý dữ liệu"), subtitle: L10n.text("Phiên bản và thời điểm xác nhận"), icon: "Stitch_verified_user", color: CareTheme.accent)
+                }
+                NavigationLink { LegalDocumentView(document: .terms) } label: {
+                    settingsRow(L10n.text("Điều khoản sử dụng"), subtitle: L10n.text("Phạm vi dịch vụ và trách nhiệm sử dụng"), icon: "Stitch_menu_book", color: CareTheme.accent)
+                }
+                NavigationLink { LegalDocumentView(document: .privacy) } label: {
+                    settingsRow(L10n.text("Chính sách quyền riêng tư"), subtitle: L10n.text("Dữ liệu được xử lý và quyền của phụ huynh"), icon: "Stitch_lock", color: CareTheme.accent)
+                }
+                NavigationLink { DataManagementView() } label: {
+                    settingsRow(L10n.text("Quản lý & xóa dữ liệu"), subtitle: L10n.text("Xóa hồ sơ bé hoặc xóa toàn bộ tài khoản"), icon: "ActivityDelete", color: CareTheme.medical)
+                }
+            }
+
             Section(L10n.text("Dữ liệu & Báo cáo")) {
                 NavigationLink { SharedReportSettingsView() } label: {
                     settingsRow(L10n.text("Liên kết báo cáo đã chia sẻ"), subtitle: L10n.text("Báo cáo PDF trên thiết bị"), icon: "Stitch_qr_code_2", color: CareTheme.feeding)

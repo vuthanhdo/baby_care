@@ -9,8 +9,8 @@ enum BabyCareSchemaV1: VersionedSchema {
 }
 
 enum BabyCareSchemaMigrationPlan: SchemaMigrationPlan {
-    static var schemas: [any VersionedSchema.Type] { [BabyCareSchemaV1.self] }
-    static var stages: [MigrationStage] { [] }
+    static var schemas: [any VersionedSchema.Type] { [BabyCareSchemaV1.self, BabyCareSchemaV2.self] }
+    static var stages: [MigrationStage] { [.lightweight(fromVersion: BabyCareSchemaV1.self, toVersion: BabyCareSchemaV2.self)] }
 }
 
 @Model
@@ -200,5 +200,40 @@ nonisolated final class ReminderEntity {
     }
     func value() -> MedicationReminder {
         MedicationReminder(id: id, name: name, amount: amount, unit: unit, nextDate: nextDate, note: note, enabled: enabled, episodeOnly: episodeOnly)
+    }
+}
+
+// V1 entities remain unchanged. Vaccinations are owned by babyID in the same store.
+enum BabyCareSchemaV2: VersionedSchema {
+    static var versionIdentifier: Schema.Version { Schema.Version(2, 0, 0) }
+    static var models: [any PersistentModel.Type] { BabyCareSchemaV1.models + [VaccinationEntity.self] }
+}
+
+@Model
+nonisolated final class VaccinationEntity {
+    @Attribute(.unique) var id: UUID
+    var babyID: UUID
+    var vaccineName: String
+    var date: Date
+    var doseNumber: Int
+    var nextDoseDate: Date?
+    var clinic: String
+    var notes: String
+    var reminderEnabled: Bool
+    var reminderDate: Date?
+    init(value: VaccinationRecord, babyID: UUID) {
+        id = value.id; self.babyID = babyID
+        vaccineName = value.vaccineName; date = value.date; doseNumber = value.doseNumber
+        nextDoseDate = value.nextDoseDate; clinic = value.clinic; notes = value.notes
+        reminderEnabled = value.reminderEnabled; reminderDate = value.reminderDate
+    }
+    func update(_ value: VaccinationRecord) {
+        vaccineName = value.vaccineName; date = value.date; doseNumber = value.doseNumber
+        nextDoseDate = value.nextDoseDate; clinic = value.clinic; notes = value.notes
+        reminderEnabled = value.reminderEnabled; reminderDate = value.reminderDate
+    }
+    func value() -> VaccinationRecord {
+        VaccinationRecord(id: id, vaccineName: vaccineName, date: date, doseNumber: doseNumber,
+            nextDoseDate: nextDoseDate, clinic: clinic, notes: notes, reminderEnabled: reminderEnabled, reminderDate: reminderDate)
     }
 }

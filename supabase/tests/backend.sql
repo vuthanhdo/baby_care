@@ -27,8 +27,18 @@ insert into auth.users(id,email) values
  ('00000000-0000-0000-0000-000000000001','babycare-test-owner@example.invalid'),
  ('00000000-0000-0000-0000-000000000002','babycare-test-other@example.invalid'),
  ('00000000-0000-0000-0000-000000000003','babycare-test-viewer@example.invalid'),
- ('00000000-0000-0000-0000-000000000004','babycare-test-caregiver@example.invalid');
+ ('00000000-0000-0000-0000-000000000004','babycare-test-caregiver@example.invalid'),
+ ('00000000-0000-0000-0000-000000000005','babycare-test-delete@example.invalid');
 set local role authenticated;
+-- Explicit acceptance by synthetic users; never seed consent for production users.
+do $$ declare u uuid; begin
+  foreach u in array array['00000000-0000-0000-0000-000000000001'::uuid,
+    '00000000-0000-0000-0000-000000000002'::uuid,'00000000-0000-0000-0000-000000000003'::uuid,
+    '00000000-0000-0000-0000-000000000004'::uuid,'00000000-0000-0000-0000-000000000005'::uuid] loop
+    perform set_config('request.jwt.claim.sub',u::text,true);
+    perform public.babycare_accept_consent('1.0','1.0','1.0',true,true,true);
+  end loop;
+end $$;
 select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-000000000001',true);
 select public.babycare_create_family('00000000-0000-0000-0000-000000000010','Test A');
 select public.babycare_create_family('00000000-0000-0000-0000-000000000010','Test A');
@@ -83,9 +93,34 @@ begin
   perform public.babycare_apply(gen_random_uuid(),f,jsonb_build_array(pg_temp.change('care_activities',106,100,1,'{}')||'{"deleted":true}'::jsonb));
   perform pg_temp.check_true(not babycare_private.can_access_media('00000000-0000-0000-0000-000000000010/00000000-0000-0000-0000-000000000100/00000000-0000-0000-0000-000000000107',false),'deleted activity hides its media');
 end $$;
+do $$
+declare f uuid := '00000000-0000-0000-0000-000000000010'; op uuid := gen_random_uuid(); batch jsonb; receipt jsonb; rev bigint;
+begin
+  batch := jsonb_build_array(pg_temp.change('vaccinations',200,100,0,
+    '{"vaccine_name":"Synthetic vaccine","vaccinated_at":"2026-01-01T00:00:00Z","dose_number":1,"next_dose_date":"2027-01-01T00:00:00Z","reminder_date":"2026-12-31T00:00:00Z","reminder_enabled":true}'));
+  receipt := public.babycare_apply(op,f,batch);
+  perform pg_temp.check_true(public.babycare_apply(op,f,batch)=receipt,'vaccination retry receipt stable');
+  perform pg_temp.check_true((select clinic='' and dose_number=1 from public.vaccinations where id=lpad('200',32,'0')::uuid),'vaccination defaults and dose');
+  perform pg_temp.rejects('update public.vaccinations set dose_number=2','42501','vaccination direct writes denied');
+  perform pg_temp.rejects(format('select public.babycare_apply(%L,%L,%L::jsonb)',gen_random_uuid(),f,
+    jsonb_build_array(pg_temp.change('vaccinations',201,100,0,'{"vaccine_name":"Invalid","vaccinated_at":"2026-01-01","dose_number":0}'))),'23514','invalid vaccination dose rejected');
+  perform pg_temp.rejects(format('select public.babycare_apply(%L,%L,%L::jsonb)',gen_random_uuid(),f,
+    jsonb_build_array(pg_temp.change('vaccinations',201,100,0,'{"vaccine_name":"Invalid","vaccinated_at":"2026-01-01","dose_number":1,"next_dose_date":"2027-01-01","reminder_date":"2027-01-02"}'))),'23514','reminder must precede next dose');
+  perform pg_temp.rejects(format('select public.babycare_apply(%L,%L,%L::jsonb)',gen_random_uuid(),f,
+    jsonb_build_array(pg_temp.change('vaccinations',201,100,0,'{"vaccine_name":"Invalid","vaccinated_at":"2024-01-01","dose_number":1}'))),'22023','vaccination before birth rejected');
+  perform pg_temp.rejects(format('select public.babycare_apply(%L,%L,%L::jsonb)',gen_random_uuid(),f,
+    jsonb_build_array(pg_temp.change('vaccinations',200,100,0,'{"notes":"stale"}'))),'40001','vaccination version conflict');
+  perform pg_temp.rejects(format('select public.babycare_apply(%L,%L,%L::jsonb)',gen_random_uuid(),f,
+    jsonb_build_array(pg_temp.change('vaccinations',200,999,1,'{"notes":"wrong baby"}'))),'42501','vaccination baby identity immutable');
+  select revision into rev from public.families where id=f;
+  perform pg_temp.check_true(jsonb_array_length(public.babycare_read_page(f,'vaccinations',rev,0,null,1)->'rows')=1,'vaccination pagination');
+  perform public.babycare_apply(gen_random_uuid(),f,jsonb_build_array(pg_temp.change('vaccinations',200,100,1,'{}')||'{"deleted":true}'::jsonb));
+  perform pg_temp.check_true((select deleted_at is not null and version=2 from public.vaccinations where id=lpad('200',32,'0')::uuid),'vaccination tombstone');
+end $$;
 select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-000000000002',true);
 do $$ begin
   perform pg_temp.check_true((select count(*)=0 from public.babies),'other family cannot read babies');
+  perform pg_temp.check_true((select count(*)=0 from public.vaccinations),'other family cannot read vaccinations');
   perform pg_temp.rejects($q$select public.babycare_apply(gen_random_uuid(),'00000000-0000-0000-0000-000000000010',jsonb_build_array(pg_temp.change('babies',100,null,1,'{"name":"Attack"}')))$q$,'42501','other family cannot write');
   perform pg_temp.rejects($q$select public.babycare_apply(gen_random_uuid(),'00000000-0000-0000-0000-000000000020',jsonb_build_array(pg_temp.change('babies',100,null,0,'{"name":"Attack","birth_date":"2025-01-01"}')))$q$,'42501','UUID collision cannot steal another family record');
   perform pg_temp.check_true(not babycare_private.can_access_media('00000000-0000-0000-0000-000000000010/00000000-0000-0000-0000-000000000100/00000000-0000-0000-0000-000000000107',false),'other family media denied');
@@ -100,13 +135,32 @@ end $$;
 select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-000000000004',true);
 select public.babycare_apply(gen_random_uuid(),'00000000-0000-0000-0000-000000000010',jsonb_build_array(pg_temp.change('babies',100,null,1,'{"name":"Caregiver update"}')));
 select pg_temp.check_true((select name='Caregiver update' and version=2 from public.babies),'caregiver can update');
+select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-000000000003',true);
+select pg_temp.rejects($q$select public.babycare_delete_baby('00000000-0000-0000-0000-000000000010','00000000-0000-0000-0000-000000000100')$q$,'42501','viewer cannot delete baby');
+select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-000000000001',true);
+select public.babycare_delete_baby('00000000-0000-0000-0000-000000000010','00000000-0000-0000-0000-000000000100');
+select pg_temp.check_true(
+  not exists(select 1 from public.babies where id='00000000-0000-0000-0000-000000000100')
+  and not exists(select 1 from public.body_measurements where baby_id='00000000-0000-0000-0000-000000000100')
+  and not exists(select 1 from public.medication_reminders where baby_id='00000000-0000-0000-0000-000000000100'),
+  'owner baby deletion cascades health data');
+select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-000000000005',true);
+select public.babycare_create_family('00000000-0000-0000-0000-000000000050','Delete account family');
+select public.babycare_apply(gen_random_uuid(),'00000000-0000-0000-0000-000000000050',jsonb_build_array(
+  pg_temp.change('babies',500,null,0,'{"name":"Delete me","birth_date":"2025-01-01T00:00:00Z"}')));
+select public.babycare_delete_account();
 reset role;
+select pg_temp.check_true(
+  not exists(select 1 from auth.users where id='00000000-0000-0000-0000-000000000005')
+  and not exists(select 1 from public.families where id='00000000-0000-0000-0000-000000000050')
+  and not exists(select 1 from public.babies where id='00000000-0000-0000-0000-000000000500'),
+  'account deletion removes auth user, owned family, and baby data');
 set local role anon;
 select set_config('request.jwt.claim.sub','',true);
 select pg_temp.rejects('select * from public.babies','42501','anonymous read denied');
 select pg_temp.rejects('select public.babycare_create_family(gen_random_uuid(),''Anon'')','42501','anonymous RPC denied');
 reset role;
 select pg_temp.check_true((select not public and file_size_limit=5242880 from storage.buckets where id='babycare-media'),'private bucket and 5 MiB limit');
-select pg_temp.check_true((select count(*)=10 and bool_and(relrowsecurity) from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='public' and c.relkind='r'),'all ten app tables have RLS');
+select pg_temp.check_true((select count(*)=13 and bool_and(relrowsecurity) from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='public' and c.relkind='r'),'all thirteen app tables have RLS');
 select count(*) as passed_checks, bool_and(passed) as all_passed from test_results;
 rollback;

@@ -1584,16 +1584,16 @@
     "semantic_hash": "4c8280b285c6ae08efeee41cfeedc355"
   },
   "BabyCare/Data/CareDataProvider.swift": {
-    "mtime": 1789209450.7479045,
-    "seen": 1789228449.794234,
-    "ast_hash": "b3ec7ddde3bdd0332954aabb5efef186",
-    "semantic_hash": "b3ec7ddde3bdd0332954aabb5efef186"
+    "mtime": 1789291494.5221066,
+    "seen": 1789545164.908076,
+    "ast_hash": "49a245d488763786b1cc0694d99cf884",
+    "semantic_hash": ""
   },
   "BabyCare/Data/Cloud/CloudCache.swift": {
-    "mtime": 1789209450.7525787,
-    "seen": 1789228449.794234,
-    "ast_hash": "82b863883a2e3d0827090ce9b68a70eb",
-    "semantic_hash": "82b863883a2e3d0827090ce9b68a70eb"
+    "mtime": 1789544291.651917,
+    "seen": 1789545164.908077,
+    "ast_hash": "3bfa8808b491a874591cee3f50911ae6",
+    "semantic_hash": ""
   },
   "BabyCare/Data/Cloud/CloudMedia.swift": {
     "mtime": 1789209450.7536008,
@@ -1602,22 +1602,22 @@
     "semantic_hash": "be47741d8292da68ccba86f8cb820125"
   },
   "BabyCare/Data/Cloud/CloudWire.swift": {
-    "mtime": 1789209450.757315,
-    "seen": 1789228449.794235,
-    "ast_hash": "1cabec9821182639ac36186ff6a28f2d",
-    "semantic_hash": "1cabec9821182639ac36186ff6a28f2d"
+    "mtime": 1789291494.5216649,
+    "seen": 1789545164.9081001,
+    "ast_hash": "351680dd0a409ab797953f159bc3d1ba",
+    "semantic_hash": ""
   },
   "BabyCare/Data/Cloud/SupabaseCareDataProvider.swift": {
-    "mtime": 1789209450.7520697,
-    "seen": 1789228449.794235,
-    "ast_hash": "b8bcadd10cf56c83e8f80ea918f909e9",
-    "semantic_hash": "b8bcadd10cf56c83e8f80ea918f909e9"
+    "mtime": 1789544281.4272635,
+    "seen": 1789545164.908101,
+    "ast_hash": "1a5a8124cfbccab3b64b94c7eff6b4a1",
+    "semantic_hash": ""
   },
   "BabyCare/Data/Cloud/SupabaseRemote.swift": {
-    "mtime": 1789209450.7556057,
-    "seen": 1789228449.794235,
-    "ast_hash": "62d84c1cdadc847335068e8cd596333d",
-    "semantic_hash": "62d84c1cdadc847335068e8cd596333d"
+    "mtime": 1789546651.4391277,
+    "seen": 1789546912.671087,
+    "ast_hash": "c56c55c05eb4ca7ff722a23553dd693c",
+    "semantic_hash": ""
   },
   "BabyCare/Data/Migration/LegacyJSONMigration.swift": {
     "mtime": 1789209450.7579722,
@@ -1626,16 +1626,16 @@
     "semantic_hash": "e8fffad702a3ea9d1dc010bc1b0d12e3"
   },
   "BabyCare/Data/SwiftData/BabyCareSchema.swift": {
-    "mtime": 1789209450.750247,
-    "seen": 1789228449.794236,
-    "ast_hash": "086d885f5ac752a2cf5a16456639df19",
-    "semantic_hash": "086d885f5ac752a2cf5a16456639df19"
+    "mtime": 1789230530.0327814,
+    "seen": 1789545164.908122,
+    "ast_hash": "963a93fb712859ac999d2cf67d36ddcc",
+    "semantic_hash": ""
   },
   "BabyCare/Data/SwiftData/SwiftDataCareDataProvider.swift": {
-    "mtime": 1789209450.7489388,
-    "seen": 1789228449.794236,
-    "ast_hash": "d6ad3349f3923e8ae260bb74c7f4d7f3",
-    "semantic_hash": "d6ad3349f3923e8ae260bb74c7f4d7f3"
+    "mtime": 1789544300.981943,
+    "seen": 1789545164.908122,
+    "ast_hash": "72e8a6ccd1d35e90bc313b67cc09bce4",
+    "semantic_hash": ""
   },
   "BabyCare/DesignSystem/CareComponents.swift": {
     "mtime": 1789209576.6090796,
@@ -1656,16 +1656,16 @@
     "semantic_hash": "8c079510623a1d5c4f315bc4b93c1246"
   },
   "BabyCare/Domain/CareDatabase.swift": {
-    "mtime": 1789209450.797471,
-    "seen": 1789228449.794237,
-    "ast_hash": "38914cf5623e0ff490be9a75b9063441",
-    "semantic_hash": "38914cf5623e0ff490be9a75b9063441"
+    "mtime": 1789544265.1718352,
+    "seen": 1789545164.9082181,
+    "ast_hash": "b40efb3c0d64bdb25ad6574e799fbf93",
+    "semantic_hash": ""
   },
   "BabyCare/Domain/CareModels.swift": {
-    "mtime": 1789209450.8018382,
-    "seen": 1789228449.7942379,
-    "ast_hash": "8651ac91e3cc88427641040e76316f81",
-    "semantic_hash": "8651ac91e3cc88427641040e76316f81"
+    "mtime": 1789230530.0297658,
+    "seen": 1789545164.9082189,
+    "ast_hash": "df069659faf464f8ebfa602893eb608f",
+    "semantic_hash": ""
   },
   "BabyCare/Domain/CarePreviewData.swift": {
     "mtime": 1789209450.7937005,
@@ -1698,10 +1698,10 @@
     "semantic_hash": "69164bb5cb0481fa4afa1a8ca3a5f957"
   },
   "BabyCare/Services/CareReminderService.swift": {
-    "mtime": 1789209450.7999122,
-    "seen": 1789228449.794239,
-    "ast_hash": "788b80d5fef0c2a41aa6a5d890a20641",
-    "semantic_hash": "788b80d5fef0c2a41aa6a5d890a20641"
+    "mtime": 1789231120.6807046,
+    "seen": 1789545164.9083169,
+    "ast_hash": "c2fe51ce88a33af38500b2a9dc3deb97",
+    "semantic_hash": ""
   },
   "BabyCare/Services/SpeechInputProvider.swift": {
     "mtime": 1789209450.7994218,
@@ -1716,16 +1716,16 @@
     "semantic_hash": "0e9d352c2e67272a4526789fd3c90803"
   },
   "BabyCare/ViewModels/BabyCareViewModel.swift": {
-    "mtime": 1789209450.7328866,
-    "seen": 1789228449.79424,
-    "ast_hash": "8f9448623f8c36dc54d3672881fcb9c4",
-    "semantic_hash": "8f9448623f8c36dc54d3672881fcb9c4"
+    "mtime": 1789291494.5237105,
+    "seen": 1789545164.908353,
+    "ast_hash": "7d34e08afae4af0cc4e8c1e08d8bc79b",
+    "semantic_hash": ""
   },
   "BabyCare/ViewModels/SessionViewModel.swift": {
-    "mtime": 1789209450.7317677,
-    "seen": 1789228449.794241,
-    "ast_hash": "000e41799806ca6ac08ba53a721e3d59",
-    "semantic_hash": "000e41799806ca6ac08ba53a721e3d59"
+    "mtime": 1789546651.4936733,
+    "seen": 1789546912.671366,
+    "ast_hash": "f69a4115a3f251ff20e8265029cf0275",
+    "semantic_hash": ""
   },
   "BabyCare/ViewModels/VoiceInputViewModel.swift": {
     "mtime": 1789209450.7348018,
@@ -1806,10 +1806,10 @@
     "semantic_hash": "024b345a6979a87b14b6bd42c94787c2"
   },
   "BabyCare/Views/Profile/BabyProfileView.swift": {
-    "mtime": 1789209648.9362159,
-    "seen": 1789228449.794245,
-    "ast_hash": "bda55be3a4ea6502a839c8410da23c80",
-    "semantic_hash": "bda55be3a4ea6502a839c8410da23c80"
+    "mtime": 1789230644.746165,
+    "seen": 1789545164.908604,
+    "ast_hash": "a6db28f4a11b6b9a3daf9a2b1523556f",
+    "semantic_hash": ""
   },
   "BabyCare/Views/Profile/MeasurementEntryView.swift": {
     "mtime": 1789209648.9363475,
@@ -1818,16 +1818,16 @@
     "semantic_hash": "c42a10b772555291c07a866eacac1506"
   },
   "BabyCare/Views/Profile/OnboardingView.swift": {
-    "mtime": 1789209450.781668,
-    "seen": 1789228449.794245,
-    "ast_hash": "573033d9edeff28bfa08000afce5551d",
-    "semantic_hash": "573033d9edeff28bfa08000afce5551d"
+    "mtime": 1789544362.2040386,
+    "seen": 1789545164.908625,
+    "ast_hash": "913c208463d02e7c6f9b8f50b07f3929",
+    "semantic_hash": ""
   },
   "BabyCare/Views/Profile/SettingsView.swift": {
-    "mtime": 1789209450.772704,
-    "seen": 1789228449.794246,
-    "ast_hash": "eee45082427af7aa8d840ecb247a3ab1",
-    "semantic_hash": "eee45082427af7aa8d840ecb247a3ab1"
+    "mtime": 1789544500.2156627,
+    "seen": 1789545164.9086258,
+    "ast_hash": "323e2138837e323f8056fdb062c54e74",
+    "semantic_hash": ""
   },
   "BabyCare/Views/QuickLog/QuickLogView.swift": {
     "mtime": 1789209450.7858534,
@@ -1842,10 +1842,10 @@
     "semantic_hash": "ac55aa7a0c16e56dc3de44a0b9a1c5ae"
   },
   "BabyCareTests/BabyCareTests.swift": {
-    "mtime": 1788913915.5363684,
-    "seen": 1789228449.794247,
-    "ast_hash": "fc87c11c0b90280d055e9c08a3362644",
-    "semantic_hash": "fc87c11c0b90280d055e9c08a3362644"
+    "mtime": 1789545705.3472993,
+    "seen": 1789545748.663987,
+    "ast_hash": "85e0bb275a7c209992c44505bded5bad",
+    "semantic_hash": ""
   },
   "BabyCareTests/BabyLimitTests.swift": {
     "mtime": 1789139339.350224,
@@ -1854,10 +1854,10 @@
     "semantic_hash": "c577dc9b0299988f52fd662ba958483d"
   },
   "BabyCareTests/CloudProviderTests.swift": {
-    "mtime": 1789083278.6092815,
-    "seen": 1789228449.794247,
-    "ast_hash": "1ab3b60285744157f90363f6abd64d7a",
-    "semantic_hash": "1ab3b60285744157f90363f6abd64d7a"
+    "mtime": 1789544676.944013,
+    "seen": 1789545164.908683,
+    "ast_hash": "9a5aa223bceadb43f8a5a18c38a6e654",
+    "semantic_hash": ""
   },
   "BabyCareTests/LocalizationTests.swift": {
     "mtime": 1789209450.8350635,
@@ -1890,10 +1890,10 @@
     "semantic_hash": "49fad2eff5d5a12400850d9eb7f5470f"
   },
   "BabyCareUITests/BabyCareUITests.swift": {
-    "mtime": 1789209576.6100147,
-    "seen": 1789228449.794249,
-    "ast_hash": "c9c96189681a24a84b142952a150c65b",
-    "semantic_hash": "c9c96189681a24a84b142952a150c65b"
+    "mtime": 1789545030.4175394,
+    "seen": 1789545164.908761,
+    "ast_hash": "71711fb0114dc27cda5bca2a317ae4b4",
+    "semantic_hash": ""
   },
   "BabyCareUITests/BabyCareUITestsLaunchTests.swift": {
     "mtime": 1789209576.610144,
@@ -1902,10 +1902,10 @@
     "semantic_hash": "6cb48fcbf10ebc18495981bd42324c06"
   },
   "BabyCareUITests/LanguageUITests.swift": {
-    "mtime": 1789209814.0615273,
-    "seen": 1789228449.79425,
-    "ast_hash": "730cfd63398a1349ee5c20968ae50453",
-    "semantic_hash": "730cfd63398a1349ee5c20968ae50453"
+    "mtime": 1789545030.4770422,
+    "seen": 1789545164.908778,
+    "ast_hash": "4520eb04f60c44c234ff3c3434a700d9",
+    "semantic_hash": ""
   },
   "BabyCareUITests/StitchAppearanceTests.swift": {
     "mtime": 1789209576.6095743,
@@ -1926,15 +1926,2133 @@
     "semantic_hash": "5b27f0b3a4a828bf5d6edeec122dd5fb"
   },
   "Tools/Localization/translations.json": {
-    "mtime": 1789209450.7281542,
-    "seen": 1789228449.794251,
-    "ast_hash": "1970fcc176a8793554bc19109c3c3ba1",
-    "semantic_hash": "1970fcc176a8793554bc19109c3c3ba1"
+    "mtime": 1789544782.8365152,
+    "seen": 1789545164.908832,
+    "ast_hash": "b4ffad938ba12c0320e9558e30331b22",
+    "semantic_hash": ""
   },
   "Tools/import_stitch_icons.py": {
     "mtime": 1789120059.0739431,
     "seen": 1789228449.794251,
     "ast_hash": "17f033552adff78d1ee52f577d4b823e",
     "semantic_hash": "17f033552adff78d1ee52f577d4b823e"
+  },
+  "BabyCare/Views/Profile/DataManagementView.swift": {
+    "mtime": 1789545705.2915704,
+    "seen": 1789545748.66385,
+    "ast_hash": "ef59a5d3b3e6eba0462fcb438b125252",
+    "semantic_hash": ""
+  },
+  "BabyCare/Views/Profile/LegalViews.swift": {
+    "mtime": 1789545030.3552866,
+    "seen": 1789545164.908606,
+    "ast_hash": "b0d77de6e67c93d1ac30fba17d9a370d",
+    "semantic_hash": ""
+  },
+  "BabyCare/Views/Profile/VaccinationView.swift": {
+    "mtime": 1789291494.5246599,
+    "seen": 1789545164.9086258,
+    "ast_hash": "b3413753894fc376a2cf3e4752ca92ef",
+    "semantic_hash": ""
+  },
+  "BabyCareTests/VaccinationTests.swift": {
+    "mtime": 1789231177.003346,
+    "seen": 1789545164.90873,
+    "ast_hash": "192b25edd5dcc82ccadd0a0967f88626",
+    "semantic_hash": ""
+  },
+  "BabyCareUITests/VaccinationUITests.swift": {
+    "mtime": 1789230968.3654559,
+    "seen": 1789545164.908793,
+    "ast_hash": "0b54b302487d85342f248a0f300f2b3e",
+    "semantic_hash": ""
+  },
+  "AGENTS.md": {
+    "mtime": 1789230369.9065135,
+    "seen": 1789545164.908849,
+    "ast_hash": "0e97f95a63925b5b1dba02a7dba55459",
+    "semantic_hash": ""
+  },
+  "ARCHITECTURE.md": {
+    "mtime": 1789209648.8950741,
+    "seen": 1789545164.908849,
+    "ast_hash": "63ec968ad9657713574232713575f41d",
+    "semantic_hash": ""
+  },
+  "BabyCare/Resources/Fonts/OFL.txt": {
+    "mtime": 1788963148.0440226,
+    "seen": 1789545164.90885,
+    "ast_hash": "fa6299d565b1374fe3a9ee454dfe1273",
+    "semantic_hash": ""
+  },
+  "BabyCare/Resources/MaterialSymbols-LICENSE.txt": {
+    "mtime": 1789120060.6634884,
+    "seen": 1789545164.908851,
+    "ast_hash": "175792518e4ac015ab6696d16c4f607e",
+    "semantic_hash": ""
+  },
+  "CLOUD_DATABASE_PLAN.md": {
+    "mtime": 1789050781.2274885,
+    "seen": 1789545164.908851,
+    "ast_hash": "b52808ea400e453d843d89f182df7707",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/EntryReview-2026-09-12/README.md": {
+    "mtime": 1789182262.144755,
+    "seen": 1789545164.908851,
+    "ast_hash": "b913a5b686c33ac00e8ac2bea8462673",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/a_b_t_u_s_d_ng_t_o_h_s_b/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.9088519,
+    "ast_hash": "6c23005929b50e3f107d1d4c1bd51fe8",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/b_ghi_nhanh_tab_1/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.9088519,
+    "ast_hash": "17b778eac49b986a7e6cf4d6f8c4be91",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/be_khoe_bo_me_an_tam/DESIGN.md": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908853,
+    "ast_hash": "7cd0cb1943dddb75048147f4a053662d",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/c_ch_n_ho_t_ng/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908853,
+    "ast_hash": "17977fa2d3f0ffec3867f60ddeab1061",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/d_nh_t_k_tab_2/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908854,
+    "ast_hash": "410b3de1c2700870d3dc34b3a9b4e0fd",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/e_chi_ti_t_ho_t_ng/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908854,
+    "ast_hash": "9ccb223ed8f7e2f8a65bf365b90908ef",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/f_form_ghi_ho_t_ng_nhi_t/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908855,
+    "ast_hash": "16e8c07a0b6b7ed1ad05ff0adf3b0fbe",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/g_nh_p_s_o_c_th/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908855,
+    "ast_hash": "d2af3c68c470fa58e5f54be3080a92e8",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/i_theo_d_i_m_l_ch_thu_c/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.9088588,
+    "ast_hash": "ce5490204ca34e49d2b6198d04cec8ef",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/k_c_i_t_ng_d_ng/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.9088588,
+    "ast_hash": "825a386afd92375e18099c773891831b",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/ng_k_b_kh_e/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.90886,
+    "ast_hash": "1e31f7de464e994d884de68eda90623e",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/ng_nh_p_b_kh_e/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.90886,
+    "ast_hash": "9fd1e8450ee66b6b20d7b77a7ca88466",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/p_h_s_b_an/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.90886,
+    "ast_hash": "0bc19e7db27bc68baf4b663e845b0172",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/r_chia_s_b_o_c_o_pdf_qr/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908861,
+    "ast_hash": "28a078dd3041c317cd0aea9965d4d936",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/s_th_ng_k_tab_3/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908861,
+    "ast_hash": "81c072c51dd375026a63f832138c0d89",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/splash_screen_b_kh_e/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.9088619,
+    "ast_hash": "2bcb6ab0abd205cb3f3b979236e33139",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/v_ghi_b_ng_gi_ng_n_i_ai/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.9088619,
+    "ast_hash": "112b3abf47a78d798cbcfd9d36587c95",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/w_trang_b_o_c_o_b_c_s_web_xem_qr/code.html": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.9088619,
+    "ast_hash": "04b8505073324d34cb16d8ff1bdcb941",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/IMPLEMENTATION.md": {
+    "mtime": 1789010665.678301,
+    "seen": 1789545164.908863,
+    "ast_hash": "0e7790688b9b5f19cf161168056cbadf",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/index.html": {
+    "mtime": 1789134569.1979082,
+    "seen": 1789545164.908863,
+    "ast_hash": "e0bd0bffa1d19f79e78a3681fb8be34a",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/UI_REVIEW_2026-09-11.md": {
+    "mtime": 1789134569.2871969,
+    "seen": 1789545164.908864,
+    "ast_hash": "c453d8cc9d7defa8c9ebb55c679c135b",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/index.html": {
+    "mtime": 1788997170.0405035,
+    "seen": 1789545164.908864,
+    "ast_hash": "37d0e92ce38231ab32accb620865ba9d",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1789050754.756445,
+    "seen": 1789545164.908865,
+    "ast_hash": "16933530e874b29b732be27457636fee",
+    "semantic_hash": ""
+  },
+  "RUNTIME_SAFETY_REVIEW.md": {
+    "mtime": 1789084041.9478035,
+    "seen": 1789545164.908865,
+    "ast_hash": "c38e18633a7f330a74878eb94d4a01be",
+    "semantic_hash": ""
+  },
+  "VACCINATION_TRACKING.md": {
+    "mtime": 1789292077.7207046,
+    "seen": 1789545164.9088662,
+    "ast_hash": "859887893c7eb533c6b44894283f94ac",
+    "semantic_hash": ""
+  },
+  "VOICE_INPUT.md": {
+    "mtime": 1789048270.7106273,
+    "seen": 1789545164.9088662,
+    "ast_hash": "e328a82a6e384390f76a1d38b4286c47",
+    "semantic_hash": ""
+  },
+  "Web/Captcha/README.md": {
+    "mtime": 1789138331.7593195,
+    "seen": 1789545164.9088662,
+    "ast_hash": "9a440f92dde96357e83ad423e5ec4495",
+    "semantic_hash": ""
+  },
+  "Web/Captcha/index.html": {
+    "mtime": 1789135752.7278574,
+    "seen": 1789545164.9088671,
+    "ast_hash": "665409ce97e2c055b9664506c801f51c",
+    "semantic_hash": ""
+  },
+  "supabase/AUTH_SETUP.md": {
+    "mtime": 1789138953.863961,
+    "seen": 1789545164.9088671,
+    "ast_hash": "9dba59f5af786c83930c883dc5aeef5b",
+    "semantic_hash": ""
+  },
+  "supabase/README.md": {
+    "mtime": 1789137430.4128046,
+    "seen": 1789545164.908868,
+    "ast_hash": "3c107c2a3c86b69db76970bd10e8a364",
+    "semantic_hash": ""
+  },
+  "supabase/templates/confirm-sign-up.html": {
+    "mtime": 1789083384.0461547,
+    "seen": 1789545164.908868,
+    "ast_hash": "a7f9de40003b999e927c95ff3250dc3e",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityAddCircle.imageset/ActivityAddCircle.svg": {
+    "mtime": 1788885037.9340332,
+    "seen": 1789545164.908869,
+    "ast_hash": "72638bf6d73c0c7451ccad38137ec0a8",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityArmpit.imageset/ActivityArmpit.svg": {
+    "mtime": 1788885037.7674856,
+    "seen": 1789545164.908869,
+    "ast_hash": "9cfd453c13c0f40ee7f1531ad5e3edd0",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityCalendar.imageset/ActivityCalendar.svg": {
+    "mtime": 1788885037.8010147,
+    "seen": 1789545164.908869,
+    "ast_hash": "6d1e5c3599b7654386656dbbb1d5acd7",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityCheckCircle.imageset/ActivityCheckCircle.svg": {
+    "mtime": 1788885037.892284,
+    "seen": 1789545164.90887,
+    "ast_hash": "47332c78b5ade02c5abb6bee08913e6a",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityClock.imageset/ActivityClock.svg": {
+    "mtime": 1788885037.7946818,
+    "seen": 1789545164.90887,
+    "ast_hash": "86f4ea13250611ef7de2dd49ad0437c2",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityDelete.imageset/ActivityDelete.svg": {
+    "mtime": 1788885037.9784331,
+    "seen": 1789545164.908871,
+    "ast_hash": "2e60bb1a15bb9856bc779dbdd55ec217",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityEar.imageset/ActivityEar.svg": {
+    "mtime": 1788885037.7888958,
+    "seen": 1789545164.908871,
+    "ast_hash": "c28b20ca8506099c87a19eb154e710be",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityEdit.imageset/ActivityEdit.svg": {
+    "mtime": 1788885038.0203485,
+    "seen": 1789545164.908872,
+    "ast_hash": "1ae3d8aa722113b133bb138a2b0f0ae5",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityForehead.imageset/ActivityForehead.svg": {
+    "mtime": 1788885037.782317,
+    "seen": 1789545164.908872,
+    "ast_hash": "cb05e4595a7e1355104b1fc4a22cd675",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityHelp.imageset/ActivityHelp.svg": {
+    "mtime": 1788885037.9725375,
+    "seen": 1789545164.908872,
+    "ast_hash": "1962c17245495a70ab543e9e3bc9925a",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityLocation.imageset/ActivityLocation.svg": {
+    "mtime": 1788885037.7674794,
+    "seen": 1789545164.9088728,
+    "ast_hash": "de2931d8493d3cb28a8eb3f30aa6f5c6",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityMedicalKit.imageset/ActivityMedicalKit.svg": {
+    "mtime": 1788885037.852517,
+    "seen": 1789545164.9088728,
+    "ast_hash": "fcfdfcb02894b9f4fec7cec0ed421ed2",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityMic.imageset/ActivityMic.svg": {
+    "mtime": 1788885037.964353,
+    "seen": 1789545164.9088728,
+    "ast_hash": "b8c017e88959f297bc149436a76c6339",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityMinus.imageset/ActivityMinus.svg": {
+    "mtime": 1788885037.77922,
+    "seen": 1789545164.908874,
+    "ast_hash": "12c45b940b3fbcbd263970dff47ffc9e",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityMore.imageset/ActivityMore.svg": {
+    "mtime": 1788885037.7888744,
+    "seen": 1789545164.908874,
+    "ast_hash": "5f7c5f1d089e28946fde8291f47f8340",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityNote.imageset/ActivityNote.svg": {
+    "mtime": 1788885037.9237297,
+    "seen": 1789545164.908874,
+    "ast_hash": "cd92f954178d532dafda85485a5937c9",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityPlus.imageset/ActivityPlus.svg": {
+    "mtime": 1788885037.8295033,
+    "seen": 1789545164.908875,
+    "ast_hash": "1189eb4be596d5eeb6c75bd0b1d8bb0b",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityQuote.imageset/ActivityQuote.svg": {
+    "mtime": 1788885037.9775193,
+    "seen": 1789545164.908875,
+    "ast_hash": "adf582acb06c22dcfd20ad415337eaee",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityRetry.imageset/ActivityRetry.svg": {
+    "mtime": 1788885038.054571,
+    "seen": 1789545164.908876,
+    "ast_hash": "5117c7aa265d2ecad8c79e4a5562d38f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityTap.imageset/ActivityTap.svg": {
+    "mtime": 1788885037.7476497,
+    "seen": 1789545164.908876,
+    "ast_hash": "b38b739a2606cc8de629cc53c2059da1",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityTip.imageset/ActivityTip.svg": {
+    "mtime": 1788885038.0963354,
+    "seen": 1789545164.908876,
+    "ast_hash": "fe2ef4f9486214e93a1d4df48b4f4e22",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ActivityTrend.imageset/ActivityTrend.svg": {
+    "mtime": 1788885038.0616379,
+    "seen": 1789545164.9088771,
+    "ast_hash": "22132e5fb7d0ad807f0d6ab61d1862c0",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/AppIcon.appiconset/AppIcon.png": {
+    "mtime": 1789048379.9261363,
+    "seen": 1789545164.9088771,
+    "ast_hash": "dd4c1b9dd976ccd4cd7c0458ccc065ea",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/BeKhoeLogo.imageset/BeKhoeLogo.png": {
+    "mtime": 1788963148.0443537,
+    "seen": 1789545164.908878,
+    "ast_hash": "017434c3f39b28770e96afe5f0f0ab15",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon0.imageset/DiaryIcon0.svg": {
+    "mtime": 1788885161.5639703,
+    "seen": 1789545164.908878,
+    "ast_hash": "8f493512d8313a8bcaf59a7ddc8d1abc",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon1.imageset/DiaryIcon1.svg": {
+    "mtime": 1788885161.4385056,
+    "seen": 1789545164.908878,
+    "ast_hash": "4dfb70adc2dc7819fdbd9c8775ca97a1",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon10.imageset/DiaryIcon10.svg": {
+    "mtime": 1788885161.655231,
+    "seen": 1789545164.908879,
+    "ast_hash": "2f2f4d19e82543f4a9afe042f69f4be5",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon11.imageset/DiaryIcon11.svg": {
+    "mtime": 1788885161.5826492,
+    "seen": 1789545164.908879,
+    "ast_hash": "6e08bb98b3e63e6215d0d27b0acab9bb",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon12.imageset/DiaryIcon12.svg": {
+    "mtime": 1788885161.6869056,
+    "seen": 1789545164.9088798,
+    "ast_hash": "fd171cda3941bc07979a9eea3869e077",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon13.imageset/DiaryIcon13.svg": {
+    "mtime": 1788885161.8620496,
+    "seen": 1789545164.9088798,
+    "ast_hash": "8c25dc47660b45574a0fc0641eae0b85",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon14.imageset/DiaryIcon14.svg": {
+    "mtime": 1788885161.610382,
+    "seen": 1789545164.9088798,
+    "ast_hash": "b72bd721f7881cc55d231fd010256485",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon15.imageset/DiaryIcon15.svg": {
+    "mtime": 1788885161.656299,
+    "seen": 1789545164.908881,
+    "ast_hash": "bf5c3f28b20b077de06fb0e7b24af394",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon16.imageset/DiaryIcon16.svg": {
+    "mtime": 1788885161.9892142,
+    "seen": 1789545164.908881,
+    "ast_hash": "f5182fb30c578b6800a4706bb5581c3a",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon17.imageset/DiaryIcon17.svg": {
+    "mtime": 1788885161.6102107,
+    "seen": 1789545164.908882,
+    "ast_hash": "3fc588bc7c9d31a55d73376cd04c5421",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon18.imageset/DiaryIcon18.svg": {
+    "mtime": 1788885161.5826495,
+    "seen": 1789545164.908882,
+    "ast_hash": "14d9bdad7dd8fcc817de487223f00ff4",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon19.imageset/DiaryIcon19.svg": {
+    "mtime": 1788885161.6216218,
+    "seen": 1789545164.9088829,
+    "ast_hash": "76bee2674c9aa436a8bc223ebbff7780",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon2.imageset/DiaryIcon2.svg": {
+    "mtime": 1788885161.4532714,
+    "seen": 1789545164.9088829,
+    "ast_hash": "6dbdd889d09f9d6cc73d9ce111a77c3b",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon20.imageset/DiaryIcon20.svg": {
+    "mtime": 1788885161.6214359,
+    "seen": 1789545164.908884,
+    "ast_hash": "687033da145ffb84e60b39015385b73d",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon21.imageset/DiaryIcon21.svg": {
+    "mtime": 1788885161.6868937,
+    "seen": 1789545164.908884,
+    "ast_hash": "94d49562847bc7caf3c957a89e24ddd7",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon22.imageset/DiaryIcon22.svg": {
+    "mtime": 1788885161.6216097,
+    "seen": 1789545164.908884,
+    "ast_hash": "9a5d33ec0e71c774d9d513217432518e",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon23.imageset/DiaryIcon23.svg": {
+    "mtime": 1788885161.723868,
+    "seen": 1789545164.908885,
+    "ast_hash": "184d1e6b1bc61482240cdb17bba8c148",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon24.imageset/DiaryIcon24.svg": {
+    "mtime": 1788885161.853205,
+    "seen": 1789545164.908885,
+    "ast_hash": "f1aea6160b74622404a8e30b2e0b267d",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon25.imageset/DiaryIcon25.svg": {
+    "mtime": 1788885161.632724,
+    "seen": 1789545164.908886,
+    "ast_hash": "1aeea63c85e1fae7ee1e910b7c7e69ca",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon26.imageset/DiaryIcon26.svg": {
+    "mtime": 1788885161.7567134,
+    "seen": 1789545164.908886,
+    "ast_hash": "23f07ebb8595cd4ffda73d9f0cbdd8c3",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon27.imageset/DiaryIcon27.svg": {
+    "mtime": 1788885161.6281672,
+    "seen": 1789545164.908886,
+    "ast_hash": "1399bdb8ba2f95dae55f6c10f1b1cbe4",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon3.imageset/DiaryIcon3.svg": {
+    "mtime": 1788885161.4413404,
+    "seen": 1789545164.9088871,
+    "ast_hash": "c795beb9cd08cfb5b6a4f1292dd3cce0",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon4.imageset/DiaryIcon4.svg": {
+    "mtime": 1788885161.5826507,
+    "seen": 1789545164.9088871,
+    "ast_hash": "e9e3f97d67817ad6206ed0e0ccca0e0f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon5.imageset/DiaryIcon5.svg": {
+    "mtime": 1788885161.4843023,
+    "seen": 1789545164.908888,
+    "ast_hash": "6d1e5c3599b7654386656dbbb1d5acd7",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon6.imageset/DiaryIcon6.svg": {
+    "mtime": 1788885161.5619924,
+    "seen": 1789545164.908888,
+    "ast_hash": "1b3074726d0fd61784bb6274c0be4988",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon7.imageset/DiaryIcon7.svg": {
+    "mtime": 1788885161.5432105,
+    "seen": 1789545164.908888,
+    "ast_hash": "45be1390559705f56e9ead81cdd16a1f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon8.imageset/DiaryIcon8.svg": {
+    "mtime": 1788885161.6102097,
+    "seen": 1789545164.908889,
+    "ast_hash": "cda6fe8bfc63e749d164d5c67cc0e402",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/DiaryIcon9.imageset/DiaryIcon9.svg": {
+    "mtime": 1788885161.6243129,
+    "seen": 1789545164.908889,
+    "ast_hash": "7603f867be8add3ced78889c4e677a29",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/GoogleSignInMark.imageset/GoogleSignInMark.svg": {
+    "mtime": 1789181666.226005,
+    "seen": 1789545164.90889,
+    "ast_hash": "44fcc838f01e78df0748dc46760b6e55",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon0.imageset/HomeIcon0.svg": {
+    "mtime": 1788885161.4843142,
+    "seen": 1789545164.90889,
+    "ast_hash": "d45bf5ac793367140a789a155b55df46",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon1.imageset/HomeIcon1.svg": {
+    "mtime": 1788885161.3016522,
+    "seen": 1789545164.90889,
+    "ast_hash": "cf8bd5ba4dff94e0c1296082c9d2b30f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon10.imageset/HomeIcon10.svg": {
+    "mtime": 1788885161.6868813,
+    "seen": 1789545164.908891,
+    "ast_hash": "28aba07424fa984b2f4a7bba2dea66d2",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon11.imageset/HomeIcon11.svg": {
+    "mtime": 1788885161.3279507,
+    "seen": 1789545164.908891,
+    "ast_hash": "97eacd6d4288238bbbb9d23ee575d2c7",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon12.imageset/HomeIcon12.svg": {
+    "mtime": 1788885161.3256493,
+    "seen": 1789545164.908891,
+    "ast_hash": "59eb6fdd0794bc470b4ffdd9fcea8d35",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon13.imageset/HomeIcon13.svg": {
+    "mtime": 1788885161.3246398,
+    "seen": 1789545164.908892,
+    "ast_hash": "43cdbb7b9581baa4b64d62aff36ab5f3",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon14.imageset/HomeIcon14.svg": {
+    "mtime": 1788885161.340373,
+    "seen": 1789545164.908892,
+    "ast_hash": "31f13b471d991b5555cde844361bac10",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon15.imageset/HomeIcon15.svg": {
+    "mtime": 1788885161.3499162,
+    "seen": 1789545164.908892,
+    "ast_hash": "9c1e4c5f56c09a03bc641eb13a68a9ad",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon16.imageset/HomeIcon16.svg": {
+    "mtime": 1788885161.4274406,
+    "seen": 1789545164.9088929,
+    "ast_hash": "99a539708db878e04cebf73155d0669f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon17.imageset/HomeIcon17.svg": {
+    "mtime": 1788885161.502803,
+    "seen": 1789545164.9088929,
+    "ast_hash": "5efc415413d6a3e9f84a4dac503813ab",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon18.imageset/HomeIcon18.svg": {
+    "mtime": 1788885161.3849726,
+    "seen": 1789545164.908894,
+    "ast_hash": "8c773c5499049a6278784d197e9c1dd5",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon19.imageset/HomeIcon19.svg": {
+    "mtime": 1788885161.3849723,
+    "seen": 1789545164.908894,
+    "ast_hash": "2689ef191819aa181bac4d68c1ed0557",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon2.imageset/HomeIcon2.svg": {
+    "mtime": 1788885161.2851114,
+    "seen": 1789545164.908894,
+    "ast_hash": "f3ccb0abcfe4eeba5e204ff601c2765f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon20.imageset/HomeIcon20.svg": {
+    "mtime": 1788885161.4001725,
+    "seen": 1789545164.908895,
+    "ast_hash": "09859c3c7196810e8fb2720d3bf5ceb7",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon21.imageset/HomeIcon21.svg": {
+    "mtime": 1788885161.4843194,
+    "seen": 1789545164.908895,
+    "ast_hash": "90b875ac5e72f402ed45b8fb6f861165",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon22.imageset/HomeIcon22.svg": {
+    "mtime": 1788885161.397552,
+    "seen": 1789545164.908895,
+    "ast_hash": "1bd673a8bd0dae80d63784f89afa5d0f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon23.imageset/HomeIcon23.svg": {
+    "mtime": 1788885161.3975487,
+    "seen": 1789545164.908896,
+    "ast_hash": "c661fc61ccd2860dc43ec61929ee9dcd",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon24.imageset/HomeIcon24.svg": {
+    "mtime": 1788885161.6888683,
+    "seen": 1789545164.908896,
+    "ast_hash": "fc7cb3219ed7d76c291d043391b4e933",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon25.imageset/HomeIcon25.svg": {
+    "mtime": 1788885161.4385052,
+    "seen": 1789545164.908897,
+    "ast_hash": "c2a1451b36063ede24bfac9196cd19cf",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon26.imageset/HomeIcon26.svg": {
+    "mtime": 1788885161.4275823,
+    "seen": 1789545164.908897,
+    "ast_hash": "7b6b0a8fe53c5614c8234ebcfd497655",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon27.imageset/HomeIcon27.svg": {
+    "mtime": 1788885161.427436,
+    "seen": 1789545164.908898,
+    "ast_hash": "694ad423a0700375c4378a2e7d21607d",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon28.imageset/HomeIcon28.svg": {
+    "mtime": 1788885161.6327324,
+    "seen": 1789545164.908898,
+    "ast_hash": "ab7a9fd6b8fb34eb29c2a4075c3119af",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon3.imageset/HomeIcon3.svg": {
+    "mtime": 1788885161.3332691,
+    "seen": 1789545164.908898,
+    "ast_hash": "43cdbb7b9581baa4b64d62aff36ab5f3",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon4.imageset/HomeIcon4.svg": {
+    "mtime": 1788885161.2929032,
+    "seen": 1789545164.908899,
+    "ast_hash": "3cfa0db806fe68a7811279494bff2f7d",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon5.imageset/HomeIcon5.svg": {
+    "mtime": 1788885161.2907705,
+    "seen": 1789545164.908899,
+    "ast_hash": "dd5549cb4a11166b3d01a9543c596e49",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon6.imageset/HomeIcon6.svg": {
+    "mtime": 1788885161.309792,
+    "seen": 1789545164.908899,
+    "ast_hash": "de5a4e2772fb86795eab26389b5973eb",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon7.imageset/HomeIcon7.svg": {
+    "mtime": 1788885161.3403513,
+    "seen": 1789545164.9089,
+    "ast_hash": "8c6f406ff33e56ce624d5ef46855ec18",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon8.imageset/HomeIcon8.svg": {
+    "mtime": 1788885161.3456204,
+    "seen": 1789545164.9089,
+    "ast_hash": "186928fe7c9b3e53a1015895dcaaaa5d",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/HomeIcon9.imageset/HomeIcon9.svg": {
+    "mtime": 1788885161.5254798,
+    "seen": 1789545164.9089012,
+    "ast_hash": "86fd0fb308b5ee4be8b4b2ea842dcb90",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsAdd.imageset/InsightsAdd.svg": {
+    "mtime": 1788885001.2702136,
+    "seen": 1789545164.9089012,
+    "ast_hash": "771e1be511e6e1be80930ffaf79a960f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsBaby.imageset/InsightsBaby.svg": {
+    "mtime": 1788885001.3336997,
+    "seen": 1789545164.9089012,
+    "ast_hash": "a59e89fbdddcffa811ea5f96600680e2",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsCalendar.imageset/InsightsCalendar.svg": {
+    "mtime": 1788885001.2777944,
+    "seen": 1789545164.908902,
+    "ast_hash": "922ab69c8d29b7eb3a550ebd56651fec",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsChart.imageset/InsightsChart.svg": {
+    "mtime": 1788885001.2435653,
+    "seen": 1789545164.908902,
+    "ast_hash": "47803314af969f71f0b60bf44c541834",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsCheck.imageset/InsightsCheck.svg": {
+    "mtime": 1788885001.305307,
+    "seen": 1789545164.908903,
+    "ast_hash": "3045c34354bdf29317de8f1a7e6c54ee",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsClock.imageset/InsightsClock.svg": {
+    "mtime": 1788885001.302873,
+    "seen": 1789545164.908903,
+    "ast_hash": "494acb0092782eb9dccb3dc1e1ecb32a",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsDoctor.imageset/InsightsDoctor.svg": {
+    "mtime": 1788885001.2305133,
+    "seen": 1789545164.908903,
+    "ast_hash": "03ed5bb6c018a0fa29ac84be50154abd",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsEdit.imageset/InsightsEdit.svg": {
+    "mtime": 1788885001.298279,
+    "seen": 1789545164.9089038,
+    "ast_hash": "1fb7aaf32d5bfce83343e5752130249a",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsGrowth.imageset/InsightsGrowth.svg": {
+    "mtime": 1788885001.2413607,
+    "seen": 1789545164.9089038,
+    "ast_hash": "9cdde4ef14f92fd99b01b8453e258419",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsList.imageset/InsightsList.svg": {
+    "mtime": 1788885001.3143697,
+    "seen": 1789545164.9089038,
+    "ast_hash": "5757be1f01d87a7e34c0769310f003ad",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsMedical.imageset/InsightsMedical.svg": {
+    "mtime": 1788885001.2303534,
+    "seen": 1789545164.908905,
+    "ast_hash": "bcc32b955ed246003d6b93c5c261ab14",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsMedicine.imageset/InsightsMedicine.svg": {
+    "mtime": 1788885001.2733371,
+    "seen": 1789545164.908905,
+    "ast_hash": "9648b448b7d7c311f54340748c429b47",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsMilk.imageset/InsightsMilk.svg": {
+    "mtime": 1788885001.230357,
+    "seen": 1789545164.908905,
+    "ast_hash": "20a794c657afcd5e53de20c56b017469",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsPDF.imageset/InsightsPDF.svg": {
+    "mtime": 1788885001.2998147,
+    "seen": 1789545164.908906,
+    "ast_hash": "b26505bcb164e5086713ed388e100dac",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsPrint.imageset/InsightsPrint.svg": {
+    "mtime": 1788885001.324715,
+    "seen": 1789545164.908906,
+    "ast_hash": "184d162c5c16e929c8bf725e5026ea74",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsRuler.imageset/InsightsRuler.svg": {
+    "mtime": 1788885001.255987,
+    "seen": 1789545164.908907,
+    "ast_hash": "098d30f5eb116e23eda81fa280e04220",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsShare.imageset/InsightsShare.svg": {
+    "mtime": 1788885001.2654853,
+    "seen": 1789545164.908907,
+    "ast_hash": "bca8cf18289824e6b4408ed64435e8ad",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsShield.imageset/InsightsShield.svg": {
+    "mtime": 1788885001.2305202,
+    "seen": 1789545164.908907,
+    "ast_hash": "17e913da6c90539314780fb9eba9b2dc",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsSleep.imageset/InsightsSleep.svg": {
+    "mtime": 1788885001.2436516,
+    "seen": 1789545164.9089081,
+    "ast_hash": "f34c68918f6ea25ef9113a4ec7d6c3ba",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/InsightsTemperature.imageset/InsightsTemperature.svg": {
+    "mtime": 1788885001.2065568,
+    "seen": 1789545164.9089081,
+    "ast_hash": "559b01ac88282234494383f73189d9f9",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileAdd.imageset/ProfileAdd.svg": {
+    "mtime": 1788885008.3558626,
+    "seen": 1789545164.9089081,
+    "ast_hash": "72638bf6d73c0c7451ccad38137ec0a8",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileAllergy.imageset/ProfileAllergy.svg": {
+    "mtime": 1788885008.3283198,
+    "seen": 1789545164.908909,
+    "ast_hash": "87fec31a90ad9475528f37ba0d8268b3",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileArrow.imageset/ProfileArrow.svg": {
+    "mtime": 1788885008.2483811,
+    "seen": 1789545164.908909,
+    "ast_hash": "8af9f527102726e95fb984ed18bb17fc",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileCamera.imageset/ProfileCamera.svg": {
+    "mtime": 1788885008.2481608,
+    "seen": 1789545164.90891,
+    "ast_hash": "1d980b123ef0bc534ac41bb305c72cb1",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileEdit.imageset/ProfileEdit.svg": {
+    "mtime": 1788885008.3082352,
+    "seen": 1789545164.90891,
+    "ast_hash": "2ab0ce254aab46c03258fd71e9daf68f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileGrowth.imageset/ProfileGrowth.svg": {
+    "mtime": 1788885008.3283176,
+    "seen": 1789545164.90891,
+    "ast_hash": "51d6d81c9bb08b5428d94b838ad114c2",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileGuide.imageset/ProfileGuide.svg": {
+    "mtime": 1788885008.301964,
+    "seen": 1789545164.908911,
+    "ast_hash": "7a060458546eb186cec4403f60ab98db",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileHeart.imageset/ProfileHeart.svg": {
+    "mtime": 1788885008.2483506,
+    "seen": 1789545164.908911,
+    "ast_hash": "335586a388867163495286c84d9ac88c",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileHeight.imageset/ProfileHeight.svg": {
+    "mtime": 1788885008.3283064,
+    "seen": 1789545164.9089122,
+    "ast_hash": "da967626145ac70960269b58bf9200fd",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileInfo.imageset/ProfileInfo.svg": {
+    "mtime": 1788885008.3082435,
+    "seen": 1789545164.9089122,
+    "ast_hash": "64f097a47f71f25098fb43b9fdda5192",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileMedicalInfo.imageset/ProfileMedicalInfo.svg": {
+    "mtime": 1788885008.2989419,
+    "seen": 1789545164.9089122,
+    "ast_hash": "cd816cde4fc16f98ed3c186bf5c349db",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileMoon.imageset/ProfileMoon.svg": {
+    "mtime": 1788885008.3374975,
+    "seen": 1789545164.908913,
+    "ast_hash": "f34c68918f6ea25ef9113a4ec7d6c3ba",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileNotifications.imageset/ProfileNotifications.svg": {
+    "mtime": 1788885008.263734,
+    "seen": 1789545164.908913,
+    "ast_hash": "709623be8c81505508c9e55366b253e2",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileQR.imageset/ProfileQR.svg": {
+    "mtime": 1788885008.269146,
+    "seen": 1789545164.908913,
+    "ast_hash": "5da626de496b3ecbafe573408ebf7206",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileReminder.imageset/ProfileReminder.svg": {
+    "mtime": 1788885008.2586336,
+    "seen": 1789545164.9089139,
+    "ast_hash": "cf81fa3e88d2bd4965931178e7858c27",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileSelected.imageset/ProfileSelected.svg": {
+    "mtime": 1788885008.348197,
+    "seen": 1789545164.9089139,
+    "ast_hash": "cda6fe8bfc63e749d164d5c67cc0e402",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileSettings.imageset/ProfileSettings.svg": {
+    "mtime": 1788885008.3732328,
+    "seen": 1789545164.9089139,
+    "ast_hash": "a5f75bc7fc3329cf5beecad672c68be9",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileShield.imageset/ProfileShield.svg": {
+    "mtime": 1788885008.248341,
+    "seen": 1789545164.908915,
+    "ast_hash": "3c807e31038fadda8d94682f6fc1fc9e",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileSparkles.imageset/ProfileSparkles.svg": {
+    "mtime": 1788885008.248353,
+    "seen": 1789545164.908915,
+    "ast_hash": "11102606081d134636c5b3d14de0b12c",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileStorage.imageset/ProfileStorage.svg": {
+    "mtime": 1788885008.2772098,
+    "seen": 1789545164.908916,
+    "ast_hash": "cb06d5b64f74063d1655a903320f931f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileTextSize.imageset/ProfileTextSize.svg": {
+    "mtime": 1788885008.2503514,
+    "seen": 1789545164.908916,
+    "ast_hash": "5526f86fb890070006e0e5c816cf7d17",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileUnits.imageset/ProfileUnits.svg": {
+    "mtime": 1788885008.25043,
+    "seen": 1789545164.908916,
+    "ast_hash": "62842c32d0f16619323918da71e3c747",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/ProfileWeight.imageset/ProfileWeight.svg": {
+    "mtime": 1788885008.3449357,
+    "seen": 1789545164.908917,
+    "ast_hash": "736df85fc7e9f9d3025032cf98651627",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_accessibility_new.imageset/Stitch_accessibility_new.svg": {
+    "mtime": 1789119989.718042,
+    "seen": 1789545164.908917,
+    "ast_hash": "bf1c6af0b9ae98b85e11c54ba6d1fc65",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_account_circle.imageset/Stitch_account_circle.svg": {
+    "mtime": 1789119989.558909,
+    "seen": 1789545164.908918,
+    "ast_hash": "f7a535e4125243a4fd2c6da0bb3bcc32",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_add.imageset/Stitch_add.svg": {
+    "mtime": 1789119989.6665833,
+    "seen": 1789545164.908918,
+    "ast_hash": "de691ddd5b37f42ed4764177dc08853e",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_add_a_photo.imageset/Stitch_add_a_photo.svg": {
+    "mtime": 1789119989.6692908,
+    "seen": 1789545164.908918,
+    "ast_hash": "a98e8f14e577df1afd977a5ecf22b346",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_add_circle.imageset/Stitch_add_circle.svg": {
+    "mtime": 1789119989.5588553,
+    "seen": 1789545164.908919,
+    "ast_hash": "5eb1feafd82caac8ba76cfcda669bc8a",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_add_circle_outline.imageset/Stitch_add_circle_outline.svg": {
+    "mtime": 1789119989.6424096,
+    "seen": 1789545164.908919,
+    "ast_hash": "5eb1feafd82caac8ba76cfcda669bc8a",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_airline_seat_flat.imageset/Stitch_airline_seat_flat.svg": {
+    "mtime": 1789119989.5746543,
+    "seen": 1789545164.908919,
+    "ast_hash": "be7e3863111b40bbd154c6cd4e5e68c5",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_alarm.imageset/Stitch_alarm.svg": {
+    "mtime": 1789119989.559801,
+    "seen": 1789545164.90892,
+    "ast_hash": "79ea22a2fa093beccce02c71e2dfbe0c",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_arrow_back_ios_new.imageset/Stitch_arrow_back_ios_new.svg": {
+    "mtime": 1789119989.9542465,
+    "seen": 1789545164.90892,
+    "ast_hash": "3339ae9e1bc11221c6cf97d4bed3a7c2",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_arrow_downward.imageset/Stitch_arrow_downward.svg": {
+    "mtime": 1789119989.926852,
+    "seen": 1789545164.908921,
+    "ast_hash": "c585abba2aba91d6c1c039511a890c06",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_arrow_drop_down.imageset/Stitch_arrow_drop_down.svg": {
+    "mtime": 1789119989.9065897,
+    "seen": 1789545164.908921,
+    "ast_hash": "87d9b3c8d3a16dfba0c86b88371b6247",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_arrow_forward.imageset/Stitch_arrow_forward.svg": {
+    "mtime": 1789119989.930533,
+    "seen": 1789545164.908921,
+    "ast_hash": "50a267bb2abb7d8023e9d82c7258474d",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_arrow_forward_ios.imageset/Stitch_arrow_forward_ios.svg": {
+    "mtime": 1789119990.0533714,
+    "seen": 1789545164.9089222,
+    "ast_hash": "6c686fe83e1a7afea5e2c92902af1341",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_assignment.imageset/Stitch_assignment.svg": {
+    "mtime": 1789119990.0520022,
+    "seen": 1789545164.9089222,
+    "ast_hash": "2643322e7a0c19b58492df48db8a6d88",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_auto_awesome.imageset/Stitch_auto_awesome.svg": {
+    "mtime": 1789119990.0532656,
+    "seen": 1789545164.908923,
+    "ast_hash": "7c9d235e22f6f1d37a8b5025afbe3aa4",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_auto_stories.imageset/Stitch_auto_stories.svg": {
+    "mtime": 1789119990.111451,
+    "seen": 1789545164.908923,
+    "ast_hash": "2786f263319528b42c595c03467f533e",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_baby_changing_station.imageset/Stitch_baby_changing_station.svg": {
+    "mtime": 1789119990.2898247,
+    "seen": 1789545164.908923,
+    "ast_hash": "67f187f9d630c7a7814398ce57805091",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_badge.imageset/Stitch_badge.svg": {
+    "mtime": 1789119990.2898302,
+    "seen": 1789545164.9089239,
+    "ast_hash": "f7c1bd3ceb25aec9ccec6d45e5eddb5b",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_bar_chart.imageset/Stitch_bar_chart.svg": {
+    "mtime": 1789119990.2988625,
+    "seen": 1789545164.9089239,
+    "ast_hash": "fc7ca2805117e6cbe99b3875a7db9142",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_bathtub.imageset/Stitch_bathtub.svg": {
+    "mtime": 1789119990.3039916,
+    "seen": 1789545164.9089239,
+    "ast_hash": "7d3d58c08e995d93469e16c6572ed527",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_bed.imageset/Stitch_bed.svg": {
+    "mtime": 1789119990.440231,
+    "seen": 1789545164.9089248,
+    "ast_hash": "2bc2f1a7e3dcba957f308ba541a09cce",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_bedtime.imageset/Stitch_bedtime.svg": {
+    "mtime": 1789119990.4402845,
+    "seen": 1789545164.9089248,
+    "ast_hash": "d402324439c65cf0ae689e7d889ed8e8",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_block.imageset/Stitch_block.svg": {
+    "mtime": 1789119990.4401705,
+    "seen": 1789545164.9089248,
+    "ast_hash": "62f42f77d8709e1e6b09c78f9c43a889",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_bolt.imageset/Stitch_bolt.svg": {
+    "mtime": 1789119990.531281,
+    "seen": 1789545164.908926,
+    "ast_hash": "bcc53cca20ca1cbe9cfec80ff29b0e5b",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_cached.imageset/Stitch_cached.svg": {
+    "mtime": 1789119990.7710857,
+    "seen": 1789545164.908926,
+    "ast_hash": "6f982fc6c5b431a093df7f3e38ccff86",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_calendar_clock.imageset/Stitch_calendar_clock.svg": {
+    "mtime": 1789119990.7714264,
+    "seen": 1789545164.908926,
+    "ast_hash": "e9ed6b12364e12a49afe3a875696247f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_calendar_month.imageset/Stitch_calendar_month.svg": {
+    "mtime": 1789119990.7710857,
+    "seen": 1789545164.908927,
+    "ast_hash": "0759b3d45b8ca53d9729a0fc60826731",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_calendar_today.imageset/Stitch_calendar_today.svg": {
+    "mtime": 1789119990.7726068,
+    "seen": 1789545164.908928,
+    "ast_hash": "e6b0149540a41f825d068ff7bc1cf5f6",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_call.imageset/Stitch_call.svg": {
+    "mtime": 1789119990.862243,
+    "seen": 1789545164.908928,
+    "ast_hash": "b4184b7bb5bf6b8da1368ca116666afc",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_cancel.imageset/Stitch_cancel.svg": {
+    "mtime": 1789119990.8622324,
+    "seen": 1789545164.908928,
+    "ast_hash": "55462ff686ddda927025f13e851b8da4",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_check.imageset/Stitch_check.svg": {
+    "mtime": 1789119990.8686407,
+    "seen": 1789545164.908928,
+    "ast_hash": "27ea57e53f7a235b0b13c342d8013ff6",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_check_circle.imageset/Stitch_check_circle.svg": {
+    "mtime": 1789119990.993189,
+    "seen": 1789545164.908929,
+    "ast_hash": "542c0f361ad2f2a13786c270085e6c2f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_chevron_left.imageset/Stitch_chevron_left.svg": {
+    "mtime": 1789119991.3315418,
+    "seen": 1789545164.908929,
+    "ast_hash": "1c137640117d342ce973cc0626f28391",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_chevron_right.imageset/Stitch_chevron_right.svg": {
+    "mtime": 1789119991.3315337,
+    "seen": 1789545164.908929,
+    "ast_hash": "3cd34752163855b363dab61cefc3b95b",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_child_care.imageset/Stitch_child_care.svg": {
+    "mtime": 1789119991.3228068,
+    "seen": 1789545164.90893,
+    "ast_hash": "2e40681d805c461ec0c584d66dd0b4c4",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_clinical_notes.imageset/Stitch_clinical_notes.svg": {
+    "mtime": 1789119991.331534,
+    "seen": 1789545164.90893,
+    "ast_hash": "7c832087a0bb612e6a1cdb39329933f9",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_close.imageset/Stitch_close.svg": {
+    "mtime": 1789119991.4892454,
+    "seen": 1789545164.90893,
+    "ast_hash": "bd8d31d8feb2a162a184229db533a93b",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_contact_mail.imageset/Stitch_contact_mail.svg": {
+    "mtime": 1789119991.4892752,
+    "seen": 1789545164.908931,
+    "ast_hash": "11a0359fe022575b815d0c77cdf2001d",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_delete.imageset/Stitch_delete.svg": {
+    "mtime": 1789119991.4940104,
+    "seen": 1789545164.908931,
+    "ast_hash": "87cbed57a6356fb4f067460715b46b54",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_delete_outline.imageset/Stitch_delete_outline.svg": {
+    "mtime": 1789119991.6467435,
+    "seen": 1789545164.9089322,
+    "ast_hash": "87cbed57a6356fb4f067460715b46b54",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_device_thermostat.imageset/Stitch_device_thermostat.svg": {
+    "mtime": 1789119991.8805525,
+    "seen": 1789545164.9089322,
+    "ast_hash": "55fbeac431f913e283e3e11d93a99f20",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_done.imageset/Stitch_done.svg": {
+    "mtime": 1789119991.8957386,
+    "seen": 1789545164.9089322,
+    "ast_hash": "27ea57e53f7a235b0b13c342d8013ff6",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_edit.imageset/Stitch_edit.svg": {
+    "mtime": 1789119991.880628,
+    "seen": 1789545164.9089332,
+    "ast_hash": "e71a1aaca1dc8c17d283d74f1f21400d",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_edit_calendar.imageset/Stitch_edit_calendar.svg": {
+    "mtime": 1789119991.8805523,
+    "seen": 1789545164.9089332,
+    "ast_hash": "ef41ddb91c8cba73c15c26966600c49b",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_edit_note.imageset/Stitch_edit_note.svg": {
+    "mtime": 1789119992.012917,
+    "seen": 1789545164.9089332,
+    "ast_hash": "0c60cefdd694a137e7bf7b8fce8eff0e",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_expand_more.imageset/Stitch_expand_more.svg": {
+    "mtime": 1789119992.012976,
+    "seen": 1789545164.9089339,
+    "ast_hash": "ef2117ee3126a4e51282ec4af64e8746",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_face.imageset/Stitch_face.svg": {
+    "mtime": 1789119992.0130427,
+    "seen": 1789545164.9089339,
+    "ast_hash": "89850faa780143050b9c0590d3ee7317",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_face_6.imageset/Stitch_face_6.svg": {
+    "mtime": 1789119992.121455,
+    "seen": 1789545164.9089339,
+    "ast_hash": "73a4c4f7b0e5d24c19a8f93c32648250",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_favorite.imageset/Stitch_favorite.svg": {
+    "mtime": 1789119992.3206885,
+    "seen": 1789545164.9089348,
+    "ast_hash": "85b5aa87a6abecc902af09b10c8306a6",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_fingerprint.imageset/Stitch_fingerprint.svg": {
+    "mtime": 1789119992.3205647,
+    "seen": 1789545164.9089348,
+    "ast_hash": "da89104c9cfdd94feb3571c876630ce3",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_flag.imageset/Stitch_flag.svg": {
+    "mtime": 1789119992.3205378,
+    "seen": 1789545164.9089348,
+    "ast_hash": "3444105e016134e5298c8bf728127cd2",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_format_list_bulleted.imageset/Stitch_format_list_bulleted.svg": {
+    "mtime": 1789119992.3205826,
+    "seen": 1789545164.908936,
+    "ast_hash": "914b52d8bc7a803df17286e04079d1d3",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_format_quote.imageset/Stitch_format_quote.svg": {
+    "mtime": 1789119992.4385033,
+    "seen": 1789545164.908936,
+    "ast_hash": "f6b31fe04d1ea78f3f8d4a44973945f3",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_format_size.imageset/Stitch_format_size.svg": {
+    "mtime": 1789119992.4463568,
+    "seen": 1789545164.908937,
+    "ast_hash": "3dcb97aa63484d3f5a46da27f46f17fc",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_front_hand.imageset/Stitch_front_hand.svg": {
+    "mtime": 1789119992.4463608,
+    "seen": 1789545164.908937,
+    "ast_hash": "2be5dc319760d398de539406c282cf73",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_healing.imageset/Stitch_healing.svg": {
+    "mtime": 1789119992.4701612,
+    "seen": 1789545164.908937,
+    "ast_hash": "89bd3d22647d252b34c4ee0bcfd2240e",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_health_and_safety.imageset/Stitch_health_and_safety.svg": {
+    "mtime": 1789119992.9185572,
+    "seen": 1789545164.908938,
+    "ast_hash": "6b817dcef16fbc6b33ad0141746e78bd",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_hearing.imageset/Stitch_hearing.svg": {
+    "mtime": 1789119992.9198754,
+    "seen": 1789545164.908938,
+    "ast_hash": "f8b6ef00ead402408fa1da55c0d9590e",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_help_outline.imageset/Stitch_help_outline.svg": {
+    "mtime": 1789119993.1710093,
+    "seen": 1789545164.9089391,
+    "ast_hash": "976f74c33c5c36f59fd845002711d26a",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_history.imageset/Stitch_history.svg": {
+    "mtime": 1789119992.913336,
+    "seen": 1789545164.9089391,
+    "ast_hash": "374a402e01ea61e666f764e6e86ff0d3",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_hourglass_top.imageset/Stitch_hourglass_top.svg": {
+    "mtime": 1789119993.005511,
+    "seen": 1789545164.9089391,
+    "ast_hash": "83f1c48a63072662f9dfcb152a138ef1",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_ios_share.imageset/Stitch_ios_share.svg": {
+    "mtime": 1789119993.0014708,
+    "seen": 1789545164.90894,
+    "ast_hash": "6e89006b0ed192b78b6f665e0073184c",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_lightbulb.imageset/Stitch_lightbulb.svg": {
+    "mtime": 1789119993.0055203,
+    "seen": 1789545164.90894,
+    "ast_hash": "2a94c179fa2740599b0ee6c01cdcb84d",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_link.imageset/Stitch_link.svg": {
+    "mtime": 1789119992.996142,
+    "seen": 1789545164.90894,
+    "ast_hash": "85d08090a1f2055441cb38e53e086f0a",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_local_hospital.imageset/Stitch_local_hospital.svg": {
+    "mtime": 1789119993.4045892,
+    "seen": 1789545164.908941,
+    "ast_hash": "e6828c4684d1124fb0cf554325871cd6",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_lock.imageset/Stitch_lock.svg": {
+    "mtime": 1789119993.4045663,
+    "seen": 1789545164.908941,
+    "ast_hash": "158b8b269d00aa6f6c199f65d434064f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_manage_search.imageset/Stitch_manage_search.svg": {
+    "mtime": 1789119993.40457,
+    "seen": 1789545164.908941,
+    "ast_hash": "bccc6bbc1a21ba4f8e5eb71497524907",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_medical_information.imageset/Stitch_medical_information.svg": {
+    "mtime": 1789119993.7999368,
+    "seen": 1789545164.908942,
+    "ast_hash": "8a1a1b58bcc8e2f1672335a5d991bda4",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_medical_services.imageset/Stitch_medical_services.svg": {
+    "mtime": 1789119993.8801315,
+    "seen": 1789545164.908942,
+    "ast_hash": "bb25058022f2f657e31cfd4fae0004d1",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_medication.imageset/Stitch_medication.svg": {
+    "mtime": 1789119993.8804543,
+    "seen": 1789545164.9089432,
+    "ast_hash": "907e9f0e505332ad69902a746400803e",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_medication_liquid.imageset/Stitch_medication_liquid.svg": {
+    "mtime": 1789119993.8734345,
+    "seen": 1789545164.9089432,
+    "ast_hash": "f4e9771c5ed0348d51ecf097396d617f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_menu_book.imageset/Stitch_menu_book.svg": {
+    "mtime": 1789119993.8803258,
+    "seen": 1789545164.9089432,
+    "ast_hash": "a1c91273fd1497993d22e0acd2be2f43",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_mic.imageset/Stitch_mic.svg": {
+    "mtime": 1789119995.027182,
+    "seen": 1789545164.908944,
+    "ast_hash": "e843addc4cb42cd4ca204a95f88ea760",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_monitor_weight.imageset/Stitch_monitor_weight.svg": {
+    "mtime": 1789119994.2549348,
+    "seen": 1789545164.908944,
+    "ast_hash": "485d0a59df73d6bcda5072290de58beb",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_more_horiz.imageset/Stitch_more_horiz.svg": {
+    "mtime": 1789119994.594899,
+    "seen": 1789545164.908944,
+    "ast_hash": "1dfbadee10bc26d97357d26df951ac44",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_nightlight_round.imageset/Stitch_nightlight_round.svg": {
+    "mtime": 1789119994.6015444,
+    "seen": 1789545164.9089448,
+    "ast_hash": "bfbf9755a310ea2139cf3adf9602d53a",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_notifications.imageset/Stitch_notifications.svg": {
+    "mtime": 1789119994.6816494,
+    "seen": 1789545164.9089448,
+    "ast_hash": "a0bc1d5151adb7ef48561b3a5782d702",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_notifications_active.imageset/Stitch_notifications_active.svg": {
+    "mtime": 1789119994.6927652,
+    "seen": 1789545164.9089448,
+    "ast_hash": "555eafcde296eeb30692765e377dd0bf",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_nutrition.imageset/Stitch_nutrition.svg": {
+    "mtime": 1789119994.6020427,
+    "seen": 1789545164.908946,
+    "ast_hash": "ee379ba9a770b606ace2f5b56a724066",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_open_in_new.imageset/Stitch_open_in_new.svg": {
+    "mtime": 1789119994.6015444,
+    "seen": 1789545164.908946,
+    "ast_hash": "f7009885fab2ae131bd1debfbefb8ac2",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_pace.imageset/Stitch_pace.svg": {
+    "mtime": 1789119994.951227,
+    "seen": 1789545164.908946,
+    "ast_hash": "4569d3906c2132b513411293ab3428bd",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_person.imageset/Stitch_person.svg": {
+    "mtime": 1789119995.413431,
+    "seen": 1789545164.908947,
+    "ast_hash": "6b365f16f3ab8e86875e63b17e8ff940",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_photo_camera.imageset/Stitch_photo_camera.svg": {
+    "mtime": 1789119995.3425019,
+    "seen": 1789545164.908947,
+    "ast_hash": "cbb7b1b5dbc689a93c363a6eb69b09d2",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_picture_as_pdf.imageset/Stitch_picture_as_pdf.svg": {
+    "mtime": 1789119995.474181,
+    "seen": 1789545164.908948,
+    "ast_hash": "cceaa522a105d7b648d00d1048020481",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_play_arrow.imageset/Stitch_play_arrow.svg": {
+    "mtime": 1789119995.2933495,
+    "seen": 1789545164.908948,
+    "ast_hash": "aab5c18a158749d4d0345ee951f72a3d",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_prescriptions.imageset/Stitch_prescriptions.svg": {
+    "mtime": 1789119995.4062967,
+    "seen": 1789545164.908948,
+    "ast_hash": "e050e0c6237da1bb2c0259d80dcf4a1c",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_print.imageset/Stitch_print.svg": {
+    "mtime": 1789119995.4827468,
+    "seen": 1789545164.908949,
+    "ast_hash": "fc59d44643e43e08bfa12d3a65dcf562",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_qr_code_2.imageset/Stitch_qr_code_2.svg": {
+    "mtime": 1789119996.8879375,
+    "seen": 1789545164.908949,
+    "ast_hash": "e6bb30f8af1fe3eca7af0bbace5aea29",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_query_stats.imageset/Stitch_query_stats.svg": {
+    "mtime": 1789119997.3401759,
+    "seen": 1789545164.908949,
+    "ast_hash": "91b9f8354be7b265a8dcf88b4b921d69",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_radio_button_unchecked.imageset/Stitch_radio_button_unchecked.svg": {
+    "mtime": 1789119996.0692008,
+    "seen": 1789545164.90895,
+    "ast_hash": "f88e6021e6debde9164ab6c232c15563",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_ramen_dining.imageset/Stitch_ramen_dining.svg": {
+    "mtime": 1789119996.1981974,
+    "seen": 1789545164.90895,
+    "ast_hash": "2a4304cc53331d626ea8b92847908eaf",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_remove.imageset/Stitch_remove.svg": {
+    "mtime": 1789119996.8882718,
+    "seen": 1789545164.90895,
+    "ast_hash": "8dbb67e2427ad46e687cbfb961eddf0d",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_restaurant.imageset/Stitch_restaurant.svg": {
+    "mtime": 1789119996.2741604,
+    "seen": 1789545164.908951,
+    "ast_hash": "f8139dd460fbe54c683c690991374df3",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_scale.imageset/Stitch_scale.svg": {
+    "mtime": 1789119996.8864136,
+    "seen": 1789545164.908951,
+    "ast_hash": "c3ec299c765783159fb07d1be052bb26",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_schedule.imageset/Stitch_schedule.svg": {
+    "mtime": 1789119997.3165495,
+    "seen": 1789545164.908951,
+    "ast_hash": "bdc8731d6ac9b27e0c3c5a1db07f2491",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_sd_storage.imageset/Stitch_sd_storage.svg": {
+    "mtime": 1789120059.937492,
+    "seen": 1789545164.908952,
+    "ast_hash": "895de31396e4de257474052ac8d953c7",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_search.imageset/Stitch_search.svg": {
+    "mtime": 1789119997.3965578,
+    "seen": 1789545164.908952,
+    "ast_hash": "673f598aa33467a268c14fad20337909",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_sensors.imageset/Stitch_sensors.svg": {
+    "mtime": 1789119997.560124,
+    "seen": 1789545164.908952,
+    "ast_hash": "df49c836d78f7440033e717787c76c3d",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_settings.imageset/Stitch_settings.svg": {
+    "mtime": 1789119997.7161837,
+    "seen": 1789545164.9089532,
+    "ast_hash": "c6da31c067b3f0ba6ae80cfa49b3f924",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_share.imageset/Stitch_share.svg": {
+    "mtime": 1789119997.5660374,
+    "seen": 1789545164.9089532,
+    "ast_hash": "4f94eab34045b6797aba6aeed7807ce8",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_share_location.imageset/Stitch_share_location.svg": {
+    "mtime": 1789119997.7224424,
+    "seen": 1789545164.9089532,
+    "ast_hash": "31c8ef0225f00d40dcaf68f8d3567a48",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_shield.imageset/Stitch_shield.svg": {
+    "mtime": 1789119997.8864384,
+    "seen": 1789545164.9089541,
+    "ast_hash": "5615bc47428be182549cf69bb024af2e",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_show_chart.imageset/Stitch_show_chart.svg": {
+    "mtime": 1789119998.2172024,
+    "seen": 1789545164.9089541,
+    "ast_hash": "cac78d2cf829679b7e8e534e70c2b2a4",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_sick.imageset/Stitch_sick.svg": {
+    "mtime": 1789119997.8293319,
+    "seen": 1789545164.9089541,
+    "ast_hash": "6d3d37f79b673cc404db2cce6ee531b0",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_spa.imageset/Stitch_spa.svg": {
+    "mtime": 1789119998.2732441,
+    "seen": 1789545164.9089549,
+    "ast_hash": "135da46b6d1e3c7ef6d63b080fe6d9fe",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_stethoscope.imageset/Stitch_stethoscope.svg": {
+    "mtime": 1789119998.3517218,
+    "seen": 1789545164.9089549,
+    "ast_hash": "b649507b132819c20777ec82105ecb27",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_straighten.imageset/Stitch_straighten.svg": {
+    "mtime": 1789119998.3856654,
+    "seen": 1789545164.9089549,
+    "ast_hash": "1224be7eb6a1a2e8db9875d9b923df66",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_sync.imageset/Stitch_sync.svg": {
+    "mtime": 1789119999.39506,
+    "seen": 1789545164.9089558,
+    "ast_hash": "ba9b51bafef3a2926bfea34fdbf8e898",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_task_alt.imageset/Stitch_task_alt.svg": {
+    "mtime": 1789119998.521237,
+    "seen": 1789545164.9089558,
+    "ast_hash": "89bed67187f6f31ff411986e6c8f69cc",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_thermostat.imageset/Stitch_thermostat.svg": {
+    "mtime": 1789119998.592994,
+    "seen": 1789545164.908957,
+    "ast_hash": "41a7657214ad9d9c911b7138b0f03a58",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_touch_app.imageset/Stitch_touch_app.svg": {
+    "mtime": 1789119998.6353662,
+    "seen": 1789545164.908957,
+    "ast_hash": "2abd6bbd301e0e984294df5566b4bbe0",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_trending_down.imageset/Stitch_trending_down.svg": {
+    "mtime": 1789119998.9140587,
+    "seen": 1789545164.908957,
+    "ast_hash": "17ad13a957c2c64992e945f302ace844",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_trending_up.imageset/Stitch_trending_up.svg": {
+    "mtime": 1789119999.035974,
+    "seen": 1789545164.908958,
+    "ast_hash": "6f6fb3a61dc495080b5023d652aaac13",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_tune.imageset/Stitch_tune.svg": {
+    "mtime": 1789119999.0525513,
+    "seen": 1789545164.908958,
+    "ast_hash": "bd2102b3656a43b40f6d39674ea5b207",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_update.imageset/Stitch_update.svg": {
+    "mtime": 1789119999.094487,
+    "seen": 1789545164.908959,
+    "ast_hash": "9f9383fb20683bfceceaf0472e3e8bd0",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_verified.imageset/Stitch_verified.svg": {
+    "mtime": 1789119999.2482753,
+    "seen": 1789545164.908959,
+    "ast_hash": "8cf7946202f2b7807924ca1394aa35cd",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_verified_user.imageset/Stitch_verified_user.svg": {
+    "mtime": 1789119999.410059,
+    "seen": 1789545164.908959,
+    "ast_hash": "52f6b8f6fa5a647ff65588cfcc89d3e5",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_visibility.imageset/Stitch_visibility.svg": {
+    "mtime": 1789119999.4102545,
+    "seen": 1789545164.90896,
+    "ast_hash": "769ef91c641a13dbd2780759f00f2bcd",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_visibility_off.imageset/Stitch_visibility_off.svg": {
+    "mtime": 1789119999.5037866,
+    "seen": 1789545164.90896,
+    "ast_hash": "3215cd0b0cb2ef347bc54abbcaec80b5",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_warning.imageset/Stitch_warning.svg": {
+    "mtime": 1789120000.598006,
+    "seen": 1789545164.90896,
+    "ast_hash": "203d40c8ad6c2fe210f8b9f13fbcf17a",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_warning_amber.imageset/Stitch_warning_amber.svg": {
+    "mtime": 1789120000.5965028,
+    "seen": 1789545164.908961,
+    "ast_hash": "203d40c8ad6c2fe210f8b9f13fbcf17a",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_water_bottle.imageset/Stitch_water_bottle.svg": {
+    "mtime": 1789120000.363338,
+    "seen": 1789545164.908961,
+    "ast_hash": "15f8daa2f0148f842223cd784df2666c",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_water_drop.imageset/Stitch_water_drop.svg": {
+    "mtime": 1789120000.1534061,
+    "seen": 1789545164.908961,
+    "ast_hash": "57194bccc98e8d4cef2838b434bd0ee3",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/EntryReview-2026-09-12/baby-setup.png": {
+    "mtime": 1789181924.9913461,
+    "seen": 1789545164.908962,
+    "ast_hash": "3c3f8771e393ef74a730e7b2f4e70621",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/EntryReview-2026-09-12/login.png": {
+    "mtime": 1789181924.9939907,
+    "seen": 1789545164.908962,
+    "ast_hash": "1847b6ec568e3e008557f1d8ca6f2c07",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/EntryReview-2026-09-12/signup.png": {
+    "mtime": 1789181924.9936924,
+    "seen": 1789545164.908962,
+    "ast_hash": "b8cfea58a36708afa8c84c865d533b7b",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/a_b_t_u_s_d_ng_t_o_h_s_b/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908963,
+    "ast_hash": "1326779d34e02af808ce43a84561ffc6",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/b_ghi_nhanh_tab_1/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908963,
+    "ast_hash": "a40a64c593edf5ec162ab95431fcbf0f",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/c_ch_n_ho_t_ng/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908963,
+    "ast_hash": "f4399a062c2f57e8c1dfb3916425d9a1",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/d_nh_t_k_tab_2/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.9089642,
+    "ast_hash": "91be1a34160f9f002ce20dc34a3aa789",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/e_chi_ti_t_ho_t_ng/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.9089642,
+    "ast_hash": "85b1085fb43637d90ab3296bc2e43d1f",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/f_form_ghi_ho_t_ng_nhi_t/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.9089642,
+    "ast_hash": "2b6b9e1530ae24607dcba7557283cf79",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/g_nh_p_s_o_c_th/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908965,
+    "ast_hash": "5a01820c75395ea79b8c70c69feed33d",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/i_theo_d_i_m_l_ch_thu_c/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908965,
+    "ast_hash": "4372e2759118e61cce1240d610a70e7d",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/k_c_i_t_ng_d_ng/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908965,
+    "ast_hash": "48b46519a4cefb47d2509a32ee53c1ea",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/logo_b_kh_e_s_c_kh_e_ch_m_s_c_b/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.9089658,
+    "ast_hash": "017434c3f39b28770e96afe5f0f0ab15",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/ng_k_b_kh_e/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.9089658,
+    "ast_hash": "ff355aadb7656bdf837a6068a6a0f1d5",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/ng_nh_p_b_kh_e/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.9089658,
+    "ast_hash": "aa50df26aa02fc9de87673728a994027",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/p_h_s_b_an/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908967,
+    "ast_hash": "9037b2bc88468fca469afb617473fe87",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/r_chia_s_b_o_c_o_pdf_qr/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908967,
+    "ast_hash": "dd061e81c6ccec50136777319c1ffdf0",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/s_th_ng_k_tab_3/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908967,
+    "ast_hash": "e1e1a076b79cdc0ba47c168f99400fa5",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/splash_screen_b_kh_e/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908968,
+    "ast_hash": "a60bbb94be8ae7f58d2af0bbfbc63ec6",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/v_ghi_b_ng_gi_ng_n_i_ai/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908968,
+    "ast_hash": "d80282c3a199e00d4a28f86d50fb77c3",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Export/w_trang_b_o_c_o_b_c_s_web_xem_qr/screen.png": {
+    "mtime": 1788937826.0,
+    "seen": 1789545164.908968,
+    "ast_hash": "11e71760f825b37e80d2b177988da910",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-01.png": {
+    "mtime": 1789134468.0412116,
+    "seen": 1789545164.908969,
+    "ast_hash": "7e20e84f72a70444f4b420216ab6a625",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-02.png": {
+    "mtime": 1789134468.0388875,
+    "seen": 1789545164.908969,
+    "ast_hash": "c0f98f42d5d4753c7c9a8759a2ea6e34",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-03.png": {
+    "mtime": 1789134468.0400515,
+    "seen": 1789545164.9089699,
+    "ast_hash": "c0fa92a83813a1aad474cbe1cf2376a8",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-04.png": {
+    "mtime": 1789120344.8812501,
+    "seen": 1789545164.9089699,
+    "ast_hash": "2f0e5a0db9d1b3ebd311d17a7ce92799",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-05.png": {
+    "mtime": 1789120344.873161,
+    "seen": 1789545164.9089699,
+    "ast_hash": "15ce36b95c02889d106573e6d852ab89",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-06.png": {
+    "mtime": 1789134468.0439603,
+    "seen": 1789545164.908971,
+    "ast_hash": "a14f1796bedcd8eaf8774ead4a11c15f",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-07.png": {
+    "mtime": 1789134468.0457716,
+    "seen": 1789545164.908971,
+    "ast_hash": "db37cc92434e5a6bc4e397d9eda62938",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-08.png": {
+    "mtime": 1789134520.469799,
+    "seen": 1789545164.908971,
+    "ast_hash": "f555576758db98133f62ff0d135004ac",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-09.png": {
+    "mtime": 1789120344.8777795,
+    "seen": 1789545164.908972,
+    "ast_hash": "9ca9b30a1638362aab6618f19bb0ae95",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-10.png": {
+    "mtime": 1789134468.04479,
+    "seen": 1789545164.908972,
+    "ast_hash": "292ec08421b85aabf99b650cb48120a5",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-11.png": {
+    "mtime": 1789134520.4712472,
+    "seen": 1789545164.908973,
+    "ast_hash": "fa0e5dd98b9d689d886a9c1d8bb0c197",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-12.png": {
+    "mtime": 1789120344.879021,
+    "seen": 1789545164.908973,
+    "ast_hash": "8e4d3855b359cae8bf898bb3c9ecc47d",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-13.png": {
+    "mtime": 1789134468.050582,
+    "seen": 1789545164.908973,
+    "ast_hash": "3cc729f84c4838bb4ef99fca5b64b07b",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-14.png": {
+    "mtime": 1789134468.0517478,
+    "seen": 1789545164.9089742,
+    "ast_hash": "b1b992d7f9de5d783b659fcfa72a300f",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-15.png": {
+    "mtime": 1789134520.462313,
+    "seen": 1789545164.9089742,
+    "ast_hash": "5b620ca7917645ba9408aca710b69e1f",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-16.png": {
+    "mtime": 1789134520.4719234,
+    "seen": 1789545164.9089742,
+    "ast_hash": "10e8c47493b81a09c68d6445c315fa41",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-17.png": {
+    "mtime": 1789134520.4715488,
+    "seen": 1789545164.9089751,
+    "ast_hash": "28cada02b07ede8bcc9f7bd5316c8254",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-18.png": {
+    "mtime": 1789134468.048251,
+    "seen": 1789545164.9089751,
+    "ast_hash": "91825f124e220c873178031f1ac7feed",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-19.png": {
+    "mtime": 1789120344.8753526,
+    "seen": 1789545164.9089751,
+    "ast_hash": "abe2a92637fa60e4a93a56e2df6cc64c",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-20.png": {
+    "mtime": 1789134468.0470998,
+    "seen": 1789545164.908976,
+    "ast_hash": "3e3a391e2f98b7af1e45091bc286a296",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-21.png": {
+    "mtime": 1789120344.8717992,
+    "seen": 1789545164.908976,
+    "ast_hash": "1416dd249cd0d7aba5b377431f81402f",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-22.png": {
+    "mtime": 1789120344.8670452,
+    "seen": 1789545164.908976,
+    "ast_hash": "d2a791620f28b357c96268169c033244",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Review-2026-09-11/screen-23.png": {
+    "mtime": 1789120344.868294,
+    "seen": 1789545164.9089768,
+    "ast_hash": "33415303c51671e201c363d323821592",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/a-ho-so-dau-tien.png": {
+    "mtime": 1788996997.4957964,
+    "seen": 1789545164.9089768,
+    "ast_hash": "dd8bd7906db5c5755a7fa8d0627341e7",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/d-du-lieu-con-sau-khi-tat-va-mo-lai-app.png": {
+    "mtime": 1788996997.4926102,
+    "seen": 1789545164.9089768,
+    "ast_hash": "a057efa644ae9236eb1593d15877966f",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/d-nhiet-do-da-luu-trong-nhat-ky.png": {
+    "mtime": 1788996997.4928713,
+    "seen": 1789545164.908978,
+    "ast_hash": "a057efa644ae9236eb1593d15877966f",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/ghi-nhanh.png": {
+    "mtime": 1788996997.5031118,
+    "seen": 1789545164.908978,
+    "ast_hash": "e3d4181461408c64aeb4bcf1d73b95b9",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/nhat-ky.png": {
+    "mtime": 1788996997.500794,
+    "seen": 1789545164.908978,
+    "ast_hash": "69c32a4e3eed26ff33b1087fffcea063",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/stitch-cai-dat.png": {
+    "mtime": 1788996997.487987,
+    "seen": 1789545164.908979,
+    "ast_hash": "8987b63510145f0d593a4b2437233027",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/stitch-chi-tiet-hoat-dong.png": {
+    "mtime": 1788996997.4862454,
+    "seen": 1789545164.908979,
+    "ast_hash": "b04f2b9fa4c3707376f773522f74669c",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/stitch-chia-se-bao-cao.png": {
+    "mtime": 1788996997.4746974,
+    "seen": 1789545164.90898,
+    "ast_hash": "544ab9f44e2bcf7c809aed648a1550be",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/stitch-chon-hoat-dong.png": {
+    "mtime": 1788996997.4645145,
+    "seen": 1789545164.90898,
+    "ast_hash": "d5f38835be9948a3633353a0f41e3716",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/stitch-chon-ngay-gio.png": {
+    "mtime": 1788996997.4801588,
+    "seen": 1789545164.908981,
+    "ast_hash": "ac55e4ee683750ffb64c3ad16c0666a4",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/stitch-dang-ky.png": {
+    "mtime": 1788996997.467867,
+    "seen": 1789545164.908981,
+    "ast_hash": "83a298c1cd2a0f4a6c99897010f84771",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/stitch-dang-nhap.png": {
+    "mtime": 1788996997.4695563,
+    "seen": 1789545164.908981,
+    "ast_hash": "777a2dd57ae7807c1a07afbccc1706a8",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/stitch-form-nhiet-do.png": {
+    "mtime": 1788996997.4829519,
+    "seen": 1789545164.908982,
+    "ast_hash": "3ce14d539d325f8816d83e73b6b408eb",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/stitch-giong-noi.png": {
+    "mtime": 1788996997.462966,
+    "seen": 1789545164.908982,
+    "ast_hash": "04a840d071c2ecf9b54c0fb3cccbf22f",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/stitch-ho-so-be.png": {
+    "mtime": 1788996997.4888418,
+    "seen": 1789545164.908983,
+    "ast_hash": "d605cb641f5f84635ec6520b9b22377b",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/stitch-nhap-so-do.png": {
+    "mtime": 1788996997.4883335,
+    "seen": 1789545164.908983,
+    "ast_hash": "ea441b0865108cd289392e9a36e49d1e",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/stitch-theo-doi-om.png": {
+    "mtime": 1788996997.4772947,
+    "seen": 1789545164.908984,
+    "ast_hash": "9e58ee46abb99227a4b8638f7e5174b7",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/stitch-xem-truoc-bao-cao.png": {
+    "mtime": 1788996997.4731572,
+    "seen": 1789545164.908984,
+    "ast_hash": "b17c89dbaebab0c06d93f47c626954fa",
+    "semantic_hash": ""
+  },
+  "DesignReference/Stitch/Verification/thong-ke.png": {
+    "mtime": 1788996997.4995472,
+    "seen": 1789545164.9089851,
+    "ast_hash": "61d1efe897ec624cc9761836c10765e9",
+    "semantic_hash": ""
   }
 }

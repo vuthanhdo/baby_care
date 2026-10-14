@@ -56,12 +56,13 @@ nonisolated struct CloudSnapshot: Codable, Sendable {
     var versions: [String: Int] = [:]
     var revision = 0
     var mediaAssets: [CloudMediaAsset]?
+    var supportsVaccinations: Bool? = true
     static func key(_ entity: String, _ id: UUID) -> String { "\(entity):\(id.uuidString.lowercased())" }
 }
 
 /// Explicit SQL column mapping: domain Codable never becomes the server contract.
 nonisolated enum CloudMapping {
-    static let entities = ["babies", "care_activities", "body_measurements", "baby_care_states", "medication_reminders", "media_assets"]
+    static let entities = ["babies", "care_activities", "body_measurements", "baby_care_states", "medication_reminders", "media_assets", "vaccinations"]
     static func rows(_ database: CareDatabase) -> [String: [UUID: CloudRow]] {
         var result: [String: [UUID: CloudRow]] = [:]
         for b in database.babies {
@@ -73,6 +74,9 @@ nonisolated enum CloudMapping {
             }
             for m in b.measurements {
                 result["body_measurements", default: [:]][m.id] = ["measured_at": .date(m.date), "weight": m.weight.map(CloudValue.number) ?? .null, "height": m.height.map(CloudValue.number) ?? .null, "head_circumference": m.headCircumference.map(CloudValue.number) ?? .null, "method": .string(m.method), "notes": .string(m.notes)]
+            }
+            for v in b.vaccinations {
+                result["vaccinations", default: [:]][v.id] = ["vaccine_name": .string(v.vaccineName), "vaccinated_at": .date(v.date), "dose_number": .number(Double(v.doseNumber)), "next_dose_date": .date(v.nextDoseDate), "clinic": .string(v.clinic), "notes": .string(v.notes), "reminder_enabled": .bool(v.reminderEnabled), "reminder_date": .date(v.reminderDate)]
             }
             for r in b.medicationReminders {
                 result["medication_reminders", default: [:]][r.id] = ["name": .string(r.name), "amount": .number(CareValidation.number(r.amount) ?? 0), "unit": .string(r.unit), "next_date": .date(r.nextDate), "note": .string(r.note), "enabled": .bool(r.enabled), "episode_only": .bool(r.episodeOnly)]
@@ -92,6 +96,7 @@ nonisolated enum CloudMapping {
                     case "babies", "baby_care_states": baby.profile.id == id
                     case "care_activities": baby.activities.contains { $0.id == id }
                     case "body_measurements": baby.measurements.contains { $0.id == id }
+                    case "vaccinations": baby.vaccinations.contains { $0.id == id }
                     case "medication_reminders": baby.medicationReminders.contains { $0.id == id }
                     default: false
                     }
@@ -153,6 +158,16 @@ nonisolated enum CloudMapping {
             for m in live["body_measurements"] ?? [] where try id(m,"baby_id") == babyID {
                 baby.measurements.append(try BodyMeasurement(id: id(m), date: date(m,"measured_at"), weight: m["weight"]?.number, height: m["height"]?.number, headCircumference: m["head_circumference"]?.number, method: text(m,"method"), notes: text(m,"notes")))
             }
+            for v in live["vaccinations"] ?? [] where try id(v,"baby_id") == babyID {
+                guard let raw = v["dose_number"]?.number, let dose = Int(exactly: raw),
+                      let enabledValue = v["reminder_enabled"], case .bool(let enabled) = enabledValue else { throw CareDataError.corruptData }
+                let record = try VaccinationRecord(id: id(v), vaccineName: text(v,"vaccine_name"), date: date(v,"vaccinated_at"), doseNumber: dose,
+                    nextDoseDate: v["next_dose_date"] == .null ? nil : date(v,"next_dose_date"), clinic: text(v,"clinic"), notes: text(v,"notes"),
+                    reminderEnabled: enabled, reminderDate: v["reminder_date"] == .null ? nil : date(v,"reminder_date"))
+                try CareValidation.vaccination(record, birthDate: profile.birthDate)
+                baby.vaccinations.append(record)
+            }
+            baby.vaccinations.sort { $0.date > $1.date }
             for m in live["medication_reminders"] ?? [] where try id(m,"baby_id") == babyID {
                 guard let amount = m["amount"]?.number else { throw CareDataError.corruptData }
                 baby.medicationReminders.append(try MedicationReminder(id: id(m), name: text(m,"name"), amount: String(amount), unit: text(m,"unit"), nextDate: date(m,"next_date"), note: text(m,"note"), enabled: m["enabled"]?.flag ?? false, episodeOnly: m["episode_only"]?.flag ?? false))

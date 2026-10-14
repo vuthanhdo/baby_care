@@ -16,6 +16,8 @@ struct BabyCareState {
     var error: String?
     var toast: String?
     var storage: CareStorageStatus = .device
+    var vaccinationsAvailable = true
+    var requiresConsent = false
 }
 
 /// The single owner of shared UI state. Views dispatch actions and read snapshots.
@@ -41,6 +43,7 @@ final class BabyCareViewModel {
     var babies: [BabyProfile] { state.database.babies.map(\.profile) }
     var hasOnboarded: Bool { state.database.hasOnboarded }
     var activities: [CareActivity] { state.database.selectedBaby?.activities ?? [] }
+    var vaccinations: [VaccinationRecord] { state.database.selectedBaby?.vaccinations ?? [] }
     var measurements: [BodyMeasurement] { state.database.selectedBaby?.measurements ?? [] }
     var medicationReminders: [MedicationReminder] { state.database.selectedBaby?.medicationReminders ?? [] }
     var isTrackingIllness: Bool { state.database.selectedBaby?.isTrackingIllness ?? false }
@@ -66,14 +69,18 @@ final class BabyCareViewModel {
                 guard active else { return false }
                 let storage = await provider.status()
                 guard active else { return false }
+                let vaccinationsAvailable = await provider.supportsVaccinations()
+                guard active else { return false }
+                state.vaccinationsAvailable = vaccinationsAvailable
                 state.database = loaded
                 state.storage = storage
                 state.phase = .ready
-                if previous != loaded { _ = await notifications.reconcile(previous: previous, current: loaded) }
+                if let warning = await notifications.reconcile(previous: previous, current: loaded) { showMessage(warning) }
                 guard active else { return false }
                 return true
             } catch {
                 guard active else { return false }
+                if error as? CloudError == .consentRequired { state.requiresConsent = true }
                 if error as? CloudError == .accessDenied || error as? CloudError == .signedOut {
                     state.database = CareDatabase(); state.phase = .failed
                     state.error = error.localizedDescription
@@ -104,6 +111,7 @@ final class BabyCareViewModel {
                 return true
             } catch {
                 guard active else { return false }
+                if error as? CloudError == .consentRequired { state.requiresConsent = true }
                 let storage = await provider.status()
                 guard active else { return false }
                 state.storage = storage

@@ -4,6 +4,14 @@ import Testing
 
 @MainActor
 struct BabyCareTests {
+    @Test func destructiveConfirmationAcceptsVietnameseToneVariants() {
+        #expect(DestructiveConfirmation.matches("XÓA"))
+        #expect(DestructiveConfirmation.matches("XOÁ"))
+        #expect(DestructiveConfirmation.matches("  xoa\n"))
+        #expect(!DestructiveConfirmation.matches("XÓA HẾT"))
+        #expect(!DestructiveConfirmation.matches(""))
+    }
+
     @Test func activityCreateEditDeleteAndPhotosSurviveDiskReopening() async throws {
         let folder = try temporaryFolder()
         defer { try? FileManager.default.removeItem(at: folder) }
@@ -64,6 +72,32 @@ struct BabyCareTests {
         #expect(data.babies.last?.activities == [secondEntry])
         #expect(data.babies.last?.measurements.isEmpty == true)
         #expect(data.babies.last?.medicationReminders.isEmpty == true)
+    }
+
+    @Test func deletingBabyRemovesItsDataAndLastDeletionReturnsToOnboarding() async throws {
+        let folder = try temporaryFolder()
+        defer { try? FileManager.default.removeItem(at: folder) }
+        let configuration = configuration(in: folder)
+        let provider = SwiftDataCareDataProvider(configuration: configuration)
+        let first = profile(), second = profile(name: "Bé Bình")
+        _ = try await provider.apply(.createBaby(first))
+        _ = try await provider.apply(.saveActivities(babyID: first.id, entries: [CareActivity(kind: .bath, value: "Đã tắm")]))
+        _ = try await provider.apply(.saveMeasurement(babyID: first.id, measurement: BodyMeasurement(weight: 9.2)))
+        _ = try await provider.apply(.saveReminder(babyID: first.id, reminder: MedicationReminder(name: "Thuốc theo đơn", amount: "1")))
+        _ = try await provider.apply(.createBaby(second))
+
+        var reopened = try await provider.apply(.deleteBaby(first.id))
+        #expect(reopened.babies.map(\.profile.id) == [second.id])
+        #expect(reopened.selectedBabyID == second.id)
+        #expect(reopened.hasOnboarded)
+        reopened = try await SwiftDataCareDataProvider(configuration: configuration).load()
+        #expect(reopened.babies.map(\.profile.id) == [second.id])
+
+        _ = try await provider.apply(.deleteBaby(second.id))
+        reopened = try await SwiftDataCareDataProvider(configuration: configuration).load()
+        #expect(reopened.babies.isEmpty)
+        #expect(reopened.selectedBabyID == nil)
+        #expect(!reopened.hasOnboarded)
     }
 
     @Test func batchRejectsAllRecordsAndKeepsSleepTimerWhenOneEntryIsInvalid() async throws {
@@ -196,18 +230,19 @@ struct BabyCareTests {
         let model = BabyCareViewModel(provider: provider, notifications: notifications)
         #expect(await model.send(.load))
         let before = model.state.database
+        let callsAfterLoad = notifications.calls
         await provider.setFailWrites(true)
         let baby = profile()
         #expect(await model.send(.commit(.createBaby(baby))) == false)
         #expect(model.state.database == before)
         #expect(model.state.error != nil)
         #expect(!model.state.isSaving)
-        #expect(notifications.calls == 0)
+        #expect(notifications.calls == callsAfterLoad)
         await provider.setFailWrites(false)
         #expect(await model.send(.commit(.createBaby(baby))))
         #expect(model.baby == baby)
         #expect(model.state.error == nil)
-        #expect(notifications.calls == 1)
+        #expect(notifications.calls == callsAfterLoad + 1)
     }
 
     @Test func delayedProviderPublishesOnlyAfterCommitAndRejectsOverlappingAction() async throws {

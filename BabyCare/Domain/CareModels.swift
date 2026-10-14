@@ -137,3 +137,16 @@ nonisolated struct MedicationReminder: Identifiable, Codable, Sendable, Equatabl
     var episodeOnly = false
 }
 
+
+/// One administered dose, with an optional follow-up appointment and notification.
+nonisolated struct VaccinationRecord: Identifiable, Codable, Sendable, Equatable {
+    var id = UUID()
+    var vaccineName = ""
+    var date = Date()
+    var doseNumber = 1
+    var nextDoseDate: Date?
+    var clinic = ""
+    var notes = ""
+    var reminderEnabled = false
+    var reminderDate: Date?
+}

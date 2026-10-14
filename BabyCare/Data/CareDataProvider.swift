@@ -7,11 +7,13 @@ protocol CareDataProvider: Sendable {
     func load() async throws -> CareDatabase
     func apply(_ mutation: CareDataMutation) async throws -> CareDatabase
     func status() async -> CareStorageStatus
+    func supportsVaccinations() async -> Bool
     func invalidate() async
 }
 
 extension CareDataProvider {
     func status() async -> CareStorageStatus { .device }
+    func supportsVaccinations() async -> Bool { true }
     func invalidate() async {}
 }
 

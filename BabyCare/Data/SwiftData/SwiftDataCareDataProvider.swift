@@ -44,7 +44,7 @@ actor SwiftDataCareDataProvider: CareDataProvider {
 
     private func preparedContext() throws -> ModelContext {
         if container == nil {
-            let schema = Schema(versionedSchema: BabyCareSchemaV1.self)
+            let schema = Schema(versionedSchema: BabyCareSchemaV2.self)
             let modelConfiguration: ModelConfiguration
             if configuration.inMemory {
                 modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true, cloudKitDatabase: .none)
@@ -87,7 +87,12 @@ actor SwiftDataCareDataProvider: CareDataProvider {
     private func read(_ context: ModelContext) throws -> CareDatabase {
         let metadata = try fetchMetadata(context)
         let entities = try context.fetch(FetchDescriptor<BabyEntity>(sortBy: [SortDescriptor(\.sortOrder)]))
-        let babies = try entities.map { try $0.value() }
+        var babies = try entities.map { try $0.value() }
+        let vaccinations = try context.fetch(FetchDescriptor<VaccinationEntity>())
+        guard vaccinations.allSatisfy({ v in babies.contains { $0.profile.id == v.babyID } }) else { throw CareDataError.corruptData }
+        for index in babies.indices {
+            babies[index].vaccinations = vaccinations.filter { $0.babyID == babies[index].profile.id }.map { $0.value() }.sorted { $0.date > $1.date }
+        }
         guard metadata.selectedBabyID == nil || babies.contains(where: { $0.profile.id == metadata.selectedBabyID }) else { throw CareDataError.corruptData }
         return CareDatabase(babies: babies, selectedBabyID: metadata.selectedBabyID, hasOnboarded: metadata.hasOnboarded)
     }
@@ -96,7 +101,20 @@ actor SwiftDataCareDataProvider: CareDataProvider {
         let metadata = try fetchMetadata(context)
         metadata.selectedBabyID = database.selectedBabyID
         metadata.hasOnboarded = database.hasOnboarded
+        let vaccinationEntities = try context.fetch(FetchDescriptor<VaccinationEntity>())
+        let wantedIDs = Set(database.babies.flatMap(\.vaccinations).map(\.id))
+        for saved in vaccinationEntities where !wantedIDs.contains(saved.id) { context.delete(saved) }
+        for baby in database.babies {
+            for record in baby.vaccinations {
+                if let saved = vaccinationEntities.first(where: { $0.id == record.id }) {
+                    guard saved.babyID == baby.profile.id else { throw CareDataError.conflict }
+                    saved.update(record)
+                } else { context.insert(VaccinationEntity(value: record, babyID: baby.profile.id)) }
+            }
+        }
         let existing = try context.fetch(FetchDescriptor<BabyEntity>())
+        let wantedBabyIDs = Set(database.babies.map(\.profile.id))
+        for saved in existing where !wantedBabyIDs.contains(saved.id) { context.delete(saved) }
         for (order, data) in database.babies.enumerated() {
             guard old.babies.first(where: { $0.profile.id == data.profile.id }) != data else { continue }
             let entity: BabyEntity

@@ -135,7 +135,9 @@ struct OnboardingView: View {
         .toolbar(.hidden, for: .tabBar)
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: 8) {
-                CarePrimaryButton(title: isAddingBaby ? L10n.text("Tạo hồ sơ bé") : L10n.text("Bắt đầu ghi nhận"), icon: "Stitch_arrow_forward", isLoading: viewModel.state.isSaving, action: createProfile)
+                CarePrimaryButton(title: isAddingBaby ? L10n.text("Tạo hồ sơ bé") : L10n.text("Tiếp tục"), icon: "Stitch_arrow_forward", isLoading: viewModel.state.isSaving) {
+                    createProfile()
+                }
                     .disabled(validName.isEmpty || photoLoadID != nil || viewModel.state.isSaving || viewModel.babies.count >= CareDatabase.maximumBabies)
                     .accessibilityIdentifier("createBabyButton")
                 Text(viewModel.babies.count >= CareDatabase.maximumBabies ? L10n.text("Bạn đã có đủ 4 hồ sơ bé.") : validName.isEmpty ? L10n.text("Nhập tên bé để bắt đầu.") : L10n.text("Có thể chỉnh sửa hoặc thêm bé trong Hồ sơ bé."))

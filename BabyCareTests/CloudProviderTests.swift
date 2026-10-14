@@ -1,5 +1,6 @@
 import Foundation
 import Testing
+import Supabase
 @testable import BabyCare
 
 @MainActor struct CloudProviderTests {
@@ -110,6 +111,23 @@ import Testing
         #expect(synced.selectedBaby?.profile.avatarData == p.avatarData)
         #expect(try await cache.read().queuedWrites.isEmpty)
         #expect(await remote.commitCount == 1)
+    }
+    @Test func consentRequiredKeepsDurableOutboxForReconsent() async throws {
+        let remote = FakeCloudRemote(), cache = FakeCloudCache(), family = UUID()
+        let provider = SupabaseCareDataProvider(remote: remote, cache: cache, familyID: family)
+        _ = try await provider.load()
+        await remote.setApplyError(.consentRequired)
+        let profile = baby()
+        await #expect(throws: CloudError.consentRequired) { try await provider.apply(.createBaby(profile)) }
+        let pending = try await cache.read()
+        #expect(pending.queuedWrites.count == 1 && pending.snapshot != nil)
+        let operation = try #require(pending.queuedWrites.first?.envelope.p_operation_id)
+        await provider.invalidate()
+        await remote.setApplyError(nil)
+        let restored = SupabaseCareDataProvider(remote: remote, cache: cache, familyID: family)
+        #expect(try await restored.syncPendingWrites().selectedBaby?.profile == profile)
+        #expect(try await cache.read().queuedWrites.isEmpty)
+        #expect(await remote.requests.last?.p_operation_id == operation)
     }
     @Test func timeoutAfterCommitRetriesSameOperationAfterProviderRecreation() async throws {
         let remote = FakeCloudRemote(), cache = FakeCloudCache(), family = UUID()
@@ -225,6 +243,20 @@ import Testing
         #expect(await provider.status() == .cacheWarning)
         #expect(try await cache.read().queuedWrites.count == 1) // Safe idempotent recovery on relaunch.
     }
+    @Test func babyDeletionUsesDedicatedRPCAndPurgesSensitiveCache() async throws {
+        let remote = FakeCloudRemote(), cache = FakeCloudCache(), profile = baby()
+        let database = try CareDatabase().applying(.createBaby(profile))
+        try await cache.write(CloudCacheState(snapshot: snapshot(database)))
+        let provider = SupabaseCareDataProvider(remote: remote, cache: cache, familyID: UUID())
+
+        let deleted = try await provider.apply(.deleteBaby(profile.id))
+
+        #expect(deleted.babies.isEmpty)
+        #expect(!deleted.hasOnboarded)
+        #expect(await remote.deletedBabyIDs == [profile.id])
+        #expect(try await cache.read().snapshot == nil)
+        #expect(try await cache.read().queuedWrites.isEmpty)
+    }
     @Test func differentAccountsAndFamiliesHaveSeparateSwiftDataStores() async throws {
         let root = URL.temporaryDirectory.appending(path: UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: root) }
@@ -272,7 +304,10 @@ private actor FakeCloudRemote: CareCloudRemote {
     private var receipts: [UUID: CloudReceipt] = [:]
     private var timeout = false
     private var fetchError: CloudError?
+    private var fetchedSnapshot = CloudSnapshot()
+    func setSnapshot(_ snapshot: CloudSnapshot) { fetchedSnapshot = snapshot }
     private var applyError: CloudError?
+    private(set) var deletedBabyIDs: [UUID] = []
     private(set) var mediaSyncCount = 0
     private var mediaError: CloudError?
     func setMediaError(_ error: CloudError?) { mediaError = error }
@@ -281,7 +316,7 @@ private actor FakeCloudRemote: CareCloudRemote {
     func setApplyError(_ error: CloudError?) { applyError = error }
     func invalidate() {}
     func fetch(selected: UUID?) throws -> CloudSnapshot {
-        if let fetchError { throw fetchError }; return CloudSnapshot()
+        if let fetchError { throw fetchError }; return fetchedSnapshot
     }
     func apply(_ envelope: CloudEnvelope) throws -> CloudReceipt {
         requests.append(envelope)
@@ -294,6 +329,7 @@ private actor FakeCloudRemote: CareCloudRemote {
         if timeout { timeout = false; throw CloudError.offline }
         return receipt
     }
+    func deleteBaby(_ id: UUID) { deletedBabyIDs.append(id) }
     func syncMedia(from old: CloudSnapshot, to next: CareDatabase, operationID: UUID) throws -> CloudMediaSyncResult {
         mediaSyncCount += 1
         if let mediaError { throw mediaError }
@@ -310,4 +346,131 @@ private actor DelayedCloudLoad: CareDataProvider {
     func load() async -> CareDatabase { await withCheckedContinuation { continuation = $0 } }
     func release(_ database: CareDatabase) { continuation?.resume(returning: database); continuation = nil }
     func apply(_ mutation: CareDataMutation) throws -> CareDatabase { throw CloudError.signedOut }
+}
+
+
+extension CloudProviderTests {
+    @Test func vaccinationOfflineQueueSurvivesProviderRecreationAndRetries() async throws {
+        let cache = FakeCloudCache(), remote = FakeCloudRemote(), family = UUID()
+        let profile = BabyProfile(name: "Vaccine test", birthDate: Date().addingTimeInterval(-86400 * 100))
+        let db = try CareDatabase().applying(.createBaby(profile))
+        try await cache.write(CloudCacheState(snapshot: CloudSnapshot(database: db)))
+        await remote.setApplyError(.offline)
+        let provider = SupabaseCareDataProvider(remote: remote, cache: cache, familyID: family, retryDelay: .seconds(3600))
+        let entry = VaccinationRecord(vaccineName: "Vaccine", date: Date().addingTimeInterval(-3600))
+        let saved = try await provider.apply(.saveVaccination(babyID: profile.id, record: entry))
+        #expect(saved.selectedBaby?.vaccinations == [entry])
+        let pending = try await cache.read()
+        #expect(pending.queuedWrites.count == 1)
+        let operation = pending.queuedWrites[0].envelope.p_operation_id
+        await provider.invalidate()
+        await remote.setApplyError(nil)
+        let reopened = SupabaseCareDataProvider(remote: remote, cache: cache, familyID: family, retryDelay: .seconds(3600))
+        let synced = try await reopened.syncPendingWrites()
+        #expect(synced.selectedBaby?.vaccinations == [entry])
+        #expect(try await cache.read().queuedWrites.isEmpty)
+        #expect(await remote.requests.last?.p_operation_id == operation)
+        #expect(await remote.requests.last?.p_changes.first?.entity == "vaccinations")
+        await reopened.invalidate()
+    }
+}
+
+
+extension CloudProviderTests {
+    @Test func legacyBackendLoadsOtherDataAndBlocksOnlyVaccinationWrites() async throws {
+        let cache = FakeCloudCache(), remote = FakeCloudRemote()
+        let profile = baby()
+        let database = try CareDatabase().applying(.createBaby(profile))
+        var legacy = snapshot(database)
+        legacy.supportsVaccinations = false
+        await remote.setSnapshot(legacy)
+        let provider = SupabaseCareDataProvider(remote: remote, cache: cache, familyID: UUID())
+        let model = BabyCareViewModel(provider: provider)
+        #expect(await model.send(.load))
+        #expect(model.state.phase == .ready)
+        #expect(!model.state.vaccinationsAvailable)
+        let record = VaccinationRecord(vaccineName: "Test", date: Date().addingTimeInterval(-3600))
+        await #expect(throws: CloudError.vaccinationsUnavailable) {
+            try await provider.apply(.saveVaccination(babyID: profile.id, record: record))
+        }
+        #expect(try await cache.read().queuedWrites.isEmpty)
+        var edited = profile; edited.name = "Edited"
+        _ = try await provider.apply(.updateBaby(edited))
+        #expect(await remote.commitCount == 1)
+        await remote.setSnapshot(snapshot(database))
+        #expect(await model.send(.load))
+        #expect(model.state.vaccinationsAvailable)
+        await model.deactivate()
+    }
+
+    @Test func unsupportedFetchPreservesCachedVaccinationHistory() async throws {
+        let cache = FakeCloudCache(), remote = FakeCloudRemote(), profile = baby()
+        let database = try CareDatabase().applying(.createBaby(profile))
+        let record = VaccinationRecord(vaccineName: "Cached", date: Date().addingTimeInterval(-3600))
+        let saved = try database.applying(.saveVaccination(babyID: profile.id, record: record))
+        try await cache.write(CloudCacheState(snapshot: snapshot(saved)))
+        var legacy = snapshot(database); legacy.supportsVaccinations = false
+        await remote.setSnapshot(legacy)
+        let provider = SupabaseCareDataProvider(remote: remote, cache: cache, familyID: UUID())
+        #expect(try await provider.load().selectedBaby?.vaccinations == [record])
+        #expect(try await cache.read().snapshot?.versions[CloudSnapshot.key("vaccinations",record.id)] == 1)
+        await provider.invalidate()
+    }
+
+    @Test func queuedVaccinationSurvivesLegacyBackendAndRetriesAfterUpgrade() async throws {
+        let cache = FakeCloudCache(), remote = FakeCloudRemote(), profile = baby(), family = UUID()
+        let database = try CareDatabase().applying(.createBaby(profile))
+        try await cache.write(CloudCacheState(snapshot: snapshot(database)))
+        await remote.setApplyError(.offline)
+        let provider = SupabaseCareDataProvider(remote: remote, cache: cache, familyID: family, retryDelay: .seconds(3600))
+        let record = VaccinationRecord(vaccineName: "Pending", date: Date().addingTimeInterval(-3600))
+        let saved = try await provider.apply(.saveVaccination(babyID: profile.id, record: record))
+        let operation = try #require(await cache.read().queuedWrites.first?.envelope.p_operation_id)
+        await remote.setApplyError(.vaccinationsUnavailable)
+        #expect(try await provider.load().selectedBaby?.vaccinations == [record])
+        #expect(await provider.status() == .pending)
+        #expect(await provider.supportsVaccinations() == false)
+        #expect(try await cache.read().queuedWrites.count == 1)
+        await remote.setApplyError(nil)
+        await remote.setSnapshot(snapshot(saved))
+        #expect(try await provider.load().selectedBaby?.vaccinations == [record])
+        #expect(await provider.supportsVaccinations())
+        #expect(try await cache.read().queuedWrites.isEmpty)
+        #expect(await remote.requests.last?.p_operation_id == operation)
+        await provider.invalidate()
+    }
+
+    @Test func onlyKnownLegacyVaccinationReadErrorIsRecoverable() {
+        let legacy = PostgrestError(code: "22023", message: "Invalid read cursor")
+        #expect(CloudError.isMissingVaccinationEntity(legacy, entity: "vaccinations"))
+        #expect(!CloudError.isMissingVaccinationEntity(legacy, entity: "babies"))
+        #expect(!CloudError.isMissingVaccinationEntity(PostgrestError(code: "42501", message: "Read access denied"), entity: "vaccinations"))
+        #expect(!CloudError.isMissingVaccinationEntity(PostgrestError(code: "22023", message: "Invalid vaccination date"), entity: "vaccinations"))
+    }
+}
+
+
+extension CloudProviderTests {
+    @Test func cacheWithoutCapabilityRequiresSuccessfulFetchBeforeVaccinationWrite() async throws {
+        let cache = FakeCloudCache(), remote = FakeCloudRemote(), profile = baby()
+        let database = try CareDatabase().applying(.createBaby(profile))
+        let bytes = try JSONEncoder().encode(snapshot(database))
+        var json = try #require(JSONSerialization.jsonObject(with: bytes) as? [String: Any])
+        json.removeValue(forKey: "supportsVaccinations")
+        let old = try JSONDecoder().decode(CloudSnapshot.self, from: JSONSerialization.data(withJSONObject: json))
+        #expect(old.supportsVaccinations == nil)
+        try await cache.write(CloudCacheState(snapshot: old))
+        await remote.setFetchError(.offline)
+        let provider = SupabaseCareDataProvider(remote: remote, cache: cache, familyID: UUID())
+        #expect(try await provider.load().selectedBaby?.profile.id == profile.id)
+        let record = VaccinationRecord(vaccineName: "Test", date: Date().addingTimeInterval(-3600))
+        await #expect(throws: CloudError.vaccinationsUnavailable) {
+            try await provider.apply(.saveVaccination(babyID: profile.id, record: record))
+        }
+        #expect(try await cache.read().queuedWrites.isEmpty)
+        await remote.setFetchError(.accessDenied)
+        await #expect(throws: CloudError.accessDenied) { try await provider.load() }
+        #expect(try await cache.read().snapshot == nil)
+        await provider.invalidate()
+    }
 }

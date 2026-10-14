@@ -4,7 +4,7 @@ import Supabase
 import UserNotifications
 
 @MainActor @Observable final class SessionViewModel {
-    enum Phase { case starting, signedOut, accountError, content }
+    enum Phase { case starting, signedOut, accountError, consent, content }
     private(set) var phase: Phase = .starting
     private(set) var viewModel: BabyCareViewModel?
     private(set) var email = ""
@@ -15,15 +15,20 @@ import UserNotifications
     private(set) var needsNewPassword = false
     private(set) var pendingSignupEmail: String?
     @ObservationIgnored private lazy var client = CloudConfiguration.makeClient()
+    @ObservationIgnored private(set) lazy var consent = ConsentViewModel(remote: consentRemote ?? SupabaseConsentRemote(client: client))
+    @ObservationIgnored private let consentRemote: (any ConsentRemote)?
+    @ObservationIgnored private let makeLocalViewModel: @MainActor () -> BabyCareViewModel
     @ObservationIgnored private var userID: UUID?
     @ObservationIgnored private var generation = 0
     @ObservationIgnored private var listener: Task<Void, Never>?
-    @ObservationIgnored private let defaults = UserDefaults.standard
+    @ObservationIgnored private let defaults: UserDefaults
     static let callback = URL(string: "babycare://auth-callback")!
     private static let pendingSignupKey = "care.auth.pendingSignupEmail"
 
-    init() {
-        pendingSignupEmail = UserDefaults.standard.string(forKey: Self.pendingSignupKey)
+    init(consentRemote: (any ConsentRemote)? = nil, defaults: UserDefaults = .standard,
+         makeLocalViewModel: @escaping @MainActor () -> BabyCareViewModel = { AppDependencies.makeViewModel() }) {
+        self.consentRemote = consentRemote; self.defaults = defaults; self.makeLocalViewModel = makeLocalViewModel
+        pendingSignupEmail = defaults.string(forKey: Self.pendingSignupKey)
     }
 
     func start(events suppliedEvents: AsyncStream<(event: AuthChangeEvent, session: Session?)>? = nil) {
@@ -33,10 +38,6 @@ import UserNotifications
             for await (event, session) in events {
                 guard !Task.isCancelled, let self else { return }
                 if event == .passwordRecovery { needsNewPassword = true }
-                if event == .initialSession, defaults.string(forKey: "care.mode") == "device" {
-                    await openDevice(); continue
-                }
-                if isLocal { continue }
                 if session?.user.id == userID, phase != .starting { continue }
                 await accept(session)
             }
@@ -58,9 +59,11 @@ import UserNotifications
     }
     func openDevice() async {
         let ticket = await detach(); guard generation == ticket else { return }
-        isLocal = true; userID = nil; email = ""; busy = false
         defaults.set("device", forKey: "care.mode")
-        viewModel = AppDependencies.makeViewModel(); phase = .content
+        await accept(client.auth.currentSession)
+        if userID == nil {
+            message = L10n.text("Đã chọn dữ liệu trên máy. Hãy đăng nhập để ghi nhận sự đồng ý trước khi tiếp tục; dữ liệu của bé không tự tải lên cloud.")
+        }
     }
     func openCloud() async {
         let ticket = await detach(); guard generation == ticket else { return }
@@ -70,7 +73,9 @@ import UserNotifications
     }
     private func accept(_ session: Session?) async {
         let ticket = await detach(); guard generation == ticket else { return }
+        consent.reset()
         userID = session?.user.id; email = session?.user.email ?? ""
+        isLocal = defaults.string(forKey: "care.mode") == "device"
         error = nil
         guard session != nil else { phase = .signedOut; return }
         pendingSignupEmail = nil
@@ -78,10 +83,38 @@ import UserNotifications
         // Keep the splash visible while the previous family is restored. Publishing
         // `.accountError` here makes the family picker flash on every app launch.
         phase = .starting
-        await loadAccount()
+        let valid = await consent.refresh()
+        guard generation == ticket else { return }
+        guard valid else { phase = .consent; return }
+        await continueAfterConsent()
+    }
+    func completeConsent() async {
+        let ticket = generation
+        guard await consent.submit(), generation == ticket else { return }
+        await continueAfterConsent()
+    }
+    func checkConsent() async {
+        guard userID != nil, !busy, !consent.busy else { return }
+        let ticket = generation
+        let valid = await consent.refresh()
+        guard generation == ticket else { return }
+        if valid {
+            if phase == .consent { await continueAfterConsent() }
+        } else {
+            let detached = await detach()
+            guard generation == detached else { return }
+            phase = .consent
+        }
+    }
+    private func continueAfterConsent() async {
+        guard consent.status?.isCurrent == true else { phase = .consent; return }
+        if isLocal {
+            viewModel = makeLocalViewModel(); phase = .content; busy = false
+        } else { await loadAccount() }
     }
     func loadAccount() async {
         guard let userID else { return }
+        guard consent.status?.isCurrent == true else { phase = .consent; return }
         let ticket = generation
         busy = true; error = nil
         defer { if generation == ticket { busy = false } }
@@ -109,6 +142,11 @@ import UserNotifications
         } catch {
             guard generation == ticket else { return }
             let normalized = CloudError.normalize(error)
+            if normalized as? CloudError == .consentRequired {
+                consent.reset(); _ = await consent.refresh()
+                guard generation == ticket else { return }
+                phase = .consent; return
+            }
             if normalized as? CloudError == .offline,
                let value = defaults.string(forKey: "care.family.\(userID)"), let id = UUID(uuidString: value) {
                 await selectFamily(id) // Provider only returns this account's confirmed cache on network errors.
@@ -120,10 +158,11 @@ import UserNotifications
     }
     func selectFamily(_ id: UUID) async {
         guard let userID else { return }
+        guard consent.status?.isCurrent == true else { phase = .consent; return }
         let ticket = await detach(); guard generation == ticket else { return }
         let remote = SupabaseRemote(authClient: client, userID: userID, familyID: id)
         let provider = SupabaseCareDataProvider(remote: remote, cache: SwiftDataCloudCache(userID: userID, familyID: id), familyID: id)
-        viewModel = BabyCareViewModel(provider: provider, notifications: LocalCareReminderService())
+        viewModel = BabyCareViewModel(provider: provider, notifications: LocalCareReminderService(scope: "cloud.\(userID.uuidString).\(id.uuidString)"))
         defaults.set(id.uuidString, forKey: "care.family.\(userID)")
         phase = .content; busy = false
     }
@@ -197,6 +236,7 @@ import UserNotifications
         catch { self.error = authMessage(error) }
     }
     func signOut() async {
+        consent.reset()
         let ticket = await detach(); guard generation == ticket else { return }
         userID = nil; email = ""; isLocal = false; phase = .signedOut
         needsNewPassword = false; pendingSignupEmail = nil; defaults.removeObject(forKey: Self.pendingSignupKey)
@@ -205,6 +245,32 @@ import UserNotifications
         defer { busy = false }
         do { try await client.auth.signOut(scope: .local) }
         catch { message = L10n.text("Đã thoát trên thiết bị. Chưa liên hệ được server để thu hồi phiên từ xa.") }
+    }
+    @discardableResult
+    func deleteAccount() async -> Bool {
+        guard !busy, !isLocal, let deletingUserID = userID else { return false }
+        busy = true; error = nil; message = nil
+        do {
+            try await CloudPrivacyDeletion.removeOwnedAccountMedia(client: client, userID: deletingUserID)
+            _ = try await client.rpc("babycare_delete_account").execute()
+            let ticket = await detach()
+            guard generation == ticket else { busy = false; return false }
+            let cacheRoot = URL.applicationSupportDirectory
+                .appending(path: "BabyCare/Cloud/cxlqvuqloaokzmaewvdy/\(deletingUserID.uuidString)", directoryHint: .isDirectory)
+            try? FileManager.default.removeItem(at: cacheRoot)
+            defaults.removeObject(forKey: "care.family.\(deletingUserID)")
+            defaults.removeObject(forKey: Self.pendingSignupKey)
+            defaults.set("cloud", forKey: "care.mode")
+            userID = nil; email = ""; isLocal = false; needsNewPassword = false
+            pendingSignupEmail = nil; phase = .signedOut; busy = false
+            consent.reset()
+            try? await client.auth.signOut(scope: .local)
+            return true
+        } catch {
+            self.error = CloudError.normalize(error).localizedDescription
+            busy = false
+            return false
+        }
     }
     private func authMessage(_ error: Error) -> String {
         if error is URLError { return L10n.text("Không kết nối được dịch vụ đăng nhập. Hãy kiểm tra mạng.") }

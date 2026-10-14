@@ -71,6 +71,14 @@ struct BabyProfileView: View {
                 }
             }
 
+            CareFormCard {
+                NavigationLink {
+                    VaccinationHistoryView(babyID: viewModel.baby.id)
+                } label: {
+                    profileRow(L10n.text("Lịch sử tiêm chủng"), icon: "Stitch_local_hospital", color: CareTheme.medical)
+                }.accessibilityIdentifier("vaccinationHistoryLink")
+            }
+
             CareFormCard(title: L10n.text("Lưu ý Y tế & Chăm sóc")) {
                 Button { editingHealth = true } label: {
                     VStack(alignment: .leading, spacing: 12) {
@@ -180,7 +188,7 @@ private struct ProfileEditorView: View {
     @State private var photoError: String?
 
     private var latestAllowedBirthDate: Date {
-        min(Date(), viewModel.activities.map(\.date).min() ?? Date(), viewModel.measurements.map(\.date).min() ?? Date())
+        min(Date(), viewModel.activities.map(\.date).min() ?? Date(), viewModel.measurements.map(\.date).min() ?? Date(), viewModel.vaccinations.map(\.date).min() ?? Date())
     }
 
     @Environment(\.locale) private var appLocale
