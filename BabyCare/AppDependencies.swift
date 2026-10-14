@@ -1,10 +1,38 @@
 import Foundation
 
+/// Debug-only sample data that never touches the user's database. `-demo` loads the small fixture the UI tests
+/// rely on; `-demo-full`, or a build with the `DEMO` compilation condition (device test builds:
+/// `SWIFT_ACTIVE_COMPILATION_CONDITIONS='$(inherited) DEMO'`), loads `CarePreviewData.showcase` so every screen has data.
+@MainActor enum CareDemoMode {
+    static var isFullBuild: Bool {
+        #if DEMO
+        true
+        #else
+        false
+        #endif
+    }
+    static var dataset: (() -> CareDatabase)? {
+        #if DEBUG
+        let arguments = ProcessInfo.processInfo.arguments
+        if arguments.contains("-demo-full") { return { CarePreviewData.showcase() } }
+        if arguments.contains("-demo") { return CarePreviewData.make }
+        if isFullBuild { return { CarePreviewData.showcase() } }
+        #endif
+        return nil
+    }
+    static var isActive: Bool { dataset != nil }
+}
+
 /// Composition root: replace this provider with an API-backed CareDataProvider to use cloud storage.
 @MainActor enum AppDependencies {
     static func makeViewModel() -> BabyCareViewModel {
         #if DEBUG
-        if ProcessInfo.processInfo.arguments.contains("-demo") { return .preview() }
+        if let dataset = CareDemoMode.dataset {
+            let data = dataset()
+            // The device demo build keeps real local notifications so reminders can be tried end to end.
+            let notifications: (any CareReminderService)? = CareDemoMode.isFullBuild ? LocalCareReminderService(scope: "demo") : nil
+            return BabyCareViewModel(provider: InMemoryCareDataProvider(database: data), notifications: notifications, initialData: data, isDemo: true)
+        }
         if ProcessInfo.processInfo.arguments.contains("-ui-testing") {
             return BabyCareViewModel(provider: InMemoryCareDataProvider())
         }

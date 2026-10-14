@@ -14,7 +14,7 @@ struct AppRootView: View {
     }
     private var bypass: Bool {
         #if DEBUG
-        ProcessInfo.processInfo.arguments.contains { ["-demo", "-ui-testing", "-ui-testing-store"].contains($0) }
+        CareDemoMode.isActive || ProcessInfo.processInfo.arguments.contains { ["-ui-testing", "-ui-testing-store"].contains($0) }
         #else
         false
         #endif
