@@ -98,7 +98,7 @@ struct BabyProfileView: View {
                     .font(CareFont.subheadline)
             }
 
-            CareFormCard(title: L10n.text("Bé trong gia đình · {0} bé", "\(viewModel.babies.count)")) {
+            CareFormCard(title: L10n.count(viewModel.babies.count, one: "Bé trong gia đình · 1 bé", many: "Bé trong gia đình · {0} bé")) {
                 ForEach(viewModel.babies) { baby in
                     Button {
                         Task { await viewModel.send(.commit(.selectBaby(baby.id), message: L10n.text("Đang xem bé {0}", "\(baby.name)"))) }

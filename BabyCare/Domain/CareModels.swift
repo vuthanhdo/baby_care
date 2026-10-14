@@ -18,13 +18,18 @@ nonisolated struct BabyProfile: Identifiable, Codable, Sendable, Equatable {
     var healthNotes = ""
     var avatarData: Data?
 
-    var ageDescription: String {
-        let months = Calendar.current.dateComponents([.month], from: birthDate, to: Date()).month ?? 0
-        if months == 0 {
-            let days = Calendar.current.dateComponents([.day], from: birthDate, to: Date()).day ?? 0
-            return L10n.text("{0} ngày tuổi", "\(max(0, days))")
+    var ageDescription: String { Self.ageText(from: birthDate) }
+    /// Shared by the header and the profile forms so both agree on days, months and years.
+    static func ageText(from birthDate: Date, at date: Date = Date(), language: AppLanguage = .current) -> String {
+        let components = Calendar.current.dateComponents([.month, .day], from: birthDate, to: date)
+        let months = max(0, components.month ?? 0)
+        if months >= 24 {
+            let years = L10n.count(months / 12, one: "1 tuổi", many: "{0} tuổi", language: language)
+            guard months % 12 > 0 else { return years }
+            return "\(years) \(L10n.count(months % 12, one: "1 tháng", many: "{0} tháng", language: language))"
         }
-        return L10n.text("{0} tháng tuổi", "\(months)")
+        if months == 0 { return L10n.count(max(0, components.day ?? 0), one: "1 ngày tuổi", many: "{0} ngày tuổi", language: language) }
+        return L10n.count(months, one: "1 tháng tuổi", many: "{0} tháng tuổi", language: language)
     }
     var initial: String { String(name.split(separator: " ").last?.prefix(1) ?? "B").uppercased() }
 }

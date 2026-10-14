@@ -1,8 +1,22 @@
 // UI strings. {0}, {1}, … are interpolation arguments.
 "+ Ghi nhiệt độ" = "+ Log temperature";
 "+ Thêm số đo" = "+ Add measurement";
+"1 bữa" = "1 meal";
 "1 chữ hoa" = "1 uppercase letter";
+"1 cữ" = "1 feed";
+"1 ghi nhận" = "1 entry";
+"1 giờ" = "1 hour";
+"1 hoạt động" = "1 activity";
+"1 hoạt động đã ghi trong khoảng" = "1 activity recorded in this period";
 "1 ký tự đặc biệt (ví dụ !, @, #)" = "1 special character (e.g. !, @, #)";
+"1 lần" = "1 time";
+"1 ngày tuổi" = "1 day old";
+"1 số đo" = "1 measurement";
+"1 số đo trong khoảng" = "1 measurement in this period";
+"1 sự kiện" = "1 event";
+"1 tháng" = "1 month";
+"1 tháng tuổi" = "1 month old";
+"1 tuổi" = "1 year";
 "1. Dữ liệu được xử lý" = "1. Data we process";
 "1. Ghi nhanh" = "1. Quick log";
 "1. Phạm vi dịch vụ" = "1. Scope of service";
@@ -33,6 +47,7 @@
 "BabyCare xử lý hồ sơ trẻ, nhật ký chăm sóc và sức khỏe, số đo, tiêm chủng, lịch nhắc, ảnh bạn chọn và thông tin tài khoản đăng nhập. Micro chỉ được dùng khi bạn chủ động ghi bằng giọng nói." = "BabyCare processes child profiles, care and health logs, measurements, vaccinations, reminders, photos you select, and sign-in account information. The microphone is used only when you start voice entry.";
 "Biểu hiện và tác nhân nếu biết" = "Symptoms and trigger, if known";
 "Biểu đồ & lịch sử tăng trưởng" = "Growth charts & history";
+"Biểu đồ nhiệt độ, 1 lần đo. Có thể chuyển sang danh sách." = "Temperature chart with 1 measurement. A list view is available.";
 "Biểu đồ nhiệt độ, {0} lần đo. Có thể chuyển sang danh sách." = "Temperature chart with {0} measurements. A list view is available.";
 "Biểu đồ {0}. Các số đo có trong danh sách bên dưới." = "{0} chart. Measurements are listed below.";
 "BÉ KHỎE – BỐ MẸ AN TÂM" = "BABYCARE – PEACE OF MIND FOR PARENTS";
@@ -49,6 +64,7 @@
 "Bé Khỏe – Bố Mẹ An Tâm" = "BabyCare – Peace of mind for parents";
 "Bé gái" = "Girl";
 "Bé trai" = "Boy";
+"Bé trong gia đình · 1 bé" = "Your babies · 1 baby";
 "Bé trong gia đình · {0} bé" = "Your babies · {0} babies";
 "Bé {0}" = "Baby {0}";
 "Bé đang ngủ" = "Baby is sleeping";
@@ -90,6 +106,7 @@
 "Bố Mẹ An Tâm" = "Peace of mind for parents";
 "Bộ nhớ trên thiết bị" = "Device storage";
 "Bữa ăn" = "Meals";
+"Bữa ăn · {0} ml nước" = "Meals · {0} ml water";
 "Cao nhất đã ghi: {0}" = "Highest recorded: {0}";
 "Chi tiết hoạt động" = "Activity details";
 "Chia sẻ báo cáo" = "Share report";
@@ -268,6 +285,7 @@
 "Hoạt động trong ngày" = "Today's activities";
 "Hoạt động y tế" = "Health activities";
 "Hoặc điền thông tin bên dưới" = "Or enter your details below";
+"HÔM NAY" = "TODAY";
 "Hãy thử lại." = "Please try again.";
 "Hôm nay" = "Today";
 "Hướng dẫn & Giới thiệu" = "Help & about";
@@ -401,6 +419,8 @@
 "Ngủ" = "Sleep";
 "Ngủ & Sinh hoạt" = "Sleep & routines";
 "Ngủ theo ngày · giờ" = "Daily sleep · hours";
+"Ngủ · 1 giấc" = "Sleep · 1 nap";
+"Ngủ · {0} giấc" = "Sleep · {0} naps";
 "Nhiệt độ" = "Temperature";
 "Nhiệt độ gần nhất" = "Latest temperature";
 "Nhiệt độ °C" = "Temperature °C";
@@ -512,6 +532,7 @@
 "Theo nhật ký đã lưu" = "Based on saved entries";
 "Theo thiết bị" = "Use device setting";
 "Thiết kế vì sự an tâm của Bố Mẹ · Bé Khỏe" = "Made for parents' peace of mind · BabyCare";
+"Thuốc" = "Medicine";
 "Thuốc theo hướng dẫn đã có" = "Medicine from your existing instructions";
 "Thân nhiệt cao nhất" = "Highest temperature";
 "Thân nhiệt mới nhất" = "Latest temperature";
@@ -570,6 +591,8 @@
 "Tài khoản" = "Account";
 "Tài khoản của bạn có thể lưu tối đa 4 hồ sơ bé." = "Your account can store up to 4 baby profiles.";
 "Tài liệu bạn nên xem" = "Documents to review";
+"Tã" = "Diapers";
+"Tã · Gần nhất {0}" = "Diapers · Last {0}";
 "Tên gọi và tuổi" = "Name and age";
 "Tên gọi ở nhà của bé" = "Baby's nickname";
 "Tên gọi ở nhà · Bắt buộc" = "Nickname · Required";
@@ -633,6 +656,7 @@
 "Xem dạng danh sách" = "View as list";
 "Xem lịch thuốc" = "View medicine reminders";
 "Xem theo dõi" = "View tracking";
+"Xem thống kê" = "View statistics";
 "Xem toàn bộ lịch sử" = "View all history";
 "Xem trước" = "Preview";
 "Xem trước báo cáo" = "Preview report";
@@ -680,16 +704,24 @@
 "viên" = "tablet";
 "{0} / 3 đã chọn" = "{0} of 3 selected";
 "{0} bữa" = "{0} meals";
+"{0} của bé" = "{0} for your baby";
+"{0} cữ" = "{0} feeds";
 "{0} ghi nhận" = "{0} entries";
 "{0} giờ" = "{0} hours";
+"{0} hoạt động" = "{0} activities";
 "{0} hoạt động · {1} số đo" = "{0} activities · {1} measurements";
 "{0} hoạt động · {1} số đo của bé" = "{0} activities · {1} measurements for your baby";
 "{0} hoạt động đã ghi trong khoảng" = "{0} activities recorded in this period";
+"{0} lần" = "{0} times";
 "{0} mục theo dõi" = "{0} tracked items";
 "{0} ngày tuổi" = "{0} days old";
+"{0} phút bú mẹ" = "{0} min breastfeeding";
+"{0} số đo" = "{0} measurements";
 "{0} số đo trong khoảng" = "{0} measurements in this period";
 "{0} sự kiện" = "{0} events";
+"{0} tháng" = "{0} months";
 "{0} tháng tuổi" = "{0} months old";
+"{0} tuổi" = "{0} years";
 "{0} tuổi {1} tháng" = "{0} years {1} months";
 "{0} {1} · Theo lịch đã lưu" = "{0} {1} · From saved schedule";
 "{0} · Dữ liệu do bố mẹ ghi nhận" = "{0} · Recorded by parents";
@@ -747,6 +779,8 @@
 "Đã gửi lại email xác thực tới {0}." = "A new verification email was sent to {0}.";
 "Đã hủy trước khi bắt đầu nhận dạng. Chưa lưu hoạt động nào." = "Cancelled before recognition started. No activities were saved.";
 "Đã kết thúc theo dõi" = "Tracking ended";
+"Đã lưu 1 hoạt động" = "Saved 1 activity";
+"Đã lưu 1 hoạt động từ giọng nói" = "Saved 1 activity from voice input";
 "Đã lưu cloud · Chưa cập nhật được bản lưu trên máy" = "Saved to cloud · Local copy could not be updated";
 "Đã lưu cài đặt gợi ý" = "Suggestion settings saved";
 "Đã lưu lịch nhắc" = "Reminder saved";

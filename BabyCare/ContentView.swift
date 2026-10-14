@@ -62,15 +62,10 @@ struct ContentView: View {
         } message: { Text(viewModel.state.error ?? L10n.text("Hãy thử lại.")) }
         .dynamicTypeSize(textSize == "largest" ? .accessibility1 : textSize == "large" ? .xxxLarge : systemTextSize)
         .preferredColorScheme(.light)
-        .overlay(alignment: .bottom) {
-            if let toast = viewModel.toast {
-                Text(toast).font(CareFont.subheadline.weight(.semibold))
-                    .padding().foregroundStyle(.white)
-                    .background(CareTheme.text, in: .capsule)
-                    .padding(.horizontal, 20).padding(.bottom, viewModel.hasOnboarded ? 80 : 16)
-                    .accessibilityAddTraits(.updatesFrequently)
-                    .allowsHitTesting(false)
-            }
+        .careToastBanner()
+        // Announce once here; sheets attach their own banner but must not repeat the announcement.
+        .onChange(of: viewModel.toast) { _, toast in
+            if let toast { AccessibilityNotification.Announcement(toast).post() }
         }
     }
 }

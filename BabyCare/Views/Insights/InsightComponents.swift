@@ -31,17 +31,79 @@ enum InsightData {
         let total = values.reduce(0, +)
         return values.isEmpty || !total.isFinite ? nil : total
     }
+    /// Hours of one finished sleep inside `interval`; nil when it does not overlap or the value is unusable.
+    static func sleepOverlapHours(_ activity: CareActivity, in interval: DateInterval) -> Double? {
+        guard activity.kind == .sleep, let amount = number(activity.value), amount > 0 else { return nil }
+        let seconds = amount * (["giờ", "h", "hour"].contains(activity.unit.lowercased()) ? 3600 : 60)
+        guard seconds.isFinite else { return nil }
+        let end = activity.date.addingTimeInterval(seconds)
+        let overlap = min(end, interval.end).timeIntervalSince(max(activity.date, interval.start))
+        return overlap > 0 ? overlap / 3600 : nil
+    }
     static func sleepHours(_ activities: [CareActivity], in interval: DateInterval) -> Double? {
-        let values = activities.filter { $0.kind == .sleep }.compactMap { activity -> Double? in
-            guard let amount = number(activity.value), amount > 0 else { return nil }
-            let seconds = amount * (["giờ", "h", "hour"].contains(activity.unit.lowercased()) ? 3600 : 60)
-            guard seconds.isFinite else { return nil }
-            let end = activity.date.addingTimeInterval(seconds)
-            let overlap = min(end, interval.end).timeIntervalSince(max(activity.date, interval.start))
-            return overlap > 0 ? overlap / 3600 : nil
-        }
+        let values = activities.compactMap { sleepOverlapHours($0, in: interval) }
         let total = values.reduce(0, +)
         return values.isEmpty || !total.isFinite ? nil : total
+    }
+    /// Totals for the calendar day containing `day`. A sleep counts when any part of it falls inside that day.
+    static func daySummary(_ activities: [CareActivity], on day: Date = .now, calendar: Calendar = .current) -> InsightDaySummary {
+        let start = calendar.startOfDay(for: day)
+        guard let end = calendar.date(byAdding: .day, value: 1, to: start), end > start else { return InsightDaySummary() }
+        let interval = DateInterval(start: start, end: end)
+        var summary = InsightDaySummary()
+        for activity in activities {
+            if activity.kind == .sleep {
+                if let hours = sleepOverlapHours(activity, in: interval) {
+                    summary.sleepCount += 1
+                    summary.sleepHours = (summary.sleepHours ?? 0) + hours
+                }
+                continue
+            }
+            guard activity.date >= start, activity.date < end else { continue }
+            let amount = number(activity.value).flatMap { $0 > 0 ? $0 : nil }
+            switch activity.kind {
+            case .milk:
+                summary.feedCount += 1
+                guard let amount else { continue }
+                switch activity.unit.lowercased() {
+                case "ml": summary.bottleMilliliters = (summary.bottleMilliliters ?? 0) + amount
+                case "phút", "min", "minutes": summary.breastfeedMinutes = (summary.breastfeedMinutes ?? 0) + amount
+                default: break
+                }
+            case .water:
+                if let amount, activity.unit.lowercased() == "ml" { summary.waterMilliliters = (summary.waterMilliliters ?? 0) + amount }
+            case .diaper:
+                summary.diaperCount += 1
+                summary.lastDiaper = max(summary.lastDiaper ?? activity.date, activity.date)
+            case .meal: summary.mealCount += 1
+            case .medicine: summary.medicineCount += 1
+            default: break
+            }
+        }
+        // Overflowed totals are dropped the same way the statistics screen drops them.
+        func finite(_ value: Double?) -> Double? { value.flatMap { $0.isFinite ? $0 : nil } }
+        summary.bottleMilliliters = finite(summary.bottleMilliliters)
+        summary.breastfeedMinutes = finite(summary.breastfeedMinutes)
+        summary.waterMilliliters = finite(summary.waterMilliliters)
+        summary.sleepHours = finite(summary.sleepHours)
+        return summary
+    }
+}
+
+/// Read-only totals for one calendar day, shown on the quick log and derived from the saved diary.
+struct InsightDaySummary: Equatable {
+    var feedCount = 0
+    var bottleMilliliters: Double?
+    var breastfeedMinutes: Double?
+    var sleepCount = 0
+    var sleepHours: Double?
+    var diaperCount = 0
+    var lastDiaper: Date?
+    var mealCount = 0
+    var waterMilliliters: Double?
+    var medicineCount = 0
+    var isEmpty: Bool {
+        feedCount == 0 && sleepCount == 0 && diaperCount == 0 && mealCount == 0 && medicineCount == 0 && waterMilliliters == nil
     }
 }
 
@@ -148,7 +210,7 @@ struct TemperatureChartView: View {
                 .chartXAxis { AxisMarks(values: .automatic(desiredCount: 3)) { _ in AxisValueLabel(format: .dateTime.day().month().hour()) } }
                 .chartXSelection(value: $selectedDate)
                 .frame(height: compact ? 150 : 195)
-                .accessibilityLabel(L10n.text("Biểu đồ nhiệt độ, {0} lần đo. Có thể chuyển sang danh sách.", "\(points.count)"))
+                .accessibilityLabel(L10n.count(points.count, one: "Biểu đồ nhiệt độ, 1 lần đo. Có thể chuyển sang danh sách.", many: "Biểu đồ nhiệt độ, {0} lần đo. Có thể chuyển sang danh sách."))
                 if points.count == 1 {
                     Text(L10n.text("Cần thêm số đo để xem diễn biến")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                 }

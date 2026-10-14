@@ -155,7 +155,7 @@ struct StatisticsView: View {
     private var nutritionMetrics: some View {
         HStack(alignment: .top, spacing: 12) {
             InsightMetricView(title: L10n.text("Lượng sữa đã ghi"), value: InsightData.sum(activities, kind: .milk, unit: "ml").map { "\(InsightData.format($0)) ml" } ?? L10n.text("Chưa ghi nhận"), subtitle: L10n.text("Chưa gồm bú mẹ trực tiếp"), icon: "Stitch_water_bottle", color: CareTheme.feeding)
-            InsightMetricView(title: L10n.text("Thời gian ngủ"), value: InsightData.sleepHours(viewModel.activities, in: interval).map { L10n.text("{0} giờ", "\(InsightData.format($0))") } ?? L10n.text("Chưa ghi nhận"), subtitle: L10n.text("Giấc ngủ đã kết thúc"), icon: "Stitch_bedtime", color: CareTheme.routine)
+            InsightMetricView(title: L10n.text("Thời gian ngủ"), value: InsightData.sleepHours(viewModel.activities, in: interval).map { L10n.count(InsightData.format($0), one: "1 giờ", many: "{0} giờ") } ?? L10n.text("Chưa ghi nhận"), subtitle: L10n.text("Giấc ngủ đã kết thúc"), icon: "Stitch_bedtime", color: CareTheme.routine)
         }
     }
 
@@ -164,7 +164,7 @@ struct StatisticsView: View {
         nutritionMetrics
         HStack(alignment: .top, spacing: 12) {
             InsightMetricView(title: L10n.text("Nước"), value: InsightData.sum(activities, kind: .water, unit: "ml").map { "\(InsightData.format($0)) ml" } ?? L10n.text("Chưa ghi nhận"), subtitle: L10n.text("Tổng trong khoảng"), icon: "Stitch_water_drop", color: CareTheme.feeding)
-            InsightMetricView(title: L10n.text("Bữa ăn"), value: activities.filter { $0.kind == .meal }.isEmpty ? L10n.text("Chưa ghi nhận") : L10n.text("{0} bữa", "\(activities.filter { $0.kind == .meal }.count)"), subtitle: L10n.text("Theo nhật ký đã lưu"), icon: "Stitch_ramen_dining", color: CareTheme.routine)
+            InsightMetricView(title: L10n.text("Bữa ăn"), value: activities.filter { $0.kind == .meal }.isEmpty ? L10n.text("Chưa ghi nhận") : L10n.count(activities.filter { $0.kind == .meal }.count, one: "1 bữa", many: "{0} bữa"), subtitle: L10n.text("Theo nhật ký đã lưu"), icon: "Stitch_ramen_dining", color: CareTheme.routine)
         }
         CareCard {
             VStack(alignment: .leading, spacing: 16) {

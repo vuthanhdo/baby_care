@@ -38,7 +38,7 @@ struct OnboardingView: View {
                             Text(L10n.text("Chăm sóc con khoa học & thảnh thơi")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                         }
                     }
-                    (isAddingBaby ? Text(L10n.text("Thêm một hồ sơ bé")) : Text(L10n.text("Ghi nhanh để chăm bé ")) + Text(L10n.text("an tâm hơn")).foregroundColor(CareTheme.accent).underline(color: CareTheme.accent.opacity(0.3)))
+                    (isAddingBaby ? Text(L10n.text("Thêm một hồ sơ bé")) : Text("\(Text(L10n.text("Ghi nhanh để chăm bé ")))\(Text(L10n.text("an tâm hơn")).foregroundColor(CareTheme.accent).underline(color: CareTheme.accent.opacity(0.3)))"))
                         .font(.custom("BeVietnamPro-Bold", size: 26, relativeTo: .title)).foregroundStyle(CareTheme.text)
                     Text(L10n.text("Tạo hồ sơ cho bé để bắt đầu theo dõi cữ sữa, giấc ngủ và nhiệt độ."))
                         .font(CareFont.callout).foregroundStyle(CareTheme.secondary)
@@ -180,7 +180,7 @@ struct OnboardingView: View {
 
     private func requiredLabel(_ title: String) -> some View {
         HStack {
-            (Text(title) + Text(" *").foregroundColor(CareTheme.medical)).font(CareFont.callout.weight(.semibold))
+            Text("\(Text(title))\(Text(" *").foregroundColor(CareTheme.medical))").font(CareFont.callout.weight(.semibold))
             Spacer(minLength: 4)
             Text(L10n.text("Bắt buộc")).font(CareFont.caption2).foregroundStyle(CareTheme.secondary)
                 .padding(.horizontal, 8).padding(.vertical, 3).background(CareTheme.background, in: .capsule)
@@ -240,11 +240,7 @@ struct ProfileAvatarView: View {
 }
 
 func profileAge(_ birthDate: Date, at date: Date = Date()) -> String {
-    let components = Calendar.current.dateComponents([.month, .day], from: birthDate, to: date)
-    let months = max(0, components.month ?? 0)
-    if months >= 24 { return L10n.text("{0} tuổi {1} tháng", "\(months / 12)", "\(months % 12)") }
-    if months == 0 { return L10n.text("{0} ngày tuổi", "\(max(0, components.day ?? 0))") }
-    return L10n.text("{0} tháng tuổi", "\(months)")
+    BabyProfile.ageText(from: birthDate, at: date)
 }
 
 #Preview {

@@ -159,7 +159,7 @@ struct ShareReportView: View {
                                 miniMetric(L10n.text("Thân nhiệt cao nhất"), value: snapshot.highestTemperature, color: CareTheme.medical)
                                 miniMetric(L10n.text("Nhiệt độ gần nhất"), value: snapshot.newestTemperature, color: CareTheme.accent)
                             }
-                            Text(L10n.text("{0} hoạt động · {1} số đo", "\(snapshot.activities.count)", "\(snapshot.measurements.count)")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                            Text([L10n.count(snapshot.activities.count, one: "1 hoạt động", many: "{0} hoạt động"), L10n.count(snapshot.measurements.count, one: "1 số đo", many: "{0} số đo")].joined(separator: " · ")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                             NavigationLink { ReportPreviewView(snapshot: snapshot) } label: {
                                 Text(L10n.text("Mở bản xem trước")).font(CareFont.headline).frame(maxWidth: .infinity, minHeight: 48)
                             }
@@ -222,9 +222,9 @@ struct ShareReportView: View {
             .frame(maxWidth: .infinity, alignment: .leading).padding(12).background(color.opacity(0.06), in: RoundedRectangle(cornerRadius: 12))
     }
     private func summary(for section: ReportSection) -> String {
-        if section == .growth { return L10n.text("{0} số đo trong khoảng", "\(viewModel.measurements.filter { interval.contains($0.date) }.count)") }
+        if section == .growth { return L10n.count(viewModel.measurements.filter { interval.contains($0.date) }.count, one: "1 số đo trong khoảng", many: "{0} số đo trong khoảng") }
         let count = viewModel.activities.filter { $0.kind.group == section.group && interval.contains($0.date) }.count
-        return count > 0 ? L10n.text("{0} hoạt động đã ghi trong khoảng", "\(count)") : L10n.text("Chưa có ghi nhận trong khoảng này")
+        return count > 0 ? L10n.count(count, one: "1 hoạt động đã ghi trong khoảng", many: "{0} hoạt động đã ghi trong khoảng") : L10n.text("Chưa có ghi nhận trong khoảng này")
     }
     private func invalidatePreview() { snapshot = nil; exportURL = nil; error = nil }
     private func makePreview() {

@@ -93,7 +93,7 @@ struct ReportPreviewView: View {
                 if report.sections.contains(.medical) {
                     HStack(alignment: .top, spacing: 10) {
                         reportStat(L10n.text("Thân nhiệt mới nhất"), value: report.newestTemperature, color: CareTheme.medical)
-                        reportStat(L10n.text("Hoạt động y tế"), value: L10n.text("{0} ghi nhận", "\(report.activities.filter { $0.kind.group == .medical }.count)"), color: CareTheme.accent)
+                        reportStat(L10n.text("Hoạt động y tế"), value: L10n.count(report.activities.filter { $0.kind.group == .medical }.count, one: "1 ghi nhận", many: "{0} ghi nhận"), color: CareTheme.accent)
                     }
                 }
                 if !report.illnessTitle.isEmpty {
@@ -163,7 +163,7 @@ struct ReportPreviewView: View {
                         reportStat(L10n.text("TỔNG SỮA ĐÃ GHI"), value: InsightData.sum(report.activities, kind: .milk, unit: "ml").map { "\(InsightData.format($0)) ml" } ?? L10n.text("Chưa ghi nhận"), color: CareTheme.feeding)
                     }
                     if report.sections.contains(.routine) {
-                        reportStat(L10n.text("GIẤC NGỦ ĐÃ KẾT THÚC"), value: InsightData.sleepHours(report.activities, in: report.interval).map { L10n.text("{0} giờ", "\(InsightData.format($0))") } ?? L10n.text("Chưa ghi nhận"), color: CareTheme.routine)
+                        reportStat(L10n.text("GIẤC NGỦ ĐÃ KẾT THÚC"), value: InsightData.sleepHours(report.activities, in: report.interval).map { L10n.count(InsightData.format($0), one: "1 giờ", many: "{0} giờ") } ?? L10n.text("Chưa ghi nhận"), color: CareTheme.routine)
                     }
                 }
                 if report.sections.contains(.feeding) { Text(L10n.text("Lượng ml chưa gồm bú mẹ trực tiếp.")).font(CareFont.caption).foregroundStyle(CareTheme.secondary) }

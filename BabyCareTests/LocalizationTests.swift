@@ -24,6 +24,33 @@ struct LocalizationTests {
         #expect(L10n.render("Unknown user text", language: .english) == "Unknown user text")
     }
 
+    @Test func countUsesSingularKeyInEnglishOnly() {
+        #expect(L10n.count(1, one: "1 cữ", many: "{0} cữ", language: .english) == "1 feed")
+        #expect(L10n.count(3, one: "1 cữ", many: "{0} cữ", language: .english) == "3 feeds")
+        #expect(L10n.count(0, one: "1 bữa", many: "{0} bữa", language: .english) == "0 meals")
+        #expect(L10n.count(1, one: "1 cữ", many: "{0} cữ", language: .vietnamese) == "1 cữ")
+        #expect(L10n.count(2, one: "1 cữ", many: "{0} cữ", language: .vietnamese) == "2 cữ")
+        #expect(L10n.count("1", one: "1 giờ", many: "{0} giờ", language: .english) == "1 hour")
+        #expect(L10n.count("1,5", one: "1 giờ", many: "{0} giờ", language: .english) == "1,5 hours")
+    }
+
+    @Test func ageTextUsesSingularFormsAndYears() throws {
+        let calendar = Calendar.current
+        func day(_ year: Int, _ month: Int, _ day: Int) throws -> Date {
+            try #require(calendar.date(from: DateComponents(year: year, month: month, day: day, hour: 12)))
+        }
+        let birth = try day(2024, 1, 15)
+        #expect(BabyProfile.ageText(from: birth, at: try day(2024, 1, 15), language: .english) == "0 days old")
+        #expect(BabyProfile.ageText(from: birth, at: try day(2024, 1, 16), language: .english) == "1 day old")
+        #expect(BabyProfile.ageText(from: birth, at: try day(2024, 1, 20), language: .vietnamese) == "5 ngày tuổi")
+        #expect(BabyProfile.ageText(from: birth, at: try day(2024, 2, 15), language: .english) == "1 month old")
+        #expect(BabyProfile.ageText(from: birth, at: try day(2025, 1, 15), language: .english) == "12 months old")
+        #expect(BabyProfile.ageText(from: birth, at: try day(2026, 1, 15), language: .english) == "2 years")
+        #expect(BabyProfile.ageText(from: birth, at: try day(2026, 2, 15), language: .english) == "2 years 1 month")
+        #expect(BabyProfile.ageText(from: birth, at: try day(2026, 4, 15), language: .vietnamese) == "2 tuổi 3 tháng")
+        #expect(BabyProfile.ageText(from: try day(2026, 4, 15), at: birth, language: .english) == "0 days old")
+    }
+
     @Test func bothCatalogsHaveMatchingKeysAndPlaceholders() throws {
         let catalogs = try AppLanguage.allCases.map { language in
             let bundle = try #require(L10n.bundles[language])

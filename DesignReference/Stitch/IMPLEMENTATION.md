@@ -9,7 +9,7 @@ Nguồn thiết kế cho lần cập nhật này: [iOS SwiftUI Design System](ht
 | Splash | Logo Bé Khỏe gốc, tên/slogan và trạng thái đang tải thật |
 | Đăng nhập / Đăng ký | Logo, nền sáng, thẻ thông tin, input có viền, hiện/ẩn mật khẩu, CTA teal; dùng email/mật khẩu đã được chọn |
 | A – Bắt đầu | Logo, tiêu đề, thẻ hồ sơ, avatar chữ cái, tên/ngày sinh/giới tính và CTA |
-| B – Ghi nhanh | Header gọn, thẻ theo dõi ốm, lịch nhắc gần nhất từ dữ liệu thật, nhóm hoạt động và danh sách gần đây gom chung |
+| B – Ghi nhanh | Header gọn, thẻ theo dõi ốm, lịch nhắc gần nhất từ dữ liệu thật, thẻ tóm tắt hôm nay (sữa, ngủ, tã, thuốc/bữa ăn; 13/10/2026), nhóm hoạt động và danh sách gần đây gom chung |
 | C – Chọn hoạt động | Ba nhóm trong sheet, các hàng có icon và mô tả, vùng nhập giọng nói |
 | D – Nhật ký | Bộ lọc và thẻ màu theo nhóm; tìm kiếm mở phạm vi toàn bộ, xóa từ khóa khôi phục phạm vi |
 | E – Chi tiết | Thẻ số liệu, ghi chú/ảnh, biểu đồ và các nút sửa/ghi tương tự/xóa |

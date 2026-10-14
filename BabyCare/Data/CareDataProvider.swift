@@ -3,7 +3,7 @@ import Foundation
 /// Implement this contract to switch to an HTTP/cloud database in AppDependencies.
 /// Return committed value snapshots; throw without publishing partial writes.
 /// Keep UUIDs stable, scope every mutation to its baby, and apply a batch atomically.
-protocol CareDataProvider: Sendable {
+nonisolated protocol CareDataProvider: Sendable {
     func load() async throws -> CareDatabase
     func apply(_ mutation: CareDataMutation) async throws -> CareDatabase
     func status() async -> CareStorageStatus

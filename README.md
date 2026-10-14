@@ -1,6 +1,6 @@
 # BabyCare · SwiftUI
 
-Giao diện iOS tiếng Việt chuyển từ [thiết kế Bé Khỏe trên Stitch](https://stitch.withgoogle.com/projects/4920262108660743872). Mở `BabyCare.xcodeproj`, chọn scheme **BabyCare**, chọn iPhone Simulator iOS 26.5 trở lên rồi Run. Đã kiểm tra bằng Xcode 26.6, iPhone 17 / iOS 26.5.
+Giao diện iOS tiếng Việt chuyển từ [thiết kế Bé Khỏe trên Stitch](https://stitch.withgoogle.com/projects/4920262108660743872). Mở `BabyCare.xcodeproj`, chọn scheme **BabyCare**, chọn iPhone Simulator iOS 26.5 trở lên rồi Run. Đã kiểm tra bằng Xcode 27.0, iPhone 17 / iOS 26.5 (13/10/2026, 85/85 unit test đạt).
 
 ## Các màn hình
 
@@ -39,13 +39,13 @@ Giao diện iOS tiếng Việt chuyển từ [thiết kế Bé Khỏe trên Stit
 
 Người dùng có thể tiếp tục dùng SwiftData tại `Application Support/BabyCare/BabyCare.store`, hoặc đăng nhập email để dùng database Supabase. Phiên cloud nằm trong Keychain; mỗi account/family có SwiftData cache và outbox riêng. Khi offline, thay đổi xuất hiện ngay sau khi đã được ghi bền vững vào outbox; app thử đồng bộ lại mỗi 10 giây và khi mở lại/tải lại. File JSON của bản cũ vẫn được import đúng một lần vào kho local và giữ nguyên làm bản phục hồi. Xem [ARCHITECTURE.md](ARCHITECTURE.md) và [supabase/README.md](supabase/README.md).
 
-Dùng `NavigationStack`, `TabView`, `Form`, sheet, PhotosPicker và Swift Charts. Font Be Vietnam Pro được đóng gói trong app, hỗ trợ tiếng Việt và Dynamic Type. Nền sáng, màu xanh #146C60 và các nhóm màu giữ theo Stitch. Thanh trạng thái, thanh tab và nút hệ thống dùng giao diện iOS thực tế. Các khung Stitch dài được chuyển thành nội dung cuộn, không đặt tọa độ tuyệt đối.
+Dùng `NavigationStack`, `TabView`, `Form`, sheet, PhotosPicker và Swift Charts. Font Be Vietnam Pro được đóng gói trong app, hỗ trợ tiếng Việt và Dynamic Type. Nền sáng, màu xanh #146C60 và các nhóm màu giữ theo Stitch. Thanh trạng thái và các control hệ thống dùng giao diện iOS thực tế; thanh tab ba mục là `CareBottomTabs` tự dựng theo Stitch, đặt bằng `safeAreaInset` nên không che nội dung. Các khung Stitch dài được chuyển thành nội dung cuộn, không đặt tọa độ tuyệt đối.
 
 ## Chạy và xem trước
 
 Mỗi màn hình có `#Preview`. Dữ liệu mẫu chỉ dùng trong preview hoặc khi thêm launch argument **`-demo`** ở cấu hình Debug; dữ liệu mẫu không ghi vào bộ nhớ ứng dụng. Lần chạy bình thường khôi phục phiên hoặc mở đăng nhập; chế độ trên máy mở hồ sơ trống nếu chưa có dữ liệu. `-ui-testing` dùng provider tạm trong bộ nhớ; `-ui-testing-store <UUID>` dùng SwiftData riêng để kiểm thử khởi động lại app.
 
-Đã nối các thao tác tạo/sửa hồ sơ, thêm bé và đổi bé, ghi/sửa/xóa hoạt động, tìm kiếm và lọc nhật ký, ghi số đo, ba chế độ thống kê, theo dõi ốm, lịch nhắc một lần và xuất/chia sẻ PDF cục bộ. Timer ngủ được giữ trong dữ liệu của từng bé. Nhắc thuốc chỉ dùng mốc người dùng nhập và xin quyền thông báo khi lưu lịch.
+Đã nối các thao tác tạo/sửa hồ sơ, thêm bé và đổi bé, ghi/sửa/xóa hoạt động, tìm kiếm và lọc nhật ký, ghi số đo, ba chế độ thống kê, theo dõi ốm, lịch nhắc một lần và xuất/chia sẻ PDF cục bộ. Timer ngủ được giữ trong dữ liệu của từng bé. Màn Ghi nhanh có thẻ tóm tắt hôm nay (cữ sữa, giấc ngủ, tã, thuốc khi đang theo dõi ốm hoặc bữa ăn) tính từ nhật ký đã lưu qua `InsightData.daySummary`. Nhắc thuốc chỉ dùng mốc người dùng nhập và xin quyền thông báo khi lưu lịch.
 
 Email/mật khẩu, khôi phục phiên, chọn/tạo family, RPC CRUD, cache cloud và outbox offline đơn giản đã có. Supabase yêu cầu xác nhận email và redirect về app. Dữ liệu SwiftData cũ chưa tự nhập lên cloud; ảnh cloud và giao diện xử lý conflict nâng cao thuộc các giai đoạn tiếp theo. Giọng nói đã tích hợp Apple Speech tiếng Việt: xin quyền micrô/nhận dạng khi bắt đầu, cập nhật văn bản trực tiếp, dừng/nói tiếp và giữ nội dung khi lỗi. Kết quả cuối được phân tích theo các mẫu hoạt động hỗ trợ và tự lưu nếu đủ dữ liệu; câu không rõ báo lỗi. Xem `VOICE_INPUT.md` để biết mẫu câu và quy tắc thời gian. QR/link trực tuyến và lịch lặp tự động chưa có.
 

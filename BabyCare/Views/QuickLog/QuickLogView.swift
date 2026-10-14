@@ -5,6 +5,7 @@ struct QuickLogView: View {
     @Environment(BabyCareViewModel.self) private var viewModel
     @AppStorage("care.habitSuggestions") private var habitSuggestions = true
     @Binding var selectedTab: CareTab
+    @Environment(\.dynamicTypeSize) private var textSize
     @State private var selectedGroup: ActivityGroup?
     @State private var sleepReview: CareActivity?
 
@@ -31,6 +32,7 @@ struct QuickLogView: View {
                     upcomingReminder(nextReminder)
                 }
                 if let sleepStart = viewModel.sleepStartDate { sleepCard(start: sleepStart) }
+                todaySummary
                 if habitSuggestions && lastMilk != nil { suggestions }
                 categories
                 NavigationLink { VoiceEntryView() } label: {
@@ -82,7 +84,7 @@ struct QuickLogView: View {
         .toolbar(.hidden, for: .tabBar)
         .safeAreaInset(edge: .top, spacing: 0) { CareBabyHeaderView() }
         .sheet(item: $selectedGroup) { group in
-            NavigationStack { ActivityPickerView(initialGroup: group) }.presentationDetents([.large])
+            NavigationStack { ActivityPickerView(initialGroup: group) }.careToastBanner().presentationDetents([.large])
         }
         .sheet(item: $sleepReview) { activity in
             NavigationStack { ActivityFormView(kind: .sleep, activity: activity) }
@@ -198,6 +200,53 @@ struct QuickLogView: View {
                 }.buttonStyle(.bordered)
             }
         }
+    }
+    private var todaySummary: some View {
+        let summary = InsightData.daySummary(viewModel.activities)
+        let showMedicine = viewModel.isTrackingIllness || summary.medicineCount > 0
+        return VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text(L10n.text("HÔM NAY")).font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.secondary)
+                Spacer()
+                Button(L10n.text("Xem thống kê")) { selectedTab = .statistics }
+                    .font(CareFont.caption.weight(.semibold)).accessibilityIdentifier("todaySummary.statistics")
+            }
+            CareCard {
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: textSize.isAccessibilitySize ? 1 : 2), alignment: .leading, spacing: 14) {
+                    summaryTile(icon: "Stitch_water_bottle", color: CareTheme.feeding,
+                        value: summary.feedCount > 0 ? L10n.count(summary.feedCount, one: "1 cữ", many: "{0} cữ") : nil,
+                        label: [L10n.text("Sữa"), summary.bottleMilliliters.map { "\(InsightData.format($0)) ml" },
+                                summary.breastfeedMinutes.map { L10n.text("{0} phút bú mẹ", InsightData.format($0)) }].compactMap { $0 }.joined(separator: " · "))
+                    summaryTile(icon: "Stitch_bedtime", color: CareTheme.routine,
+                        value: summary.sleepHours.map { L10n.count(InsightData.format($0), one: "1 giờ", many: "{0} giờ") },
+                        label: summary.sleepCount == 0 ? L10n.text("Ngủ") : L10n.count(summary.sleepCount, one: "Ngủ · 1 giấc", many: "Ngủ · {0} giấc"))
+                    summaryTile(icon: "Stitch_baby_changing_station", color: CareTheme.routine,
+                        value: summary.diaperCount > 0 ? L10n.count(summary.diaperCount, one: "1 lần", many: "{0} lần") : nil,
+                        label: summary.lastDiaper.map { L10n.text("Tã · Gần nhất {0}", $0.careFormatted(date: .omitted, time: .shortened)) } ?? L10n.text("Tã"))
+                    if showMedicine {
+                        summaryTile(icon: "Stitch_medication", color: CareTheme.medical,
+                            value: summary.medicineCount > 0 ? L10n.count(summary.medicineCount, one: "1 lần", many: "{0} lần") : nil, label: L10n.text("Thuốc"))
+                    } else {
+                        summaryTile(icon: "Stitch_ramen_dining", color: CareTheme.feeding,
+                            value: summary.mealCount > 0 ? L10n.count(summary.mealCount, one: "1 bữa", many: "{0} bữa") : nil,
+                            label: summary.waterMilliliters.map { L10n.text("Bữa ăn · {0} ml nước", InsightData.format($0)) } ?? L10n.text("Bữa ăn"))
+                    }
+                }
+            }
+        }
+    }
+    /// `value` nil shows a dash and reads as "not recorded" to VoiceOver.
+    private func summaryTile(icon: String, color: Color, value: String?, label: String) -> some View {
+        HStack(spacing: 10) {
+            CareIcon(name: icon, color: color, size: 20)
+                .frame(width: 36, height: 36).background(color.opacity(0.1), in: .rect(cornerRadius: 10))
+            VStack(alignment: .leading, spacing: 2) {
+                Text(value ?? "—").font(CareFont.headline).foregroundStyle(CareTheme.text).monospacedDigit()
+                    .accessibilityLabel(value ?? L10n.text("Chưa ghi nhận"))
+                Text(label).font(CareFont.caption).foregroundStyle(CareTheme.secondary).lineLimit(2)
+            }
+            Spacer(minLength: 0)
+        }.accessibilityElement(children: .combine)
     }
     private var suggestions: some View {
         VStack(alignment: .leading, spacing: 12) {

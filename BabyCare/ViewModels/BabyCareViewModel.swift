@@ -134,7 +134,7 @@ final class BabyCareViewModel {
         toastTask?.cancel()
         state.toast = message
         toastTask = Task { [weak self] in
-            try? await Task.sleep(for: .seconds(6))
+            try? await Task.sleep(for: .seconds(4))
             guard !Task.isCancelled else { return }
             self?.state.toast = nil
         }

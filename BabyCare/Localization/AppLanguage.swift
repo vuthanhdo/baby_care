@@ -40,6 +40,15 @@ nonisolated enum L10n {
         render(key, arguments: arguments, language: .current)
     }
 
+    /// English needs a singular form; the Vietnamese keys differ only by the number.
+    static func count(_ count: Int, one: String, many: String, language: AppLanguage = .current) -> String {
+        count == 1 ? render(one, language: language) : render(many, arguments: ["\(count)"], language: language)
+    }
+    /// For decimals that are already formatted, such as sleep hours.
+    static func count(_ formatted: String, one: String, many: String, language: AppLanguage = .current) -> String {
+        formatted == "1" ? render(one, language: language) : render(many, arguments: [formatted], language: language)
+    }
+
     static func render(_ key: String, arguments: [String] = [], language: AppLanguage) -> String {
         let format = bundles[language]?.localizedString(forKey: key, value: key, table: "Localizable") ?? key
         // Replace placeholders once; user content containing braces is never reinterpreted.

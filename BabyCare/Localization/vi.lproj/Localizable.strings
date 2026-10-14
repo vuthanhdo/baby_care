@@ -1,8 +1,22 @@
 // UI strings. {0}, {1}, … are interpolation arguments.
 "+ Ghi nhiệt độ" = "+ Ghi nhiệt độ";
 "+ Thêm số đo" = "+ Thêm số đo";
+"1 bữa" = "1 bữa";
 "1 chữ hoa" = "1 chữ hoa";
+"1 cữ" = "1 cữ";
+"1 ghi nhận" = "1 ghi nhận";
+"1 giờ" = "1 giờ";
+"1 hoạt động" = "1 hoạt động";
+"1 hoạt động đã ghi trong khoảng" = "1 hoạt động đã ghi trong khoảng";
 "1 ký tự đặc biệt (ví dụ !, @, #)" = "1 ký tự đặc biệt (ví dụ !, @, #)";
+"1 lần" = "1 lần";
+"1 ngày tuổi" = "1 ngày tuổi";
+"1 số đo" = "1 số đo";
+"1 số đo trong khoảng" = "1 số đo trong khoảng";
+"1 sự kiện" = "1 sự kiện";
+"1 tháng" = "1 tháng";
+"1 tháng tuổi" = "1 tháng tuổi";
+"1 tuổi" = "1 tuổi";
 "1. Dữ liệu được xử lý" = "1. Dữ liệu được xử lý";
 "1. Ghi nhanh" = "1. Ghi nhanh";
 "1. Phạm vi dịch vụ" = "1. Phạm vi dịch vụ";
@@ -33,6 +47,7 @@
 "BabyCare xử lý hồ sơ trẻ, nhật ký chăm sóc và sức khỏe, số đo, tiêm chủng, lịch nhắc, ảnh bạn chọn và thông tin tài khoản đăng nhập. Micro chỉ được dùng khi bạn chủ động ghi bằng giọng nói." = "BabyCare xử lý hồ sơ trẻ, nhật ký chăm sóc và sức khỏe, số đo, tiêm chủng, lịch nhắc, ảnh bạn chọn và thông tin tài khoản đăng nhập. Micro chỉ được dùng khi bạn chủ động ghi bằng giọng nói.";
 "Biểu hiện và tác nhân nếu biết" = "Biểu hiện và tác nhân nếu biết";
 "Biểu đồ & lịch sử tăng trưởng" = "Biểu đồ & lịch sử tăng trưởng";
+"Biểu đồ nhiệt độ, 1 lần đo. Có thể chuyển sang danh sách." = "Biểu đồ nhiệt độ, 1 lần đo. Có thể chuyển sang danh sách.";
 "Biểu đồ nhiệt độ, {0} lần đo. Có thể chuyển sang danh sách." = "Biểu đồ nhiệt độ, {0} lần đo. Có thể chuyển sang danh sách.";
 "Biểu đồ {0}. Các số đo có trong danh sách bên dưới." = "Biểu đồ {0}. Các số đo có trong danh sách bên dưới.";
 "BÉ KHỎE – BỐ MẸ AN TÂM" = "BÉ KHỎE – BỐ MẸ AN TÂM";
@@ -49,6 +64,7 @@
 "Bé Khỏe – Bố Mẹ An Tâm" = "Bé Khỏe – Bố Mẹ An Tâm";
 "Bé gái" = "Bé gái";
 "Bé trai" = "Bé trai";
+"Bé trong gia đình · 1 bé" = "Bé trong gia đình · 1 bé";
 "Bé trong gia đình · {0} bé" = "Bé trong gia đình · {0} bé";
 "Bé {0}" = "Bé {0}";
 "Bé đang ngủ" = "Bé đang ngủ";
@@ -90,6 +106,7 @@
 "Bố Mẹ An Tâm" = "Bố Mẹ An Tâm";
 "Bộ nhớ trên thiết bị" = "Bộ nhớ trên thiết bị";
 "Bữa ăn" = "Bữa ăn";
+"Bữa ăn · {0} ml nước" = "Bữa ăn · {0} ml nước";
 "Cao nhất đã ghi: {0}" = "Cao nhất đã ghi: {0}";
 "Chi tiết hoạt động" = "Chi tiết hoạt động";
 "Chia sẻ báo cáo" = "Chia sẻ báo cáo";
@@ -268,6 +285,7 @@
 "Hoạt động trong ngày" = "Hoạt động trong ngày";
 "Hoạt động y tế" = "Hoạt động y tế";
 "Hoặc điền thông tin bên dưới" = "Hoặc điền thông tin bên dưới";
+"HÔM NAY" = "HÔM NAY";
 "Hãy thử lại." = "Hãy thử lại.";
 "Hôm nay" = "Hôm nay";
 "Hướng dẫn & Giới thiệu" = "Hướng dẫn & Giới thiệu";
@@ -401,6 +419,8 @@
 "Ngủ" = "Ngủ";
 "Ngủ & Sinh hoạt" = "Ngủ & Sinh hoạt";
 "Ngủ theo ngày · giờ" = "Ngủ theo ngày · giờ";
+"Ngủ · 1 giấc" = "Ngủ · 1 giấc";
+"Ngủ · {0} giấc" = "Ngủ · {0} giấc";
 "Nhiệt độ" = "Nhiệt độ";
 "Nhiệt độ gần nhất" = "Nhiệt độ gần nhất";
 "Nhiệt độ °C" = "Nhiệt độ °C";
@@ -512,6 +532,7 @@
 "Theo nhật ký đã lưu" = "Theo nhật ký đã lưu";
 "Theo thiết bị" = "Theo thiết bị";
 "Thiết kế vì sự an tâm của Bố Mẹ · Bé Khỏe" = "Thiết kế vì sự an tâm của Bố Mẹ · Bé Khỏe";
+"Thuốc" = "Thuốc";
 "Thuốc theo hướng dẫn đã có" = "Thuốc theo hướng dẫn đã có";
 "Thân nhiệt cao nhất" = "Thân nhiệt cao nhất";
 "Thân nhiệt mới nhất" = "Thân nhiệt mới nhất";
@@ -570,6 +591,8 @@
 "Tài khoản" = "Tài khoản";
 "Tài khoản của bạn có thể lưu tối đa 4 hồ sơ bé." = "Tài khoản của bạn có thể lưu tối đa 4 hồ sơ bé.";
 "Tài liệu bạn nên xem" = "Tài liệu bạn nên xem";
+"Tã" = "Tã";
+"Tã · Gần nhất {0}" = "Tã · Gần nhất {0}";
 "Tên gọi và tuổi" = "Tên gọi và tuổi";
 "Tên gọi ở nhà của bé" = "Tên gọi ở nhà của bé";
 "Tên gọi ở nhà · Bắt buộc" = "Tên gọi ở nhà · Bắt buộc";
@@ -633,6 +656,7 @@
 "Xem dạng danh sách" = "Xem dạng danh sách";
 "Xem lịch thuốc" = "Xem lịch thuốc";
 "Xem theo dõi" = "Xem theo dõi";
+"Xem thống kê" = "Xem thống kê";
 "Xem toàn bộ lịch sử" = "Xem toàn bộ lịch sử";
 "Xem trước" = "Xem trước";
 "Xem trước báo cáo" = "Xem trước báo cáo";
@@ -680,16 +704,24 @@
 "viên" = "viên";
 "{0} / 3 đã chọn" = "{0} / 3 đã chọn";
 "{0} bữa" = "{0} bữa";
+"{0} của bé" = "{0} của bé";
+"{0} cữ" = "{0} cữ";
 "{0} ghi nhận" = "{0} ghi nhận";
 "{0} giờ" = "{0} giờ";
+"{0} hoạt động" = "{0} hoạt động";
 "{0} hoạt động · {1} số đo" = "{0} hoạt động · {1} số đo";
 "{0} hoạt động · {1} số đo của bé" = "{0} hoạt động · {1} số đo của bé";
 "{0} hoạt động đã ghi trong khoảng" = "{0} hoạt động đã ghi trong khoảng";
+"{0} lần" = "{0} lần";
 "{0} mục theo dõi" = "{0} mục theo dõi";
 "{0} ngày tuổi" = "{0} ngày tuổi";
+"{0} phút bú mẹ" = "{0} phút bú mẹ";
+"{0} số đo" = "{0} số đo";
 "{0} số đo trong khoảng" = "{0} số đo trong khoảng";
 "{0} sự kiện" = "{0} sự kiện";
+"{0} tháng" = "{0} tháng";
 "{0} tháng tuổi" = "{0} tháng tuổi";
+"{0} tuổi" = "{0} tuổi";
 "{0} tuổi {1} tháng" = "{0} tuổi {1} tháng";
 "{0} {1} · Theo lịch đã lưu" = "{0} {1} · Theo lịch đã lưu";
 "{0} · Dữ liệu do bố mẹ ghi nhận" = "{0} · Dữ liệu do bố mẹ ghi nhận";
@@ -747,6 +779,8 @@
 "Đã gửi lại email xác thực tới {0}." = "Đã gửi lại email xác thực tới {0}.";
 "Đã hủy trước khi bắt đầu nhận dạng. Chưa lưu hoạt động nào." = "Đã hủy trước khi bắt đầu nhận dạng. Chưa lưu hoạt động nào.";
 "Đã kết thúc theo dõi" = "Đã kết thúc theo dõi";
+"Đã lưu 1 hoạt động" = "Đã lưu 1 hoạt động";
+"Đã lưu 1 hoạt động từ giọng nói" = "Đã lưu 1 hoạt động từ giọng nói";
 "Đã lưu cloud · Chưa cập nhật được bản lưu trên máy" = "Đã lưu cloud · Chưa cập nhật được bản lưu trên máy";
 "Đã lưu cài đặt gợi ý" = "Đã lưu cài đặt gợi ý";
 "Đã lưu lịch nhắc" = "Đã lưu lịch nhắc";

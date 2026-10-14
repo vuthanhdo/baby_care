@@ -49,7 +49,7 @@ struct VoiceEntryView: View {
                         .accessibilityIdentifier("voiceError")
                 }
                 if !voice.savedActivities.isEmpty {
-                    CareSectionTitle(title: L10n.text("Đã lưu {0} hoạt động", "\(voice.savedActivities.count)"), subtitle: L10n.text("Bạn có thể xem và chỉnh sửa trong Nhật ký."))
+                    CareSectionTitle(title: L10n.count(voice.savedActivities.count, one: "Đã lưu 1 hoạt động", many: "Đã lưu {0} hoạt động"), subtitle: L10n.text("Bạn có thể xem và chỉnh sửa trong Nhật ký."))
                     ForEach(voice.savedActivities) { entry in
                         CareCard { CareActivityRow(activity: entry) }
                     }
@@ -93,7 +93,7 @@ struct VoiceEntryView: View {
         let babyID = expectedBabyID ?? viewModel.baby.id
         guard babyID == viewModel.baby.id else { voice.cancel(); return }
         await voice.parseAndSave(babyID: babyID) { entries in
-            await viewModel.send(.commit(.saveActivities(babyID: babyID, entries: entries), message: L10n.text("Đã lưu {0} hoạt động từ giọng nói", "\(entries.count)")))
+            await viewModel.send(.commit(.saveActivities(babyID: babyID, entries: entries), message: L10n.count(entries.count, one: "Đã lưu 1 hoạt động từ giọng nói", many: "Đã lưu {0} hoạt động từ giọng nói")))
         }
     }
 }

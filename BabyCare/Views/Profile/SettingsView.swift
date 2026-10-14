@@ -71,7 +71,7 @@ struct SettingsView: View {
                     settingsRow(L10n.text("Liên kết báo cáo đã chia sẻ"), subtitle: L10n.text("Báo cáo PDF trên thiết bị"), icon: "Stitch_qr_code_2", color: CareTheme.feeding)
                 }
                 Button { showingStorage = true } label: {
-                    settingsRow(viewModel.state.storage == .device ? L10n.text("Bộ nhớ trên thiết bị") : L10n.text("Dữ liệu cloud & cache"), subtitle: L10n.text("{0} hoạt động · {1} số đo của bé", "\(viewModel.activities.count)", "\(viewModel.measurements.count)"), icon: "Stitch_sd_storage", color: CareTheme.accent)
+                    settingsRow(viewModel.state.storage == .device ? L10n.text("Bộ nhớ trên thiết bị") : L10n.text("Dữ liệu cloud & cache"), subtitle: L10n.text("{0} của bé", [L10n.count(viewModel.activities.count, one: "1 hoạt động", many: "{0} hoạt động"), L10n.count(viewModel.measurements.count, one: "1 số đo", many: "{0} số đo")].joined(separator: " · ")), icon: "Stitch_sd_storage", color: CareTheme.accent)
                 }.buttonStyle(.plain)
             }
 
@@ -127,7 +127,7 @@ struct SettingsView: View {
                 .toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.text("Đóng")) { showingTextSize = false } } }
                 .dynamicTypeSize(textSize == "largest" ? .accessibility1 : textSize == "large" ? .xxxLarge : .large)
                 .onChange(of: textSize) { _, _ in Task { await viewModel.send(.showMessage(L10n.text("Đã đổi cỡ chữ"))) } }
-            }.presentationDetents([.medium, .large])
+            }.careToastBanner().presentationDetents([.medium, .large])
         }
         .sheet(isPresented: $showingPermissions) { NavigationStack { ProfilePermissionsView() } }
         .sheet(isPresented: $showingGuide) { NavigationStack { ProfileGuideView() } }

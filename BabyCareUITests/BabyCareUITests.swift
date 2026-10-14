@@ -33,6 +33,8 @@ final class BabyCareUITests: XCTestCase {
         let save = app.buttons["saveActivityButton"]
         XCTAssertTrue(save.isEnabled)
         save.tap()
+        // The confirmation banner must be visible inside the still-open picker sheet.
+        XCTAssertTrue(app.staticTexts["Đã lưu nhiệt độ"].waitForExistence(timeout: 3))
 
         // A pushed form returns to the activity picker; close that sheet if present.
         let diaryTab = app.buttons["tab.diary"]

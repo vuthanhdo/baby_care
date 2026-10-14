@@ -153,6 +153,31 @@ extension View {
     func careScreen() -> some View {
         self.scrollContentBackground(.hidden).background(CareTheme.background)
     }
+    /// Shows `BabyCareViewModel.toast` as a top banner. Attach to the app content and to any sheet that stays
+    /// open after a save, because a presented sheet hides the banner of the view underneath it.
+    func careToastBanner() -> some View { modifier(CareToastBanner()) }
+}
+
+/// A banner only covers static chrome, never the entry that was just saved; taps pass through it.
+struct CareToastBanner: ViewModifier {
+    @Environment(BabyCareViewModel.self) private var viewModel
+    func body(content: Content) -> some View {
+        content.overlay(alignment: .top) {
+            ZStack(alignment: .top) {
+                if let toast = viewModel.toast {
+                    Text(toast).font(CareFont.subheadline.weight(.semibold)).multilineTextAlignment(.center)
+                        .padding(.horizontal, 18).padding(.vertical, 12).foregroundStyle(.white)
+                        .background(CareTheme.text, in: .capsule)
+                        .shadow(color: CareTheme.text.opacity(0.18), radius: 10, y: 4)
+                        .padding(.horizontal, 20).padding(.top, 8)
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .accessibilityAddTraits(.updatesFrequently)
+                }
+            }
+            .animation(.snappy, value: viewModel.toast)
+            .allowsHitTesting(false)
+        }
+    }
 }
 
 extension Date {

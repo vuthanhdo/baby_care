@@ -42,7 +42,7 @@ struct DiaryView: View {
                         Text(L10n.text("Phạm vi: {0}", "\(allDates ? L10n.text("Tất cả thời gian") : "Theo ngày")")).font(CareFont.caption.weight(.medium))
                     }.frame(minHeight: 44)
                     Spacer()
-                    CareBadge(title: L10n.text("{0} sự kiện", "\(filtered.count)"))
+                    CareBadge(title: L10n.count(filtered.count, one: "1 sự kiện", many: "{0} sự kiện"))
                 }
                 HStack {
                     Button(L10n.text("Ngày trước"), systemImage: "chevron.left") { moveDay(-1) }.labelStyle(.iconOnly).frame(width: 44, height: 44)
@@ -99,7 +99,7 @@ struct DiaryView: View {
                 }.padding(.horizontal, 20).frame(minHeight: 52).background(CareTheme.accent, in: .capsule)
             }.buttonStyle(.plain).padding(.horizontal, 20).padding(.bottom, 8)
         }
-        .sheet(isPresented: $showingPicker) { NavigationStack { ActivityPickerView(initialGroup: group ?? .medical) } }
+        .sheet(isPresented: $showingPicker) { NavigationStack { ActivityPickerView(initialGroup: group ?? .medical) }.careToastBanner() }
         .sheet(isPresented: $showingDate) {
             NavigationStack {
                 DatePicker(L10n.text("Chọn ngày"), selection: $draftDay, in: ...Date(), displayedComponents: .date)
