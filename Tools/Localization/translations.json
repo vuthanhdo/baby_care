@@ -93,7 +93,6 @@
   "Chưa xác nhận được kết quả lưu. Hãy tải lại để đối soát yêu cầu cũ trước khi lưu tiếp.": "The save result could not be confirmed. Reload to check the previous request before saving again.",
   "Đang xử lý dữ liệu. Hãy chờ thao tác hiện tại hoàn tất.": "Processing data. Please wait for the current action to finish.",
   "Bạn chỉ có thể tạo tối đa 4 hồ sơ bé.": "You can create up to 4 baby profiles.",
-  "Cloud từ chối dữ liệu ({0}). Hãy kiểm tra thông tin rồi thử lại.": "The cloud rejected this data ({0}). Check the details and try again.",
   "Không thể xử lý ảnh trên cloud ({0}).": "Unable to process the photo in the cloud ({0}).",
   "Thao tác vượt quá 100 bản ghi. Hãy chia thành các lần lưu nhỏ hơn.": "This action exceeds 100 records. Save in smaller batches.",
   "Y tế": "Health",
@@ -840,5 +839,9 @@
   "Biểu đồ nhiệt độ, 1 lần đo. Có thể chuyển sang danh sách.": "Temperature chart with 1 measurement. A list view is available.",
   "1 sự kiện": "1 event",
   "Bé trong gia đình · 1 bé": "Your babies · 1 baby",
-  "{0} của bé": "{0} for your baby"
+  "{0} của bé": "{0} for your baby",
+  "Đã đồng ý trên thiết bị": "Accepted on this device",
+  "Sẽ được ghi nhận trên máy chủ khi kết nối được.": "It will be recorded on the server once a connection is available.",
+  "Cloud từ chối dữ liệu ({0}: {1}). Hãy kiểm tra thông tin rồi thử lại.": "The cloud rejected the data ({0}: {1}). Check the details and try again.",
+  "Server chưa có hàm mà app cần. Hãy áp dụng migration Supabase mới nhất rồi thử lại. ({0})": "The server is missing a function this app needs. Apply the latest Supabase migration and try again. ({0})"
 }

@@ -15,7 +15,7 @@ import UserNotifications
     private(set) var needsNewPassword = false
     private(set) var pendingSignupEmail: String?
     @ObservationIgnored private lazy var client = CloudConfiguration.makeClient()
-    @ObservationIgnored private(set) lazy var consent = ConsentViewModel(remote: consentRemote ?? SupabaseConsentRemote(client: client))
+    @ObservationIgnored private(set) lazy var consent = ConsentViewModel(remote: consentRemote ?? SupabaseConsentRemote(client: client), store: defaults)
     @ObservationIgnored private let consentRemote: (any ConsentRemote)?
     @ObservationIgnored private let makeLocalViewModel: @MainActor () -> BabyCareViewModel
     @ObservationIgnored private var userID: UUID?
@@ -74,6 +74,7 @@ import UserNotifications
     private func accept(_ session: Session?) async {
         let ticket = await detach(); guard generation == ticket else { return }
         consent.reset()
+        consent.userKey = session?.user.id.uuidString
         userID = session?.user.id; email = session?.user.email ?? ""
         isLocal = defaults.string(forKey: "care.mode") == "device"
         error = nil
@@ -107,14 +108,14 @@ import UserNotifications
         }
     }
     private func continueAfterConsent() async {
-        guard consent.status?.isCurrent == true else { phase = .consent; return }
+        guard consent.isAccepted else { phase = .consent; return }
         if isLocal {
             viewModel = makeLocalViewModel(); phase = .content; busy = false
         } else { await loadAccount() }
     }
     func loadAccount() async {
         guard let userID else { return }
-        guard consent.status?.isCurrent == true else { phase = .consent; return }
+        guard consent.isAccepted else { phase = .consent; return }
         let ticket = generation
         busy = true; error = nil
         defer { if generation == ticket { busy = false } }
@@ -143,7 +144,7 @@ import UserNotifications
             guard generation == ticket else { return }
             let normalized = CloudError.normalize(error)
             if normalized as? CloudError == .consentRequired {
-                consent.reset(); _ = await consent.refresh()
+                consent.reset(); consent.userKey = userID.uuidString; _ = await consent.refresh()
                 guard generation == ticket else { return }
                 phase = .consent; return
             }
@@ -158,7 +159,7 @@ import UserNotifications
     }
     func selectFamily(_ id: UUID) async {
         guard let userID else { return }
-        guard consent.status?.isCurrent == true else { phase = .consent; return }
+        guard consent.isAccepted else { phase = .consent; return }
         let ticket = await detach(); guard generation == ticket else { return }
         let remote = SupabaseRemote(authClient: client, userID: userID, familyID: id)
         let provider = SupabaseCareDataProvider(remote: remote, cache: SwiftDataCloudCache(userID: userID, familyID: id), familyID: id)

@@ -27,7 +27,27 @@ Append-only audit records are retained for old versions and are removed with the
 auth user by the existing account-erasure flow. Changing a required version adds
 a new audit row after acceptance instead of rewriting the prior record.
 
+## Quyết định 14/10/2026: không gate theo phiên bản phía client
+
+- Chỉ có một bộ Điều khoản & Chính sách; app không còn so phiên bản tài liệu với server và không khóa nút
+  "Đồng ý & Tiếp tục" vì server. Ba xác nhận (điều khoản, dữ liệu sức khỏe, người đại diện) vẫn bắt buộc vì
+  RPC `babycare_accept_consent` cần đủ ba cờ.
+- `ConsentViewModel.submit()` ghi mốc đồng ý cục bộ theo tài khoản (`care.consent.accepted.<user>`), rồi gọi
+  server best-effort với đúng phiên bản server yêu cầu. Lỗi/404 không chặn người dùng.
+- `refresh()`: server trả lời được thì câu trả lời của server thắng; nếu server nói chưa có mà máy đã ghi đồng
+  ý thì tự gửi lại một lần (đồng bộ muộn). Server không truy cập được thì dùng bản ghi cục bộ.
+- Màn "Trạng thái đồng ý dữ liệu" hiển thị mốc đồng ý trên thiết bị khi chưa có bản ghi server.
+
 ## Deployment and rollback
+
+> **Trạng thái 14/10/2026:** migration `202609180008_user_consent.sql` **chưa được áp dụng** lên project
+> `cxlqvuqloaokzmaewvdy` — `POST /rest/v1/rpc/babycare_consent_status` trả 404 `PGRST202` (các RPC của
+> migration 0001/0006/0007 trả 401 như mong đợi). Vì vậy màn đồng ý luôn khóa nút "Đồng ý & Tiếp tục" dù đã
+> tick đủ 3 ô (đã gỡ gate phía client, xem mục dưới). Ngoài ra `SupabaseRemote.syncMedia` gọi `babycare_consent_status`
+> trước khi upload ảnh; thiếu hàm này làm cả `load()` thất bại với PGRST202 khi outbox còn ghi dở — từ 14/10/2026 app bỏ
+> qua bước kiểm tra đó khi RPC chưa tồn tại (PGRST202) và để `babycare_apply`/policy Storage tự bắt buộc consent.
+> Áp dụng migration theo các bước dưới đây.
+
 
 1. Release a compatible iOS build that understands the new consent RPCs and
    bundled document versions.

@@ -61,14 +61,25 @@ nonisolated struct SupabaseConsentRemote: ConsentRemote {
     private(set) var status: ConsentStatus?
     private(set) var busy = false
     private(set) var error: String?
+    /// Account the local record belongs to; the session sets it after sign-in.
+    @ObservationIgnored var userKey: String?
     @ObservationIgnored private let remote: any ConsentRemote
+    @ObservationIgnored private let store: UserDefaults
     @ObservationIgnored private var generation = 0
-    init(remote: any ConsentRemote) { self.remote = remote }
-    var canSubmit: Bool {
-        terms && health && representative && !busy && status?.required == .bundled && status?.isCurrent != true
+    init(remote: any ConsentRemote, store: UserDefaults = .standard) { self.remote = remote; self.store = store }
+
+    /// Three explicit confirmations are enough; there is one terms & conditions document, no version gate.
+    var canSubmit: Bool { terms && health && representative && !busy && !isAccepted }
+    var acceptedLocallyAt: Date? {
+        get { userKey.flatMap { store.object(forKey: Self.key($0)) as? Date } }
+        set { guard let userKey else { return }; store.set(newValue, forKey: Self.key(userKey)) }
     }
+    /// The server's answer wins whenever it can be reached; otherwise the local record applies.
+    var isAccepted: Bool { status.map(\.isCurrent) ?? (acceptedLocallyAt != nil) }
+    private static func key(_ user: String) -> String { "care.consent.accepted.\(user)" }
+
     func reset() {
-        generation += 1; busy = false; status = nil; error = nil
+        generation += 1; busy = false; status = nil; error = nil; userKey = nil
         terms = false; health = false; representative = false
     }
     func refresh() async -> Bool {
@@ -77,36 +88,34 @@ nonisolated struct SupabaseConsentRemote: ConsentRemote {
         busy = true; error = nil
         defer { if ticket == generation { busy = false } }
         do {
-            let result = try await remote.status()
+            var result = try await remote.status()
             guard ticket == generation else { return false }
+            // Accepted offline earlier: record it on the server now instead of asking again.
+            if !result.isCurrent, acceptedLocallyAt != nil, let synced = try? await remote.accept(versions: result.required) {
+                guard ticket == generation else { return false }
+                result = synced
+            }
             status = result
-            if result.required != .bundled { error = L10n.text("Vui lòng cập nhật BabyCare để xem và đồng ý với tài liệu mới nhất.") }
-            return result.isCurrent
         } catch {
             guard ticket == generation else { return false }
-            self.error = L10n.text("Chưa kiểm tra được sự đồng ý. Hãy kiểm tra kết nối và thử lại.")
-            return false
+            status = nil // Offline or the consent RPC is not deployed: the local record decides.
         }
+        return isAccepted
     }
     func submit() async -> Bool {
-        guard canSubmit, let versions = status?.required else { return false }
+        guard canSubmit else { return false }
         let ticket = generation
         busy = true; error = nil
         defer { if ticket == generation { busy = false } }
+        acceptedLocallyAt = Date()
         do {
-            let result = try await remote.accept(versions: versions)
+            let result = try await remote.accept(versions: status?.required ?? .bundled)
             guard ticket == generation else { return false }
             status = result
-            guard result.isCurrent else { throw CloudError.consentRequired }
-            return true
         } catch {
             guard ticket == generation else { return false }
-            self.error = L10n.text("Chưa ghi nhận được sự đồng ý. Vui lòng thử lại.")
-            // Fetch changed requirements without accepting them or looping automatically.
-            if CloudError.normalize(error) as? CloudError == .consentRequired {
-                status = nil; terms = false; health = false; representative = false
-            }
-            return false
+            status = nil // Keep the local record; refresh() retries the server later.
         }
+        return isAccepted
     }
 }

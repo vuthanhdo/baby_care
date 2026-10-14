@@ -9,8 +9,12 @@ private actor FakeConsentRemote: ConsentRemote {
     var hold = false
     var continuation: CheckedContinuation<Void, Never>?
     private(set) var submissions = 0
-    func configure(fail: Bool = false, hold: Bool = false) { self.fail = fail; self.hold = hold }
-    func status() -> ConsentStatus { current }
+    var failStatus = false
+    func configure(fail: Bool = false, hold: Bool = false, failStatus: Bool = false) { self.fail = fail; self.hold = hold; self.failStatus = failStatus }
+    func status() throws -> ConsentStatus {
+        if failStatus { throw URLError(.notConnectedToInternet) }
+        return current
+    }
     func setStatus(_ status: ConsentStatus) { current = status }
     func release() { continuation?.resume(); continuation = nil }
     func accept(versions: ConsentVersions) async throws -> ConsentStatus {
@@ -52,27 +56,53 @@ private actor FakeConsentRemote: ConsentRemote {
         #expect(subject.status?.isCurrent == true)
         #expect(!subject.canSubmit)
     }
-    @Test func failedAPICannotCompleteConsentAndCanRetry() async {
+    @Test func failedAPIStillAcceptsLocallyAndSyncsLater() async throws {
+        let suite = "ConsentTests.\(UUID())"
+        let defaults = try #require(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
         let remote = FakeConsentRemote()
-        let subject = ConsentViewModel(remote: remote)
-        _ = await subject.refresh()
+        let subject = ConsentViewModel(remote: remote, store: defaults)
+        subject.userKey = "user-1"
+        #expect(await subject.refresh() == false)
         subject.terms = true; subject.health = true; subject.representative = true
         await remote.configure(fail: true)
-        #expect(await subject.submit() == false)
-        #expect(subject.status?.isCurrent == false && subject.error != nil && subject.canSubmit)
-        await remote.configure()
         #expect(await subject.submit())
+        #expect(subject.status == nil && subject.isAccepted && subject.acceptedLocallyAt != nil && !subject.canSubmit)
+        // Another account on the same device has no record.
+        let other = ConsentViewModel(remote: remote, store: defaults)
+        other.userKey = "user-2"
+        #expect(!other.isAccepted)
+        // Once the server answers again, the local record is recorded there without asking the user twice.
+        await remote.configure()
+        #expect(await subject.refresh())
+        #expect(subject.status?.isCurrent == true)
+        #expect(await remote.submissions == 2)
     }
-    @Test func missingOutdatedOrUnknownDocumentsKeepGateClosed() async throws {
-        let remote = FakeConsentRemote(), subject = ConsentViewModel(remote: FakeConsentRemote())
-        #expect(await subject.refresh() == false)
+    @Test func unreachableStatusDoesNotBlockThreeConfirmations() async throws {
+        let suite = "ConsentTests.\(UUID())"
+        let defaults = try #require(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let remote = FakeConsentRemote()
+        await remote.configure(failStatus: true)
+        let subject = ConsentViewModel(remote: remote, store: defaults)
+        subject.userKey = "user-1"
+        #expect(await subject.refresh() == false && subject.status == nil && subject.error == nil)
+        subject.terms = true; subject.health = true; subject.representative = true
+        #expect(subject.canSubmit)
+        #expect(await subject.submit())
+        #expect(subject.isAccepted)
+    }
+    @Test func outdatedServerVersionsDoNotBlockAcceptance() async throws {
+        let remote = FakeConsentRemote()
         let valid = try await remote.accept(versions: .bundled)
         let newer = ConsentVersions(terms_version: "2.0", privacy_version: "1.0", health_version: "1.0")
         await remote.setStatus(.init(required: newer, accepted: valid.accepted, valid: false))
-        let outdated = ConsentViewModel(remote: remote)
-        #expect(await outdated.refresh() == false)
-        outdated.terms = true; outdated.health = true; outdated.representative = true
-        #expect(!outdated.canSubmit && outdated.error != nil)
+        let subject = ConsentViewModel(remote: remote)
+        #expect(await subject.refresh() == false && subject.error == nil)
+        subject.terms = true; subject.health = true; subject.representative = true
+        #expect(subject.canSubmit)
+        #expect(await subject.submit())
+        #expect(subject.status?.required == newer && subject.status?.isCurrent == true)
     }
     @Test func sessionResetDiscardsLateAcceptance() async {
         let remote = FakeConsentRemote()
@@ -114,16 +144,20 @@ private actor FakeConsentRemote: ConsentRemote {
         }
         #expect(session.phase == .consent && session.viewModel == nil)
         session.consent.terms = true; session.consent.health = true; session.consent.representative = true
+        // The server cannot record it right now: the local record lets the parent continue.
         await remote.configure(fail: true)
         await session.completeConsent()
-        #expect(session.phase == .consent && session.viewModel == nil)
-        await remote.configure()
-        await session.completeConsent()
-        #expect(session.phase == .content)
+        #expect(session.phase == .content && session.consent.acceptedLocallyAt != nil)
         let model = try #require(session.viewModel)
         _ = await model.send(.load)
         #expect(model.babies.isEmpty) // ContentView presents Create Child Profile for the empty store.
+        // Reachable again: the record is synced instead of asking twice.
+        await remote.configure()
+        await session.checkConsent()
+        #expect(session.phase == .content && session.consent.status?.isCurrent == true)
+        // A reachable server that rejects the record wins over the local one.
         await remote.setStatus(.init(required: .bundled, accepted: nil, valid: false))
+        await remote.configure(fail: true)
         await session.checkConsent()
         #expect(session.phase == .consent && session.viewModel == nil)
     }

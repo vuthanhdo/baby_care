@@ -181,7 +181,7 @@
 "Chọn ảnh hoặc dùng avatar chữ cái theo tên" = "Chọn ảnh hoặc dùng avatar chữ cái theo tên";
 "Chọn ảnh đại diện" = "Chọn ảnh đại diện";
 "Cloud chưa hỗ trợ xoá hồ sơ bé." = "Cloud chưa hỗ trợ xoá hồ sơ bé.";
-"Cloud từ chối dữ liệu ({0}). Hãy kiểm tra thông tin rồi thử lại." = "Cloud từ chối dữ liệu ({0}). Hãy kiểm tra thông tin rồi thử lại.";
+"Cloud từ chối dữ liệu ({0}: {1}). Hãy kiểm tra thông tin rồi thử lại." = "Cloud từ chối dữ liệu ({0}: {1}). Hãy kiểm tra thông tin rồi thử lại.";
 "Cài đặt" = "Cài đặt";
 "Các lần dùng thuốc" = "Các lần dùng thuốc";
 "Các lần uống thuốc đã ghi vẫn được giữ trong nhật ký." = "Các lần uống thuốc đã ghi vẫn được giữ trong nhật ký.";
@@ -497,7 +497,9 @@
 "Quản lý dữ liệu" = "Quản lý dữ liệu";
 "Rất lớn" = "Rất lớn";
 "Sao lưu trước khi xóa" = "Sao lưu trước khi xóa";
+"Server chưa có hàm mà app cần. Hãy áp dụng migration Supabase mới nhất rồi thử lại. ({0})" = "Server chưa có hàm mà app cần. Hãy áp dụng migration Supabase mới nhất rồi thử lại. ({0})";
 "Sinh hoạt" = "Sinh hoạt";
+"Sẽ được ghi nhận trên máy chủ khi kết nối được." = "Sẽ được ghi nhận trên máy chủ khi kết nối được.";
 "Số đo cơ thể" = "Số đo cơ thể";
 "Số đo của bé được cập nhật vào hồ sơ và biểu đồ tăng trưởng." = "Số đo của bé được cập nhật vào hồ sơ và biểu đồ tăng trưởng.";
 "Sổ mũi" = "Sổ mũi";
@@ -803,6 +805,7 @@
 "Đã xóa mũi tiêm" = "Đã xóa mũi tiêm";
 "Đã đến mốc theo lịch" = "Đã đến mốc theo lịch";
 "Đã đồng ý" = "Đã đồng ý";
+"Đã đồng ý trên thiết bị" = "Đã đồng ý trên thiết bị";
 "Đã đổi cỡ chữ" = "Đã đổi cỡ chữ";
 "Đã đổi mật khẩu." = "Đã đổi mật khẩu.";
 "Đóng" = "Đóng";

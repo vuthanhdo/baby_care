@@ -180,6 +180,12 @@ struct ConsentStatusView: View {
     @Environment(SessionViewModel.self) private var session: SessionViewModel?
     var body: some View {
         List {
+            if let local = session?.consent.acceptedLocallyAt, session?.consent.status == nil {
+                Section(L10n.text("Trạng thái đồng ý dữ liệu")) {
+                    LabeledContent(L10n.text("Đã đồng ý trên thiết bị"), value: local.careFormatted(date: .abbreviated, time: .shortened))
+                    Text(L10n.text("Sẽ được ghi nhận trên máy chủ khi kết nối được.")).font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
+                }
+            }
             if let status = session?.consent.status {
                 Section(L10n.text("Phiên bản hiện tại")) {
                     LabeledContent(L10n.text("Điều khoản sử dụng"), value: status.required.terms_version)

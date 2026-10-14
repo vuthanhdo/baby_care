@@ -30,22 +30,29 @@ final class ConsentUITests: XCTestCase {
         XCTAssertFalse(submit.exists)
     }
 
-    @MainActor func testFailedAcceptanceKeepsGateAndRetryWorks() {
+    @MainActor func testAcceptanceProceedsWhenServerRejectsOnce() {
         let app = launch(failOnce: true)
         XCTAssertTrue(app.buttons["onboardingConsentButton"].waitForExistence(timeout: 10))
         selectAll(in: app)
         app.buttons["onboardingConsentButton"].tap()
-        XCTAssertTrue(app.staticTexts["consent.error"].waitForExistence(timeout: 5))
-        XCTAssertFalse(app.textFields["babyNameField"].exists)
-        XCTAssertTrue(app.buttons["onboardingConsentButton"].isEnabled)
+        XCTAssertTrue(app.textFields["babyNameField"].waitForExistence(timeout: 10))
+    }
+
+    /// The consent RPC is unreachable or not deployed: three ticks still unlock the gate.
+    @MainActor func testStatusFailureStillUnlocksWithThreeTicks() {
+        let app = launch(statusFails: true)
+        XCTAssertTrue(app.buttons["onboardingConsentButton"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts["consent.error"].exists)
+        selectAll(in: app)
         app.buttons["onboardingConsentButton"].tap()
         XCTAssertTrue(app.textFields["babyNameField"].waitForExistence(timeout: 10))
     }
 
-    @MainActor private func launch(failOnce: Bool = false) -> XCUIApplication {
+    @MainActor private func launch(failOnce: Bool = false, statusFails: Bool = false) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = ["-ui-testing-consent", "-care.language", "vi"]
         if failOnce { app.launchArguments.append("-ui-testing-consent-failure") }
+        if statusFails { app.launchArguments.append("-ui-testing-consent-status-failure") }
         app.launch(); return app
     }
     @MainActor private func selectAll(in app: XCUIApplication) {

@@ -181,7 +181,7 @@
 "Chọn ảnh hoặc dùng avatar chữ cái theo tên" = "Choose a photo or use initials from your baby's name";
 "Chọn ảnh đại diện" = "Choose profile photo";
 "Cloud chưa hỗ trợ xoá hồ sơ bé." = "Cloud does not support deleting a baby profile yet.";
-"Cloud từ chối dữ liệu ({0}). Hãy kiểm tra thông tin rồi thử lại." = "The cloud rejected this data ({0}). Check the details and try again.";
+"Cloud từ chối dữ liệu ({0}: {1}). Hãy kiểm tra thông tin rồi thử lại." = "The cloud rejected the data ({0}: {1}). Check the details and try again.";
 "Cài đặt" = "Settings";
 "Các lần dùng thuốc" = "Medicine entries";
 "Các lần uống thuốc đã ghi vẫn được giữ trong nhật ký." = "Recorded medicine entries will remain in the diary.";
@@ -497,7 +497,9 @@
 "Quản lý dữ liệu" = "Manage data";
 "Rất lớn" = "Extra large";
 "Sao lưu trước khi xóa" = "Back up before deleting";
+"Server chưa có hàm mà app cần. Hãy áp dụng migration Supabase mới nhất rồi thử lại. ({0})" = "The server is missing a function this app needs. Apply the latest Supabase migration and try again. ({0})";
 "Sinh hoạt" = "Routines";
+"Sẽ được ghi nhận trên máy chủ khi kết nối được." = "It will be recorded on the server once a connection is available.";
 "Số đo cơ thể" = "Body measurements";
 "Số đo của bé được cập nhật vào hồ sơ và biểu đồ tăng trưởng." = "Your baby's measurements update their profile and growth charts.";
 "Sổ mũi" = "Runny nose";
@@ -803,6 +805,7 @@
 "Đã xóa mũi tiêm" = "Vaccination deleted";
 "Đã đến mốc theo lịch" = "Scheduled time reached";
 "Đã đồng ý" = "Accepted";
+"Đã đồng ý trên thiết bị" = "Accepted on this device";
 "Đã đổi cỡ chữ" = "Text size updated";
 "Đã đổi mật khẩu." = "Password updated.";
 "Đóng" = "Close";

@@ -24,7 +24,12 @@ import Supabase
     private actor Transport: ConsentRemote {
         var current = ConsentStatus(required: .bundled, accepted: nil, valid: false)
         var failOnce = ProcessInfo.processInfo.arguments.contains("-ui-testing-consent-failure")
-        func status() -> ConsentStatus { current }
+        // Sign-in and the screen's own task both call status(); fail both so the gate stays locked until Retry.
+        var failingStatusCalls = ProcessInfo.processInfo.arguments.contains("-ui-testing-consent-status-failure") ? 2 : 0
+        func status() throws -> ConsentStatus {
+            if failingStatusCalls > 0 { failingStatusCalls -= 1; throw URLError(.notConnectedToInternet) }
+            return current
+        }
         func accept(versions: ConsentVersions) async throws -> ConsentStatus {
             try await Task.sleep(for: .milliseconds(250))
             if failOnce { failOnce = false; throw URLError(.notConnectedToInternet) }

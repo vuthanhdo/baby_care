@@ -36,7 +36,11 @@ nonisolated enum CloudError: Error, LocalizedError, Sendable, Equatable {
             if e.code == "P0001", e.message == "Baby limit reached" { return CareDataError.invalidInput(L10n.text("Bạn chỉ có thể tạo tối đa 4 hồ sơ bé.")) }
             if e.code == "40001" || e.code == "23505" { return CloudError.conflict }
             if e.code == "42501" || e.code == "PGRST301" || e.code == "PGRST302" { return CloudError.accessDenied }
-            return CareDataError.invalidInput(L10n.text("Cloud từ chối dữ liệu ({0}). Hãy kiểm tra thông tin rồi thử lại.", "\(e.code ?? "unknown")"))
+            if e.code == "PGRST202" {
+                // The message names the function and parameters PostgREST looked for: the server is missing a migration.
+                return CareDataError.invalidInput(L10n.text("Server chưa có hàm mà app cần. Hãy áp dụng migration Supabase mới nhất rồi thử lại. ({0})", e.message))
+            }
+            return CareDataError.invalidInput(L10n.text("Cloud từ chối dữ liệu ({0}: {1}). Hãy kiểm tra thông tin rồi thử lại.", "\(e.code ?? "unknown")", e.message))
         }
         if error is AuthError { return CloudError.signedOut }
         if let e = error as? StorageError {
@@ -176,7 +180,11 @@ actor SupabaseRemote: CareCloudRemote {
     func syncMedia(from old: CloudSnapshot, to next: CareDatabase, operationID: UUID) async throws -> CloudMediaSyncResult {
         do {
             try await lease.check()
-            guard try await SupabaseConsentRemote(client: client).status().isCurrent else { throw CloudError.consentRequired }
+            // Pre-check consent before uploading bytes. Until migration 0008 exists on the server the status RPC is
+            // missing (PGRST202); the apply RPC and Storage policies enforce consent themselves once it does.
+            do {
+                guard try await SupabaseConsentRemote(client: client).status().isCurrent else { throw CloudError.consentRequired }
+            } catch let error as PostgrestError where error.code == "PGRST202" { }
             let desired = try CloudMediaPlan.desired(in: next, familyID: familyID,
                 operationID: operationID, existing: old.mediaAssets ?? [])
             let oldAssets = old.mediaAssets ?? []
