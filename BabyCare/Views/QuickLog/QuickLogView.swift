@@ -111,7 +111,7 @@ struct QuickLogView: View {
                             Text(L10n.text("Còn"))
                             Text(timerInterval: context.date...reminder.nextDate, countsDown: true).monospacedDigit()
                         }.font(CareFont.headline)
-                    } else { Text(L10n.text("Đã đến mốc theo lịch")).font(CareFont.headline) }
+                    } else { Text(L10n.text("Đã đến mốc theo lịch")).font(CareFont.headline).foregroundStyle(CareTheme.medical) }
                 }.foregroundStyle(CareTheme.accent).frame(maxWidth: .infinity, alignment: .leading)
                     .padding(12).background(CareTheme.feedingBackground, in: .rect(cornerRadius: 12))
             }
@@ -162,10 +162,22 @@ struct QuickLogView: View {
                             }
                         }.padding(12).background(CareTheme.medicalBackground.opacity(0.5), in: .rect(cornerRadius: 12))
                     }
+                    let episode = InsightData.episodeSummary(viewModel.activities, since: viewModel.illnessStartDate)
+                    if let peak = episode.peakTemperature, peak.id != lastTemperature?.id {
+                        Text(L10n.text("Cao nhất trong đợt: {0} °C · {1}", "\(peak.value)", "\(peak.date.careFormatted(date: .abbreviated, time: .shortened))"))
+                            .font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                    }
+                    if !episode.symptomNames.isEmpty {
+                        HStack(spacing: 8) {
+                            Text(L10n.text("Triệu chứng gần nhất")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                            SymptomChips(names: episode.symptomNames)
+                        }
+                    }
                     ViewThatFits(in: .horizontal) {
                         HStack { temperatureLink; illnessLink }
                         VStack { temperatureLink; illnessLink }
                     }
+                    symptomLink
                 }
             }
         }
@@ -174,6 +186,11 @@ struct QuickLogView: View {
         NavigationLink { ActivityFormView(kind: .temperature) } label: {
             Label { Text(L10n.text("Đo nhiệt độ")) } icon: { CareIcon(name: "Stitch_device_thermostat", color: .white, size: 20) }
         }.buttonStyle(CareActionStyle())
+    }
+    private var symptomLink: some View {
+        NavigationLink { ActivityFormView(kind: .symptom) } label: {
+            Label(L10n.text("Ghi triệu chứng"), systemImage: "plus").font(CareFont.caption.weight(.semibold)).frame(maxWidth: .infinity, minHeight: 36)
+        }.foregroundStyle(CareTheme.medical)
     }
     private var illnessLink: some View {
         NavigationLink { IllnessTrackingView() } label: {

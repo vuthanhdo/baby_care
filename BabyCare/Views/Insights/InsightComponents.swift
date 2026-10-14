@@ -88,6 +88,41 @@ enum InsightData {
         summary.sleepHours = finite(summary.sleepHours)
         return summary
     }
+    /// Quick choices after a dose, counted from the logged time; moments already past are not offered.
+    static func nextDoseOptions(after takenAt: Date, now: Date = .now) -> [(hours: Int, date: Date)] {
+        [4, 6, 8, 12].map { (hours: $0, date: takenAt.addingTimeInterval(Double($0) * 3600)) }.filter { $0.date > now }
+    }
+    /// Totals for the running illness episode: only medical entries logged since it started count.
+    static func episodeSummary(_ activities: [CareActivity], since start: Date, now: Date = .now, calendar: Calendar = .current) -> InsightEpisodeSummary {
+        var summary = InsightEpisodeSummary()
+        let elapsed = calendar.dateComponents([.day], from: calendar.startOfDay(for: start), to: calendar.startOfDay(for: now)).day ?? 0
+        summary.days = max(1, elapsed + 1)
+        for activity in activities where activity.date >= start && activity.date <= now {
+            switch activity.kind {
+            case .temperature:
+                guard let value = number(activity.value) else { continue }
+                summary.temperatureCount += 1
+                if let peak = summary.peakTemperature, let peakValue = number(peak.value),
+                   peakValue > value || (peakValue == value && peak.date >= activity.date) { continue }
+                summary.peakTemperature = activity
+            case .medicine: summary.doseCount += 1
+            case .symptom:
+                if summary.latestSymptoms.map({ $0.date < activity.date }) ?? true { summary.latestSymptoms = activity }
+            default: break
+            }
+        }
+        return summary
+    }
+}
+
+/// Totals for the running illness episode, shown on the quick log and the illness screen.
+struct InsightEpisodeSummary: Equatable {
+    var days = 1
+    var temperatureCount = 0
+    var peakTemperature: CareActivity?
+    var doseCount = 0
+    var latestSymptoms: CareActivity?
+    var symptomNames: [String] { latestSymptoms?.value.components(separatedBy: ", ").filter { !$0.isEmpty } ?? [] }
 }
 
 /// Read-only totals for one calendar day, shown on the quick log and derived from the saved diary.
@@ -116,6 +151,49 @@ struct InsightBadge: View {
         Text(title).font(CareFont.caption.weight(.semibold)).foregroundStyle(color)
             .padding(.horizontal, 10).padding(.vertical, 5)
             .background(color.opacity(0.09), in: Capsule())
+    }
+}
+
+/// Stored symptom values are stable Vietnamese keys; they are translated only when shown.
+/// Chips wrap instead of scrolling so a vertical swipe over them still scrolls the screen.
+struct SymptomChips: View {
+    let names: [String]
+    @Environment(\.locale) private var appLocale
+    var body: some View {
+        let _ = appLocale
+        CareWrapLayout(spacing: 6) {
+            ForEach(names, id: \.self) { name in
+                Text(L10n.text(name)).font(CareFont.caption.weight(.medium)).foregroundStyle(CareTheme.medical)
+                    .padding(.horizontal, 9).padding(.vertical, 4).background(CareTheme.medicalBackground, in: Capsule())
+            }
+        }.accessibilityElement(children: .combine)
+    }
+}
+
+/// Lays children out left to right and wraps to the next line when the width runs out.
+struct CareWrapLayout: Layout {
+    var spacing: CGFloat = 6
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let width = proposal.width ?? .infinity
+        return place(in: width, subviews: subviews).size
+    }
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        for (index, origin) in place(in: bounds.width, subviews: subviews).origins.enumerated() {
+            subviews[index].place(at: CGPoint(x: bounds.minX + origin.x, y: bounds.minY + origin.y), proposal: .unspecified)
+        }
+    }
+    private func place(in width: CGFloat, subviews: Subviews) -> (size: CGSize, origins: [CGPoint]) {
+        var origins: [CGPoint] = []
+        var x: CGFloat = 0, y: CGFloat = 0, rowHeight: CGFloat = 0, maxX: CGFloat = 0
+        for subview in subviews {
+            let size = subview.sizeThatFits(.unspecified)
+            if x > 0, x + size.width > width { x = 0; y += rowHeight + spacing; rowHeight = 0 }
+            origins.append(CGPoint(x: x, y: y))
+            x += size.width + spacing
+            rowHeight = max(rowHeight, size.height)
+            maxX = max(maxX, x - spacing)
+        }
+        return (CGSize(width: width.isFinite ? min(width, maxX) : maxX, height: y + rowHeight), origins)
     }
 }
 
@@ -161,6 +239,8 @@ struct InsightActivityRow: View {
 
 struct TemperatureChartView: View {
     let activities: [CareActivity]
+    /// Doses are drawn as dashed moments below the readings, never as amounts on the temperature axis.
+    var medicines: [CareActivity] = []
     var compact = false
     @State private var selectedDate: Date?
     @State private var showList = false
@@ -170,6 +250,12 @@ struct TemperatureChartView: View {
     private var selected: CareActivity? {
         guard let selectedDate else { return nil }
         return points.min { abs($0.date.timeIntervalSince(selectedDate)) < abs($1.date.timeIntervalSince(selectedDate)) }
+    }
+    private var doses: [CareActivity] { medicines.filter { $0.kind == .medicine }.sorted { $0.date < $1.date } }
+    private var selectedDose: CareActivity? {
+        guard let selectedDate, let dose = doses.min(by: { abs($0.date.timeIntervalSince(selectedDate)) < abs($1.date.timeIntervalSince(selectedDate)) }),
+              abs(dose.date.timeIntervalSince(selectedDate)) <= 45 * 60 else { return nil }
+        return dose
     }
     private var domain: ClosedRange<Double> {
         let values = points.compactMap { InsightData.number($0.value) }
@@ -197,12 +283,20 @@ struct TemperatureChartView: View {
                     NavigationLink { ActivityDetailView(activity: point) } label: { InsightActivityRow(activity: point) }
                 }
             } else {
-                Chart(points) { point in
-                    if let value = InsightData.number(point.value) {
-                        LineMark(x: .value(L10n.text("Thời điểm"), point.date), y: .value(L10n.text("Nhiệt độ °C"), value))
-                            .foregroundStyle(CareTheme.accent).interpolationMethod(.linear)
-                        PointMark(x: .value(L10n.text("Thời điểm"), point.date), y: .value(L10n.text("Nhiệt độ °C"), value))
-                            .foregroundStyle(CareTheme.accent).symbolSize(selected?.id == point.id ? 90 : 35)
+                Chart {
+                    ForEach(points) { point in
+                        if let value = InsightData.number(point.value) {
+                            LineMark(x: .value(L10n.text("Thời điểm"), point.date), y: .value(L10n.text("Nhiệt độ °C"), value))
+                                .foregroundStyle(CareTheme.accent).interpolationMethod(.linear)
+                            PointMark(x: .value(L10n.text("Thời điểm"), point.date), y: .value(L10n.text("Nhiệt độ °C"), value))
+                                .foregroundStyle(CareTheme.accent).symbolSize(selected?.id == point.id ? 90 : 35)
+                        }
+                    }
+                    ForEach(doses) { dose in
+                        RuleMark(x: .value(L10n.text("Thuốc"), dose.date))
+                            .foregroundStyle(CareTheme.feeding.opacity(selectedDose?.id == dose.id ? 0.9 : 0.45))
+                            .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
+                            .annotation(position: .top, spacing: 2) { CareIcon(name: "Stitch_medication", color: CareTheme.feeding, size: 11) }
                     }
                 }
                 .chartYScale(domain: domain)
@@ -213,6 +307,18 @@ struct TemperatureChartView: View {
                 .accessibilityLabel(L10n.count(points.count, one: "Biểu đồ nhiệt độ, 1 lần đo. Có thể chuyển sang danh sách.", many: "Biểu đồ nhiệt độ, {0} lần đo. Có thể chuyển sang danh sách."))
                 if points.count == 1 {
                     Text(L10n.text("Cần thêm số đo để xem diễn biến")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                }
+                if !doses.isEmpty {
+                    Text(L10n.count(doses.count, one: "Vạch đứt: 1 lần dùng thuốc", many: "Vạch đứt: {0} lần dùng thuốc")).font(CareFont.caption2).foregroundStyle(CareTheme.secondary)
+                }
+                if let selectedDose {
+                    NavigationLink { ActivityDetailView(activity: selectedDose) } label: {
+                        HStack {
+                            Text("\(selectedDose.date.careFormatted(date: .omitted, time: .shortened)) · \(selectedDose.detail) \(selectedDose.formattedValue)")
+                            Spacer()
+                            Text(L10n.text("Xem bản ghi")).fontWeight(.semibold)
+                        }.font(CareFont.caption).foregroundStyle(CareTheme.feeding)
+                    }
                 }
                 if let selected {
                     NavigationLink { ActivityDetailView(activity: selected) } label: {

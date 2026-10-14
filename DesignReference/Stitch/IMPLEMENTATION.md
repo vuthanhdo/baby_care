@@ -17,7 +17,7 @@ Nguồn thiết kế cho lần cập nhật này: [iOS SwiftUI Design System](ht
 | G – Số đo | Thẻ cân nặng/chiều cao, bước tăng giảm, phương pháp đo, sheet ngày giờ, CTA lưu |
 | P – Hồ sơ | Avatar, thông tin bé, số đo mới nhất, lưu ý sức khỏe và danh sách bé trong các thẻ |
 | S – Thống kê | Typography, bộ lọc, thẻ số liệu và biểu đồ nhất quán; giữ ba chế độ và dữ liệu thật |
-| I – Theo dõi ốm | Thẻ đợt theo dõi, lịch thuốc và nhật ký; dùng cùng typography và button |
+| I – Theo dõi ốm | Thẻ đợt có lưới tổng quan (nhiệt độ gần nhất, cao nhất trong đợt, số lần đo, số liều, chip triệu chứng), biểu đồ thân nhiệt theo đợt với vạch thuốc, nhật ký đợt nhóm theo ngày; sau "Ghi đã dùng" hiện sheet "Mốc tiếp theo" (+4/6/8/12 giờ, giờ khác, tạm dừng), thẻ lịch nhắc có lần gần nhất và viền đỏ khi đến mốc; ghi nhiệt độ khi chưa có đợt sẽ mời bắt đầu theo dõi (14/10/2026) |
 | V – Giọng nói | Typography, vùng microphone/nội dung và các thẻ xem lại; ghi rõ trạng thái tính năng |
 | R / W – Báo cáo | Typography/thẻ, lựa chọn nội dung, logo ở bản xem trước, PDF từ snapshot |
 | K – Cài đặt | Typography, logo mục giới thiệu; chuyển tài khoản/gia đình từ thanh đầu app vào đây |

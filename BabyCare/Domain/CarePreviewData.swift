@@ -7,6 +7,8 @@ nonisolated enum CarePreviewData {
         let now = Date()
         data.activities = [
             CareActivity(kind: .temperature, date: now.addingTimeInterval(-3600), value: "37,7", unit: "°C", note: "Trán ấm, chơi ngoan", detail: "Đo nách"),
+            CareActivity(kind: .symptom, date: now.addingTimeInterval(-5400), value: "Ho, Sổ mũi", note: "Ho nhẹ về đêm"),
+            CareActivity(kind: .medicine, date: now.addingTimeInterval(-21600), value: "5", unit: "ml", detail: "Paracetamol"),
             CareActivity(kind: .bath, date: now.addingTimeInterval(-7200), value: "Tắm nước ấm", note: "Bé thoải mái sau khi tắm"),
             CareActivity(kind: .sleep, date: now.addingTimeInterval(-14400), value: "90", unit: "phút", note: "Ngủ tròn giấc, dậy vui"),
             CareActivity(kind: .milk, date: now.addingTimeInterval(-18000), value: "120", unit: "ml", note: "Bé bú hết bình", detail: "Sữa công thức"),

@@ -14,6 +14,7 @@
 "1 số đo" = "1 số đo";
 "1 số đo trong khoảng" = "1 số đo trong khoảng";
 "1 sự kiện" = "1 sự kiện";
+"1 sự kiện kể từ khởi phát" = "1 sự kiện kể từ khởi phát";
 "1 tháng" = "1 tháng";
 "1 tháng tuổi" = "1 tháng tuổi";
 "1 tuổi" = "1 tuổi";
@@ -99,6 +100,7 @@
 "Bắt đầu ngủ" = "Bắt đầu ngủ";
 "Bắt đầu theo dõi" = "Bắt đầu theo dõi";
 "Bắt đầu theo dõi ốm" = "Bắt đầu theo dõi ốm";
+"Bắt đầu theo dõi ốm?" = "Bắt đầu theo dõi ốm?";
 "Bắt đầu {0} · Xem lịch thuốc và nhật ký" = "Bắt đầu {0} · Xem lịch thuốc và nhật ký";
 "Bắt đầu đồng hành cùng bé yêu." = "Bắt đầu đồng hành cùng bé yêu.";
 "Bỏ nội dung" = "Bỏ nội dung";
@@ -107,6 +109,8 @@
 "Bộ nhớ trên thiết bị" = "Bộ nhớ trên thiết bị";
 "Bữa ăn" = "Bữa ăn";
 "Bữa ăn · {0} ml nước" = "Bữa ăn · {0} ml nước";
+"Cao nhất trong đợt" = "Cao nhất trong đợt";
+"Cao nhất trong đợt: {0} °C · {1}" = "Cao nhất trong đợt: {0} °C · {1}";
 "Cao nhất đã ghi: {0}" = "Cao nhất đã ghi: {0}";
 "Chi tiết hoạt động" = "Chi tiết hoạt động";
 "Chia sẻ báo cáo" = "Chia sẻ báo cáo";
@@ -134,6 +138,7 @@
 "Chưa có số đo" = "Chưa có số đo";
 "Chưa có số đo trong khoảng này" = "Chưa có số đo trong khoảng này";
 "Chưa có tài khoản?" = "Chưa có tài khoản?";
+"Chưa ghi lần nào" = "Chưa ghi lần nào";
 "Chưa ghi nhận" = "Chưa ghi nhận";
 "Chưa ghi nhận dùng thuốc" = "Chưa ghi nhận dùng thuốc";
 "Chưa ghi nhận nhiệt độ trong khoảng này" = "Chưa ghi nhận nhiệt độ trong khoảng này";
@@ -173,6 +178,7 @@
 "Chọn Y tế, Ăn uống hoặc Sinh hoạt; chọn hoạt động; kiểm tra dữ liệu rồi bấm Lưu. Thời điểm mặc định là hiện tại. Nội dung giọng nói cần xem lại trước khi lưu." = "Chọn Y tế, Ăn uống hoặc Sinh hoạt; chọn hoạt động; kiểm tra dữ liệu rồi bấm Lưu. Thời điểm mặc định là hiện tại. Nội dung giọng nói cần xem lại trước khi lưu.";
 "Chọn bé" = "Chọn bé";
 "Chọn danh mục hoặc nói để ghi nhanh" = "Chọn danh mục hoặc nói để ghi nhanh";
+"Chọn giờ khác" = "Chọn giờ khác";
 "Chọn một hoạt động phía trên để bắt đầu chăm sóc bé mỗi ngày." = "Chọn một hoạt động phía trên để bắt đầu chăm sóc bé mỗi ngày.";
 "Chọn ngày" = "Chọn ngày";
 "Chọn nội dung chia sẻ" = "Chọn nội dung chia sẻ";
@@ -251,6 +257,7 @@
 "Ghi nhanh, Tìm lại, Lịch thuốc, Chia sẻ" = "Ghi nhanh, Tìm lại, Lịch thuốc, Chia sẻ";
 "Ghi nhanh, tìm lại dễ dàng và theo dõi thông tin chăm sóc bé trong một ứng dụng." = "Ghi nhanh, tìm lại dễ dàng và theo dõi thông tin chăm sóc bé trong một ứng dụng.";
 "Ghi số đo và vị trí đo" = "Ghi số đo và vị trí đo";
+"Ghi triệu chứng" = "Ghi triệu chứng";
 "Ghi tương tự" = "Ghi tương tự";
 "Ghi tương tự (Đo lại bây giờ)" = "Ghi tương tự (Đo lại bây giờ)";
 "Ghi uống thuốc" = "Ghi uống thuốc";
@@ -268,6 +275,7 @@
 "Giới tính của bé" = "Giới tính của bé";
 "Giờ" = "Giờ";
 "Giờ bắt đầu và kết thúc" = "Giờ bắt đầu và kết thúc";
+"Gom nhiệt độ, thuốc và triệu chứng vào một đợt để theo dõi diễn biến. Bạn có thể kết thúc bất cứ lúc nào." = "Gom nhiệt độ, thuốc và triệu chứng vào một đợt để theo dõi diễn biến. Bạn có thể kết thúc bất cứ lúc nào.";
 "Gỡ ảnh {0}" = "Gỡ ảnh {0}";
 "GỢI Ý LÚC NÀY" = "GỢI Ý LÚC NÀY";
 "Gợi ý theo thói quen" = "Gợi ý theo thói quen";
@@ -288,6 +296,7 @@
 "HÔM NAY" = "HÔM NAY";
 "Hãy thử lại." = "Hãy thử lại.";
 "Hôm nay" = "Hôm nay";
+"Hôm qua" = "Hôm qua";
 "Hướng dẫn & Giới thiệu" = "Hướng dẫn & Giới thiệu";
 "Hướng dẫn sử dụng" = "Hướng dẫn sử dụng";
 "Hướng dẫn sử dụng 4 bước" = "Hướng dẫn sử dụng 4 bước";
@@ -321,6 +330,7 @@
 "Không đọc được dữ liệu" = "Không đọc được dữ liệu";
 "Không đọc được dữ liệu đã lưu. Dữ liệu gốc vẫn được giữ." = "Không đọc được dữ liệu đã lưu. Dữ liệu gốc vẫn được giữ.";
 "Không đọc được ảnh này. Hãy chọn ảnh khác." = "Không đọc được ảnh này. Hãy chọn ảnh khác.";
+"Không, chỉ ghi nhiệt độ" = "Không, chỉ ghi nhiệt độ";
 "Khởi phát: {0}" = "Khởi phát: {0}";
 "Kiểm tra hộp thư của bạn" = "Kiểm tra hộp thư của bạn";
 "Kiểm tra lịch đã nhập cho bé" = "Kiểm tra lịch đã nhập cho bé";
@@ -356,8 +366,11 @@
 "Lượng thực tế" = "Lượng thực tế";
 "Lượng thực tế · Bắt buộc" = "Lượng thực tế · Bắt buộc";
 "Lượng đã nhập: {0} {1}" = "Lượng đã nhập: {0} {1}";
+"Lần dùng thuốc" = "Lần dùng thuốc";
+"Lần gần nhất: {0} · {1}" = "Lần gần nhất: {0} · {1}";
 "Lần trước: {0} kg · {1}" = "Lần trước: {0} kg · {1}";
 "Lần trước: {0}. Kiểm tra lượng mới trước khi lưu." = "Lần trước: {0}. Kiểm tra lượng mới trước khi lưu.";
+"Lần đo" = "Lần đo";
 "Lần đo trước: {0} · {1}" = "Lần đo trước: {0} · {1}";
 "Lịch mũi tiếp theo" = "Lịch mũi tiếp theo";
 "Lịch nhắc" = "Lịch nhắc";
@@ -390,6 +403,8 @@
 "MỐC ĐÃ ĐẶT: {0}" = "MỐC ĐÃ ĐẶT: {0}";
 "Mốc do bạn đặt" = "Mốc do bạn đặt";
 "Mốc nhắc tiếp theo" = "Mốc nhắc tiếp theo";
+"Mốc tiếp theo" = "Mốc tiếp theo";
+"Mốc tiếp theo: {0}" = "Mốc tiếp theo: {0}";
 "Mỗi hoạt động tối đa 3 ảnh." = "Mỗi hoạt động tối đa 3 ảnh.";
 "Mỗi ảnh cần nhỏ hơn 5 MB." = "Mỗi ảnh cần nhỏ hơn 5 MB.";
 "Một số thông tin bạn nhập có thể là dữ liệu cá nhân và dữ liệu sức khỏe của trẻ, vì vậy BabyCare cần sự đồng ý của bạn trước khi xử lý các thông tin này." = "Một số thông tin bạn nhập có thể là dữ liệu cá nhân và dữ liệu sức khỏe của trẻ, vì vậy BabyCare cần sự đồng ý của bạn trước khi xử lý các thông tin này.";
@@ -453,6 +468,8 @@
 "Nhập ít nhất một số đo hợp lệ để lưu." = "Nhập ít nhất một số đo hợp lệ để lưu.";
 "Nhật ký" = "Nhật ký";
 "Nhật ký dùng thuốc" = "Nhật ký dùng thuốc";
+"Nhật ký y tế gần đây" = "Nhật ký y tế gần đây";
+"Nhật ký đợt ốm" = "Nhật ký đợt ốm";
 "Nhật ký đợt ốm gần đây" = "Nhật ký đợt ốm gần đây";
 "Nhắc thuốc" = "Nhắc thuốc";
 "Nhắc trước mũi tiếp theo" = "Nhắc trước mũi tiếp theo";
@@ -497,6 +514,8 @@
 "Quản lý dữ liệu" = "Quản lý dữ liệu";
 "Rất lớn" = "Rất lớn";
 "Sao lưu trước khi xóa" = "Sao lưu trước khi xóa";
+"Sau 1 giờ" = "Sau 1 giờ";
+"Sau {0} giờ" = "Sau {0} giờ";
 "Server chưa có hàm mà app cần. Hãy áp dụng migration Supabase mới nhất rồi thử lại. ({0})" = "Server chưa có hàm mà app cần. Hãy áp dụng migration Supabase mới nhất rồi thử lại. ({0})";
 "Sinh hoạt" = "Sinh hoạt";
 "Sẽ được ghi nhận trên máy chủ khi kết nối được." = "Sẽ được ghi nhận trên máy chủ khi kết nối được.";
@@ -582,6 +601,7 @@
 "Toàn bộ dữ liệu liên quan tới bé này sẽ bị xóa và không thể hoàn tác." = "Toàn bộ dữ liệu liên quan tới bé này sẽ bị xóa và không thể hoàn tác.";
 "Toàn bộ lịch sử" = "Toàn bộ lịch sử";
 "Triệu chứng" = "Triệu chứng";
+"Triệu chứng gần nhất" = "Triệu chứng gần nhất";
 "Trong Thống kê, chọn Chia sẻ báo cáo, chọn thời gian và nội dung, xem trước rồi xuất PDF. Báo cáo phản ánh dữ liệu tại thời điểm tạo." = "Trong Thống kê, chọn Chia sẻ báo cáo, chọn thời gian và nội dung, xem trước rồi xuất PDF. Báo cáo phản ánh dữ liệu tại thời điểm tạo.";
 "Trán" = "Trán";
 "Trên thiết bị" = "Trên thiết bị";
@@ -606,6 +626,7 @@
 "Tìm hoạt động, thuốc, ghi chú…" = "Tìm hoạt động, thuốc, ghi chú…";
 "Tích nhanh tất cả & Tiếp tục" = "Tích nhanh tất cả & Tiếp tục";
 "Tính năng tiêm chủng chưa sẵn sàng trên cloud. Dữ liệu khác vẫn sử dụng được." = "Tính năng tiêm chủng chưa sẵn sàng trên cloud. Dữ liệu khác vẫn sử dụng được.";
+"Tính từ lần vừa ghi" = "Tính từ lần vừa ghi";
 "Tôi là cha mẹ, người giám hộ hoặc người đại diện hợp pháp có quyền cung cấp thông tin của trẻ." = "Tôi là cha mẹ, người giám hộ hoặc người đại diện hợp pháp có quyền cung cấp thông tin của trẻ.";
 "Tôi xác nhận tôi là cha/mẹ, người giám hộ hoặc người đại diện hợp pháp có quyền cung cấp và quản lý thông tin của trẻ." = "Tôi xác nhận tôi là cha/mẹ, người giám hộ hoặc người đại diện hợp pháp có quyền cung cấp và quản lý thông tin của trẻ.";
 "Tôi đã đọc và đồng ý với Điều khoản sử dụng" = "Tôi đã đọc và đồng ý với Điều khoản sử dụng";
@@ -616,6 +637,7 @@
 "Tăng " = "Tăng ";
 "Tăng 0,1 độ" = "Tăng 0,1 độ";
 "Tăng trưởng" = "Tăng trưởng";
+"Tạm dừng nhắc thuốc này" = "Tạm dừng nhắc thuốc này";
 "Tạo báo cáo PDF" = "Tạo báo cáo PDF";
 "Tạo bản PDF" = "Tạo bản PDF";
 "Tạo hồ sơ bé" = "Tạo hồ sơ bé";
@@ -650,6 +672,8 @@
 "Ví dụ: “Bé uống 120 ml sữa lúc 7 giờ sáng”" = "Ví dụ: “Bé uống 120 ml sữa lúc 7 giờ sáng”";
 "Vòng đầu (cm) · Tùy chọn" = "Vòng đầu (cm) · Tùy chọn";
 "Vòng đầu {0} cm" = "Vòng đầu {0} cm";
+"Vạch đứt: 1 lần dùng thuốc" = "Vạch đứt: 1 lần dùng thuốc";
+"Vạch đứt: {0} lần dùng thuốc" = "Vạch đứt: {0} lần dùng thuốc";
 "Về ứng dụng" = "Về ứng dụng";
 "Về ứng dụng Bé Khỏe" = "Về ứng dụng Bé Khỏe";
 "Vị trí đo" = "Vị trí đo";
@@ -703,6 +727,7 @@
 "hoặc đăng nhập bằng email" = "hoặc đăng nhập bằng email";
 "lần xịt" = "lần xịt";
 "phút" = "phút";
+"trong đợt" = "trong đợt";
 "viên" = "viên";
 "{0} / 3 đã chọn" = "{0} / 3 đã chọn";
 "{0} bữa" = "{0} bữa";
@@ -721,6 +746,7 @@
 "{0} số đo" = "{0} số đo";
 "{0} số đo trong khoảng" = "{0} số đo trong khoảng";
 "{0} sự kiện" = "{0} sự kiện";
+"{0} sự kiện kể từ khởi phát" = "{0} sự kiện kể từ khởi phát";
 "{0} tháng" = "{0} tháng";
 "{0} tháng tuổi" = "{0} tháng tuổi";
 "{0} tuổi" = "{0} tuổi";
@@ -777,6 +803,7 @@
 "Đã cập nhật số đo" = "Đã cập nhật số đo";
 "Đã ghi" = "Đã ghi";
 "Đã ghi nhận" = "Đã ghi nhận";
+"Đã ghi {0} {1} lúc {2}. Đặt mốc nhắc tiếp theo theo hướng dẫn bạn đang có." = "Đã ghi {0} {1} lúc {2}. Đặt mốc nhắc tiếp theo theo hướng dẫn bạn đang có.";
 "Đã gửi email tới {0}. Bấm liên kết trong email để xác minh tài khoản." = "Đã gửi email tới {0}. Bấm liên kết trong email để xác minh tài khoản.";
 "Đã gửi lại email xác thực tới {0}." = "Đã gửi lại email xác thực tới {0}.";
 "Đã hủy trước khi bắt đầu nhận dạng. Chưa lưu hoạt động nào." = "Đã hủy trước khi bắt đầu nhận dạng. Chưa lưu hoạt động nào.";
@@ -820,6 +847,7 @@
 "Đơn vị đo" = "Đơn vị đo";
 "Đặt lại mật khẩu" = "Đặt lại mật khẩu";
 "Đặt mốc theo hướng dẫn bạn đã có. Lịch nhắc không phải bản ghi đã uống." = "Đặt mốc theo hướng dẫn bạn đã có. Lịch nhắc không phải bản ghi đã uống.";
+"Đặt mốc đã chọn" = "Đặt mốc đã chọn";
 "Đến" = "Đến";
 "Để sau" = "Để sau";
 "Để trống thông tin chưa biết. Ghi chú do gia đình cung cấp không phải chẩn đoán." = "Để trống thông tin chưa biết. Ghi chú do gia đình cung cấp không phải chẩn đoán.";

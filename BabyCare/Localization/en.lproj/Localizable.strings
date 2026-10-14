@@ -14,6 +14,7 @@
 "1 số đo" = "1 measurement";
 "1 số đo trong khoảng" = "1 measurement in this period";
 "1 sự kiện" = "1 event";
+"1 sự kiện kể từ khởi phát" = "1 entry since onset";
 "1 tháng" = "1 month";
 "1 tháng tuổi" = "1 month old";
 "1 tuổi" = "1 year";
@@ -99,6 +100,7 @@
 "Bắt đầu ngủ" = "Start sleep";
 "Bắt đầu theo dõi" = "Start tracking";
 "Bắt đầu theo dõi ốm" = "Start illness tracking";
+"Bắt đầu theo dõi ốm?" = "Start tracking an illness?";
 "Bắt đầu {0} · Xem lịch thuốc và nhật ký" = "Started {0} · View medicine reminders and diary";
 "Bắt đầu đồng hành cùng bé yêu." = "Start your baby's care journey.";
 "Bỏ nội dung" = "Discard";
@@ -107,6 +109,8 @@
 "Bộ nhớ trên thiết bị" = "Device storage";
 "Bữa ăn" = "Meals";
 "Bữa ăn · {0} ml nước" = "Meals · {0} ml water";
+"Cao nhất trong đợt" = "Peak this episode";
+"Cao nhất trong đợt: {0} °C · {1}" = "Peak this episode: {0} °C · {1}";
 "Cao nhất đã ghi: {0}" = "Highest recorded: {0}";
 "Chi tiết hoạt động" = "Activity details";
 "Chia sẻ báo cáo" = "Share report";
@@ -134,6 +138,7 @@
 "Chưa có số đo" = "No measurements yet";
 "Chưa có số đo trong khoảng này" = "No measurements in this period";
 "Chưa có tài khoản?" = "Don't have an account?";
+"Chưa ghi lần nào" = "No dose logged yet";
 "Chưa ghi nhận" = "Not recorded yet";
 "Chưa ghi nhận dùng thuốc" = "No medicine entries";
 "Chưa ghi nhận nhiệt độ trong khoảng này" = "No temperature entries in this period";
@@ -173,6 +178,7 @@
 "Chọn Y tế, Ăn uống hoặc Sinh hoạt; chọn hoạt động; kiểm tra dữ liệu rồi bấm Lưu. Thời điểm mặc định là hiện tại. Nội dung giọng nói cần xem lại trước khi lưu." = "Select Health, Feeding or Routines, then choose an activity, check the details and tap Save. The default time is now. Voice input currently recognizes Vietnamese.";
 "Chọn bé" = "Select baby";
 "Chọn danh mục hoặc nói để ghi nhanh" = "Choose a category or use voice entry";
+"Chọn giờ khác" = "Pick another time";
 "Chọn một hoạt động phía trên để bắt đầu chăm sóc bé mỗi ngày." = "Choose an activity above to start recording your baby's daily care.";
 "Chọn ngày" = "Select date";
 "Chọn nội dung chia sẻ" = "Select information to share";
@@ -251,6 +257,7 @@
 "Ghi nhanh, Tìm lại, Lịch thuốc, Chia sẻ" = "Log, Find, Medicine, Share";
 "Ghi nhanh, tìm lại dễ dàng và theo dõi thông tin chăm sóc bé trong một ứng dụng." = "Log quickly, find entries easily and track your baby's care in one app.";
 "Ghi số đo và vị trí đo" = "Record the reading and measurement site";
+"Ghi triệu chứng" = "Log symptoms";
 "Ghi tương tự" = "Log similar";
 "Ghi tương tự (Đo lại bây giờ)" = "Log similar (measure again now)";
 "Ghi uống thuốc" = "Log medicine";
@@ -268,6 +275,7 @@
 "Giới tính của bé" = "Baby's gender";
 "Giờ" = "Time";
 "Giờ bắt đầu và kết thúc" = "Start and end time";
+"Gom nhiệt độ, thuốc và triệu chứng vào một đợt để theo dõi diễn biến. Bạn có thể kết thúc bất cứ lúc nào." = "Group temperatures, medicines and symptoms into one episode to follow how it develops. You can end it at any time.";
 "Gỡ ảnh {0}" = "Remove photo {0}";
 "GỢI Ý LÚC NÀY" = "SUGGESTIONS FOR NOW";
 "Gợi ý theo thói quen" = "Routine suggestions";
@@ -288,6 +296,7 @@
 "HÔM NAY" = "TODAY";
 "Hãy thử lại." = "Please try again.";
 "Hôm nay" = "Today";
+"Hôm qua" = "Yesterday";
 "Hướng dẫn & Giới thiệu" = "Help & about";
 "Hướng dẫn sử dụng" = "User guide";
 "Hướng dẫn sử dụng 4 bước" = "4-step guide";
@@ -321,6 +330,7 @@
 "Không đọc được dữ liệu" = "Unable to load data";
 "Không đọc được dữ liệu đã lưu. Dữ liệu gốc vẫn được giữ." = "Unable to read saved data. The original data is kept.";
 "Không đọc được ảnh này. Hãy chọn ảnh khác." = "Unable to read this photo. Choose another one.";
+"Không, chỉ ghi nhiệt độ" = "No, just log the temperature";
 "Khởi phát: {0}" = "Started: {0}";
 "Kiểm tra hộp thư của bạn" = "Check your inbox";
 "Kiểm tra lịch đã nhập cho bé" = "Review your baby's schedule";
@@ -356,8 +366,11 @@
 "Lượng thực tế" = "Actual amount";
 "Lượng thực tế · Bắt buộc" = "Actual amount · Required";
 "Lượng đã nhập: {0} {1}" = "Entered amount: {0} {1}";
+"Lần dùng thuốc" = "Doses";
+"Lần gần nhất: {0} · {1}" = "Last dose: {0} · {1}";
 "Lần trước: {0} kg · {1}" = "Previous: {0} kg · {1}";
 "Lần trước: {0}. Kiểm tra lượng mới trước khi lưu." = "Previous: {0}. Check the new amount before saving.";
+"Lần đo" = "Readings";
 "Lần đo trước: {0} · {1}" = "Previous reading: {0} · {1}";
 "Lịch mũi tiếp theo" = "Next dose schedule";
 "Lịch nhắc" = "Reminders";
@@ -390,6 +403,8 @@
 "MỐC ĐÃ ĐẶT: {0}" = "SCHEDULED: {0}";
 "Mốc do bạn đặt" = "Your chosen time";
 "Mốc nhắc tiếp theo" = "Next reminder";
+"Mốc tiếp theo" = "Next dose";
+"Mốc tiếp theo: {0}" = "Next dose: {0}";
 "Mỗi hoạt động tối đa 3 ảnh." = "Each activity can have up to 3 photos.";
 "Mỗi ảnh cần nhỏ hơn 5 MB." = "Each photo must be smaller than 5 MB.";
 "Một số thông tin bạn nhập có thể là dữ liệu cá nhân và dữ liệu sức khỏe của trẻ, vì vậy BabyCare cần sự đồng ý của bạn trước khi xử lý các thông tin này." = "Some information you enter may be personal and child health data. BabyCare needs your consent before processing it.";
@@ -453,6 +468,8 @@
 "Nhập ít nhất một số đo hợp lệ để lưu." = "Enter at least one valid measurement to save.";
 "Nhật ký" = "Diary";
 "Nhật ký dùng thuốc" = "Medicine diary";
+"Nhật ký y tế gần đây" = "Recent medical entries";
+"Nhật ký đợt ốm" = "Episode log";
 "Nhật ký đợt ốm gần đây" = "Recent illness entries";
 "Nhắc thuốc" = "Medicine reminder";
 "Nhắc trước mũi tiếp theo" = "Remind me before the next dose";
@@ -497,6 +514,8 @@
 "Quản lý dữ liệu" = "Manage data";
 "Rất lớn" = "Extra large";
 "Sao lưu trước khi xóa" = "Back up before deleting";
+"Sau 1 giờ" = "In 1 hour";
+"Sau {0} giờ" = "In {0} hours";
 "Server chưa có hàm mà app cần. Hãy áp dụng migration Supabase mới nhất rồi thử lại. ({0})" = "The server is missing a function this app needs. Apply the latest Supabase migration and try again. ({0})";
 "Sinh hoạt" = "Routines";
 "Sẽ được ghi nhận trên máy chủ khi kết nối được." = "It will be recorded on the server once a connection is available.";
@@ -582,6 +601,7 @@
 "Toàn bộ dữ liệu liên quan tới bé này sẽ bị xóa và không thể hoàn tác." = "All data related to this baby will be deleted and cannot be undone.";
 "Toàn bộ lịch sử" = "All history";
 "Triệu chứng" = "Symptoms";
+"Triệu chứng gần nhất" = "Latest symptoms";
 "Trong Thống kê, chọn Chia sẻ báo cáo, chọn thời gian và nội dung, xem trước rồi xuất PDF. Báo cáo phản ánh dữ liệu tại thời điểm tạo." = "In Statistics, select Share report, choose a date range and sections, preview, then export a PDF. The report reflects data at creation time.";
 "Trán" = "Forehead";
 "Trên thiết bị" = "On device";
@@ -606,6 +626,7 @@
 "Tìm hoạt động, thuốc, ghi chú…" = "Search activities, medicines, notes…";
 "Tích nhanh tất cả & Tiếp tục" = "Select all and continue";
 "Tính năng tiêm chủng chưa sẵn sàng trên cloud. Dữ liệu khác vẫn sử dụng được." = "Vaccination tracking is not available on the cloud yet. Your other data is still available.";
+"Tính từ lần vừa ghi" = "Counted from the dose just logged";
 "Tôi là cha mẹ, người giám hộ hoặc người đại diện hợp pháp có quyền cung cấp thông tin của trẻ." = "I am a parent, guardian, or legal representative authorized to provide the child's information.";
 "Tôi xác nhận tôi là cha/mẹ, người giám hộ hoặc người đại diện hợp pháp có quyền cung cấp và quản lý thông tin của trẻ." = "I confirm that I am a parent, guardian, or legal representative authorized to provide and manage this child's information.";
 "Tôi đã đọc và đồng ý với Điều khoản sử dụng" = "I have read and agree to the Terms of Use";
@@ -616,6 +637,7 @@
 "Tăng " = "Increase ";
 "Tăng 0,1 độ" = "Increase by 0.1 degrees";
 "Tăng trưởng" = "Growth";
+"Tạm dừng nhắc thuốc này" = "Pause this reminder";
 "Tạo báo cáo PDF" = "Create PDF report";
 "Tạo bản PDF" = "Create PDF";
 "Tạo hồ sơ bé" = "Create baby profile";
@@ -650,6 +672,8 @@
 "Ví dụ: “Bé uống 120 ml sữa lúc 7 giờ sáng”" = "Vietnamese example: “Bé uống 120 ml sữa lúc 7 giờ sáng”";
 "Vòng đầu (cm) · Tùy chọn" = "Head circumference (cm) · Optional";
 "Vòng đầu {0} cm" = "Head circumference {0} cm";
+"Vạch đứt: 1 lần dùng thuốc" = "Dashed line: 1 dose given";
+"Vạch đứt: {0} lần dùng thuốc" = "Dashed lines: {0} doses given";
 "Về ứng dụng" = "About";
 "Về ứng dụng Bé Khỏe" = "About BabyCare";
 "Vị trí đo" = "Measurement site";
@@ -703,6 +727,7 @@
 "hoặc đăng nhập bằng email" = "or sign in with email";
 "lần xịt" = "spray";
 "phút" = "min";
+"trong đợt" = "this episode";
 "viên" = "tablet";
 "{0} / 3 đã chọn" = "{0} of 3 selected";
 "{0} bữa" = "{0} meals";
@@ -721,6 +746,7 @@
 "{0} số đo" = "{0} measurements";
 "{0} số đo trong khoảng" = "{0} measurements in this period";
 "{0} sự kiện" = "{0} events";
+"{0} sự kiện kể từ khởi phát" = "{0} entries since onset";
 "{0} tháng" = "{0} months";
 "{0} tháng tuổi" = "{0} months old";
 "{0} tuổi" = "{0} years";
@@ -777,6 +803,7 @@
 "Đã cập nhật số đo" = "Measurements updated";
 "Đã ghi" = "Recorded";
 "Đã ghi nhận" = "Recorded";
+"Đã ghi {0} {1} lúc {2}. Đặt mốc nhắc tiếp theo theo hướng dẫn bạn đang có." = "Logged {0} {1} at {2}. Set the next reminder according to the instructions you have.";
 "Đã gửi email tới {0}. Bấm liên kết trong email để xác minh tài khoản." = "An email was sent to {0}. Tap the link in the email to verify your account.";
 "Đã gửi lại email xác thực tới {0}." = "A new verification email was sent to {0}.";
 "Đã hủy trước khi bắt đầu nhận dạng. Chưa lưu hoạt động nào." = "Cancelled before recognition started. No activities were saved.";
@@ -820,6 +847,7 @@
 "Đơn vị đo" = "Measurement units";
 "Đặt lại mật khẩu" = "Reset password";
 "Đặt mốc theo hướng dẫn bạn đã có. Lịch nhắc không phải bản ghi đã uống." = "Set a time based on your existing instructions. A reminder is not a record of a dose given.";
+"Đặt mốc đã chọn" = "Set this time";
 "Đến" = "To";
 "Để sau" = "Later";
 "Để trống thông tin chưa biết. Ghi chú do gia đình cung cấp không phải chẩn đoán." = "Leave unknown information blank. Caregiver notes are not a medical diagnosis.";

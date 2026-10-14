@@ -16,6 +16,8 @@ struct ActivityFormView: View {
     @State private var expanded = false
     @State private var discard = false
     @State private var saveError = false
+    @State private var nextDose: NextDosePrompt?
+    @State private var episodeOffer: Date?
     @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var photoError: String?
     @ScaledMetric(relativeTo: .largeTitle) private var measurementSize: CGFloat = 48
@@ -195,6 +197,16 @@ struct ActivityFormView: View {
             Button(L10n.text("Bỏ nội dung"), role: .destructive) { dismiss() }
             Button(L10n.text("Tiếp tục nhập"), role: .cancel) { }
         }
+        .sheet(item: $nextDose) { prompt in
+            NextDoseView(prompt: prompt) { nextDose = nil; dismiss() }
+        }
+        .confirmationDialog(L10n.text("Bắt đầu theo dõi ốm?"), isPresented: Binding(get: { episodeOffer != nil }, set: { if !$0 { episodeOffer = nil; dismiss() } }), titleVisibility: .visible) {
+            Button(L10n.text("Bắt đầu theo dõi")) {
+                let start = Calendar.current.startOfDay(for: episodeOffer ?? Date())
+                Task { _ = await viewModel.send(.commit(.startIllness(babyID: viewModel.baby.id, title: "", date: start), message: L10n.text("Đã bắt đầu theo dõi"))) }
+            }
+            Button(L10n.text("Không, chỉ ghi nhiệt độ"), role: .cancel) { }
+        } message: { Text(L10n.text("Gom nhiệt độ, thuốc và triệu chứng vào một đợt để theo dõi diễn biến. Bạn có thể kết thúc bất cứ lúc nào.")) }
         .task(id: selectedPhotos) {
             let items = selectedPhotos
             guard !items.isEmpty else { return }
@@ -286,10 +298,19 @@ struct ActivityFormView: View {
         guard valid, let entry = form.makeEntry() else { return }
         if let onSave { onSave(entry); dismiss(); return }
         let finishingSleep = kind == .sleep && !isEditing && viewModel.sleepStartDate == activity?.date ? viewModel.sleepStartDate : nil
+        // Offer an episode once per cluster of readings; the parent decides, nothing is diagnosed.
+        let offerEpisode = kind == .temperature && !isEditing && !viewModel.isTrackingIllness
+            && !viewModel.activities.contains { $0.kind == .temperature && $0.id != entry.id && abs($0.date.timeIntervalSince(entry.date)) < 86_400 }
         Task {
             guard await viewModel.send(.commit(.saveActivities(babyID: viewModel.baby.id, entries: [entry], finishingSleep: finishingSleep,
                 completingReminderID: completingReminderID), message: isEditing ? L10n.text("Đã cập nhật") : L10n.text("Đã lưu {0}", "\(kind.title.lowercased())"))) else { saveError = true; return }
-            dismiss()
+            if let completingReminderID, let reminder = viewModel.medicationReminders.first(where: { $0.id == completingReminderID }) {
+                nextDose = NextDosePrompt(reminder: reminder, takenAt: entry.date)
+            } else if offerEpisode {
+                episodeOffer = entry.date
+            } else {
+                dismiss()
+            }
         }
     }
 }

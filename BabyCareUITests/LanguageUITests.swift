@@ -57,6 +57,9 @@ final class LanguageUITests: XCTestCase {
         XCTAssertTrue(app.buttons["saveActivityButton"].isEnabled)
         app.buttons["saveActivityButton"].tap()
         XCTAssertTrue(app.staticTexts["Saved temperature"].waitForExistence(timeout: 3))
+        let skipEpisode = app.buttons["No, just log the temperature"]
+        XCTAssertTrue(skipEpisode.waitForExistence(timeout: 3))
+        skipEpisode.tap()
         let diary = app.buttons["tab.diary"]
         if !diary.isHittable { app.buttons["Close"].firstMatch.tap() }
         diary.tap()
