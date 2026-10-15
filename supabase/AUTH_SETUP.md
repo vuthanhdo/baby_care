@@ -18,6 +18,15 @@ Client Secret chỉ nằm trong Supabase Dashboard; không đưa vào source iOS
 
 Tài liệu: https://supabase.com/docs/guides/auth/social-login/auth-google
 
+## 1b. Sign in with Apple
+
+App dùng nút Apple native (`SignInWithAppleButton`), gửi identity token kèm nonce cho Supabase qua `signInWithIdToken`; không đi qua trình duyệt nên không cần Services ID hay secret key cho luồng iOS.
+
+1. Trong Apple Developer, bật capability **Sign in with Apple** cho App ID `com.vuthanhdo.BabyCare` (Xcode tự đăng ký khi build với automatic signing; entitlement nằm ở `Configuration/BabyCare.entitlements`).
+2. Trong [Supabase Apple provider](https://supabase.com/dashboard/project/cxlqvuqloaokzmaewvdy/auth/providers?provider=Apple), bật provider và thêm `com.vuthanhdo.BabyCare` vào **Authorized Client IDs**. Secret key chỉ cần nếu sau này bật đăng nhập Apple trên web.
+3. Thử trên máy thật (simulator thường không hoàn tất xác thực Apple): bấm "Continue with Apple", chọn ẩn email hay không, kiểm tra tài khoản xuất hiện trong Authentication → Users với provider `apple`.
+4. Khi người dùng xóa tài khoản, App Store yêu cầu thu hồi token Sign in with Apple (REST API `auth/revoke` với client secret ký bằng key .p8). Hiện `babycare_delete_account` chưa gọi; cần một Edge Function hoặc bước thủ công trước khi phát hành.
+
 ## 2. Xác minh đăng ký bằng liên kết email
 
 - Giữ **Confirm email** bật và dùng template **Confirm sign up** mặc định có liên kết xác thực.

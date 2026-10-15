@@ -6,6 +6,8 @@
 	<false/>
 	<key>CFBundleDisplayName</key>
 	<string>Bé Khỏe</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

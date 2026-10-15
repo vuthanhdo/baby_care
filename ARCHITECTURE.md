@@ -43,7 +43,7 @@ Cache nằm tại:
 
 Khi RLS thu hồi quyền family, provider xóa cache của family đó trước khi báo lỗi. Đăng xuất vô hiệu hóa token lease, hủy network session và xóa dữ liệu đang hiển thị. Lịch thông báo được tạo lại từ snapshot của account/family hiện tại và gỡ khi rời phiên.
 
-Ảnh cloud và import dữ liệu SwiftData cũ chưa thuộc giai đoạn này. Provider từ chối mutation có ảnh để tránh báo lưu thành công trong khi byte ảnh chưa được upload. Dữ liệu trên máy không tự được gửi lên khi đăng nhập.
+Ảnh cloud đã có ở giai đoạn sau (`CloudMedia`, `SupabaseRemote.syncMedia`): byte ảnh nằm trong outbox cho tới khi cả bản ghi và file được xác nhận. Import dữ liệu SwiftData cũ chưa thuộc giai đoạn này; dữ liệu trên máy không tự được gửi lên khi đăng nhập.
 
 
 ## Tài khoản và tối đa 4 bé (12/09/2026)

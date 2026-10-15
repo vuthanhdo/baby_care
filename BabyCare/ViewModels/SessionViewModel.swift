@@ -224,6 +224,18 @@ import UserNotifications
             self.error = L10n.text("Không thể đăng nhập bằng Google. Hãy thử lại hoặc dùng email và mật khẩu.")
         }
     }
+    /// Native Sign in with Apple: the identity token from AuthenticationServices is exchanged for a Supabase
+    /// session; the auth listener then moves the app on exactly as for the other providers.
+    func signInWithApple(idToken: String, nonce: String) async {
+        guard !busy else { return }
+        busy = true; error = nil; message = nil
+        defer { busy = false }
+        do { _ = try await client.auth.signInWithIdToken(credentials: OpenIDConnectCredentials(provider: .apple, idToken: idToken, nonce: nonce)) }
+        catch { appleSignInFailed() }
+    }
+    func appleSignInFailed() {
+        error = L10n.text("Không thể đăng nhập bằng Apple. Hãy thử lại hoặc dùng email và mật khẩu.")
+    }
     func handleCallback(_ url: URL) async {
         guard url.scheme == "babycare", url.host == "auth-callback" else { return }
         do { _ = try await client.auth.session(from: url) }

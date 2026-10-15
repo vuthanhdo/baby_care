@@ -874,5 +874,6 @@
   "Còn {0}": "{0} left",
   "{0} ngày {1} giờ": "{0} d {1} h",
   "{0} giờ {1} phút": "{0} h {1} min",
-  "{0} phút": "{0} min"
+  "{0} phút": "{0} min",
+  "Không thể đăng nhập bằng Apple. Hãy thử lại hoặc dùng email và mật khẩu.": "Could not sign in with Apple. Try again or use email and password."
 }

@@ -39,6 +39,7 @@ final class StitchAppearanceTests: XCTestCase {
         let email = app.textFields["auth.email"]
         XCTAssertTrue(email.waitForExistence(timeout: 10))
         XCTAssertFalse(app.buttons["auth.submit"].isEnabled)
+        XCTAssertTrue(app.buttons["auth.apple"].exists || app.buttons.containing(NSPredicate(format: "label CONTAINS[c] 'Apple'")).firstMatch.exists, "Sign in with Apple missing next to Google")
         capture(app, "Stitch — Đăng nhập")
         email.tap()
         email.typeText("parent@example.com")

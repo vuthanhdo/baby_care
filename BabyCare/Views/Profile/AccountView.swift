@@ -1,3 +1,4 @@
+import AuthenticationServices
 import SwiftUI
 
 struct AppRootView: View {
@@ -68,7 +69,7 @@ struct AppRootView: View {
     }
 }
 
-/// Stitch login/signup layout with email verification and Google OAuth.
+/// Stitch login/signup layout with email verification, Sign in with Apple and Google OAuth.
 struct SignInView: View {
     @Environment(SessionViewModel.self) private var session
     @State private var email = ""
@@ -78,6 +79,7 @@ struct SignInView: View {
     @State private var captchaID = UUID()
     @State private var registering = false
     @State private var googleLoading = false
+    @State private var appleNonce = ""
     @State private var showingPassword = false
     @State private var resetting = false
     @State private var touched: Set<Field> = []
@@ -93,11 +95,12 @@ struct SignInView: View {
                     HStack { Spacer(); LanguagePicker() }.disabled(session.busy)
                     if !registering || session.pendingSignupEmail != nil || resetting {
                         entryHeader
-                        if session.pendingSignupEmail == nil && !resetting { googleButton; emailDivider }
+                        if session.pendingSignupEmail == nil && !resetting { appleButton; googleButton; emailDivider }
                     }
                     EntryFormCard {
                         if registering && session.pendingSignupEmail == nil && !resetting {
                             entryHeader
+                            appleButton
                             googleButton
                             emailDivider
                         }
@@ -247,6 +250,31 @@ struct SignInView: View {
                 .font(CareFont.callout).foregroundStyle(CareTheme.secondary)
                 .multilineTextAlignment(registering ? .leading : .center)
         }.frame(maxWidth: .infinity, alignment: registering ? .leading : .center)
+    }
+    /// Apple's own button (required next to Google by App Store guideline 4.8); its label follows the device language.
+    private var appleButton: some View {
+        SignInWithAppleButton(registering ? .signUp : .continue) { request in
+            focus = nil
+            appleNonce = AppleSignInNonce.random()
+            request.requestedScopes = [.email]
+            request.nonce = AppleSignInNonce.sha256(appleNonce)
+        } onCompletion: { result in
+            switch result {
+            case .success(let authorization):
+                guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
+                      let data = credential.identityToken, let token = String(data: data, encoding: .utf8) else { session.appleSignInFailed(); return }
+                let nonce = appleNonce
+                Task { await session.signInWithApple(idToken: token, nonce: nonce) }
+            case .failure(let error):
+                if (error as? ASAuthorizationError)?.code == .canceled { return }
+                session.appleSignInFailed()
+            }
+        }
+        .signInWithAppleButtonStyle(.black)
+        .frame(maxWidth: .infinity).frame(height: 48)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .disabled(session.busy)
+        .accessibilityIdentifier("auth.apple")
     }
     private var googleButton: some View {
         Button {
