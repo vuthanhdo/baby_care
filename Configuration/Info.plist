@@ -4,10 +4,6 @@
 <dict>
 	<key>AuthCaptchaEnabled</key>
 	<false/>
-	<key>CFBundleDisplayName</key>
-	<string>Bé Khỏe</string>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -19,10 +15,6 @@
 			</array>
 		</dict>
 	</array>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Bé Khỏe dùng micrô khi bạn bấm ghi âm để nhập hoạt động chăm sóc bé bằng giọng nói.</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Bé Khỏe chuyển lời nói tiếng Việt thành văn bản để bạn xem lại trước khi lưu. Âm thanh có thể được gửi tới Apple để nhận dạng.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>BeVietnamPro-Regular.ttf</string>
