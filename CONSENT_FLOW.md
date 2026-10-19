@@ -47,11 +47,13 @@ a new audit row after acceptance instead of rewriting the prior record.
 > trước khi upload ảnh; thiếu hàm này làm cả `load()` thất bại với PGRST202 khi outbox còn ghi dở — từ 14/10/2026 app bỏ
 > qua bước kiểm tra đó khi RPC chưa tồn tại (PGRST202) và để `babycare_apply`/policy Storage tự bắt buộc consent.
 > Áp dụng migration theo các bước dưới đây.
+>
+> **Cập nhật 19/10/2026:** migration `202609180008_user_consent.sql` **đã được áp dụng** qua Supabase MCP connector (4 RPC public, 5 hàm trong `babycare_private`, 9 trigger `consent_required`, 2 policy Storage, `consent_requirements` = 1.0/1.0/1.0). `babycare_consent_status` nay trả 401 cho anon thay vì 404; user hiện có sẽ được app ghi consent lên server ở lần mở tiếp theo nhờ bản ghi đồng ý cục bộ.
 
 
 1. Release a compatible iOS build that understands the new consent RPCs and
    bundled document versions.
-2. Apply `202609180008_user_consent.sql` during a controlled maintenance window.
+2. Apply `202609180008_user_consent.sql` during a controlled maintenance window. Done 19/10/2026 via the Supabase MCP connector.
 3. Verify the three RPCs, an authenticated protected mutation, and a protected
    Storage upload in staging before production.
 
