@@ -2,6 +2,7 @@
 // deleted (App Store Review Guideline 5.1.1(v)).
 //   POST {"action":"link","code":"<authorizationCode>"}  right after a native Apple sign-in (code expires in 5 min)
 //   POST {"action":"revoke"}                              right before babycare_delete_account
+//   POST {"action":"diag"}                                reports which secrets are present and whether the key loads
 // Requires secrets APPLE_TEAM_ID, APPLE_CLIENT_ID (bundle id), APPLE_KEY_ID, APPLE_PRIVATE_KEY (.p8 contents).
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
@@ -66,11 +67,28 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
+    if (payload.action === "diag") {
+      const present = {
+        APPLE_TEAM_ID: !!Deno.env.get("APPLE_TEAM_ID"),
+        APPLE_CLIENT_ID: !!Deno.env.get("APPLE_CLIENT_ID"),
+        APPLE_KEY_ID: !!Deno.env.get("APPLE_KEY_ID"),
+        APPLE_PRIVATE_KEY: !!Deno.env.get("APPLE_PRIVATE_KEY"),
+      };
+      const pem = Deno.env.get("APPLE_PRIVATE_KEY") ?? "";
+      let secret = "ok";
+      try {
+        await clientSecret();
+      } catch (e) {
+        secret = e instanceof Error ? e.message : String(e);
+      }
+      return json(200, { present, pemLines: pem.split("\n").length, pemStartsWithHeader: pem.startsWith("-----BEGIN"), clientSecret: secret });
+    }
     if (payload.action === "link") {
       if (!payload.code) return json(400, { error: "code required" });
       const res = await appleForm("/auth/token", { code: payload.code, grant_type: "authorization_code" });
       const token = await res.json();
       if (!res.ok || !token.refresh_token) {
+        console.error("apple-token link: exchange failed", res.status, JSON.stringify(token).slice(0, 300));
         return json(502, { error: "Apple token exchange failed", detail: token.error ?? res.status });
       }
       // The code must belong to the signed-in user's Apple identity, never to someone else's.
@@ -83,7 +101,10 @@ Deno.serve(async (req: Request) => {
         refresh_token: token.refresh_token,
         updated_at: new Date().toISOString(),
       });
-      if (dbError) return json(500, { error: dbError.message });
+      if (dbError) {
+        console.error("apple-token link: upsert failed", dbError.message);
+        return json(500, { error: dbError.message });
+      }
       return json(200, { linked: true });
     }
     if (payload.action === "revoke") {
@@ -96,6 +117,8 @@ Deno.serve(async (req: Request) => {
     }
     return json(400, { error: "action must be link or revoke" });
   } catch (e) {
-    return json(500, { error: e instanceof Error ? e.message : String(e) });
+    const message = e instanceof Error ? e.message : String(e);
+    console.error("apple-token", payload.action, "failed:", message);
+    return json(500, { error: message });
   }
 });
