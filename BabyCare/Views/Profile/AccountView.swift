@@ -264,7 +264,8 @@ struct SignInView: View {
                 guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
                       let data = credential.identityToken, let token = String(data: data, encoding: .utf8) else { session.appleSignInFailed(); return }
                 let nonce = appleNonce
-                Task { await session.signInWithApple(idToken: token, nonce: nonce) }
+                let code = credential.authorizationCode.flatMap { String(data: $0, encoding: .utf8) }
+                Task { await session.signInWithApple(idToken: token, nonce: nonce, authorizationCode: code) }
             case .failure(let error):
                 if (error as? ASAuthorizationError)?.code == .canceled { return }
                 session.appleSignInFailed()

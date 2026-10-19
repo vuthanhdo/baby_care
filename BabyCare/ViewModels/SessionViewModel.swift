@@ -226,12 +226,19 @@ import UserNotifications
     }
     /// Native Sign in with Apple: the identity token from AuthenticationServices is exchanged for a Supabase
     /// session; the auth listener then moves the app on exactly as for the other providers.
-    func signInWithApple(idToken: String, nonce: String) async {
+    func signInWithApple(idToken: String, nonce: String, authorizationCode: String? = nil) async {
         guard !busy else { return }
         busy = true; error = nil; message = nil
         defer { busy = false }
-        do { _ = try await client.auth.signInWithIdToken(credentials: OpenIDConnectCredentials(provider: .apple, idToken: idToken, nonce: nonce)) }
-        catch { appleSignInFailed() }
+        do {
+            _ = try await client.auth.signInWithIdToken(credentials: OpenIDConnectCredentials(provider: .apple, idToken: idToken, nonce: nonce))
+            if let authorizationCode { await linkAppleToken(code: authorizationCode) }
+        } catch { appleSignInFailed() }
+    }
+    /// Stores Apple's refresh token server-side (apple-token Edge Function) so it can be revoked when the
+    /// account is deleted, as App Store Review Guideline 5.1.1(v) requires. Best effort: sign-in already succeeded.
+    private func linkAppleToken(code: String) async {
+        try? await client.functions.invoke("apple-token", options: .init(body: ["action": "link", "code": code]))
     }
     func appleSignInFailed() {
         error = L10n.text("Không thể đăng nhập bằng Apple. Hãy thử lại hoặc dùng email và mật khẩu.")
@@ -264,6 +271,8 @@ import UserNotifications
         guard !busy, !isLocal, let deletingUserID = userID else { return false }
         busy = true; error = nil; message = nil
         do {
+            // Revoke the Sign in with Apple token first; the auth user (and its token row) disappears below.
+            try? await client.functions.invoke("apple-token", options: .init(body: ["action": "revoke"]))
             try await CloudPrivacyDeletion.removeOwnedAccountMedia(client: client, userID: deletingUserID)
             _ = try await client.rpc("babycare_delete_account").execute()
             let ticket = await detach()
