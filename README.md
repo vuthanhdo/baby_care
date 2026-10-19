@@ -41,6 +41,10 @@ Người dùng có thể tiếp tục dùng SwiftData tại `Application Support
 
 Dùng `NavigationStack`, `TabView`, `Form`, sheet, PhotosPicker và Swift Charts. Font Be Vietnam Pro được đóng gói trong app, hỗ trợ tiếng Việt và Dynamic Type. Nền sáng, màu xanh #146C60 và các nhóm màu giữ theo Stitch. Thanh trạng thái và các control hệ thống dùng giao diện iOS thực tế; thanh tab ba mục là `CareBottomTabs` tự dựng theo Stitch, đặt bằng `safeAreaInset` nên không che nội dung. Các khung Stitch dài được chuyển thành nội dung cuộn, không đặt tọa độ tuyệt đối.
 
+## Trang công khai (GitHub Pages)
+
+Thư mục `docs/` được GitHub Pages phục vụ từ nhánh `develop` tại https://vuthanhdo.github.io/baby_care/ : trang hỗ trợ (`index.html`), [Chính sách quyền riêng tư](https://vuthanhdo.github.io/baby_care/privacy.html) và [Điều khoản sử dụng](https://vuthanhdo.github.io/baby_care/terms.html), song ngữ Việt/Anh, phiên bản 1.0 khớp `ConsentVersions.bundled`. Dùng hai URL này cho Privacy Policy URL và Support URL trong App Store Connect; khi đổi nội dung pháp lý trong `LegalViews.swift` thì cập nhật cả `docs/` và tăng phiên bản.
+
 ## Chạy và xem trước
 
 Mỗi màn hình có `#Preview`. Dữ liệu mẫu chỉ dùng trong preview hoặc khi thêm launch argument **`-demo`** ở cấu hình Debug; dữ liệu mẫu không ghi vào bộ nhớ ứng dụng. **`-demo-full`** (hoặc build với `SWIFT_ACTIVE_COMPILATION_CONDITIONS='$(inherited) DEMO'` khi cài lên máy thật để xem thử) nạp bộ dữ liệu mẫu đầy đủ `CarePreviewData.showcase`: 3 bé (11 tháng đang theo dõi sốt, 3 tuổi đang ngủ trưa, sơ sinh 12 ngày), một tháng sinh hoạt, đợt ốm với thuốc và triệu chứng, lịch nhắc, lịch sử tăng trưởng, tiêm chủng theo lịch TCMR và ảnh đính kèm; bản build này vẫn gửi thông báo nhắc thuốc thật. Lần chạy bình thường khôi phục phiên hoặc mở đăng nhập; chế độ trên máy mở hồ sơ trống nếu chưa có dữ liệu. `-ui-testing` dùng provider tạm trong bộ nhớ; `-ui-testing-store <UUID>` dùng SwiftData riêng để kiểm thử khởi động lại app.
