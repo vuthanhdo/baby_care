@@ -192,7 +192,7 @@ struct QuickLogView: View {
     private var illnessLink: some View {
         NavigationLink { IllnessTrackingView() } label: {
             Text(L10n.text("Xem theo dõi")).font(CareFont.subheadline.weight(.semibold)).frame(maxWidth: .infinity, minHeight: 32)
-        }.buttonStyle(.plain).padding(12).foregroundStyle(CareTheme.medical)
+        }.buttonStyle(.plain).accessibilityIdentifier("illness.open").padding(12).foregroundStyle(CareTheme.medical)
             .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(CareTheme.medical))
     }
     private func sleepCard(start: Date) -> some View {

@@ -123,7 +123,7 @@ struct CareBabyHeaderView: View {
                         Text(viewModel.baby.ageDescription).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                     }
                 }
-            }.buttonStyle(.plain).accessibilityLabel(L10n.text("Hồ sơ {0}", "\(viewModel.baby.name)"))
+            }.buttonStyle(.plain).accessibilityLabel(L10n.text("Hồ sơ {0}", "\(viewModel.baby.name)")).accessibilityIdentifier("app.profile")
             if viewModel.babies.count > 1 {
                 Menu {
                     ForEach(viewModel.babies) { baby in

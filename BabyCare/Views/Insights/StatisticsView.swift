@@ -60,6 +60,7 @@ struct StatisticsView: View {
                                     .foregroundStyle(item.color).background(item.color.opacity(0.08), in: Capsule())
                                     .overlay(Capsule().stroke(item.color.opacity(mode == item ? 0.35 : 0.15), lineWidth: 1))
                             }.buttonStyle(.plain).accessibilityAddTraits(mode == item ? [.isSelected] : [])
+                                .accessibilityIdentifier("statistics.mode.\(item == .medical ? "medical" : item == .food ? "food" : "growth")")
                         }
                     }
                 }
