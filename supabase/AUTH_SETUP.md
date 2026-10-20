@@ -4,7 +4,7 @@
 
 ## 1. Google OAuth
 
-1. Mở Google Cloud Console, chọn/tạo project dành cho BabyCare. Trong Google Auth Platform, khai báo Branding, email hỗ trợ và Audience phù hợp. Khi ở chế độ Testing, thêm email thử nghiệm vào Test users.
+1. Mở Google Cloud Console, project **BabyCare** (`babycare-508314`, tài khoản vuthanhdo123456@gmail.com). Google Auth Platform → Branding: tên app, email hỗ trợ, link trang chủ/chính sách/điều khoản (GitHub Pages) và authorized domains `cxlqvuqloaokzmaewvdy.supabase.co`, `vuthanhdo.github.io`. Audience: **In production** từ 20/10/2026 (trước đó Testing chỉ cho test user); scope cơ bản nên không cần verification.
 2. Tạo OAuth client loại **Web application** (app dùng Supabase làm trung gian qua trình duyệt hệ thống). Đặt tên `BabyCare Supabase`.
 3. Authorized redirect URI phải đúng:
 
