@@ -309,7 +309,17 @@ struct TemperatureChartView: View {
                 }
                 .chartYScale(domain: domain)
                 .chartYAxis { AxisMarks(position: .leading) { _ in AxisGridLine(); AxisValueLabel() } }
-                .chartXAxis { AxisMarks(values: .automatic(desiredCount: 3)) { _ in AxisValueLabel(format: .dateTime.day().month().hour()) } }
+                .chartXAxis { AxisMarks(values: .automatic(desiredCount: 3)) { value in
+                    AxisValueLabel {
+                        // Two short lines instead of "18 giờ 18 thg 10", which overlapped its neighbours in Vietnamese.
+                        if let date = value.as(Date.self) {
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text(date, format: .dateTime.hour().minute())
+                                Text(date, format: .dateTime.day().month(.twoDigits))
+                            }
+                        }
+                    }
+                } }
                 .chartXSelection(value: $selectedDate)
                 .frame(height: compact ? 150 : 195)
                 .accessibilityLabel(L10n.count(points.count, one: "Biểu đồ nhiệt độ, 1 lần đo. Có thể chuyển sang danh sách.", many: "Biểu đồ nhiệt độ, {0} lần đo. Có thể chuyển sang danh sách."))

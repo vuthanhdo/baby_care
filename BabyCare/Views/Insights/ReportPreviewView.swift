@@ -132,7 +132,17 @@ struct ReportPreviewView: View {
                             PointMark(x: .value(L10n.text("Thời điểm"), item.date), y: .value("°C", value)).foregroundStyle(CareTheme.medical).symbolSize(item.id == selected?.id ? 85 : 35)
                         }
                     }.frame(height: 175).chartYScale(domain: .automatic(includesZero: false))
-                    .chartXAxis { AxisMarks(values: .automatic(desiredCount: 3)) { _ in AxisValueLabel(format: .dateTime.day().month().hour()) } }
+                    .chartXAxis { AxisMarks(values: .automatic(desiredCount: 3)) { value in
+                    AxisValueLabel {
+                        // Two short lines instead of "18 giờ 18 thg 10", which overlapped its neighbours in Vietnamese.
+                        if let date = value.as(Date.self) {
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text(date, format: .dateTime.hour().minute())
+                                Text(date, format: .dateTime.day().month(.twoDigits))
+                            }
+                        }
+                    }
+                } }
                     .chartXSelection(value: $selectedDate)
                     if let selected { Text("\(selected.date.careFormatted(date: .abbreviated, time: .shortened)) · \(selected.value) °C").font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.accent) }
                 }

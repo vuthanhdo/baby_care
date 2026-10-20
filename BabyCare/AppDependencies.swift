@@ -21,6 +21,14 @@ import Foundation
         return nil
     }
     static var isActive: Bool { dataset != nil }
+    /// Store screenshots show the badge a real cloud user sees instead of "Dữ liệu mẫu".
+    static var hidesDemoBadge: Bool {
+        #if DEBUG
+        ProcessInfo.processInfo.arguments.contains("-store-screenshots")
+        #else
+        false
+        #endif
+    }
 }
 
 /// Composition root: replace this provider with an API-backed CareDataProvider to use cloud storage.

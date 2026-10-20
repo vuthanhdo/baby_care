@@ -25,7 +25,7 @@ struct QuickLogView: View {
                         Text(L10n.text("Ghi nhanh")).font(CareFont.title.bold())
                     }
                     Spacer()
-                    CareBadge(title: viewModel.isDemo ? L10n.text("Dữ liệu mẫu") : viewModel.state.storage == .device ? L10n.text("Trên thiết bị") : "Cloud")
+                    CareBadge(title: viewModel.isDemo && !CareDemoMode.hidesDemoBadge ? L10n.text("Dữ liệu mẫu") : viewModel.state.storage == .device ? L10n.text("Trên thiết bị") : "Cloud")
                 }
                 if viewModel.isTrackingIllness { illnessCard }
                 if let nextReminder = viewModel.medicationReminders.filter({ $0.enabled }).min(by: { $0.nextDate < $1.nextDate }) {
