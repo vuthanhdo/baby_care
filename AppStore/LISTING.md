@@ -1,75 +1,28 @@
 # Nội dung App Store Connect — Bé Khỏe (BabyCare)
 
-Nháp để dán vào App Store Connect. Giới hạn ký tự của Apple ghi trong ngoặc; các chuỗi đã kiểm tra độ dài.
-Screenshot tạo bằng `Tools/store_screenshots.sh` (xem `AppStore/README.md`).
+App đã tạo trên App Store Connect (id 6824822487) với tên **Bé Khỏe – Baby Care Diary**, ngôn ngữ chính **English (U.K.)**. Mỗi mục dưới đây có bản tiếng Anh (dán vào localization English U.K.) và bản tiếng Việt (dán vào localization Vietnamese, thêm bằng nút English (U.K.) ▾ → Add Localization). Giới hạn ký tự ghi trong ngoặc, tất cả đã kiểm tra.
+Screenshot: `screenshots/iphone-6.3/<en|vi>` cho khung iPhone (medium display), `screenshots/ipad-13/<en|vi>` cho khung iPad 13".
 
-## Thông tin chung
+## 1. Thông tin chung (không theo ngôn ngữ)
 
 | Mục | Giá trị |
 | --- | --- |
 | Bundle ID | `com.vuthanhdo.BabyCare` |
 | SKU | `bekhoe-ios` |
-| Primary language | Vietnamese |
-| Danh mục | Primary: Health & Fitness · Secondary: Medical |
+| Primary language | English (U.K.) |
+| Category | Primary: Health & Fitness · Secondary: Medical |
 | Privacy Policy URL | https://vuthanhdo.github.io/baby_care/privacy.html |
 | Support URL | https://vuthanhdo.github.io/baby_care/index.html |
-| Marketing URL | (để trống) |
+| Marketing URL | (trống) |
 | Copyright | 2026 Vu Thanh Do |
-| Age rating | 4+ (trả lời "None" cho mọi mục nội dung; Medical/Treatment Information: None; không có nội dung do người dùng tạo công khai, không có quảng cáo) |
-| Export compliance | Đã khai `ITSAppUsesNonExemptEncryption = NO` trong Info.plist, chỉ dùng HTTPS |
-| Sign in | Email/mật khẩu, Sign in with Apple, Google |
+| Version | 1.0 |
+| Age rating | 4+ (trả lời None/No cho mọi câu; Medical/Treatment Information: None; không quảng cáo, không nội dung người dùng công khai) |
+| Content rights | Does not contain, show, or access third-party content |
+| Advertising Identifier (IDFA) | No |
+| Export compliance | Đã khai `ITSAppUsesNonExemptEncryption = NO` (chỉ HTTPS) |
+| Sign-in | Email/password, Sign in with Apple, Google |
 
-## Tiếng Việt (primary)
-
-**Tên (30):** `Bé Khỏe: Nhật ký chăm sóc bé`
-
-**Phụ đề (30):** `Sốt, thuốc, bú ngủ, tiêm chủng`
-
-**Promotional text (170):**
-`Ghi nhanh nhiệt độ, thuốc, bú, ngủ, tã; theo dõi đợt ốm với lịch nhắc thuốc; xuất báo cáo PDF cho bác sĩ. Dữ liệu đồng bộ cloud, chia sẻ cho cả nhà.`
-
-**Từ khóa (100):**
-`nhật ký bé,chăm sóc trẻ,sốt,nhiệt độ,thuốc,tiêm chủng,bú sữa,giấc ngủ,tã,tăng trưởng,baby tracker`
-
-**Mô tả (4000):**
-```
-Bé Khỏe là cuốn nhật ký chăm sóc bé dành cho bố mẹ Việt: ghi trong vài giây, nhìn lại cả quá trình, và có sẵn mọi thứ khi đi khám.
-
-GHI NHANH TRONG VÀI GIÂY
-• Nhiệt độ, thuốc đã uống, triệu chứng, lần đi khám, dị ứng
-• Cữ sữa, bữa ăn, nước uống
-• Giấc ngủ (bấm bắt đầu, bấm kết thúc), tắm, thay tã
-• Nhập bằng giọng nói tiếng Việt, đính kèm tối đa 3 ảnh mỗi lần ghi
-• Thẻ "Hôm nay" tóm tắt cữ sữa, giờ ngủ, số lần thay tã và thuốc
-
-THEO DÕI ĐỢT ỐM
-• Bắt đầu một đợt theo dõi khi bé sốt: đỉnh sốt, số lần đo, số liều thuốc, triệu chứng gần nhất
-• Biểu đồ thân nhiệt theo giờ, đánh dấu từng lần dùng thuốc
-• Lịch nhắc thuốc: ghi liều vừa uống là app hỏi ngay mốc tiếp theo (+4, +6, +8, +12 giờ hoặc giờ bạn chọn)
-• Nhật ký đợt ốm gom theo ngày, kết thúc đợt bất cứ lúc nào
-
-THỐNG KÊ VÀ BÁO CÁO
-• Thống kê theo hôm nay, 48 giờ, 7 ngày hoặc khoảng tùy chọn
-• Lượng sữa, giờ ngủ, bữa ăn theo ngày; biểu đồ cân nặng và chiều cao
-• Xuất báo cáo PDF hoặc mã QR để gửi bác sĩ, ông bà
-
-HỒ SƠ VÀ TIÊM CHỦNG
-• Tối đa 4 bé trong một gia đình, chuyển bé trong một chạm
-• Lịch sử tiêm chủng với mũi tiếp theo và lời nhắc trước ngày hẹn
-• Dị ứng, nhóm máu, thói quen chăm sóc
-
-DỮ LIỆU CỦA BẠN
-• Đồng bộ cloud, thành viên gia đình cùng xem và ghi
-• Hoạt động offline, tự đồng bộ khi có mạng
-• Xóa hồ sơ bé hoặc toàn bộ tài khoản ngay trong app
-• Hỗ trợ iPhone, iPad, tiếng Việt và tiếng Anh
-
-Bé Khỏe chỉ ghi nhận thông tin do gia đình nhập, không chẩn đoán, không kê đơn và không thay thế tư vấn của bác sĩ. Khi bé có dấu hiệu nghiêm trọng, hãy liên hệ cơ sở y tế.
-```
-
-**What's New (4000):** `Phiên bản đầu tiên.`
-
-## English
+## 2. English (U.K.) — localization chính
 
 **Name (30):** `Bé Khỏe – Baby Care Diary`
 
@@ -117,33 +70,92 @@ YOUR DATA
 Bé Khỏe records what the family enters. It does not diagnose, prescribe or replace a doctor's advice. If a child shows serious symptoms, contact a healthcare provider.
 ```
 
-**What's New:** `First release.`
+**What's New (4000):** `First release.`
 
-## App Privacy (privacy nutrition labels)
+## 3. Vietnamese — localization thêm
 
-Chọn **Data Linked to You**, mục đích **App Functionality**, không dùng cho tracking, không dùng cho quảng cáo:
+**Name (30):** `Bé Khỏe – Nhật ký chăm bé` (tên đầu tiên `Bé Khỏe: Nhật ký chăm sóc bé` bị báo trùng; nếu tên này cũng trùng, dùng `Nhật ký Bé Khỏe`)
 
-| Loại dữ liệu | Mục |
-| --- | --- |
-| Contact Info | Email Address |
-| Health & Fitness | Health |
-| User Content | Photos or Videos; Other User Content (nhật ký, hồ sơ bé) |
-| Identifiers | User ID |
+**Subtitle (30):** `Sốt, thuốc, bú ngủ, tiêm chủng`
 
-Không thu thập: vị trí, danh bạ, lịch sử duyệt, dữ liệu tài chính, dữ liệu chẩn đoán. Âm thanh nhập giọng nói do Apple Speech xử lý và không được lưu. Khai báo khớp với `BabyCare/PrivacyInfo.xcprivacy`.
+**Promotional text (170):**
+`Ghi nhanh nhiệt độ, thuốc, bú, ngủ, tã; theo dõi đợt ốm với lịch nhắc thuốc; xuất báo cáo PDF cho bác sĩ. Dữ liệu đồng bộ cloud, chia sẻ cho cả nhà.`
 
-## Ghi chú cho App Review (Notes)
+**Keywords (100):**
+`nhật ký bé,chăm sóc trẻ,sốt,nhiệt độ,thuốc,tiêm chủng,bú sữa,giấc ngủ,tã,tăng trưởng,baby tracker`
 
+**Description (4000):**
 ```
-Bé Khỏe is a care diary for parents; it records information the family enters and does not provide medical advice.
+Bé Khỏe là cuốn nhật ký chăm sóc bé dành cho bố mẹ Việt: ghi trong vài giây, nhìn lại cả quá trình, và có sẵn mọi thứ khi đi khám.
 
-Test account (email/password): <điền email tài khoản test> / <điền mật khẩu>
-Sign in with Apple and Google are also available. After signing in, accept the three consent checkboxes, then create a child profile; sample screens in the screenshots were produced with demo data.
+GHI NHANH TRONG VÀI GIÂY
+• Nhiệt độ, thuốc đã uống, triệu chứng, lần đi khám, dị ứng
+• Cữ sữa, bữa ăn, nước uống
+• Giấc ngủ (bấm bắt đầu, bấm kết thúc), tắm, thay tã
+• Nhập bằng giọng nói tiếng Việt, đính kèm tối đa 3 ảnh mỗi lần ghi
+• Thẻ "Hôm nay" tóm tắt cữ sữa, giờ ngủ, số lần thay tã và thuốc
 
-Email confirmation and password reset links open the app through the custom scheme babycare://auth-callback.
-Account deletion: Profile → Settings → Data → Delete account (removes all cloud data; Sign in with Apple tokens are revoked server-side).
+THEO DÕI ĐỢT ỐM
+• Bắt đầu một đợt theo dõi khi bé sốt: đỉnh sốt, số lần đo, số liều thuốc, triệu chứng gần nhất
+• Biểu đồ thân nhiệt theo giờ, đánh dấu từng lần dùng thuốc
+• Lịch nhắc thuốc: ghi liều vừa uống là app hỏi ngay mốc tiếp theo (+4, +6, +8, +12 giờ hoặc giờ bạn chọn)
+• Nhật ký đợt ốm gom theo ngày, kết thúc đợt bất cứ lúc nào
+
+THỐNG KÊ VÀ BÁO CÁO
+• Thống kê theo hôm nay, 48 giờ, 7 ngày hoặc khoảng tùy chọn
+• Lượng sữa, giờ ngủ, bữa ăn theo ngày; biểu đồ cân nặng và chiều cao
+• Xuất báo cáo PDF hoặc mã QR để gửi bác sĩ, ông bà
+
+HỒ SƠ VÀ TIÊM CHỦNG
+• Tối đa 4 bé trong một gia đình, chuyển bé trong một chạm
+• Lịch sử tiêm chủng với mũi tiếp theo và lời nhắc trước ngày hẹn
+• Dị ứng, nhóm máu, thói quen chăm sóc
+
+DỮ LIỆU CỦA BẠN
+• Đồng bộ cloud, thành viên gia đình cùng xem và ghi
+• Hoạt động offline, tự đồng bộ khi có mạng
+• Xóa hồ sơ bé hoặc toàn bộ tài khoản ngay trong app
+• Hỗ trợ iPhone, iPad, tiếng Việt và tiếng Anh
+
+Bé Khỏe chỉ ghi nhận thông tin do gia đình nhập, không chẩn đoán, không kê đơn và không thay thế tư vấn của bác sĩ. Khi bé có dấu hiệu nghiêm trọng, hãy liên hệ cơ sở y tế.
 ```
 
-## Tài khoản test
+**What's New (4000):** `Phiên bản đầu tiên.`
 
-Dùng `thanhdo.vtb+bekhoe-test@gmail.com`: bấm link xác nhận trong Gmail, đặt mật khẩu qua "Quên mật khẩu?" trong app, rồi điền vào Notes ở trên. Tạo sẵn một hồ sơ bé và vài bản ghi để reviewer thấy app có dữ liệu.
+## 4. App Privacy (privacy nutrition labels)
+
+Chọn **Data Linked to You** cho từng loại, mục đích **App Functionality**, không dùng cho tracking, không dùng cho quảng cáo:
+
+| Category | Data type | Ghi chú |
+| --- | --- | --- |
+| Contact Info | Email Address | Tài khoản đăng nhập |
+| Health & Fitness | Health | Nhiệt độ, thuốc, triệu chứng, số đo của bé |
+| User Content | Photos or Videos | Ảnh đính kèm, ảnh đại diện bé |
+| User Content | Other User Content | Nhật ký, hồ sơ bé, ghi chú |
+| Identifiers | User ID | Supabase user id |
+
+Không thu thập: vị trí, danh bạ, lịch sử duyệt web, dữ liệu tài chính, dữ liệu chẩn đoán/crash. Âm thanh nhập giọng nói do Apple Speech xử lý, không lưu. Khai báo khớp `BabyCare/PrivacyInfo.xcprivacy`.
+
+## 5. Age rating questionnaire
+
+Trả lời **None** cho Cartoon/Fantasy/Realistic Violence, Profanity, Mature/Suggestive Themes, Horror/Fear, Medical/Treatment Information, Alcohol/Tobacco/Drug, Sexual Content, Gambling, Contests; **No** cho Unrestricted Web Access, Gambling and Contests, Loot Boxes, Parental Controls, Age Assurance. Kết quả 4+.
+
+## 6. App Review Information
+
+**Sign-in required**: bật; email và mật khẩu lấy từ `review-account.local.txt` (tài khoản `thanhdo.vtb+review@gmail.com`, đã xác nhận, có 1 hồ sơ bé và vài bản ghi).
+
+**Contact**: họ tên, số điện thoại, email của bạn.
+
+**Notes (EN, dán nguyên):**
+```
+Bé Khỏe is a care diary for parents. It records information the family enters (temperature, medicines, feeds, sleep, growth, vaccinations) and does not provide medical advice or diagnosis.
+
+Test account: use the email/password provided above. Sign in with Apple and Google are also available. After signing in you may be asked to accept three consent checkboxes before editing data; a child profile with sample entries is already created on the test account.
+
+Email confirmation and password reset links open the app via the custom URL scheme babycare://auth-callback.
+Account deletion: Profile → Settings → Data → Delete account. It removes all cloud data and revokes the Sign in with Apple token server-side.
+```
+
+**Attachment**: không cần.
+
+**Version release**: Manually release this version.
