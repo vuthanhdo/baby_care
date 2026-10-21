@@ -148,14 +148,22 @@ Trả lời **None** cho Cartoon/Fantasy/Realistic Violence, Profanity, Mature/S
 
 **Notes (EN, dán nguyên):**
 ```
-Bé Khỏe is a care diary for parents. It records information the family enters (temperature, medicines, feeds, sleep, growth, vaccinations) and does not provide medical advice or diagnosis.
+Bé Khỏe is a private care diary for parents of babies and young children (Vietnamese and English UI). It stores what the family enters (temperature, medicines, symptoms, feeds, sleep, diapers, growth, vaccinations), shows timeline/charts/statistics, reminds the medication time the parent chose and exports a PDF report for the doctor. It does not diagnose, prescribe or calculate doses. No social features, no public or shared user content, no paid content, no IAP.
 
-Test account: use the email/password provided above. Sign in with Apple and Google are also available. After signing in you may be asked to accept three consent checkboxes before editing data; a child profile with sample entries is already created on the test account.
+ACCESS: use the demo account above (one child profile with sample entries is already created). Sign in with Apple and Google are also available. New accounts: sign up with any email; the confirmation link opens the app via babycare://auth-callback. First sign-in shows three consent checkboxes (terms/privacy, child health data, cloud sync) that must be accepted before editing data.
 
-Email confirmation and password reset links open the app via the custom URL scheme babycare://auth-callback.
-Account deletion: Profile → Settings → Data → Delete account. It removes all cloud data and revokes the Sign in with Apple token server-side.
+MAIN FEATURES: "Quick log" tab (temperature, medicine, feeding, sleep, diaper, symptoms, voice entry, photos; "Illness & medicine tracking" card with temperature chart and medication reminders), "Diary" tab (timeline by day), "Statistics" tab (ranges, growth charts, "Share report (PDF / QR)"), avatar → child profiles (up to 4), vaccinations, Settings.
+ACCOUNT DELETION: Profile → Settings → Manage and delete data → Permanently delete account and all data (deletes all cloud data and revokes the Sign in with Apple token server-side).
+Optional permissions (mic/speech, photos, notifications) are not required.
+
+EXTERNAL SERVICES: Supabase (auth, PostgreSQL, storage for photos, one Edge Function for Apple token revocation); Sign in with Apple; Google OAuth via Supabase; Brevo SMTP for confirmation/reset emails; Apple Speech framework (Vietnamese, on-device when supported); GitHub Pages for privacy/support pages. No analytics, ads, payments, AI or third-party content.
+
+REGIONS: identical in all regions; UI language follows the device (vi/en).
+REGULATION: not a medical device, no diagnosis or treatment advice; reports carry a "does not replace medical advice" notice. No protected third-party material.
+
+A screen recording of the full flow (launch, registration + email confirmation, consent, logging, reports, sign in with Apple, account deletion) was provided in the Resolution Center reply.
 ```
 
-**Attachment**: không cần.
+**Attachment**: video quay trên máy thật (xem `REVIEW_REPLY.md`); Apple yêu cầu từ lần review đầu (21/10/2026).
 
 **Version release**: Manually release this version.
