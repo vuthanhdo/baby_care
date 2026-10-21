@@ -809,6 +809,7 @@
 "Đã ghi nhận" = "Recorded";
 "Đã ghi {0} {1} lúc {2}. Đặt mốc nhắc tiếp theo theo hướng dẫn bạn đang có." = "Logged {0} {1} at {2}. Set the next reminder according to the instructions you have.";
 "Đã gửi email tới {0}. Bấm liên kết trong email để xác minh tài khoản." = "An email was sent to {0}. Tap the link in the email to verify your account.";
+"Email này đã có tài khoản. Hãy đăng nhập hoặc dùng Quên mật khẩu." = "This email already has an account. Sign in or use Forgot password.";
 "Đã gửi lại email xác thực tới {0}." = "A new verification email was sent to {0}.";
 "Đã hủy trước khi bắt đầu nhận dạng. Chưa lưu hoạt động nào." = "Cancelled before recognition started. No activities were saved.";
 "Đã kết thúc theo dõi" = "Tracking ended";

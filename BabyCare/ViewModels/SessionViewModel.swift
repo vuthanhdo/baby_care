@@ -187,7 +187,11 @@ import UserNotifications
                 _ = try await client.auth.signIn(email: email, password: password, captchaToken: AuthCaptchaConfiguration.isEnabled ? captchaToken : nil)
             case .signUp:
                 let response = try await client.auth.signUp(email: email, password: password, redirectTo: Self.callback, captchaToken: AuthCaptchaConfiguration.isEnabled ? captchaToken : nil)
-                if response.session == nil {
+                switch Self.signupOutcome(hasSession: response.session != nil, identityCount: response.user.identities?.count) {
+                case .signedIn: break
+                case .existingAccount:
+                    self.error = L10n.text("Email này đã có tài khoản. Hãy đăng nhập hoặc dùng Quên mật khẩu.")
+                case .confirmationPending:
                     pendingSignupEmail = email
                     defaults.set(email, forKey: Self.pendingSignupKey)
                     message = L10n.text("Đã gửi email tới {0}. Bấm liên kết trong email để xác minh tài khoản.", "\(email)")
@@ -294,6 +298,17 @@ import UserNotifications
             return false
         }
     }
+    nonisolated enum SignupOutcome: Equatable { case signedIn, confirmationPending, existingAccount }
+
+    /// Supabase keeps email enumeration protection on: signing up with an email that already has a confirmed
+    /// account answers 200 with no session, no email and an empty `identities` array instead of an error.
+    /// Treat that shape as "existing account" so the UI does not wait for a confirmation email that never comes.
+    nonisolated static func signupOutcome(hasSession: Bool, identityCount: Int?) -> SignupOutcome {
+        if hasSession { return .signedIn }
+        if let identityCount, identityCount == 0 { return .existingAccount }
+        return .confirmationPending
+    }
+
     private func authMessage(_ error: Error) -> String {
         if error is URLError { return L10n.text("Không kết nối được dịch vụ đăng nhập. Hãy kiểm tra mạng.") }
         return L10n.text("Chưa hoàn tất đăng nhập. Kiểm tra email, mật khẩu hoặc xác nhận email. Nếu gửi email thất bại, hãy thử lại sau hoặc kiểm tra cấu hình gửi email của project.")

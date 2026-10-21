@@ -18,4 +18,11 @@ struct AuthValidationTests {
         #expect(AuthValidation.signupError(password: "Password!23", confirmation: "") != nil)
         #expect(AuthValidation.signupError(password: "short", confirmation: "short") != nil)
     }
+
+    @Test func signupOutcomeDistinguishesExistingAccounts() {
+        #expect(SessionViewModel.signupOutcome(hasSession: true, identityCount: 1) == .signedIn)
+        #expect(SessionViewModel.signupOutcome(hasSession: false, identityCount: 1) == .confirmationPending)
+        #expect(SessionViewModel.signupOutcome(hasSession: false, identityCount: nil) == .confirmationPending)
+        #expect(SessionViewModel.signupOutcome(hasSession: false, identityCount: 0) == .existingAccount)
+    }
 }
