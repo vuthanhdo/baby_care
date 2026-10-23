@@ -13,6 +13,10 @@ struct StatisticsView: View {
     @State private var growthList = false
     @State private var selectedGrowthDate: Date?
     @State private var foodList = false
+    @Environment(\.careWindow) private var window
+    @Environment(\.dynamicTypeSize) private var typeSize
+    /// Open iPhone Duo / iPad: the growth history gets its own column instead of the list toggle.
+    private var columns: Bool { window.allowsColumns(typeSize: typeSize) }
     private enum Mode: String, CaseIterable, Identifiable {
         case medical = "Y tế", food = "Ăn & ngủ", growth = "Tăng trưởng"
         var id: Self { self }
@@ -43,7 +47,7 @@ struct StatisticsView: View {
     var body: some View {
         let _ = appLocale
         ScrollView {
-            LazyVStack(alignment: .leading, spacing: 16) {
+            CareColumns(spacing: 16) {
                 Picker(L10n.text("Khoảng thống kê"), selection: $range) {
                     ForEach(InsightRange.allCases) { Text(L10n.text($0.rawValue)).tag($0) }
                 }.pickerStyle(.segmented)
@@ -72,6 +76,12 @@ struct StatisticsView: View {
                 case .food: foodContent
                 case .growth: growthContent
                 }
+            } trailing: {
+                switch mode {
+                case .medical: medicalOverview
+                case .food: foodCharts
+                case .growth: if columns { growthHistory }
+                }
                 NavigationLink { ShareReportView(interval: interval) } label: {
                     HStack(spacing: 8) {
                         CareIcon(name: "Stitch_ios_share", color: .white, size: 20)
@@ -81,7 +91,7 @@ struct StatisticsView: View {
                 }
                 Text(L10n.text("{0} · Dữ liệu do bố mẹ ghi nhận", "\(InsightData.intervalLabel(interval))"))
                     .font(CareFont.caption).foregroundStyle(CareTheme.secondary).frame(maxWidth: .infinity)
-            }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
+            }
         }
         .background(CareTheme.background)
         .toolbar(.hidden, for: .navigationBar)
@@ -135,6 +145,9 @@ struct StatisticsView: View {
                 }
             }.foregroundStyle(CareTheme.text)
         }
+    }
+
+    @ViewBuilder private var medicalOverview: some View {
         CareSectionTitle(title: L10n.text("Tổng quan"), subtitle: L10n.text(range.rawValue))
         nutritionMetrics
         if let latest = viewModel.measurements.max(by: { $0.date < $1.date }) {
@@ -167,6 +180,9 @@ struct StatisticsView: View {
             InsightMetricView(title: L10n.text("Nước"), value: InsightData.sum(activities, kind: .water, unit: "ml").map { "\(InsightData.format($0)) ml" } ?? L10n.text("Chưa ghi nhận"), subtitle: L10n.text("Tổng trong khoảng"), icon: "Stitch_water_drop", color: CareTheme.feeding)
             InsightMetricView(title: L10n.text("Bữa ăn"), value: activities.filter { $0.kind == .meal }.isEmpty ? L10n.text("Chưa ghi nhận") : L10n.count(activities.filter { $0.kind == .meal }.count, one: "1 bữa", many: "{0} bữa"), subtitle: L10n.text("Theo nhật ký đã lưu"), icon: "Stitch_ramen_dining", color: CareTheme.routine)
         }
+    }
+
+    @ViewBuilder private var foodCharts: some View {
         CareCard {
             VStack(alignment: .leading, spacing: 16) {
                 Toggle(L10n.text("Xem dạng danh sách"), isOn: $foodList).font(CareFont.subheadline)
@@ -214,20 +230,12 @@ struct StatisticsView: View {
                     Text("\(InsightData.format(value)) \(growthMetric.unit)").font(CareFont.largeTitle.bold())
                     Text(latest.date, format: .dateTime.day().month().year()).font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
                 } else { Text(L10n.text("Chưa ghi nhận")).font(CareFont.title2.bold()) }
-                Toggle(L10n.text("Xem dạng danh sách"), isOn: $growthList).font(CareFont.subheadline)
+                if !columns { Toggle(L10n.text("Xem dạng danh sách"), isOn: $growthList).font(CareFont.subheadline) }
                 Text(allGrowth ? L10n.text("Toàn bộ lịch sử") : InsightData.intervalLabel(interval)).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                 if growth.isEmpty {
                     Text(L10n.text("Chưa có số đo trong khoảng này")).foregroundStyle(CareTheme.secondary).frame(maxWidth: .infinity, minHeight: 100)
-                } else if growthList {
-                    ForEach(growth) { item in
-                        NavigationLink { MeasurementEntryView(measurement: item) } label: {
-                            HStack {
-                                Text(item.date, format: .dateTime.day().month().year())
-                                Spacer()
-                                Text("\(InsightData.format(growthMetric.value(item) ?? 0)) \(growthMetric.unit)").fontWeight(.semibold)
-                            }.font(CareFont.subheadline).padding(.vertical, 8)
-                        }
-                    }
+                } else if growthList && !columns {
+                    growthRows(growth)
                 } else {
                     Chart(growth) { item in
                         if let value = growthMetric.value(item) {
@@ -248,6 +256,32 @@ struct StatisticsView: View {
                 NavigationLink { MeasurementEntryView() } label: {
                     Text(L10n.text("+ Thêm số đo")).font(CareFont.headline).frame(maxWidth: .infinity, minHeight: 48)
                         .background(CareTheme.accent.opacity(0.09), in: RoundedRectangle(cornerRadius: 12))
+                }
+            }.foregroundStyle(CareTheme.text)
+        }
+    }
+
+    private func growthRows(_ items: [BodyMeasurement]) -> some View {
+        ForEach(items) { item in
+            NavigationLink { MeasurementEntryView(measurement: item) } label: {
+                HStack {
+                    Text(item.date, format: .dateTime.day().month().year())
+                    Spacer()
+                    Text("\(InsightData.format(growthMetric.value(item) ?? 0)) \(growthMetric.unit)").fontWeight(.semibold)
+                }.font(CareFont.subheadline).padding(.vertical, 8)
+            }
+        }
+    }
+
+    /// Second column of the growth mode: every measurement of the chart, newest first.
+    private var growthHistory: some View {
+        CareCard {
+            VStack(alignment: .leading, spacing: 8) {
+                CareSectionTitle(title: L10n.text("Lịch sử số đo"), subtitle: L10n.text(growthMetric.rawValue))
+                if growth.isEmpty {
+                    Text(L10n.text("Chưa có số đo trong khoảng này")).foregroundStyle(CareTheme.secondary)
+                } else {
+                    growthRows(growth.reversed())
                 }
             }.foregroundStyle(CareTheme.text)
         }

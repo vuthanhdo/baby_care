@@ -22,16 +22,16 @@ struct ContentView: View {
             } else if viewModel.hasOnboarded {
                 TabView(selection: $selectedTab) {
                     Tab(value: .quick) {
-                        NavigationStack { QuickLogView(selectedTab: $selectedTab).safeAreaInset(edge: .bottom, spacing: 0) { CareBottomTabs(selection: $selectedTab) } }
+                        NavigationStack { QuickLogView(selectedTab: $selectedTab).careTabs($selectedTab) }
                     } label: { Label(L10n.text("Ghi nhanh"), systemImage: "bolt") }
                     Tab(value: .diary) {
-                        NavigationStack { DiaryView().safeAreaInset(edge: .bottom, spacing: 0) { CareBottomTabs(selection: $selectedTab) } }
+                        NavigationStack { DiaryView().careTabs($selectedTab) }
                     } label: { Label(L10n.text("Nhật ký"), systemImage: "book.pages") }
                     Tab(value: .statistics) {
                         NavigationStack {
                             StatisticsView()
                                 .safeAreaInset(edge: .top, spacing: 0) { CareBabyHeaderView() }
-                                .safeAreaInset(edge: .bottom, spacing: 0) { CareBottomTabs(selection: $selectedTab) }
+                                .careTabs($selectedTab)
                         }
                     } label: { Label(L10n.text("Thống kê"), systemImage: "chart.bar") }
                 }
@@ -71,27 +71,59 @@ struct ContentView: View {
 }
 #Preview { ContentView().environment(BabyCareViewModel.preview()) }
 
-/// Flat, full-width Stitch navigation; each root owns its inset so pushed forms hide it.
+extension View {
+    /// Attaches the app tabs to a tab root: a bottom bar on phones and the folded iPhone Duo, a leading rail when the
+    /// window is wide (open Duo, iPad landscape) so no tab sits on the hinge and the content keeps its height.
+    /// Each root owns its inset so pushed screens hide the tabs.
+    func careTabs(_ selection: Binding<CareTab>) -> some View { modifier(CareTabsInset(selection: selection)) }
+}
+
+private struct CareTabsInset: ViewModifier {
+    @Binding var selection: CareTab
+    @Environment(\.careWindow) private var window
+    func body(content: Content) -> some View {
+        let rail = window.usesSideTabs
+        content
+            .safeAreaInset(edge: .leading, spacing: 0) { if rail { CareBottomTabs(selection: $selection, axis: .vertical) } }
+            .safeAreaInset(edge: .bottom, spacing: 0) { if !rail { CareBottomTabs(selection: $selection) } }
+    }
+}
+
+/// Flat Stitch navigation: full-width bar along the bottom, or a slim rail along the leading edge.
 struct CareBottomTabs: View {
     @Binding var selection: CareTab
+    var axis: Axis = .horizontal
     @Environment(\.locale) private var appLocale
     var body: some View {
         let _ = appLocale
-        HStack(spacing: 0) {
-            tab(.quick, title: L10n.text("Ghi nhanh"), symbol: "bolt", identifier: "tab.quick")
-            tab(.diary, title: L10n.text("Nhật ký"), symbol: "auto_stories", identifier: "tab.diary")
-            tab(.statistics, title: L10n.text("Thống kê"), symbol: "bar_chart", identifier: "tab.statistics")
-        }.frame(maxWidth: 620).frame(maxWidth: .infinity).padding(.top, 10).padding(.bottom, 4)
-            .background(CareTheme.surface.ignoresSafeArea(edges: .bottom))
-            .overlay(alignment: .top) { Rectangle().fill(CareTheme.border).frame(height: 0.5) }
+        if axis == .horizontal {
+            // The background runs under the iPhone Duo's side safe area (status cluster strip); the tabs stay clear of it.
+            HStack(spacing: 0) { tabs }
+                .frame(maxWidth: 620).frame(maxWidth: .infinity).padding(.top, 10).padding(.bottom, 4)
+                .background(CareTheme.surface.ignoresSafeArea(edges: [.bottom, .horizontal]))
+                .overlay(alignment: .top) { Rectangle().fill(CareTheme.border).frame(height: 0.5).ignoresSafeArea(edges: .horizontal) }
+        } else {
+            VStack(spacing: 6) { tabs; Spacer(minLength: 0) }
+                .frame(width: 84).padding(.top, 12)
+                .background(CareTheme.surface.ignoresSafeArea(edges: [.leading, .vertical]))
+                .overlay(alignment: .trailing) { Rectangle().fill(CareTheme.border).frame(width: 0.5).ignoresSafeArea(edges: .vertical) }
+        }
+    }
+    @ViewBuilder private var tabs: some View {
+        tab(.quick, title: L10n.text("Ghi nhanh"), symbol: "bolt", identifier: "tab.quick")
+        tab(.diary, title: L10n.text("Nhật ký"), symbol: "auto_stories", identifier: "tab.diary")
+        tab(.statistics, title: L10n.text("Thống kê"), symbol: "bar_chart", identifier: "tab.statistics")
     }
     private func tab(_ value: CareTab, title: String, symbol: String, identifier: String) -> some View {
         Button { selection = value } label: {
             VStack(spacing: 5) {
                 CareIcon(name: "Stitch_" + symbol, color: selection == value ? CareTheme.accent : CareTheme.secondary, size: 26)
                 Text(title).font(CareFont.caption).fontWeight(selection == value ? .bold : .medium)
+                    .multilineTextAlignment(.center).lineLimit(2).minimumScaleFactor(0.8)
             }.foregroundStyle(selection == value ? CareTheme.accent : CareTheme.secondary)
-                .frame(maxWidth: .infinity, minHeight: 48)
+                .frame(maxWidth: axis == .horizontal ? .infinity : nil, minHeight: axis == .horizontal ? 48 : 64)
+                .frame(width: axis == .vertical ? 76 : nil)
+                .background(axis == .vertical && selection == value ? CareTheme.accent.opacity(0.08) : .clear, in: .rect(cornerRadius: 14))
                 .contentShape(Rectangle())
         }.buttonStyle(.plain).accessibilityIdentifier(identifier)
             .accessibilityAddTraits(selection == value ? .isSelected : [])

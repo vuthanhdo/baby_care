@@ -17,7 +17,8 @@ struct QuickLogView: View {
     var body: some View {
         let _ = appLocale
         ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
+            // Open iPhone Duo / iPad: what is happening now on one side of the fold, logging on the other.
+            CareColumns {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(Date.now, format: .dateTime.weekday(.wide).day().month())
@@ -34,6 +35,7 @@ struct QuickLogView: View {
                 if let sleepStart = viewModel.sleepStartDate { sleepCard(start: sleepStart) }
                 todaySummary
                 if habitSuggestions && lastMilk != nil { suggestions }
+            } trailing: {
                 categories
                 NavigationLink { VoiceEntryView() } label: {
                     HStack(spacing: 14) {
@@ -77,7 +79,7 @@ struct QuickLogView: View {
                     NavigationLink(L10n.text("Bắt đầu theo dõi ốm")) { IllnessTrackingView() }
                         .font(CareFont.subheadline.weight(.semibold)).frame(maxWidth: .infinity, minHeight: 44)
                 }
-            }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
+            }
         }
         .careScreen()
         .toolbar(.hidden, for: .navigationBar)
@@ -181,7 +183,8 @@ struct QuickLogView: View {
     }
     private var temperatureLink: some View {
         NavigationLink { ActivityFormView(kind: .temperature) } label: {
-            Label { Text(L10n.text("Đo nhiệt độ")) } icon: { CareIcon(name: "Stitch_device_thermostat", color: .white, size: 20) }
+            // Narrow columns (open iPhone Duo, small phones) shrink the title a little instead of wrapping it.
+            Label { Text(L10n.text("Đo nhiệt độ")).lineLimit(1).minimumScaleFactor(0.8) } icon: { CareIcon(name: "Stitch_device_thermostat", color: .white, size: 20) }
         }.buttonStyle(CareActionStyle())
     }
     private var symptomLink: some View {

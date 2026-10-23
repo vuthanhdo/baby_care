@@ -23,7 +23,8 @@ struct IllnessTrackingView: View {
     var body: some View {
         let _ = appLocale
         ScrollView {
-            LazyVStack(alignment: .leading, spacing: 18) {
+            // Open iPhone Duo / iPad: episode and reminders beside the episode log.
+            CareColumns(spacing: 18) {
                 episodeCard
                 if viewModel.isTrackingIllness, !recent.isEmpty { CareCard { TemperatureChartView(activities: recent, medicines: recent, compact: true) } }
                 HStack {
@@ -47,6 +48,7 @@ struct IllnessTrackingView: View {
                 }
                 Label(L10n.text("Kiểm tra tên thuốc, lượng thực tế và thời điểm theo hướng dẫn đang có trước khi lưu."), systemImage: "info.circle")
                     .font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+            } trailing: {
                 CareSectionTitle(title: viewModel.isTrackingIllness ? L10n.text("Nhật ký đợt ốm") : L10n.text("Nhật ký y tế gần đây"),
                                  subtitle: viewModel.isTrackingIllness ? L10n.count(recent.count, one: "1 sự kiện kể từ khởi phát", many: "{0} sự kiện kể từ khởi phát") : nil)
                 if recent.isEmpty {
@@ -72,7 +74,7 @@ struct IllnessTrackingView: View {
                     }.foregroundStyle(.white).frame(maxWidth: .infinity, minHeight: 56)
                         .background(CareTheme.accent, in: RoundedRectangle(cornerRadius: 16))
                 }
-            }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
+            }
         }
         .background(CareTheme.background).foregroundStyle(CareTheme.text)
         .navigationTitle(L10n.text("Theo dõi ốm & Lịch thuốc")).navigationBarTitleDisplayMode(.inline)

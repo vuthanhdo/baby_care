@@ -65,6 +65,7 @@ struct AppRootView: View {
         .onChange(of: session.viewModel?.state.requiresConsent) { _, required in
             if required == true { Task { await session.checkConsent() } }
         }
+        .careAdaptiveRoot()
         .tint(CareTheme.accent)
     }
 }

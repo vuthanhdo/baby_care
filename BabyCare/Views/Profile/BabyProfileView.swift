@@ -24,7 +24,8 @@ struct BabyProfileView: View {
     var body: some View {
         let _ = appLocale
         ScrollView {
-            VStack(spacing: 20) {
+            // Open iPhone Duo / iPad: profile and growth beside health notes and the family's babies.
+            CareColumns {
             CareFormCard {
                 VStack(spacing: 16) {
                     Button { editingProfile = true } label: {
@@ -79,6 +80,7 @@ struct BabyProfileView: View {
                 }.accessibilityIdentifier("vaccinationHistoryLink")
             }
 
+            } trailing: {
             CareFormCard(title: L10n.text("Lưu ý Y tế & Chăm sóc")) {
                 Button { editingHealth = true } label: {
                     VStack(alignment: .leading, spacing: 12) {
@@ -124,7 +126,7 @@ struct BabyProfileView: View {
                 }.disabled(viewModel.babies.count >= CareDatabase.maximumBabies)
                 Text(L10n.text("{0}/4 hồ sơ bé", "\(viewModel.babies.count)")).font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
             }
-            }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
+            }
         }
         .scrollContentBackground(.hidden)
         .background(CareTheme.background)

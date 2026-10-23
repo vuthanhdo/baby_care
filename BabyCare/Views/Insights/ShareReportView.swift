@@ -96,10 +96,28 @@ struct ShareReportView: View {
     private var canPreview: Bool { includeProfile || includeHealthNotes || !sections.isEmpty }
 
     @Environment(\.locale) private var appLocale
+    @Environment(\.careWindow) private var window
+    @Environment(\.dynamicTypeSize) private var typeSize
+    private var columns: Bool { window.allowsColumns(typeSize: typeSize) }
+
+    private var exportControl: some View {
+        VStack(spacing: 8) {
+            if let exportURL {
+                ShareLink(item: exportURL) {
+                    HStack(spacing: 8) { CareIcon(name: "Stitch_ios_share", color: .white, size: 20); Text(L10n.text("Chia sẻ file PDF")).font(CareFont.headline) }
+                        .foregroundStyle(.white).frame(maxWidth: .infinity, minHeight: 56).background(CareTheme.accent, in: RoundedRectangle(cornerRadius: 14))
+                }
+            } else {
+                CarePrimaryButton(title: isGenerating ? L10n.text("Đang tạo PDF…") : L10n.text("Xuất file PDF & Chia sẻ")) { export() }.disabled(!canPreview || isGenerating)
+            }
+        }
+    }
+
     var body: some View {
         let _ = appLocale
         ScrollView {
-            LazyVStack(alignment: .leading, spacing: 16) {
+            // Open iPhone Duo / iPad: choose the content on one side, check the preview on the other.
+            CareColumns(spacing: 16) {
                 CareCard {
                     HStack(alignment: .top, spacing: 12) {
                         CareIcon(name: "Stitch_health_and_safety", color: CareTheme.accent, size: 25)
@@ -151,6 +169,7 @@ struct ShareReportView: View {
                         }.font(CareFont.subheadline.weight(.semibold))
                     }
                 }
+            } trailing: {
                 CareCard {
                     VStack(alignment: .leading, spacing: 16) {
                         stepTitle(2, L10n.text("Xem trước phiếu tóm tắt"), badge: "PDF")
@@ -177,22 +196,15 @@ struct ShareReportView: View {
                     }
                 }
                 if let error { Text(error).font(CareFont.subheadline).foregroundStyle(CareTheme.medical) }
-            }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
+                // Two columns: export follows the preview instead of a bar that would cross the iPhone Duo hinge.
+                if columns { exportControl }
+            }
         }
         .background(CareTheme.background).foregroundStyle(CareTheme.text)
         .navigationTitle(L10n.text("Chia sẻ báo cáo")).navigationBarTitleDisplayMode(.inline).toolbar(.visible, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)
         .safeAreaInset(edge: .bottom) {
-            VStack(spacing: 8) {
-                if let exportURL {
-                    ShareLink(item: exportURL) {
-                        HStack(spacing: 8) { CareIcon(name: "Stitch_ios_share", color: .white, size: 20); Text(L10n.text("Chia sẻ file PDF")).font(CareFont.headline) }
-                            .foregroundStyle(.white).frame(maxWidth: .infinity, minHeight: 56).background(CareTheme.accent, in: RoundedRectangle(cornerRadius: 14))
-                    }
-                } else {
-                    CarePrimaryButton(title: isGenerating ? L10n.text("Đang tạo PDF…") : L10n.text("Xuất file PDF & Chia sẻ")) { export() }.disabled(!canPreview || isGenerating)
-                }
-            }.padding(.horizontal, 20).padding(.vertical, 12).background(CareTheme.surface)
+            if !columns { exportControl.padding(.horizontal, 20).padding(.vertical, 12).background(CareTheme.surface) }
         }
         .sheet(isPresented: $showRange) { InsightDateRangeView(start: interval.start, end: interval.end) { interval = $0 } }
         .onChange(of: sections) { _, _ in invalidatePreview() }

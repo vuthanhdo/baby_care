@@ -6,8 +6,23 @@ struct ActivityPickerView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.dynamicTypeSize) private var textSize
     @State private var selectedGroup: ActivityGroup
+    @State private var gridSpan: ClosedRange<CGFloat> = 0...0
+    @Environment(\.careWindow) private var window
     init(initialGroup: ActivityGroup = .medical) { _selectedGroup = State(initialValue: initialGroup) }
     private var kinds: [ActivityKind] { ActivityKind.allCases.filter { $0.group == selectedGroup } }
+
+    /// Two equal columns, except on the open iPhone Duo: the sheet sits across the hinge, so the column gap
+    /// widens to cover it and no tile lands on the fold.
+    private var gridColumns: [GridItem] {
+        if textSize.isAccessibilitySize { return [GridItem(.flexible(), spacing: 10)] }
+        if let fold = window.localFold(in: gridSpan) {
+            let gutter = fold.upperBound - fold.lowerBound + 2 * CareColumnsPlan.foldClearance
+            let leading = (fold.lowerBound + fold.upperBound) / 2 - gutter / 2
+            let trailing = gridSpan.upperBound - gridSpan.lowerBound - leading - gutter
+            if leading >= 140, trailing >= 140 { return [GridItem(.fixed(leading), spacing: gutter), GridItem(.fixed(trailing))] }
+        }
+        return Array(repeating: GridItem(.flexible(), spacing: 10), count: 2)
+    }
 
     @Environment(\.locale) private var appLocale
     var body: some View {
@@ -59,7 +74,7 @@ struct ActivityPickerView: View {
                             .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(CareTheme.medical.opacity(0.25)))
                     }.buttonStyle(.plain).accessibilityIdentifier("picker.kind.temperature")
                 }
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: textSize.isAccessibilitySize ? 1 : 2), spacing: 10) {
+                LazyVGrid(columns: gridColumns, spacing: 10) {
                     ForEach(kinds.filter { selectedGroup != .medical || $0 != .temperature }) { kind in
                         NavigationLink { ActivityFormView(kind: kind) } label: {
                             VStack(alignment: .leading, spacing: 10) {
@@ -74,7 +89,7 @@ struct ActivityPickerView: View {
                                 .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(CareTheme.border))
                         }.buttonStyle(.plain).accessibilityIdentifier("picker.kind.\(kind.rawValue)")
                     }
-                }
+                }.careHorizontalSpan($gridSpan)
                 NavigationLink { VoiceEntryView() } label: {
                     HStack(spacing: 14) {
                         CareIcon(name: "Stitch_mic", color: .white, size: 30)

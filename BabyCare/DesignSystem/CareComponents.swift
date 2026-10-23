@@ -144,8 +144,8 @@ struct CareBabyHeaderView: View {
                 .background(CareTheme.surface, in: .circle)
                 .overlay(Circle().strokeBorder(CareTheme.border)).accessibilityLabel(L10n.text("Theo dõi và lịch nhắc"))
         }.padding(.horizontal, 20).padding(.vertical, 8)
-            .background(CareTheme.background)
-            .overlay(alignment: .bottom) { Rectangle().fill(CareTheme.border).frame(height: 0.5) }
+            .background(CareTheme.background.ignoresSafeArea(edges: .horizontal))
+            .overlay(alignment: .bottom) { Rectangle().fill(CareTheme.border).frame(height: 0.5).ignoresSafeArea(edges: .horizontal) }
     }
 }
 
