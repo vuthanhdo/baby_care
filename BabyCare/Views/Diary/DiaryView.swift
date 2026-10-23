@@ -11,6 +11,20 @@ struct DiaryView: View {
     @State private var showingDate = false
     @State private var draftDay = Date()
     @State private var scopeBeforeSearch = false
+    /// Entry shown in the detail pane when the window is wide enough for list and detail side by side.
+    @State private var selectedID: CareActivity.ID?
+    /// Entry pushed full screen when the list is alone (phone, folded iPhone Duo).
+    @State private var pushed: CareActivity?
+    @State private var span: ClosedRange<CGFloat> = 0...0
+    @Environment(\.careWindow) private var window
+    @Environment(\.dynamicTypeSize) private var typeSize
+
+    /// Width of the list pane, splitting at the hinge of an open iPhone Duo; nil keeps a single pane.
+    private var listWidth: CGFloat? {
+        CareColumnsPlan.paneSplit(width: span.upperBound - span.lowerBound, split: window.allowsColumns(typeSize: typeSize),
+                                  fold: window.localFold(in: span))
+    }
+    private var selectedActivity: CareActivity? { selectedID.flatMap { id in viewModel.activities.first { $0.id == id } } }
 
     private var filtered: [CareActivity] {
         viewModel.activities.filter { activity in
@@ -22,6 +36,73 @@ struct DiaryView: View {
     @Environment(\.locale) private var appLocale
     var body: some View {
         let _ = appLocale
+        let listWidth = listWidth
+        HStack(spacing: 0) {
+            list(isSplit: listWidth != nil)
+                .safeAreaInset(edge: .bottom, alignment: .trailing) { addButton }
+                .frame(width: listWidth)
+            if listWidth != nil { detailPane }
+        }
+        .careHorizontalSpan($span)
+        .onChange(of: query) { old, new in
+            if old.isEmpty && !new.isEmpty { scopeBeforeSearch = allDates; allDates = true }
+            else if !old.isEmpty && new.isEmpty { allDates = scopeBeforeSearch }
+        }
+        // Folding keeps the open entry on screen full size; unfolding moves it back beside the list.
+        .onChange(of: listWidth != nil) { _, isSplit in
+            if isSplit, let pushed { selectedID = pushed.id; self.pushed = nil }
+            else if !isSplit, let selectedActivity { pushed = selectedActivity }
+        }
+        .onChange(of: pushed?.id) { _, id in if id == nil && listWidth == nil { selectedID = nil } }
+        .navigationDestination(isPresented: Binding(get: { pushed != nil }, set: { if !$0 { pushed = nil } })) {
+            if let pushed { ActivityDetailView(activity: pushed) }
+        }
+        .careScreen().toolbar(.hidden, for: .navigationBar)
+        .toolbar(.hidden, for: .tabBar)
+        .safeAreaInset(edge: .top, spacing: 0) { CareBabyHeaderView() }
+        .sheet(isPresented: $showingPicker) { NavigationStack { ActivityPickerView(initialGroup: group ?? .medical) }.careToastBanner() }
+        .sheet(isPresented: $showingDate) {
+            NavigationStack {
+                DatePicker(L10n.text("Chọn ngày"), selection: $draftDay, in: ...Date(), displayedComponents: .date)
+                    .datePickerStyle(.graphical).padding().navigationTitle(L10n.text("Ngày nhật ký"))
+                    .toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.text("Áp dụng")) { day = draftDay; allDates = false; showingDate = false } } }
+            }.presentationDetents([.medium, .large])
+        }
+    }
+
+    private func open(_ activity: CareActivity) {
+        if listWidth != nil { selectedID = activity.id } else { pushed = activity }
+    }
+
+    private var addButton: some View {
+        Button { showingPicker = true } label: {
+            HStack(spacing: 8) {
+                CareIcon(name: "Stitch_add", color: .white, size: 22)
+                Text(L10n.text("Ghi hoạt động")).font(CareFont.headline).foregroundStyle(.white)
+            }.padding(.horizontal, 20).frame(minHeight: 52).background(CareTheme.accent, in: .capsule)
+        }.buttonStyle(.plain).padding(.horizontal, 20).padding(.bottom, 8)
+    }
+
+    @ViewBuilder private var detailPane: some View {
+        Group {
+            if let activity = selectedActivity {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 14) {
+                        Text(L10n.text("Chi tiết hoạt động")).font(CareFont.title3.bold())
+                        ActivityDetailContent(activity: activity) { selectedID = nil }
+                    }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
+                }.id(activity.id)
+            } else {
+                ContentUnavailableView {
+                    Label(L10n.text("Chọn một hoạt động"), systemImage: "hand.point.up.left")
+                } description: { Text(L10n.text("Chi tiết hiện ở đây, bên cạnh nhật ký.")) }
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .overlay(alignment: .leading) { Rectangle().fill(CareTheme.border).frame(width: 0.5).ignoresSafeArea(edges: .bottom) }
+    }
+
+    private func list(isSplit: Bool) -> some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 14) {
                 HStack(spacing: 10) {
@@ -77,35 +158,13 @@ struct DiaryView: View {
                     }
                 } else {
                     ForEach(filtered) { activity in
-                        NavigationLink { ActivityDetailView(activity: activity) } label: {
-                            DiaryActivityCardView(activity: activity, showsDate: allDates)
-                        }.buttonStyle(.plain)
+                        let selected = isSplit && activity.id == selectedID
+                        Button { open(activity) } label: {
+                            DiaryActivityCardView(activity: activity, showsDate: allDates, isSelected: selected)
+                        }.buttonStyle(.plain).accessibilityAddTraits(selected ? .isSelected : [])
                     }
                 }
             }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
-        }
-        .onChange(of: query) { old, new in
-            if old.isEmpty && !new.isEmpty { scopeBeforeSearch = allDates; allDates = true }
-            else if !old.isEmpty && new.isEmpty { allDates = scopeBeforeSearch }
-        }
-        .careScreen().toolbar(.hidden, for: .navigationBar)
-        .toolbar(.hidden, for: .tabBar)
-        .safeAreaInset(edge: .top, spacing: 0) { CareBabyHeaderView() }
-        .safeAreaInset(edge: .bottom, alignment: .trailing) {
-            Button { showingPicker = true } label: {
-                HStack(spacing: 8) {
-                    CareIcon(name: "Stitch_add", color: .white, size: 22)
-                    Text(L10n.text("Ghi hoạt động")).font(CareFont.headline).foregroundStyle(.white)
-                }.padding(.horizontal, 20).frame(minHeight: 52).background(CareTheme.accent, in: .capsule)
-            }.buttonStyle(.plain).padding(.horizontal, 20).padding(.bottom, 8)
-        }
-        .sheet(isPresented: $showingPicker) { NavigationStack { ActivityPickerView(initialGroup: group ?? .medical) }.careToastBanner() }
-        .sheet(isPresented: $showingDate) {
-            NavigationStack {
-                DatePicker(L10n.text("Chọn ngày"), selection: $draftDay, in: ...Date(), displayedComponents: .date)
-                    .datePickerStyle(.graphical).padding().navigationTitle(L10n.text("Ngày nhật ký"))
-                    .toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.text("Áp dụng")) { day = draftDay; allDates = false; showingDate = false } } }
-            }.presentationDetents([.medium, .large])
         }
     }
     private func moveDay(_ amount: Int) {
@@ -129,6 +188,8 @@ struct DiaryView: View {
 struct DiaryActivityCardView: View {
     let activity: CareActivity
     var showsDate = false
+    /// Highlights the entry open in the detail pane.
+    var isSelected = false
     @Environment(\.locale) private var appLocale
     var body: some View {
         let _ = appLocale
@@ -158,6 +219,7 @@ struct DiaryActivityCardView: View {
                 if showsDate { Text(activity.date, format: .dateTime.day().month().year()).font(CareFont.caption).foregroundStyle(CareTheme.secondary) }
             }
         }.foregroundStyle(CareTheme.text)
+            .overlay { if isSelected { RoundedRectangle(cornerRadius: 16).strokeBorder(activity.kind.group.color, lineWidth: 2) } }
     }
 }
 #Preview { NavigationStack { DiaryView() }.environment(BabyCareViewModel.preview()) }
