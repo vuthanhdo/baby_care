@@ -120,7 +120,7 @@ struct DiaryView: View {
                         Button(L10n.text("Ngày đang chọn")) { allDates = false }
                         Button(L10n.text("Tất cả thời gian")) { allDates = true }
                     } label: {
-                        Text(L10n.text("Phạm vi: {0}", "\(allDates ? L10n.text("Tất cả thời gian") : "Theo ngày")")).font(CareFont.caption.weight(.medium))
+                        Text(L10n.text("Phạm vi: {0}", allDates ? L10n.text("Tất cả thời gian") : L10n.text("Theo ngày"))).font(CareFont.caption.weight(.medium))
                     }.frame(minHeight: 44)
                     Spacer()
                     CareBadge(title: L10n.count(filtered.count, one: "1 sự kiện", many: "{0} sự kiện"))
