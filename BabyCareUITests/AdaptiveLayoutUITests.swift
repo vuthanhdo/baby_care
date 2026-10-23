@@ -68,6 +68,66 @@ final class AdaptiveLayoutUITests: XCTestCase {
         }
     }
 
+    /// Open iPhone Duo and wide iPad windows: tabs move to a leading rail, the quick log splits at the hinge
+    /// (the window centre on the Duo) and the diary opens an entry beside the list instead of pushing it.
+    @MainActor
+    func testWideWindowUsesRailColumnsAndDiaryDetailPane() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-demo", "-ui-testing", "-care.language", "vi"]
+        app.launch()
+        // Later tests on the same simulator expect portrait; trying orientations must not leak into them.
+        defer { XCUIDevice.shared.orientation = .portrait }
+        let quick = app.buttons["tab.quick"], diary = app.buttons["tab.diary"]
+        XCTAssertTrue(quick.waitForExistence(timeout: 10))
+        // Phones in landscape are wide but short and compact width; they keep the bottom tab bar.
+        guard makeWindowWide(app) else {
+            let window = app.windowFrame
+            throw XCTSkip("Window is \(Int(window.width)) × \(Int(window.height)) pt; the open-Duo layout needs a regular-size window.")
+        }
+
+        // The open iPhone Duo folds down the middle of its 951-pt display; iPads are wider and have no hinge.
+        let window = app.windowFrame
+        let foldX = window.midX, hasHinge = window.width < 1000
+        XCTAssertLessThan(quick.frame.maxX, 120, "tabs should sit in a leading rail")
+        XCTAssertGreaterThan(diary.frame.minY, quick.frame.minY, "rail tabs stack vertically")
+        let medical = app.buttons["medicalGroupButton"]
+        XCTAssertTrue(medical.waitForExistence(timeout: 5))
+        XCTAssertGreaterThan(medical.frame.minX, foldX, "the logging column should sit in the second column")
+        if hasHinge { XCTAssertGreaterThanOrEqual(medical.frame.minX, foldX + 15, "no card may cross the hinge") }
+        capture(app, "wide – quick log")
+
+        select(diary)
+        XCTAssertTrue(diary.isSelected)
+        let entry = app.buttons.containing(.staticText, identifier: "Nhiệt độ").firstMatch
+        XCTAssertTrue(entry.waitForExistence(timeout: 5))
+        entry.tap()
+        let detail = app.staticTexts["NHIỆT ĐỘ CƠ THỂ"]
+        XCTAssertTrue(detail.waitForExistence(timeout: 5), "selected entry should open in the detail pane")
+        XCTAssertLessThan(entry.frame.maxX, detail.frame.minX, "list and detail should sit side by side")
+        if hasHinge {
+            XCTAssertLessThanOrEqual(entry.frame.maxX, foldX - 15, "the list must end before the hinge")
+            XCTAssertGreaterThanOrEqual(detail.frame.minX, foldX + 15, "the detail must start after the hinge")
+        }
+        XCTAssertTrue(diary.isHittable, "opening an entry must not push over the tabs")
+        capture(app, "wide – diary detail")
+
+        select(app.buttons["tab.statistics"])
+        XCTAssertTrue(app.buttons["statistics.mode.growth"].waitForExistence(timeout: 5))
+        capture(app, "wide – statistics")
+    }
+
+    /// Tries the orientations until the window is at least 860 × 600 pt. The open iPhone Duo's inner display is wide
+    /// in the device's portrait orientation; iPads are wide in portrait (13") or landscape (mini).
+    @MainActor private func makeWindowWide(_ app: XCUIApplication) -> Bool {
+        func isWide() -> Bool { app.windowFrame.width >= 860 && app.windowFrame.height >= 600 }
+        for orientation in [UIDeviceOrientation.portrait, .landscapeLeft] where !isWide() {
+            XCUIDevice.shared.orientation = orientation
+            for _ in 0..<12 where !isWide() { usleep(250_000) }
+            sleep(1) // let the resize animation finish before tapping
+        }
+        return isWide()
+    }
+
     /// Polls until the window has the expected aspect, then lets the resize animation finish.
     @MainActor private func waitForRotation(_ app: XCUIApplication, landscape: Bool) {
         for _ in 0..<20 where (app.frame.width > app.frame.height) != landscape { usleep(250_000) }
