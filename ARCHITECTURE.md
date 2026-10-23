@@ -67,15 +67,27 @@ Kiểm chứng: 19/19 test iOS đạt (BabyLimitTests, CloudProviderTests, BabyC
 - Date/number presentation follows the selected app locale. iOS permission dialogs use the OS-selected app language through `InfoPlist.strings`.
 - Voice recognition and parsing still support Vietnamese. English UI explicitly labels Vietnamese voice examples. Switching UI language does not change the parser or infer new voice commands.
 
-## iPhone Duo (14/10/2026)
+## iPhone Duo (cập nhật 23/10/2026, Xcode 27.1)
 
-Apple công bố iPhone Duo (09/2026). Số liệu đo trên simulator iOS 27.1: màn ngoài khi gập **466 × 678 pt**, size class compact/regular (ngang: compact/compact) — như iPhone thường; màn trong khi mở **669 × 951 pt**, **regular/regular** ở cả hai hướng — như iPad, và màn trong **bỏ qua** `UISupportedInterfaceOrientations`. App cũ chạy được không cần build lại; build bằng SDK 27.1 mới tràn hết mép màn trong.
+Số liệu đo trên simulator iOS 27.1 (Device Hub):
 
-Nguyên tắc đã áp dụng:
+| Trạng thái | Cửa sổ | Size class | Vùng dành riêng (pt, toạ độ cửa sổ) |
+| --- | --- | --- | --- |
+| Gập (màn ngoài) | 466 × 678 | compact/regular | occlusion: camera 37 × 37 tại (399.7, 29.3), cụm trạng thái 84 × 174 góc trên phải |
+| Mở nằm ngang (màn trong) | 951 × 669 | regular/regular | division (bản lề) x 455.5–495.5 cao toàn màn; occlusion 84 × 124 góc trên phải |
+| Mở dọc (màn trong) | 669 × 951 | regular/regular | chưa đo (cần xoay trong Device Hub) |
 
-- Layout chỉ phụ thuộc size class; không dùng `UIScreen.main`, `userInterfaceIdiom` hay orientation (đã rà soát, không có chỗ nào).
-- Nội dung cuộn giới hạn `.frame(maxWidth: 620).frame(maxWidth: .infinity)` ở mọi màn `ScrollView`; `CareBottomTabs` cũng gom về 620 pt. Màn dùng `List`/`Form` hệ thống giữ nguyên vì iPadOS tự inset.
-- Safe area dùng đúng từng cạnh (header/tab bar là `safeAreaInset`, chỉ nền tab bar `ignoresSafeArea(edges: .bottom)`), nên vùng camera/status bar lệch một bên trên Duo không che nội dung.
-- Sheet trên regular width là form sheet giữa màn; banner toast đã gắn trong sheet.
+Hệ thống chừa nguyên dải 84 pt bên phải làm safe area ở cả hai màn. Simulator khởi động lại luôn ở trạng thái gập; chỉ Device Hub gập/mở được (không có lệnh `simctl` hay API XCUITest), và `xcodebuild test` chạy song song sẽ dùng bản clone ở trạng thái gập.
 
-Kiểm thử: `AdaptiveLayoutUITests` chạy cùng luồng (tab → chọn hoạt động → form nhiệt độ có bàn phím → lưu) ở portrait và landscape; chạy với destination iPhone (compact width, landscape = compact height) và iPad mini (regular width). Khi có Xcode 27.1: mở Device Hub → iPhone Duo simulator, thử open/close/rotate/fold và Split View; build lại bằng SDK 27.1. Chưa dùng `ReservedRegion`/`ArrangementView` (iOS 27.1) vì app không có UI tự dựng sát mép và chưa có bố cục hai pane.
+Thiết kế (`DesignSystem/CareAdaptiveLayout.swift`):
+
+- `careAdaptiveRoot()` gắn ở `AppRootView`: một UIView thăm dò đọc `UIView.reservedRegions(kind: .division/.occlusion)` (iOS 27.1, chỉ có ở UIKit) và `UIHingeInteraction`, đưa `CareWindowMetrics` (kích thước cửa sổ, nếp gấp, vùng che, size class) vào environment. iOS dưới 27.1 và thiết bị không gập chỉ có kích thước.
+- `CareColumns { trái } trailing: { phải }` + `CareColumnsLayout`: một cột ≤ 620 pt (iPhone, Duo gập, Duo mở dọc 669 pt, chữ cỡ trợ năng) hoặc hai cột khi cửa sổ regular width ≥ 760 pt; khe giữa nới rộng để phủ trọn nếp gấp cộng 12 pt mỗi bên. Hai cột giữ identity khi chuyển nên gập/mở không mất state. Phép tính thuần nằm trong `CareColumnsPlan` (có unit test).
+- `careTabs(_:)`: tab bar dưới như cũ, chuyển thành thanh dọc 84 pt bên trái khi cửa sổ regular width ≥ 860 pt (Duo mở ngang, iPad ngang) để tab giữa không nằm trên bản lề và nội dung giữ chiều cao.
+- Màn hai cột: Ghi nhanh (trạng thái | danh mục, gần đây), Theo dõi ốm (đợt ốm, nhắc thuốc | nhật ký đợt), Thống kê (biểu đồ chính | tổng quan; Tăng trưởng: biểu đồ | lịch sử số đo), Hồ sơ bé, Chia sẻ báo cáo.
+- Nhật ký: danh sách | chi tiết, chia đúng giữa nếp gấp; chọn thẻ mở chi tiết ở khung phải (`ActivityDetailContent` dùng chung với màn chi tiết). Gập máy khi đang xem chi tiết thì chi tiết được đẩy toàn màn; mở máy khi đang ở màn chi tiết thì quay về danh sách với chi tiết ở khung phải.
+- Nền tab bar và đường kẻ header chạy dưới dải safe area bên phải; nội dung vẫn tránh vùng che. Thanh điều hướng hệ thống tự xếp quanh vùng che (nút Back nằm dưới cụm trạng thái khi mở ngang).
+- Sheet do hệ thống đặt giữa màn, tức trùng tâm bản lề khi mở Duo; lưới ô của bảng chọn hoạt động nới khe giữa để phủ bản lề. Form và cài đặt (`List`/`Form`) giữ một cột.
+- Đã kiểm trên simulator (23/10/2026): app đang chạy tự đổi bố cục khi gập/mở; gập khi đang xem chi tiết Nhật ký thì chi tiết hiện toàn màn ngoài, mở lại thì về danh sách với chi tiết ở khung phải.
+
+Kiểm thử: `AdaptiveLayoutTests` (unit) cho phép chia cột với số đo thật của Duo; `AdaptiveLayoutUITests.testTabsPickerAndFormInPortraitAndLandscape` chạy mọi destination; `testWideWindowUsesRailColumnsAndDiaryDetailPane` chạy khi cửa sổ ≥ 860 × 600 pt (Duo mở, iPad ngang), tự bỏ qua trên iPhone, và kiểm tra thêm phần tử không vắt qua bản lề khi cửa sổ hẹp hơn 1000 pt. Muốn chạy trên Duo mở: mở máy trong Device Hub rồi chạy với `-parallel-testing-enabled NO` để không tạo clone. Trên màn trong, `app.frame` của XCUITest vẫn báo 669 × 951 và lệnh xoay không có tác dụng, nên test dùng `app.windowFrame` (khung cửa sổ). Test nào xoay máy phải trả về portrait trong `defer`, nếu không các test sau trên cùng simulator chạy ở hướng ngang và hỏng.
