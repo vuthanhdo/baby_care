@@ -162,6 +162,7 @@ struct DiaryView: View {
                         Button { open(activity) } label: {
                             DiaryActivityCardView(activity: activity, showsDate: allDates, isSelected: selected)
                         }.buttonStyle(.plain).accessibilityAddTraits(selected ? .isSelected : [])
+                            .accessibilityIdentifier("diary.entry.\(activity.kind.rawValue)")
                     }
                 }
             }.padding(20).frame(maxWidth: 620).frame(maxWidth: .infinity)
