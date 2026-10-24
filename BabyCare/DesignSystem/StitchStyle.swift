@@ -49,18 +49,23 @@ struct CareSplashView: View {
     @Environment(\.locale) private var appLocale
     var body: some View {
         let _ = appLocale
-        VStack(spacing: 20) {
-            Spacer()
-            CareBrandView(size: 160)
-            Text(L10n.text("Bé Khỏe")).font(CareFont.largeTitle).foregroundStyle(CareTheme.accent)
-            Text(L10n.text("Bố Mẹ An Tâm")).font(CareFont.title3)
-            Text(L10n.text("Ghi nhanh nhật ký · Theo dõi sát sao\nĐồng hành cùng bé yêu"))
-                .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
-                .multilineTextAlignment(.center)
-            Spacer()
-            ProgressView(L10n.text("Đang chuẩn bị dữ liệu…")).font(CareFont.footnote)
-            Spacer().frame(height: 32)
-        }.frame(maxWidth: .infinity, maxHeight: .infinity)
+        // The logo sits exactly where the launch screen draws LaunchLogo (centre of the whole screen), so the
+        // hand-over from the system launch screen to this view does not move it.
+        CareBrandView(size: 160)
+            .overlay(alignment: .top) {
+                VStack(spacing: 20) {
+                    Text(L10n.text("Bé Khỏe")).font(CareFont.largeTitle).foregroundStyle(CareTheme.accent)
+                    Text(L10n.text("Bố Mẹ An Tâm")).font(CareFont.title3)
+                    Text(L10n.text("Ghi nhanh nhật ký · Theo dõi sát sao\nĐồng hành cùng bé yêu"))
+                        .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
+                        .multilineTextAlignment(.center)
+                }.fixedSize().offset(y: 180)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .ignoresSafeArea()
+            .overlay(alignment: .bottom) {
+                ProgressView(L10n.text("Đang chuẩn bị dữ liệu…")).font(CareFont.footnote).padding(.bottom, 32)
+            }
             .background(CareTheme.background).accessibilityIdentifier("care.splash")
     }
 }

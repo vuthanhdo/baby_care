@@ -409,6 +409,7 @@
 				INFOPLIST_FILE = Configuration/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Bé Khỏe";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Bé Khỏe dùng camera khi bạn bấm Chụp ảnh để lưu ảnh hộp hoặc chai thuốc của bé.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Bé Khỏe dùng vị trí gần đúng của bạn để hiện thời tiết và gợi ý trang phục cho bé. Vị trí chỉ gửi tới Apple Weather và không được lưu.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Bé Khỏe dùng micrô khi bạn bấm ghi âm để nhập hoạt động chăm sóc bé bằng giọng nói.";
@@ -417,8 +418,6 @@
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -459,6 +458,7 @@
 				INFOPLIST_FILE = Configuration/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Bé Khỏe";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Bé Khỏe dùng camera khi bạn bấm Chụp ảnh để lưu ảnh hộp hoặc chai thuốc của bé.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Bé Khỏe dùng vị trí gần đúng của bạn để hiện thời tiết và gợi ý trang phục cho bé. Vị trí chỉ gửi tới Apple Weather và không được lưu.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Bé Khỏe dùng micrô khi bạn bấm ghi âm để nhập hoạt động chăm sóc bé bằng giọng nói.";
@@ -467,8 +467,6 @@
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
