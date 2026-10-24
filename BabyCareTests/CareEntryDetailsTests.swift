@@ -399,3 +399,19 @@ struct HealthDetailsTests {
         #expect(again.selectedBaby?.profile.medicalHistory == "" && again.selectedBaby?.activities.first?.followUpDate == nil)
     }
 }
+
+struct CareQuoteTests {
+    @Test func splashQuoteChangesEveryLaunchAndIsTranslated() throws {
+        let defaults = try #require(UserDefaults(suiteName: "CareQuoteTests-\(UUID().uuidString)"))
+        var previous: CareQuote?
+        for draw in 0..<40 {
+            let quote = CareQuotes.pick(defaults: defaults) { draw * 7 }
+            #expect(quote != previous)
+            previous = quote
+        }
+        for quote in CareQuotes.all {
+            #expect(L10n.render(quote.text, language: .english) != quote.text)
+            if let source = quote.source { #expect(L10n.render(source, language: .english) != source) }
+        }
+    }
+}

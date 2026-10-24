@@ -95,6 +95,7 @@
 "Bé đã có giấc ngủ đang diễn ra." = "Bé đã có giấc ngủ đang diễn ra.";
 "Bé đã ngủ dậy? Ghi giấc vừa ngủ" = "Bé đã ngủ dậy? Ghi giấc vừa ngủ";
 "Bình thường khi đo ở {0}: {1}" = "Bình thường khi đo ở {0}: {1}";
+"Bình tĩnh là điều đầu tiên con cần khi con ốm." = "Bình tĩnh là điều đầu tiên con cần khi con ốm.";
 "Bú mẹ" = "Bú mẹ";
 "Bú mẹ, sữa vắt hoặc sữa công thức" = "Bú mẹ, sữa vắt hoặc sữa công thức";
 "Bước 3 / 3" = "Bước 3 / 3";
@@ -134,10 +135,12 @@
 "Bỏ nội dung chưa lưu?" = "Bỏ nội dung chưa lưu?";
 "Bỏ trống mức độ hoặc độ chắc chắn nếu chưa rõ." = "Bỏ trống mức độ hoặc độ chắc chắn nếu chưa rõ.";
 "Bố Mẹ An Tâm" = "Bố Mẹ An Tâm";
+"Bố mẹ an tâm thì con vui khỏe." = "Bố mẹ an tâm thì con vui khỏe.";
 "Bộ nhớ trên thiết bị" = "Bộ nhớ trên thiết bị";
 "Bữa ăn" = "Bữa ăn";
 "Bữa ăn · {0} ml nước" = "Bữa ăn · {0} ml nước";
 "CDC 2000 · tham chiếu của Mỹ" = "CDC 2000 · tham chiếu của Mỹ";
+"Ca dao" = "Ca dao";
 "Cao nhất trong đợt" = "Cao nhất trong đợt";
 "Cao nhất trong đợt: {0} °C · {1}" = "Cao nhất trong đợt: {0} °C · {1}";
 "Cao nhất đã ghi: {0}" = "Cao nhất đã ghi: {0}";
@@ -234,6 +237,7 @@
 "Cloud chưa hỗ trợ xoá hồ sơ bé." = "Cloud chưa hỗ trợ xoá hồ sơ bé.";
 "Cloud không nhận một thay đổi nên thay đổi đó chưa được lưu; các thay đổi khác vẫn được đồng bộ. {0}" = "Cloud không nhận một thay đổi nên thay đổi đó chưa được lưu; các thay đổi khác vẫn được đồng bộ. {0}";
 "Cloud từ chối dữ liệu ({0}: {1}). Hãy kiểm tra thông tin rồi thử lại." = "Cloud từ chối dữ liệu ({0}: {1}). Hãy kiểm tra thông tin rồi thử lại.";
+"Con hơn cha là nhà có phúc." = "Con hơn cha là nhà có phúc.";
 "Cài đặt" = "Cài đặt";
 "Các lần dùng thuốc" = "Các lần dùng thuốc";
 "Các lần uống thuốc đã ghi vẫn được giữ trong nhật ký." = "Các lần uống thuốc đã ghi vẫn được giữ trong nhật ký.";
@@ -249,12 +253,14 @@
 "Có lịch chăm sóc cần xem" = "Có lịch chăm sóc cần xem";
 "Có lịch hẹn tiếp theo" = "Có lịch hẹn tiếp theo";
 "Có mây rải rác" = "Có mây rải rác";
+"Có nuôi con mới biết lòng cha mẹ." = "Có nuôi con mới biết lòng cha mẹ.";
 "Có thể chỉnh sửa hoặc thêm bé trong Hồ sơ bé." = "Có thể chỉnh sửa hoặc thêm bé trong Hồ sơ bé.";
 "Có thể ghi sau khi bé đã ngủ dậy: chọn giờ bắt đầu và giờ thức dậy." = "Có thể ghi sau khi bé đã ngủ dậy: chọn giờ bắt đầu và giờ thức dậy.";
 "Có thể mưa ({0}%): mang áo mưa hoặc tấm che xe đẩy." = "Có thể mưa ({0}%): mang áo mưa hoặc tấm che xe đẩy.";
 "Có thể nói “sáng nay bảy giờ rưỡi…”, “…hồi 7h30 sáng” hoặc “…mười phút trước”. Không cần đọc đúng câu mẫu; hãy nói rõ lượng và đơn vị. Nếu còn thiếu thông tin, app sẽ chỉ ra phần cần bổ sung. Âm thanh có thể được Apple xử lý khi thiết bị không hỗ trợ nhận dạng tại máy." = "Có thể nói “sáng nay bảy giờ rưỡi…”, “…hồi 7h30 sáng” hoặc “…mười phút trước”. Không cần đọc đúng câu mẫu; hãy nói rõ lượng và đơn vị. Nếu còn thiếu thông tin, app sẽ chỉ ra phần cần bổ sung. Âm thanh có thể được Apple xử lý khi thiết bị không hỗ trợ nhận dạng tại máy.";
 "Có từ chưa nghe rõ. Hãy kiểm tra văn bản hoặc nói lại; chưa tự lưu hoạt động nào." = "Có từ chưa nghe rõ. Hãy kiểm tra văn bản hoặc nói lại; chưa tự lưu hoạt động nào.";
 "Có ảnh hộp hoặc chai thuốc thì có thể bỏ trống tên." = "Có ảnh hộp hoặc chai thuốc thì có thể bỏ trống tên.";
+"Công cha như núi Thái Sơn, nghĩa mẹ như nước trong nguồn chảy ra." = "Công cha như núi Thái Sơn, nghĩa mẹ như nước trong nguồn chảy ra.";
 "Cùng một lúc, nhiệt độ hậu môn cao nhất, rồi đến tai và miệng; nách thấp nhất. Hãy so số đo với đúng vị trí đã đo." = "Cùng một lúc, nhiệt độ hậu môn cao nhất, rồi đến tai và miệng; nách thấp nhất. Hãy so số đo với đúng vị trí đã đo.";
 "Cả hai" = "Cả hai";
 "Cảm giác như {0}" = "Cảm giác như {0}";
@@ -311,6 +317,7 @@
 "Ghi hoạt động cho {0}" = "Ghi hoạt động cho {0}";
 "Ghi hoạt động đầu tiên cho bé trong ngày này." = "Ghi hoạt động đầu tiên cho bé trong ngày này.";
 "Ghi lại các mũi đã tiêm và lịch hẹn tiếp theo." = "Ghi lại các mũi đã tiêm và lịch hẹn tiếp theo.";
+"Ghi lại hôm nay để ngày mai yên tâm hơn." = "Ghi lại hôm nay để ngày mai yên tâm hơn.";
 "Ghi lại lời dặn và lịch hẹn để không quên tái khám." = "Ghi lại lời dặn và lịch hẹn để không quên tái khám.";
 "Ghi mũi tiếp theo" = "Ghi mũi tiếp theo";
 "Ghi nhanh" = "Ghi nhanh";
@@ -366,8 +373,10 @@
 "Hoạt động y tế" = "Hoạt động y tế";
 "Hoặc điền thông tin bên dưới" = "Hoặc điền thông tin bên dưới";
 "HÔM NAY" = "HÔM NAY";
+"Hãy chăm sóc cả bản thân, vì bé cần bố mẹ khỏe mạnh." = "Hãy chăm sóc cả bản thân, vì bé cần bố mẹ khỏe mạnh.";
 "Hãy thử lại." = "Hãy thử lại.";
 "Hôm nay" = "Hôm nay";
+"Hôm nay hãy ôm con lâu hơn một chút." = "Hôm nay hãy ôm con lâu hơn một chút.";
 "Hôm qua" = "Hôm qua";
 "Hướng dẫn & Giới thiệu" = "Hướng dẫn & Giới thiệu";
 "Hướng dẫn sử dụng" = "Hướng dẫn sử dụng";
@@ -396,6 +405,7 @@
 "Khác" = "Khác";
 "Khám lại {0}" = "Khám lại {0}";
 "Khói mù" = "Khói mù";
+"Không có bố mẹ hoàn hảo, chỉ có bố mẹ luôn cố gắng vì con." = "Không có bố mẹ hoàn hảo, chỉ có bố mẹ luôn cố gắng vì con.";
 "Không dùng BabyCare cho tình huống cấp cứu hoặc làm căn cứ duy nhất để quyết định điều trị. Khi trẻ có dấu hiệu nghiêm trọng, hãy liên hệ cơ sở y tế hoặc dịch vụ cấp cứu phù hợp." = "Không dùng BabyCare cho tình huống cấp cứu hoặc làm căn cứ duy nhất để quyết định điều trị. Khi trẻ có dấu hiệu nghiêm trọng, hãy liên hệ cơ sở y tế hoặc dịch vụ cấp cứu phù hợp.";
 "Không dùng nhiệt kế thủy ngân để đo hậu môn hoặc miệng cho bé vì dễ vỡ." = "Không dùng nhiệt kế thủy ngân để đo hậu môn hoặc miệng cho bé vì dễ vỡ.";
 "Không kết nối được cloud. Chỉ có thể xem bản lưu trên máy; hãy tải lại khi có mạng." = "Không kết nối được cloud. Chỉ có thể xem bản lưu trên máy; hãy tải lại khi có mạng.";
@@ -417,6 +427,7 @@
 "Khăn" = "Khăn";
 "Khả năng cao" = "Khả năng cao";
 "Khởi phát: {0}" = "Khởi phát: {0}";
+"Kiên nhẫn hôm nay là kỷ niệm đẹp ngày mai." = "Kiên nhẫn hôm nay là kỷ niệm đẹp ngày mai.";
 "Kiểm tra hộp thư của bạn" = "Kiểm tra hộp thư của bạn";
 "Kiểm tra lịch đã nhập cho bé" = "Kiểm tra lịch đã nhập cho bé";
 "Kiểm tra thời gian và nội dung đã nhập cho bé." = "Kiểm tra thời gian và nội dung đã nhập cho bé.";
@@ -520,10 +531,13 @@
 "Mốc nhịp thở của WHO dành cho trẻ dưới 5 tuổi." = "Mốc nhịp thở của WHO dành cho trẻ dưới 5 tuổi.";
 "Mốc tiếp theo" = "Mốc tiếp theo";
 "Mốc tiếp theo: {0}" = "Mốc tiếp theo: {0}";
+"Mỗi bé có nhịp lớn riêng, đừng so con với ai." = "Mỗi bé có nhịp lớn riêng, đừng so con với ai.";
 "Mỗi dị ứng gồm tên chất, mức độ phản ứng và độ chắc chắn." = "Mỗi dị ứng gồm tên chất, mức độ phản ứng và độ chắc chắn.";
 "Mỗi hoạt động tối đa 3 ảnh." = "Mỗi hoạt động tối đa 3 ảnh.";
 "Mỗi lần ngực hoặc bụng nhô lên rồi hạ xuống là 1 nhịp." = "Mỗi lần ngực hoặc bụng nhô lên rồi hạ xuống là 1 nhịp.";
+"Mỗi ngày bé lớn thêm một chút, bố mẹ cũng vậy." = "Mỗi ngày bé lớn thêm một chút, bố mẹ cũng vậy.";
 "Mỗi ảnh cần nhỏ hơn 5 MB." = "Mỗi ảnh cần nhỏ hơn 5 MB.";
+"Một giấc ngủ ngon của bé là món quà cho cả nhà." = "Một giấc ngủ ngon của bé là món quà cho cả nhà.";
 "Một số thông tin bạn nhập có thể là dữ liệu cá nhân và dữ liệu sức khỏe của trẻ, vì vậy BabyCare cần sự đồng ý của bạn trước khi xử lý các thông tin này." = "Một số thông tin bạn nhập có thể là dữ liệu cá nhân và dữ liệu sức khỏe của trẻ, vì vậy BabyCare cần sự đồng ý của bạn trước khi xử lý các thông tin này.";
 "MỚI NHẤT ĐÃ GHI" = "MỚI NHẤT ĐÃ GHI";
 "Mở Cài đặt" = "Mở Cài đặt";
@@ -613,6 +627,7 @@
 "Nhịp thở bình thường theo tuổi" = "Nhịp thở bình thường theo tuổi";
 "Nhịp thở của trẻ" = "Nhịp thở của trẻ";
 "Nhịp thở phải từ 1 đến 150 lần/phút." = "Nhịp thở phải từ 1 đến 150 lần/phút.";
+"Những đêm thức trắng rồi sẽ qua, nụ cười của con thì ở lại." = "Những đêm thức trắng rồi sẽ qua, nụ cười của con thì ở lại.";
 "Nách" = "Nách";
 "Nên ngủ {0} giờ" = "Nên ngủ {0} giờ";
 "Nói một hoạt động rõ ràng. App tự lưu khi phân tích thành công; câu không rõ sẽ báo lỗi." = "Nói một hoạt động rõ ràng. App tự lưu khi phân tích thành công; câu không rõ sẽ báo lỗi.";
@@ -845,6 +860,7 @@
 "TỔNG SỮA ĐÃ GHI" = "TỔNG SỮA ĐÃ GHI";
 "Tổng quan" = "Tổng quan";
 "Tổng trong khoảng" = "Tổng trong khoảng";
+"Tục ngữ" = "Tục ngữ";
 "Từ" = "Từ";
 "Uống thuốc" = "Uống thuốc";
 "Uống thuốc, nhiệt độ, triệu chứng, khám bệnh" = "Uống thuốc, nhiệt độ, triệu chứng, khám bệnh";

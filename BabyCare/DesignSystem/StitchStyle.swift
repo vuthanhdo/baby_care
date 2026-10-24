@@ -46,6 +46,8 @@ struct CareBrandView: View {
 }
 
 struct CareSplashView: View {
+    /// The launch screen itself is a static image iOS snapshots, so the changing quote lives here.
+    var quote = CareQuotes.forThisLaunch
     @Environment(\.locale) private var appLocale
     var body: some View {
         let _ = appLocale
@@ -53,13 +55,19 @@ struct CareSplashView: View {
         // hand-over from the system launch screen to this view does not move it.
         CareBrandView(size: 160)
             .overlay(alignment: .top) {
-                VStack(spacing: 20) {
+                VStack(spacing: 12) {
                     Text(L10n.text("Bé Khỏe")).font(CareFont.largeTitle).foregroundStyle(CareTheme.accent)
                     Text(L10n.text("Bố Mẹ An Tâm")).font(CareFont.title3)
-                    Text(L10n.text("Ghi nhanh nhật ký · Theo dõi sát sao\nĐồng hành cùng bé yêu"))
-                        .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
-                        .multilineTextAlignment(.center)
-                }.fixedSize().offset(y: 180)
+                    VStack(spacing: 4) {
+                        Text("“\(L10n.text(quote.text))”").font(CareFont.footnote.italic()).foregroundStyle(CareTheme.secondary)
+                            .lineLimit(3).minimumScaleFactor(0.85)
+                        if let source = quote.source {
+                            Text("— \(L10n.text(source))").font(CareFont.caption2).foregroundStyle(CareTheme.secondary)
+                        }
+                    }.multilineTextAlignment(.center).padding(.top, 4).accessibilityIdentifier("care.splash.quote")
+                }
+                // Wider than the logo it hangs from, and wrapping instead of growing sideways.
+                .frame(width: 300).fixedSize(horizontal: false, vertical: true).offset(y: 180)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeArea()

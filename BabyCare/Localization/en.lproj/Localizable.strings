@@ -95,6 +95,7 @@
 "Bé đã có giấc ngủ đang diễn ra." = "Your baby already has an ongoing sleep session.";
 "Bé đã ngủ dậy? Ghi giấc vừa ngủ" = "Already awake? Log the nap";
 "Bình thường khi đo ở {0}: {1}" = "Normal for {0}: {1}";
+"Bình tĩnh là điều đầu tiên con cần khi con ốm." = "When your child is unwell, your calm is the first thing they need.";
 "Bú mẹ" = "Breastfeeding";
 "Bú mẹ, sữa vắt hoặc sữa công thức" = "Breastfeeding, expressed milk or formula";
 "Bước 3 / 3" = "Step 3 of 3";
@@ -134,10 +135,12 @@
 "Bỏ nội dung chưa lưu?" = "Discard unsaved changes?";
 "Bỏ trống mức độ hoặc độ chắc chắn nếu chưa rõ." = "Leave severity or certainty empty if you are not sure.";
 "Bố Mẹ An Tâm" = "Peace of mind for parents";
+"Bố mẹ an tâm thì con vui khỏe." = "Calm parents raise happy, healthy children.";
 "Bộ nhớ trên thiết bị" = "Device storage";
 "Bữa ăn" = "Meals";
 "Bữa ăn · {0} ml nước" = "Meals · {0} ml water";
 "CDC 2000 · tham chiếu của Mỹ" = "CDC 2000 · US reference";
+"Ca dao" = "Vietnamese folk verse";
 "Cao nhất trong đợt" = "Peak this episode";
 "Cao nhất trong đợt: {0} °C · {1}" = "Peak this episode: {0} °C · {1}";
 "Cao nhất đã ghi: {0}" = "Highest recorded: {0}";
@@ -234,6 +237,7 @@
 "Cloud chưa hỗ trợ xoá hồ sơ bé." = "Cloud does not support deleting a baby profile yet.";
 "Cloud không nhận một thay đổi nên thay đổi đó chưa được lưu; các thay đổi khác vẫn được đồng bộ. {0}" = "The cloud refused one change, so it was not saved; your other changes still sync. {0}";
 "Cloud từ chối dữ liệu ({0}: {1}). Hãy kiểm tra thông tin rồi thử lại." = "The cloud rejected the data ({0}: {1}). Check the details and try again.";
+"Con hơn cha là nhà có phúc." = "A child who does better than their parents is a blessing to the home.";
 "Cài đặt" = "Settings";
 "Các lần dùng thuốc" = "Medicine entries";
 "Các lần uống thuốc đã ghi vẫn được giữ trong nhật ký." = "Recorded medicine entries will remain in the diary.";
@@ -249,12 +253,14 @@
 "Có lịch chăm sóc cần xem" = "A care reminder is ready to review";
 "Có lịch hẹn tiếp theo" = "Next appointment scheduled";
 "Có mây rải rác" = "Partly cloudy";
+"Có nuôi con mới biết lòng cha mẹ." = "Only by raising a child do you come to know your parents' hearts.";
 "Có thể chỉnh sửa hoặc thêm bé trong Hồ sơ bé." = "You can edit or add babies in Baby Profile.";
 "Có thể ghi sau khi bé đã ngủ dậy: chọn giờ bắt đầu và giờ thức dậy." = "You can log a sleep after your baby wakes up: pick when it started and when they woke up.";
 "Có thể mưa ({0}%): mang áo mưa hoặc tấm che xe đẩy." = "Rain likely ({0}%): bring a raincoat or a stroller cover.";
 "Có thể nói “sáng nay bảy giờ rưỡi…”, “…hồi 7h30 sáng” hoặc “…mười phút trước”. Không cần đọc đúng câu mẫu; hãy nói rõ lượng và đơn vị. Nếu còn thiếu thông tin, app sẽ chỉ ra phần cần bổ sung. Âm thanh có thể được Apple xử lý khi thiết bị không hỗ trợ nhận dạng tại máy." = "For Vietnamese input, try “sáng nay bảy giờ rưỡi…”, “…hồi 7h30 sáng” or “…mười phút trước”. You do not need to match the examples exactly; state the amount and unit clearly. The app will point out missing details. Apple may process audio when on-device recognition is unavailable.";
 "Có từ chưa nghe rõ. Hãy kiểm tra văn bản hoặc nói lại; chưa tự lưu hoạt động nào." = "Some words were unclear. Review the text or try again. No activities were saved automatically.";
 "Có ảnh hộp hoặc chai thuốc thì có thể bỏ trống tên." = "With a photo of the box or bottle, the name can stay empty.";
+"Công cha như núi Thái Sơn, nghĩa mẹ như nước trong nguồn chảy ra." = "A father's love is as great as Mount Thai Son; a mother's care flows like water from its spring.";
 "Cùng một lúc, nhiệt độ hậu môn cao nhất, rồi đến tai và miệng; nách thấp nhất. Hãy so số đo với đúng vị trí đã đo." = "At the same moment, rectal readings are highest, then ear and mouth; armpit is lowest. Compare a reading with the site it was taken at.";
 "Cả hai" = "Both";
 "Cảm giác như {0}" = "Feels like {0}";
@@ -311,6 +317,7 @@
 "Ghi hoạt động cho {0}" = "Log an activity for {0}";
 "Ghi hoạt động đầu tiên cho bé trong ngày này." = "Log your baby's first activity for this day.";
 "Ghi lại các mũi đã tiêm và lịch hẹn tiếp theo." = "Record administered doses and the next appointment.";
+"Ghi lại hôm nay để ngày mai yên tâm hơn." = "Write today down so tomorrow feels calmer.";
 "Ghi lại lời dặn và lịch hẹn để không quên tái khám." = "Note the doctor's advice and the next appointment so you don't miss the follow-up.";
 "Ghi mũi tiếp theo" = "Record next dose";
 "Ghi nhanh" = "Quick log";
@@ -366,8 +373,10 @@
 "Hoạt động y tế" = "Health activities";
 "Hoặc điền thông tin bên dưới" = "Or enter your details below";
 "HÔM NAY" = "TODAY";
+"Hãy chăm sóc cả bản thân, vì bé cần bố mẹ khỏe mạnh." = "Look after yourself too; your baby needs you well.";
 "Hãy thử lại." = "Please try again.";
 "Hôm nay" = "Today";
+"Hôm nay hãy ôm con lâu hơn một chút." = "Hold your little one a little longer today.";
 "Hôm qua" = "Yesterday";
 "Hướng dẫn & Giới thiệu" = "Help & about";
 "Hướng dẫn sử dụng" = "User guide";
@@ -396,6 +405,7 @@
 "Khác" = "Other";
 "Khám lại {0}" = "Follow-up {0}";
 "Khói mù" = "Smoky";
+"Không có bố mẹ hoàn hảo, chỉ có bố mẹ luôn cố gắng vì con." = "There are no perfect parents, only parents who keep trying for their child.";
 "Không dùng BabyCare cho tình huống cấp cứu hoặc làm căn cứ duy nhất để quyết định điều trị. Khi trẻ có dấu hiệu nghiêm trọng, hãy liên hệ cơ sở y tế hoặc dịch vụ cấp cứu phù hợp." = "Do not use BabyCare in an emergency or as the sole basis for treatment decisions. If a child shows serious symptoms, contact an appropriate healthcare facility or emergency service.";
 "Không dùng nhiệt kế thủy ngân để đo hậu môn hoặc miệng cho bé vì dễ vỡ." = "Don't use a mercury thermometer in your baby's bottom or mouth; it can break.";
 "Không kết nối được cloud. Chỉ có thể xem bản lưu trên máy; hãy tải lại khi có mạng." = "Unable to connect to the cloud. You can view the local copy; reload when you are online.";
@@ -417,6 +427,7 @@
 "Khăn" = "Scarf";
 "Khả năng cao" = "Likely";
 "Khởi phát: {0}" = "Started: {0}";
+"Kiên nhẫn hôm nay là kỷ niệm đẹp ngày mai." = "Today's patience becomes tomorrow's fond memories.";
 "Kiểm tra hộp thư của bạn" = "Check your inbox";
 "Kiểm tra lịch đã nhập cho bé" = "Review your baby's schedule";
 "Kiểm tra thời gian và nội dung đã nhập cho bé." = "Check the time and details entered for your baby.";
@@ -520,10 +531,13 @@
 "Mốc nhịp thở của WHO dành cho trẻ dưới 5 tuổi." = "WHO breathing-rate references cover children under 5.";
 "Mốc tiếp theo" = "Next dose";
 "Mốc tiếp theo: {0}" = "Next dose: {0}";
+"Mỗi bé có nhịp lớn riêng, đừng so con với ai." = "Every baby grows at their own pace; don't compare yours with anyone.";
 "Mỗi dị ứng gồm tên chất, mức độ phản ứng và độ chắc chắn." = "Each allergy has the substance, how severe the reaction was and how certain it is.";
 "Mỗi hoạt động tối đa 3 ảnh." = "Each activity can have up to 3 photos.";
 "Mỗi lần ngực hoặc bụng nhô lên rồi hạ xuống là 1 nhịp." = "Each rise and fall of the chest or belly is one breath.";
+"Mỗi ngày bé lớn thêm một chút, bố mẹ cũng vậy." = "Every day your baby grows a little, and so do you.";
 "Mỗi ảnh cần nhỏ hơn 5 MB." = "Each photo must be smaller than 5 MB.";
+"Một giấc ngủ ngon của bé là món quà cho cả nhà." = "A good night's sleep for your baby is a gift for the whole family.";
 "Một số thông tin bạn nhập có thể là dữ liệu cá nhân và dữ liệu sức khỏe của trẻ, vì vậy BabyCare cần sự đồng ý của bạn trước khi xử lý các thông tin này." = "Some information you enter may be personal and child health data. BabyCare needs your consent before processing it.";
 "MỚI NHẤT ĐÃ GHI" = "LATEST RECORDED";
 "Mở Cài đặt" = "Open Settings";
@@ -613,6 +627,7 @@
 "Nhịp thở bình thường theo tuổi" = "Normal breathing rate by age";
 "Nhịp thở của trẻ" = "Children's breathing rate";
 "Nhịp thở phải từ 1 đến 150 lần/phút." = "Breathing rate must be 1 to 150 breaths/min.";
+"Những đêm thức trắng rồi sẽ qua, nụ cười của con thì ở lại." = "The sleepless nights will pass; your child's smiles will stay.";
 "Nách" = "Armpit";
 "Nên ngủ {0} giờ" = "Aim for {0} h";
 "Nói một hoạt động rõ ràng. App tự lưu khi phân tích thành công; câu không rõ sẽ báo lỗi." = "Say an activity in Vietnamese. The app saves it when parsing succeeds and shows an error if it is unclear.";
@@ -845,6 +860,7 @@
 "TỔNG SỮA ĐÃ GHI" = "TOTAL MILK RECORDED";
 "Tổng quan" = "Overview";
 "Tổng trong khoảng" = "Total in this period";
+"Tục ngữ" = "Vietnamese proverb";
 "Từ" = "From";
 "Uống thuốc" = "Medicine";
 "Uống thuốc, nhiệt độ, triệu chứng, khám bệnh" = "Medicine, temperature, symptoms, doctor visits";
