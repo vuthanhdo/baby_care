@@ -14,8 +14,12 @@ nonisolated enum CloudConfiguration {
 
 nonisolated enum CloudError: Error, LocalizedError, Sendable, Equatable {
     case offline, accessDenied, signedOut, conflict, uncertain, busy, vaccinationsUnavailable, consentRequired
+    /// The server refuses the data itself (a check, a type or a missing field). Retrying sends the same request
+    /// and gets the same answer, so the outbox drops such a write instead of keeping it at the head of the queue.
+    case rejected(String)
     var errorDescription: String? {
         switch self {
+        case .rejected(let message): message
         case .consentRequired: L10n.text("Vui lòng xác nhận quyền riêng tư và dữ liệu trước khi tiếp tục.")
         case .vaccinationsUnavailable: L10n.text("Tính năng tiêm chủng chưa sẵn sàng trên cloud. Dữ liệu khác vẫn sử dụng được.")
         case .offline: L10n.text("Không kết nối được cloud. Chỉ có thể xem bản lưu trên máy; hãy tải lại khi có mạng.")
@@ -40,7 +44,11 @@ nonisolated enum CloudError: Error, LocalizedError, Sendable, Equatable {
                 // The message names the function and parameters PostgREST looked for: the server is missing a migration.
                 return CareDataError.invalidInput(L10n.text("Server chưa có hàm mà app cần. Hãy áp dụng migration Supabase mới nhất rồi thử lại. ({0})", e.message))
             }
-            return CareDataError.invalidInput(L10n.text("Cloud từ chối dữ liệu ({0}: {1}). Hãy kiểm tra thông tin rồi thử lại.", "\(e.code ?? "unknown")", e.message))
+            let message = L10n.text("Cloud từ chối dữ liệu ({0}: {1}). Hãy kiểm tra thông tin rồi thử lại.", "\(e.code ?? "unknown")", e.message)
+            // SQLSTATE classes 22 (data exception) and 23 (integrity) and RAISE in our functions are answers about
+            // the data, not about the connection; anything else may succeed on retry.
+            if let code = e.code, code.hasPrefix("22") || code.hasPrefix("23") || code == "P0001" { return CloudError.rejected(message) }
+            return CareDataError.invalidInput(message)
         }
         if error is AuthError { return CloudError.signedOut }
         if let e = error as? StorageError {
@@ -256,7 +264,18 @@ actor SupabaseRemote: CareCloudRemote {
     }
     func fetch(selected: UUID?) async throws -> CloudSnapshot {
         struct Page: Decodable { var revision: Int; var rows: [CloudRow]; var next_after_id: UUID? }
-        struct Params: Encodable { var p_family_id: UUID; var p_entity: String; var p_at_revision: Int; var p_after_id: UUID?; var p_limit = 200 }
+        struct Params: Encodable { var p_family_id: UUID; var p_entity: String; var p_at_revision: Int; var p_after_id: UUID?; var p_limit = 200; var p_api_version: Int? }
+        // Version 2 also returns activity kinds that 1.0.x cannot decode (breathing). A server without
+        // migration 0011 has no such rows, so falling back to its old signature loses nothing.
+        var readVersion: Int? = CloudMapping.readVersion
+        func readPage(_ entity: String, revision: Int, after cursor: UUID?) async throws -> Page {
+            do {
+                return try await client.rpc("babycare_read_page", params: Params(p_family_id: familyID, p_entity: entity, p_at_revision: revision, p_after_id: cursor, p_api_version: readVersion)).execute().value
+            } catch where readVersion != nil && (error as? PostgrestError)?.code == "PGRST202" {
+                readVersion = nil
+                return try await client.rpc("babycare_read_page", params: Params(p_family_id: familyID, p_entity: entity, p_at_revision: revision, p_after_id: cursor)).execute().value
+            }
+        }
         do {
             for attempt in 0..<3 {
                 do {
@@ -271,7 +290,7 @@ actor SupabaseRemote: CareCloudRemote {
                             try await lease.check()
                             let page: Page
                             do {
-                                page = try await client.rpc("babycare_read_page", params: Params(p_family_id: familyID, p_entity: entity, p_at_revision: family.revision, p_after_id: cursor)).execute().value
+                                page = try await readPage(entity, revision: family.revision, after: cursor)
                             } catch where CloudError.isMissingVaccinationEntity(error, entity: entity) {
                                 vaccinationsAvailable = false
                                 break

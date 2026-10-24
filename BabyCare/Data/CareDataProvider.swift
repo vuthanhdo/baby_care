@@ -9,12 +9,18 @@ nonisolated protocol CareDataProvider: Sendable {
     func status() async -> CareStorageStatus
     func supportsVaccinations() async -> Bool
     func invalidate() async
+    /// What the screens should show after a failed write, when the provider knows better than the last result.
+    func currentDatabase() async -> CareDatabase?
+    /// A one-time message about earlier writes the backend refused and the provider dropped.
+    func takeNotice() async -> String?
 }
 
 extension CareDataProvider {
     func status() async -> CareStorageStatus { .device }
     func supportsVaccinations() async -> Bool { true }
     func invalidate() async {}
+    func currentDatabase() async -> CareDatabase? { nil }
+    func takeNotice() async -> String? { nil }
 }
 
 /// Previews/tests use the identical contract without touching the user's database.

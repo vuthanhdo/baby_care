@@ -75,6 +75,7 @@ final class BabyCareViewModel {
                 state.database = loaded
                 state.storage = storage
                 state.phase = .ready
+                if let notice = await provider.takeNotice() { state.error = notice }
                 if let warning = await notifications.reconcile(previous: previous, current: loaded) { showMessage(warning) }
                 guard active else { return false }
                 return true
@@ -108,6 +109,7 @@ final class BabyCareViewModel {
                 let warning = await notifications.reconcile(previous: previous, current: saved)
                 guard active else { return false }
                 if let message = warning ?? message { showMessage(message) }
+                if let notice = await provider.takeNotice() { state.error = notice }
                 return true
             } catch {
                 guard active else { return false }
@@ -115,6 +117,12 @@ final class BabyCareViewModel {
                 let storage = await provider.status()
                 guard active else { return false }
                 state.storage = storage
+                // A refused write is no longer shown; neither are later changes that depended on it.
+                if let current = await provider.currentDatabase(), current != state.database {
+                    let previous = state.database
+                    state.database = current
+                    _ = await notifications.reconcile(previous: previous, current: current)
+                }
                 state.error = error.localizedDescription
                 return false
             }

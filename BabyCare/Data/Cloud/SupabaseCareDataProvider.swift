@@ -23,6 +23,9 @@ actor SupabaseCareDataProvider: CareDataProvider {
     private var storage: CareStorageStatus = .cloud
     private var loaded = false
     private var busy = false
+    /// Operation IDs of writes the backend refused; checked by `apply` to fail the save that caused them.
+    private var dropped: Set<UUID> = []
+    private var notice: String?
     private var active = true
     private var retryTask: Task<Void, Never>?
 
@@ -35,6 +38,8 @@ actor SupabaseCareDataProvider: CareDataProvider {
 
     func status() async -> CareStorageStatus { storage }
     func supportsVaccinations() async -> Bool { state.snapshot?.supportsVaccinations == true }
+    func currentDatabase() async -> CareDatabase? { visibleDatabase }
+    func takeNotice() async -> String? { defer { notice = nil }; return notice }
     func invalidate() async {
         active = false; retryTask?.cancel(); retryTask = nil
         await remote.invalidate()
@@ -130,8 +135,8 @@ actor SupabaseCareDataProvider: CareDataProvider {
         guard !localChanges.isEmpty || CloudMediaPlan.hasChanges(from: current, to: next) else { return current }
         var queue = state.queuedWrites
         let changes = queue.isEmpty ? localChanges : []
-        queue.append(PendingCloudWrite(mutation: mutation,
-            envelope: CloudEnvelope(p_family_id: familyID, p_changes: changes), proposed: next))
+        let write = PendingCloudWrite(mutation: mutation, envelope: CloudEnvelope(p_family_id: familyID, p_changes: changes), proposed: next)
+        queue.append(write)
         state.queuedWrites = queue
         try await cache.write(state) // Durable before any network attempt.
         try check()
@@ -139,6 +144,11 @@ actor SupabaseCareDataProvider: CareDataProvider {
             try await flushQueuedWrites(allowRebase: true)
         } catch where error as? CloudError == .offline || error as? CloudError == .uncertain {
             storage = .pending; scheduleRetry(); return next
+        }
+        if dropped.contains(write.envelope.p_operation_id), let notice {
+            // This very change was refused: report it as the failure of this save.
+            self.notice = nil
+            throw CloudError.rejected(notice)
         }
         return visibleDatabase ?? next
     }
@@ -182,6 +192,12 @@ actor SupabaseCareDataProvider: CareDataProvider {
                     try await flushQueuedWrites(allowRebase: false)
                     return
                 }
+                if case .rejected(let reason) = error as? CloudError {
+                    // Kept at the head, this write would fail every later save and load the same way.
+                    try await dropHead(onto: committed)
+                    notice = L10n.text("Cloud không nhận một thay đổi nên thay đổi đó chưa được lưu; các thay đổi khác vẫn được đồng bộ. {0}", reason)
+                    continue
+                }
                 if error as? CloudError == .accessDenied {
                     state = CloudCacheState(); try await cache.write(state)
                 } else { storage = .pending }
@@ -218,6 +234,24 @@ actor SupabaseCareDataProvider: CareDataProvider {
             }
         }
         if storage != .cacheWarning { storage = .cloud }
+    }
+
+    /// Drops the refused head write and replays the rest on the committed data. Writes that only made sense
+    /// on top of the refused one cannot be replayed and are dropped with it.
+    private func dropHead(onto committed: CloudSnapshot) async throws {
+        guard let head = state.queuedWrites.first else { return }
+        dropped.insert(head.envelope.p_operation_id)
+        var database = committed.database
+        var kept: [PendingCloudWrite] = []
+        for var write in state.queuedWrites.dropFirst() {
+            guard let next = try? database.applying(write.mutation) else { dropped.insert(write.envelope.p_operation_id); continue }
+            database = next
+            write.proposed = next
+            write.envelope.p_changes = [] // Never sent: only the head write is ever frozen.
+            kept.append(write)
+        }
+        state.queuedWrites = kept
+        try await cache.write(state)
     }
 
     private func rebaseQueue() async throws {

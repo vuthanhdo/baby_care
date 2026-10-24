@@ -210,6 +210,40 @@ import Supabase
         #expect(try await cache.read().queuedWrites.isEmpty)
         #expect(await remote.commitCount == 1)
     }
+    @Test func refusedWriteNoLongerBlocksLaterSavesAndLoads() async throws {
+        let remote = FakeCloudRemote(), cache = FakeCloudCache()
+        let profile = baby()
+        await remote.setSnapshot(snapshot(try CareDatabase().applying(.createBaby(profile))))
+        let provider = SupabaseCareDataProvider(remote: remote, cache: cache, familyID: UUID())
+        _ = try await provider.load()
+        // Queued while offline, then refused once the network is back (the field report: every save failed).
+        await remote.setApplyError(.offline)
+        let breathing = CareActivity(kind: .breathing, value: "40", unit: "lần/phút")
+        _ = try await provider.apply(.saveActivities(babyID: profile.id, entries: [breathing]))
+        await remote.setApplyError(nil)
+        await remote.refuse(kind: "breathing")
+        let milk = CareActivity(kind: .milk, value: "120", unit: "ml")
+        let saved = try await provider.apply(.saveActivities(babyID: profile.id, entries: [milk]))
+        #expect(saved.selectedBaby?.activities == [milk])
+        #expect(try await cache.read().queuedWrites.isEmpty)
+        #expect(await remote.commitCount == 1)
+        #expect(await provider.takeNotice()?.contains("23514") == true)
+        #expect(await provider.takeNotice() == nil)
+
+        // Refused straight away: this save fails, the screens drop the entry and the next save still works.
+        await #expect(throws: CloudError.self) {
+            try await provider.apply(.saveActivities(babyID: profile.id, entries: [CareActivity(kind: .breathing, value: "38", unit: "lần/phút")]))
+        }
+        #expect(await provider.currentDatabase()?.selectedBaby?.activities == [milk])
+        let bath = CareActivity(kind: .bath, value: "Đã tắm")
+        #expect(try await provider.apply(.saveActivities(babyID: profile.id, entries: [bath])).selectedBaby?.activities.count == 2)
+        #expect(await remote.commitCount == 2)
+    }
+    @Test func transientServerErrorsStayQueued() {
+        // Only data errors are final; a timeout or an unknown failure must be retried, not dropped.
+        #expect(CloudError.rejected("x") != CloudError.offline)
+        #expect(CloudError.normalize(URLError(.timedOut)) as? CloudError == .offline)
+    }
     @Test func queuedWriteRetriesAutomaticallyWhenNetworkReturns() async throws {
         let remote = FakeCloudRemote(), cache = FakeCloudCache()
         let profile = baby()
@@ -314,6 +348,9 @@ private actor FakeCloudRemote: CareCloudRemote {
     func timeoutOnce() { timeout = true }
     func setFetchError(_ error: CloudError?) { fetchError = error }
     func setApplyError(_ error: CloudError?) { applyError = error }
+    /// Models a backend without migration 0011: any batch carrying this activity kind fails its check constraint.
+    private var refusedKind: String?
+    func refuse(kind: String?) { refusedKind = kind }
     func invalidate() {}
     func fetch(selected: UUID?) throws -> CloudSnapshot {
         if let fetchError { throw fetchError }; return fetchedSnapshot
@@ -321,6 +358,9 @@ private actor FakeCloudRemote: CareCloudRemote {
     func apply(_ envelope: CloudEnvelope) throws -> CloudReceipt {
         requests.append(envelope)
         if let applyError { throw applyError }
+        if let refusedKind, envelope.p_changes.contains(where: { $0.data["kind"] == .string(refusedKind) }) {
+            throw CloudError.rejected("23514 care_activities_kind_check")
+        }
         if let receipt = receipts[envelope.p_operation_id] { return receipt }
         commitCount += 1
         let receipt = CloudReceipt(operation_id: envelope.p_operation_id, revision: commitCount,
