@@ -70,7 +70,13 @@ YOUR DATA
 Bé Khỏe records what the family enters. It does not diagnose, prescribe or replace a doctor's advice. If a child shows serious symptoms, contact a healthcare provider.
 ```
 
-**What's New (4000):** `First release.`
+**What's New (4000):** 1.0: `First release.` · 1.0.1:
+```
+• Optimised for iPhone Duo and iPad: on large displays the tabs move to the side and screens split into two columns that stay clear of the fold.
+• The diary shows an entry's details right next to the list; fold or unfold iPhone Duo and you stay on the same entry.
+• A clear message when you sign up with an email that already has an account.
+• Minor layout and translation fixes.
+```
 
 ## 3. Vietnamese — localization thêm
 
@@ -120,7 +126,13 @@ DỮ LIỆU CỦA BẠN
 Bé Khỏe chỉ ghi nhận thông tin do gia đình nhập, không chẩn đoán, không kê đơn và không thay thế tư vấn của bác sĩ. Khi bé có dấu hiệu nghiêm trọng, hãy liên hệ cơ sở y tế.
 ```
 
-**What's New (4000):** `Phiên bản đầu tiên.`
+**What's New (4000):** 1.0: `Phiên bản đầu tiên.` · 1.0.1:
+```
+• Tối ưu cho iPhone Duo và iPad: trên màn hình lớn, thanh tab chuyển sang cạnh trái và các màn chia hai cột, tránh nếp gấp.
+• Nhật ký hiện chi tiết ngay bên cạnh danh sách; gập hoặc mở iPhone Duo vẫn giữ nguyên mục bạn đang xem.
+• Báo rõ khi đăng ký bằng email đã có tài khoản.
+• Sửa một số lỗi hiển thị và bản dịch.
+```
 
 ## 4. App Privacy (privacy nutrition labels)
 
