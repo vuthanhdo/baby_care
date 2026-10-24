@@ -117,6 +117,45 @@ begin
   perform public.babycare_apply(gen_random_uuid(),f,jsonb_build_array(pg_temp.change('vaccinations',200,100,1,'{}')||'{"deleted":true}'::jsonb));
   perform pg_temp.check_true((select deleted_at is not null and version=2 from public.vaccinations where id=lpad('200',32,'0')::uuid),'vaccination tombstone');
 end $$;
+do $$
+declare f uuid := '00000000-0000-0000-0000-000000000010'; rev bigint;
+begin
+  perform public.babycare_apply(gen_random_uuid(),f,jsonb_build_array(
+    pg_temp.change('care_activities',300,100,0,'{"kind":"breathing","occurred_at":"2026-01-01T13:00:00Z","value":"42","unit":"lần/phút","detail":"Lúc ngủ"}'),
+    pg_temp.change('care_activities',301,100,0,'{"kind":"temperature","occurred_at":"2026-01-01T13:05:00Z","value":"37.5","unit":"°C","detail":"Hậu môn · Điện tử"}'),
+    pg_temp.change('media_assets',302,100,0,'{"purpose":"activity","activity_id":"00000000-0000-0000-0000-000000000300","mime_type":"image/jpeg","byte_count":100}')));
+  select revision into rev from public.families where id=f;
+  perform pg_temp.check_true((select count(*)=2 from jsonb_array_elements(public.babycare_read_page(f,'care_activities',rev,0,null,200,2)->'rows') r
+    where r->>'id' in ('00000000-0000-0000-0000-000000000300','00000000-0000-0000-0000-000000000301')),'read version 2 returns breathing entries');
+  perform pg_temp.check_true((select count(*)=1 from jsonb_array_elements(public.babycare_read_page(f,'care_activities',rev)->'rows') r
+    where r->>'id' in ('00000000-0000-0000-0000-000000000300','00000000-0000-0000-0000-000000000301')),'legacy read hides kinds 1.0.x cannot decode');
+  perform pg_temp.check_true(not exists(select 1 from jsonb_array_elements(public.babycare_read_page(f,'media_assets',rev)->'rows') r
+    where r->>'id'='00000000-0000-0000-0000-000000000302'),'legacy read hides media of hidden entries');
+  perform pg_temp.check_true(exists(select 1 from jsonb_array_elements(public.babycare_read_page(f,'media_assets',rev,0,null,200,2)->'rows') r
+    where r->>'id'='00000000-0000-0000-0000-000000000302'),'read version 2 returns that media');
+  perform pg_temp.rejects(format('select public.babycare_apply(%L,%L,%L::jsonb)',gen_random_uuid(),f,jsonb_build_array(
+    pg_temp.change('care_activities',303,100,0,'{"kind":"pulse","occurred_at":"2026-01-01T13:00:00Z","value":"1"}'))),'23514','unknown activity kind still rejected');
+  perform pg_temp.rejects(format('select public.babycare_read_page(%L,''care_activities'',%s,0,null,200,0)',f,rev),'22023','invalid read version rejected');
+  -- 1.1 fields: medical history and a doctor's follow-up date; 1.0.x writes leave them untouched.
+  perform public.babycare_apply(gen_random_uuid(),f,jsonb_build_array(
+    pg_temp.change('care_activities',310,100,0,'{"kind":"doctor","occurred_at":"2026-01-02T09:00:00Z","value":"Synthetic visit","detail":"Advice","follow_up_at":"2026-01-09T09:00:00Z"}')));
+  perform pg_temp.check_true((select follow_up_at='2026-01-09T09:00:00Z'::timestamptz from public.care_activities where id=lpad('310',32,'0')::uuid),'doctor follow-up stored');
+  perform public.babycare_apply(gen_random_uuid(),f,jsonb_build_array(
+    pg_temp.change('care_activities',310,100,1,'{"kind":"doctor","occurred_at":"2026-01-02T09:00:00Z","value":"Edited by 1.0","unit":"","note":"n","detail":"Advice"}')));
+  perform pg_temp.check_true((select follow_up_at is not null and value='Edited by 1.0' from public.care_activities where id=lpad('310',32,'0')::uuid),'old client edit keeps follow-up');
+  perform public.babycare_apply(gen_random_uuid(),f,jsonb_build_array(pg_temp.change('care_activities',310,100,2,'{"follow_up_at":null}')));
+  perform pg_temp.check_true((select follow_up_at is null from public.care_activities where id=lpad('310',32,'0')::uuid),'follow-up can be cleared');
+  perform pg_temp.rejects(format('select public.babycare_apply(%L,%L,%L::jsonb)',gen_random_uuid(),f,jsonb_build_array(
+    pg_temp.change('care_activities',311,100,0,'{"kind":"meal","occurred_at":"2026-01-02T09:00:00Z","value":"x","follow_up_at":"2026-01-09T09:00:00Z"}'))),'23514','follow-up only on doctor visits');
+  perform pg_temp.rejects(format('select public.babycare_apply(%L,%L,%L::jsonb)',gen_random_uuid(),f,jsonb_build_array(
+    pg_temp.change('care_activities',312,100,0,'{"kind":"doctor","occurred_at":"2026-01-02T09:00:00Z","value":"x","follow_up_at":"2026-01-01T09:00:00Z"}'))),'23514','follow-up must be after the visit');
+  perform pg_temp.check_true((select medical_history='' from public.babies where id=lpad('100',32,'0')::uuid),'medical history defaults to empty');
+  -- A separate baby: later checks expect baby 100 at version 1.
+  perform public.babycare_apply(gen_random_uuid(),f,jsonb_build_array(
+    pg_temp.change('babies',120,null,0,'{"name":"History Baby","birth_date":"2025-06-01T00:00:00Z","medical_history":"Synthetic history"}')));
+  perform pg_temp.check_true((select medical_history='Synthetic history' from public.babies where id=lpad('120',32,'0')::uuid),'medical history stored');
+  perform public.babycare_delete_baby(f,lpad('120',32,'0')::uuid);
+end $$;
 select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-000000000002',true);
 do $$ begin
   perform pg_temp.check_true((select count(*)=0 from public.babies),'other family cannot read babies');
@@ -161,6 +200,6 @@ select pg_temp.rejects('select * from public.babies','42501','anonymous read den
 select pg_temp.rejects('select public.babycare_create_family(gen_random_uuid(),''Anon'')','42501','anonymous RPC denied');
 reset role;
 select pg_temp.check_true((select not public and file_size_limit=5242880 from storage.buckets where id='babycare-media'),'private bucket and 5 MiB limit');
-select pg_temp.check_true((select count(*)=13 and bool_and(relrowsecurity) from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='public' and c.relkind='r'),'all thirteen app tables have RLS');
+select pg_temp.check_true((select count(*)=14 and bool_and(relrowsecurity) from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='public' and c.relkind='r'),'all fourteen app tables have RLS');
 select count(*) as passed_checks, bool_and(passed) as all_passed from test_results;
 rollback;

@@ -13,7 +13,7 @@ try {
   // Minimal Supabase platform shim. Tests exercise actual SQL functions, RLS and
   // triggers, not GoTrue JWT validation, PostgREST or the Storage HTTP service.
   await db.exec(`
-    create role anon; create role authenticated;
+    create role anon; create role authenticated; create role service_role;
     create schema auth; create schema storage;
     create table auth.users(id uuid primary key,email text);
     create function auth.uid() returns uuid language sql stable as $$
