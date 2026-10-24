@@ -63,6 +63,8 @@ Nhịp thở là `ActivityKind.breathing` (đơn vị `lần/phút`, `detail` = 
 
 Hai trường cần cột mới (cùng migration 0011): `BabyProfile.medicalHistory` (`babies.medical_history`) và `CareActivity.followUpDate` của lần đi khám (`care_activities.follow_up_at`, `detail` là lời dặn của bác sĩ). `babycare_apply` gộp field gửi lên vào bản ghi cũ nên bản 1.0.x sửa bản ghi không xoá hai cột này. App chỉ gửi hai cột khi có giá trị và gửi giá trị rỗng khi người dùng xoá (`CloudMapping.optionalColumns`). Outbox bỏ một thay đổi bị server từ chối vì dữ liệu (SQLSTATE 22/23, `CloudError.rejected`), phát lại các thay đổi sau trên bản đã lưu và báo một lần, thay vì để nó chặn mọi lần lưu và tải. Trên máy, SwiftData V3 thêm hai bảng phụ `BabyDetailsEntity`/`ActivityFollowUpEntity` theo id bản ghi (giống `VaccinationEntity`), để entity V1/V2 giữ nguyên. Lịch khám lại được nhắc trước 2 ngày (`DoctorFollowUp`, `LocalCareReminderService`) và hiện trên màn Ghi nhanh khi còn trong 14 ngày. Giờ ngủ khuyến cáo theo tuổi: `SleepRecommendation` (WHO 2019 dưới 5 tuổi, AASM từ 6 tuổi).
 
+Biểu đồ tăng trưởng (`Views/Insights/GrowthChartView.swift`) vẽ theo tháng tuổi với dải P3–P97 và đường P15/P50/P85 theo giới tính. Dữ liệu LMS 0–60 tháng (`Domain/GrowthReferenceData.swift`) sinh bằng `Tools/Growth/generate.py` từ bảng WHO 2006 (mặc định) và CDC 2000 (tham chiếu Mỹ). Chụm hai ngón hoặc dùng nút kính lúp để phóng to; trục y co theo khoảng tháng đang xem.
+
 ## Tài khoản và tối đa 4 bé (12/09/2026)
 
 App không còn màn chọn/tạo family hay thao tác chọn family trong Cài đặt. Sau đăng nhập, SessionViewModel tự mở vùng dữ liệu trước đó; tài khoản mới tự tạo vùng dữ liệu rồi vào bước tạo bé. Lỗi tải tài khoản hiển thị Thử lại/Đăng xuất.

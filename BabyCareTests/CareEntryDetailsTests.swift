@@ -178,6 +178,45 @@ struct CareEntryDetailsTests {
     }
 }
 
+struct GrowthReferenceTests {
+    @Test func whoTablesMatchPublishedMediansAndPercentiles() throws {
+        let boys = GrowthReferenceData.whoWeightBoys
+        #expect(boys.count == 61 && boys.first?.month == 0 && boys.last?.month == 60)
+        #expect(boys[12].m == 9.6479)
+        #expect(GrowthReferenceData.whoHeightGirls[12].m == 74.0149)
+        // At the median the percentile is 50; the published WHO P3 for boys at 12 months is 7.8 kg.
+        #expect(GrowthReference.percentile(of: 9.6479, ageInMonths: 12, standard: .who, metric: .weight, gender: .boy) == 50)
+        #expect(abs(boys[12].value(z: -GrowthReference.z3) - 7.8) < 0.05)
+        #expect(GrowthReference.percentile(of: 9.6, ageInMonths: 12, standard: .who, metric: .weight, gender: .unspecified) == nil)
+        #expect(GrowthReference.percentile(of: 20, ageInMonths: 61, standard: .who, metric: .weight, gender: .girl) == nil)
+    }
+
+    @Test func everyTableIsOrderedAndCoversFiveYears() {
+        for standard in GrowthStandard.allCases {
+            for metric in GrowthMetric.allCases {
+                for gender in [BabyGender.boy, .girl] {
+                    let rows = GrowthReference.table(standard, metric, gender)
+                    #expect(rows.first?.month == 0)
+                    #expect((rows.last?.month ?? 0) >= 60)
+                    #expect(zip(rows, rows.dropFirst()).allSatisfy { $0.month < $1.month })
+                    #expect(rows.allSatisfy { $0.m > 0 && $0.s > 0 })
+                }
+            }
+        }
+    }
+
+    @Test func curvesStopJustPastTheShownAgeAndInterpolate() throws {
+        let curves = GrowthReference.curves(standard: .who, metric: .height, gender: .girl, through: 7.5)
+        #expect(curves.map(\.age) == Array(0...8).map(Double.init))
+        #expect(curves.allSatisfy { $0.p3 < $0.p15 && $0.p15 < $0.p50 && $0.p50 < $0.p85 && $0.p85 < $0.p97 })
+        #expect(GrowthReference.curves(standard: .who, metric: .weight, gender: .unspecified, through: 12).isEmpty)
+        let rows = GrowthReferenceData.whoWeightGirls
+        let middle = try #require(GrowthReference.lms(at: 6.5, in: rows))
+        #expect(abs(middle.m - (rows[6].m + rows[7].m) / 2) < 1e-9)
+        #expect(GrowthReference.ageInMonths(from: Date(timeIntervalSince1970: 0), to: Date(timeIntervalSince1970: 30.4375 * 86_400 * 6)) == 6)
+    }
+}
+
 @MainActor
 struct HealthDetailsTests {
     @Test func doctorFollowUpIsSavedValidatedAndRemindedTwoDaysAhead() throws {

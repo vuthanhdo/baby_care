@@ -9,9 +9,7 @@ struct StatisticsView: View {
     @State private var showRange = false
     @State private var mode: Mode = .medical
     @State private var growthMetric: GrowthMetric = .weight
-    @State private var allGrowth = false
     @State private var growthList = false
-    @State private var selectedGrowthDate: Date?
     @State private var foodList = false
     @Environment(\.careWindow) private var window
     @Environment(\.dynamicTypeSize) private var typeSize
@@ -23,21 +21,13 @@ struct StatisticsView: View {
         var color: Color { self == .medical ? CareTheme.medical : self == .food ? CareTheme.feeding : CareTheme.accent }
         var icon: String { self == .medical ? "Stitch_stethoscope" : self == .food ? "Stitch_water_bottle" : "Stitch_trending_up" }
     }
-    private enum GrowthMetric: String, CaseIterable, Identifiable {
-        case weight = "Cân nặng", height = "Chiều cao"
-        var id: Self { self }
-        var unit: String { self == .weight ? "kg" : "cm" }
-        func value(_ item: BodyMeasurement) -> Double? {
-            let value = self == .weight ? item.weight : item.height
-            return value.flatMap { $0.isFinite ? $0 : nil }
-        }
-    }
     private var interval: DateInterval { range == .custom ? customInterval : range.interval() }
     private var activities: [CareActivity] { viewModel.activities.filter { interval.contains($0.date) }.sorted { $0.date > $1.date } }
     private var temperatures: [CareActivity] { activities.filter { $0.kind == .temperature } }
     private var medicines: [CareActivity] { activities.filter { $0.kind == .medicine } }
+    /// Growth is read against age, so it always covers the whole history; the range picker is for daily logs.
     private var growth: [BodyMeasurement] {
-        viewModel.measurements.filter { (allGrowth || interval.contains($0.date)) && growthMetric.value($0) != nil }.sorted { $0.date < $1.date }
+        viewModel.measurements.filter { growthMetric.value($0) != nil }.sorted { $0.date < $1.date }
     }
     private var newestMeasurement: BodyMeasurement? {
         viewModel.measurements.filter { growthMetric.value($0) != nil }.max { $0.date < $1.date }
@@ -243,28 +233,17 @@ struct StatisticsView: View {
                     Text(latest.date, format: .dateTime.day().month().year()).font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
                 } else { Text(L10n.text("Chưa ghi nhận")).font(CareFont.title2.bold()) }
                 if !columns { Toggle(L10n.text("Xem dạng danh sách"), isOn: $growthList).font(CareFont.subheadline) }
-                Text(allGrowth ? L10n.text("Toàn bộ lịch sử") : InsightData.intervalLabel(interval)).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                 if growth.isEmpty {
-                    Text(L10n.text("Chưa có số đo trong khoảng này")).foregroundStyle(CareTheme.secondary).frame(maxWidth: .infinity, minHeight: 100)
+                    Text(L10n.text("Chưa có số đo")).foregroundStyle(CareTheme.secondary).frame(maxWidth: .infinity, minHeight: 100)
                 } else if growthList && !columns {
                     growthRows(growth)
                 } else {
-                    Chart(growth) { item in
-                        if let value = growthMetric.value(item) {
-                            LineMark(x: .value(L10n.text("Ngày"), item.date), y: .value(growthMetric.unit, value)).foregroundStyle(CareTheme.accent)
-                            PointMark(x: .value(L10n.text("Ngày"), item.date), y: .value(growthMetric.unit, value)).foregroundStyle(CareTheme.accent)
-                        }
-                    }.frame(height: 195).chartYScale(domain: .automatic(includesZero: false))
-                    .chartXSelection(value: $selectedGrowthDate)
-                    .chartXAxis { AxisMarks(values: .automatic(desiredCount: 3)) { _ in AxisValueLabel(format: .dateTime.day().month()) } }
-                    if let date = selectedGrowthDate, let selected = growth.min(by: { abs($0.date.timeIntervalSince(date)) < abs($1.date.timeIntervalSince(date)) }) {
+                    GrowthChartView(measurements: growth, metric: growthMetric, profile: viewModel.baby) { selected in
                         NavigationLink { MeasurementEntryView(measurement: selected) } label: {
-                            Text(L10n.text("{0} · {1} {2} · Xem / sửa số đo", "\(selected.date.careFormatted(date: .abbreviated, time: .omitted))", "\(InsightData.format(growthMetric.value(selected) ?? 0))", "\(growthMetric.unit)"))
-                                .font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.accent)
+                            Text(L10n.text("Xem / sửa số đo")).font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.accent)
                         }
                     }
                 }
-                Button(allGrowth ? L10n.text("Dùng khoảng đã chọn") : L10n.text("Xem toàn bộ lịch sử")) { allGrowth.toggle() }.font(CareFont.subheadline.weight(.semibold))
                 NavigationLink { MeasurementEntryView() } label: {
                     Text(L10n.text("+ Thêm số đo")).font(CareFont.headline).frame(maxWidth: .infinity, minHeight: 48)
                         .background(CareTheme.accent.opacity(0.09), in: RoundedRectangle(cornerRadius: 12))
@@ -291,7 +270,7 @@ struct StatisticsView: View {
             VStack(alignment: .leading, spacing: 8) {
                 CareSectionTitle(title: L10n.text("Lịch sử số đo"), subtitle: L10n.text(growthMetric.rawValue))
                 if growth.isEmpty {
-                    Text(L10n.text("Chưa có số đo trong khoảng này")).foregroundStyle(CareTheme.secondary)
+                    Text(L10n.text("Chưa có số đo")).foregroundStyle(CareTheme.secondary)
                 } else {
                     growthRows(growth.reversed())
                 }

@@ -1,6 +1,5 @@
 import SwiftUI
 import PhotosUI
-import Charts
 #if canImport(UIKit)
 import UIKit
 #endif
@@ -329,7 +328,7 @@ private struct ProfileHealthEditorView: View {
 struct MeasurementHistoryView: View {
     @Environment(BabyCareViewModel.self) private var viewModel
     @State private var addingMeasurement = false
-    @State private var metric = "Cân nặng"
+    @State private var metric: GrowthMetric = .weight
     @State private var selectedMeasurement: BodyMeasurement?
     private var sorted: [BodyMeasurement] { viewModel.measurements.sorted { $0.date > $1.date } }
 
@@ -348,18 +347,10 @@ struct MeasurementHistoryView: View {
             } else {
                 Section {
                     Picker(L10n.text("Chỉ số"), selection: $metric) {
-                        Text(L10n.text("Cân nặng")).tag("Cân nặng")
-                        Text(L10n.text("Chiều cao")).tag("Chiều cao")
+                        ForEach(GrowthMetric.allCases) { Text(L10n.text($0.rawValue)).tag($0) }
                     }.pickerStyle(.segmented)
-                    Chart(sorted.reversed()) { measurement in
-                        if let value = metric == "Cân nặng" ? measurement.weight : measurement.height, value.isFinite {
-                            LineMark(x: .value(L10n.text("Ngày"), measurement.date), y: .value(metric, value))
-                                .foregroundStyle(CareTheme.accent).interpolationMethod(.monotone)
-                            PointMark(x: .value(L10n.text("Ngày"), measurement.date), y: .value(metric, value))
-                                .foregroundStyle(CareTheme.accent)
-                        }
-                    }.frame(height: 200).padding(.vertical, 8)
-                        .accessibilityLabel(L10n.text("Biểu đồ {0}. Các số đo có trong danh sách bên dưới.", "\(metric)"))
+                    GrowthChartView(measurements: sorted, metric: metric, profile: viewModel.baby) { _ in EmptyView() }
+                        .padding(.vertical, 8)
                 }
                 Section(L10n.text("Tất cả số đo")) {
                     ForEach(sorted) { measurement in
