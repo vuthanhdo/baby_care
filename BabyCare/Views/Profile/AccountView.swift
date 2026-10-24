@@ -5,6 +5,7 @@ struct AppRootView: View {
     @AppStorage(AppLanguage.preferenceKey) private var language = AppLanguage.current.rawValue
     @State private var session: SessionViewModel
     @State private var testingModel: BabyCareViewModel?
+    @State private var weather = AppDependencies.makeWeather()
     @Environment(\.scenePhase) private var scenePhase
     init() {
         #if DEBUG
@@ -49,6 +50,7 @@ struct AppRootView: View {
         }
         .environment(\.locale, (AppLanguage(rawValue: language) ?? .english).locale)
         .environment(session)
+        .environment(weather)
         .font(CareFont.body)
         .foregroundStyle(CareTheme.text)
         .preferredColorScheme(.light)

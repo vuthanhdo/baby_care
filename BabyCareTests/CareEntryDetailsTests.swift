@@ -274,6 +274,28 @@ struct HealthDetailsTests {
         #expect(try hours(160) == nil)
     }
 
+    @Test func outfitAdviceFollowsFeelsLikeRainUVAndAge() {
+        var weather = CareWeather(date: Date(), temperature: 30, apparentTemperature: 34, condition: .clear, symbolName: "sun.max",
+                                  high: nil, low: nil, uvIndex: 8, precipitationChance: 0.6, windSpeed: 10)
+        // Hot, wet and sunny for a 4-month-old: light clothes, a raincoat and shade instead of sunscreen.
+        #expect(OutfitAdvice.items(for: weather, ageInMonths: 4).map(\.icon) == ["👕", "🩳", "👒", "🍼", "☂️", "⛱️"])
+        #expect(OutfitAdvice.items(for: weather, ageInMonths: 8).last?.label == "Kem chống nắng")
+        weather.apparentTemperature = 15
+        weather.uvIndex = 4
+        weather.precipitationChance = 0
+        weather.windSpeed = 35
+        #expect(OutfitAdvice.items(for: weather, ageInMonths: 8).map(\.icon) == ["🧥", "🧢", "🧦", "👶", "🌬️"])
+        weather.apparentTemperature = 24
+        // Moderate UV adds a hat only when the outfit has none.
+        #expect(OutfitAdvice.items(for: weather, ageInMonths: 30).map(\.icon) == ["👕", "🧥", "🧢", "🌬️"])
+    }
+
+    @Test func weatherConditionsUseTheAppLanguage() {
+        #expect(L10n.render("Có mây rải rác", language: .english) == "Partly cloudy")
+        #expect(L10n.render("Có mây rải rác", language: .vietnamese) == "Có mây rải rác")
+        #expect(Set(CareWeatherCondition.allCases.map(\.title)).count == CareWeatherCondition.allCases.count)
+    }
+
     @Test func profilesFromBeforeMedicalHistoryStillDecode() throws {
         let old = #"{"id":"6F9619FF-8B86-D011-B42D-00C04FC964FF","name":"Bé","birthDate":0,"gender":"girl","bloodType":"O","allergies":"","healthNotes":""}"#
         let profile = try JSONDecoder().decode(BabyProfile.self, from: Data(old.utf8))

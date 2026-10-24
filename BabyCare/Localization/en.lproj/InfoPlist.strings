@@ -1,3 +1,4 @@
 "NSMicrophoneUsageDescription" = "BabyCare uses the microphone when you record a care activity by voice.";
 "NSSpeechRecognitionUsageDescription" = "BabyCare converts Vietnamese speech into activity text. Audio may be sent to Apple for recognition.";
+"NSLocationWhenInUseUsageDescription" = "BabyCare uses your approximate location to show the weather and suggest what your baby should wear. It is sent only to Apple Weather and is not stored.";
 "NSCameraUsageDescription" = "BabyCare uses the camera when you tap Take photo to save a picture of your baby's medicine.";

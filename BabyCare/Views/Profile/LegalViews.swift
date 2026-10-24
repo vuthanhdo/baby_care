@@ -250,14 +250,14 @@ struct LegalDocumentView: View {
             ]
         case .privacy:
             [
-                (L10n.text("1. Dữ liệu được xử lý"), L10n.text("BabyCare xử lý hồ sơ trẻ, nhật ký chăm sóc và sức khỏe, số đo, tiêm chủng, lịch nhắc, ảnh bạn chọn và thông tin tài khoản đăng nhập. Micro chỉ được dùng khi bạn chủ động ghi bằng giọng nói.")),
+                (L10n.text("1. Dữ liệu được xử lý"), L10n.text("BabyCare xử lý hồ sơ trẻ, nhật ký chăm sóc và sức khỏe, số đo, tiêm chủng, lịch nhắc, ảnh bạn chọn và thông tin tài khoản đăng nhập. Micro chỉ được dùng khi bạn chủ động ghi bằng giọng nói. Vị trí gần đúng chỉ được dùng khi bạn bật thời tiết trên màn hình chính và không được lưu.")),
                 (L10n.text("2. Mục đích"), L10n.text("Dữ liệu được dùng để lưu nhật ký, hiển thị lịch sử và thống kê, tạo lời nhắc, đồng bộ khi bạn chọn cloud và tạo báo cáo do bạn chủ động chia sẻ.")),
                 (L10n.text("3. Nơi lưu dữ liệu"), L10n.text("Ở chế độ thiết bị, hồ sơ và nhật ký nằm trong vùng lưu trữ của ứng dụng trên máy. Tài khoản và bản ghi đồng ý vẫn được xử lý trên Supabase. Ở chế độ cloud, dữ liệu được đồng bộ với Supabase và có cache tách riêng theo tài khoản và gia đình.")),
                 (L10n.text("4. Dữ liệu trẻ em và đồng thuận"), L10n.text("Trước khi tạo hoặc chỉnh sửa dữ liệu của bé, người dùng phải đồng ý với tài liệu hiện hành, việc xử lý dữ liệu sức khỏe và xác nhận có quyền đại diện hợp pháp. Server ghi lại phiên bản và thời điểm xác nhận; thay đổi phiên bản có thể yêu cầu đồng ý lại.")),
-                (L10n.text("5. Chia sẻ"), L10n.text("Chế độ cloud sử dụng Supabase để xác thực, lưu dữ liệu và ảnh. Thành viên có quyền trong gia đình có thể truy cập dữ liệu được chia sẻ. Báo cáo được gửi qua chức năng chia sẻ do bạn chọn. Nhập giọng nói dùng Apple Speech; khi thiết bị không hỗ trợ nhận dạng tại chỗ, âm thanh có thể được xử lý qua dịch vụ của Apple.")),
+                (L10n.text("5. Chia sẻ"), L10n.text("Chế độ cloud sử dụng Supabase để xác thực, lưu dữ liệu và ảnh. Thành viên có quyền trong gia đình có thể truy cập dữ liệu được chia sẻ. Báo cáo được gửi qua chức năng chia sẻ do bạn chọn. Nhập giọng nói dùng Apple Speech; khi thiết bị không hỗ trợ nhận dạng tại chỗ, âm thanh có thể được xử lý qua dịch vụ của Apple. Thời tiết lấy từ Apple Weather (WeatherKit) bằng vị trí gần đúng của bạn.")),
                 (L10n.text("6. Lưu giữ và xóa"), L10n.text("Dữ liệu được giữ khi hồ sơ hoặc tài khoản còn hoạt động. Xóa hồ sơ bé sẽ xóa dữ liệu liên quan của bé; xóa tài khoản sẽ xóa các gia đình do tài khoản sở hữu, dữ liệu cloud, ảnh và cache của tài khoản trên thiết bị này.")),
                 (L10n.text("7. Quyền của bạn"), L10n.text("Bạn có thể xem, sửa, xuất báo cáo và xóa hồ sơ hoặc tài khoản trong Cài đặt. Màn trạng thái đồng ý hiển thị phiên bản và thời điểm đã xác nhận. Ứng dụng chưa có chức năng rút lại từng loại đồng ý riêng biệt.")),
-                (L10n.text("8. Quyền thiết bị và bảo mật"), L10n.text("BabyCare xin quyền ảnh, micro và thông báo đúng lúc dùng tính năng tương ứng. Dữ liệu cloud được truyền qua HTTPS và quyền truy cập được giới hạn bằng phiên đăng nhập cùng chính sách cách ly gia đình."))
+                (L10n.text("8. Quyền thiết bị và bảo mật"), L10n.text("BabyCare xin quyền ảnh, camera, micro, vị trí và thông báo đúng lúc dùng tính năng tương ứng. Dữ liệu cloud được truyền qua HTTPS và quyền truy cập được giới hạn bằng phiên đăng nhập cùng chính sách cách ly gia đình."))
             ]
         }
     }

@@ -53,4 +53,16 @@ import Foundation
         #endif
         return BabyCareViewModel(provider: SwiftDataCareDataProvider(), notifications: LocalCareReminderService())
     }
+
+    /// Home-screen weather. UI tests (`-demo`, `-ui-testing…`) get none so the layout they check stays put;
+    /// `-demo-full` shows sample weather for screenshots without asking for location.
+    static func makeWeather() -> WeatherViewModel? {
+        #if DEBUG
+        let arguments = ProcessInfo.processInfo.arguments
+        // `-live-weather` keeps the real WeatherKit source in demo runs, to debug it on a signed simulator build.
+        if arguments.contains("-demo-full") && !arguments.contains("-live-weather") { return WeatherViewModel(sample: WeatherViewModel.sampleWeather) }
+        if arguments.contains(where: { ["-demo", "-ui-testing", "-ui-testing-store", "-ui-testing-auth"].contains($0) }) { return nil }
+        #endif
+        return WeatherViewModel(source: AppleWeatherSource(), location: SystemLocationSource())
+    }
 }

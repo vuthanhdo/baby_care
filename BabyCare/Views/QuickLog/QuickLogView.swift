@@ -3,6 +3,7 @@ import SwiftUI
 /// Stitch B — native view backed by the existing data provider.
 struct QuickLogView: View {
     @Environment(BabyCareViewModel.self) private var viewModel
+    @Environment(WeatherViewModel.self) private var weather: WeatherViewModel?
     @AppStorage("care.habitSuggestions") private var habitSuggestions = true
     @Binding var selectedTab: CareTab
     @Environment(\.dynamicTypeSize) private var textSize
@@ -28,6 +29,7 @@ struct QuickLogView: View {
                     Spacer()
                     CareBadge(title: viewModel.isDemo && !CareDemoMode.hidesDemoBadge ? L10n.text("Dữ liệu mẫu") : viewModel.state.storage == .device ? L10n.text("Trên thiết bị") : "Cloud")
                 }
+                if let weather { WeatherCardView(weather: weather, baby: viewModel.baby) }
                 if viewModel.isTrackingIllness { illnessCard }
                 if let nextReminder = viewModel.medicationReminders.filter({ $0.enabled }).min(by: { $0.nextDate < $1.nextDate }) {
                     upcomingReminder(nextReminder)
