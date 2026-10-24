@@ -61,7 +61,6 @@ struct ContentView: View {
             Button(L10n.text("Đóng"), role: .cancel) { Task { await viewModel.send(.dismissError) } }
         } message: { Text(viewModel.state.error ?? L10n.text("Hãy thử lại.")) }
         .dynamicTypeSize(textSize == "largest" ? .accessibility1 : textSize == "large" ? .xxxLarge : systemTextSize)
-        .preferredColorScheme(.light)
         .careToastBanner()
         // Announce once here; sheets attach their own banner but must not repeat the announcement.
         .onChange(of: viewModel.toast) { _, toast in

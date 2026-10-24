@@ -334,6 +334,7 @@
 "Ghi uống thuốc" = "Ghi uống thuốc";
 "Ghi đã dùng" = "Ghi đã dùng";
 "Ghi đúng tên, đơn vị và lượng đã dùng theo hướng dẫn bạn đang có." = "Ghi đúng tên, đơn vị và lượng đã dùng theo hướng dẫn bạn đang có.";
+"Giao diện" = "Giao diện";
 "Gió bụi" = "Gió bụi";
 "Gió mạnh" = "Gió mạnh";
 "Gió mạnh: che chắn mặt và tai cho bé." = "Gió mạnh: che chắn mặt và tai cho bé.";
@@ -683,6 +684,7 @@
 "Sau {0} giờ" = "Sau {0} giờ";
 "Server chưa có hàm mà app cần. Hãy áp dụng migration Supabase mới nhất rồi thử lại. ({0})" = "Server chưa có hàm mà app cần. Hãy áp dụng migration Supabase mới nhất rồi thử lại. ({0})";
 "Sinh hoạt" = "Sinh hoạt";
+"Sáng" = "Sáng";
 "Sương mù" = "Sương mù";
 "Sẽ được ghi nhận trên máy chủ khi kết nối được." = "Sẽ được ghi nhận trên máy chủ khi kết nối được.";
 "Số lượng (tùy chọn), vd. 1/2 bát" = "Số lượng (tùy chọn), vd. 1/2 bát";
@@ -857,6 +859,7 @@
 "Tập trung nhiệt độ, thuốc và triệu chứng khi bé không khỏe" = "Tập trung nhiệt độ, thuốc và triệu chứng khi bé không khỏe";
 "Tập trung nhiệt độ, thuốc và triệu chứng khi bé không khỏe." = "Tập trung nhiệt độ, thuốc và triệu chứng khi bé không khỏe.";
 "Tắm bé" = "Tắm bé";
+"Tối" = "Tối";
 "TỔNG SỮA ĐÃ GHI" = "TỔNG SỮA ĐÃ GHI";
 "Tổng quan" = "Tổng quan";
 "Tổng trong khoảng" = "Tổng trong khoảng";

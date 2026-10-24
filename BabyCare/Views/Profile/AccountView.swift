@@ -53,7 +53,7 @@ struct AppRootView: View {
         .environment(weather)
         .font(CareFont.body)
         .foregroundStyle(CareTheme.text)
-        .preferredColorScheme(.light)
+        .careAppearance()
         .task {
             #if DEBUG
             if ConsentUITestFixture.enabled { session.start(events: ConsentUITestFixture.events()); return }
@@ -90,6 +90,7 @@ struct SignInView: View {
     private enum Field { case email, password, confirmation }
 
     @Environment(\.locale) private var appLocale
+    @Environment(\.colorScheme) private var colorScheme
     var body: some View {
         let _ = appLocale
         NavigationStack {
@@ -274,7 +275,8 @@ struct SignInView: View {
                 session.appleSignInFailed()
             }
         }
-        .signInWithAppleButtonStyle(.black)
+        // Apple's guidelines: the black button on light backgrounds, the white one on dark.
+        .signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black)
         .frame(maxWidth: .infinity).frame(height: 48)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .disabled(session.busy)

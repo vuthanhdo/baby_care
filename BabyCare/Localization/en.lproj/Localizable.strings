@@ -334,6 +334,7 @@
 "Ghi uống thuốc" = "Log medicine";
 "Ghi đã dùng" = "Log dose given";
 "Ghi đúng tên, đơn vị và lượng đã dùng theo hướng dẫn bạn đang có." = "Record the correct name, unit and amount given according to your existing instructions.";
+"Giao diện" = "Appearance";
 "Gió bụi" = "Blowing dust";
 "Gió mạnh" = "Windy";
 "Gió mạnh: che chắn mặt và tai cho bé." = "Strong wind: shield your baby's face and ears.";
@@ -683,6 +684,7 @@
 "Sau {0} giờ" = "In {0} hours";
 "Server chưa có hàm mà app cần. Hãy áp dụng migration Supabase mới nhất rồi thử lại. ({0})" = "The server is missing a function this app needs. Apply the latest Supabase migration and try again. ({0})";
 "Sinh hoạt" = "Routines";
+"Sáng" = "Light";
 "Sương mù" = "Foggy";
 "Sẽ được ghi nhận trên máy chủ khi kết nối được." = "It will be recorded on the server once a connection is available.";
 "Số lượng (tùy chọn), vd. 1/2 bát" = "Amount (optional), e.g. half a bowl";
@@ -857,6 +859,7 @@
 "Tập trung nhiệt độ, thuốc và triệu chứng khi bé không khỏe" = "Focus on temperature, medicines and symptoms when your baby is unwell";
 "Tập trung nhiệt độ, thuốc và triệu chứng khi bé không khỏe." = "Focus on temperature, medicines and symptoms when your baby is unwell.";
 "Tắm bé" = "Bath";
+"Tối" = "Dark";
 "TỔNG SỮA ĐÃ GHI" = "TOTAL MILK RECORDED";
 "Tổng quan" = "Overview";
 "Tổng trong khoảng" = "Total in this period";

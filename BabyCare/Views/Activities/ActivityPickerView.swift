@@ -63,7 +63,7 @@ struct ActivityPickerView: View {
                     NavigationLink { ActivityFormView(kind: .temperature) } label: {
                         HStack(spacing: 14) {
                             CareIcon(name: ActivityKind.temperature.assetName, color: CareTheme.medical, size: 30)
-                                .frame(width: 48, height: 48).background(.white, in: .rect(cornerRadius: 14))
+                                .frame(width: 48, height: 48).background(CareTheme.surface, in: .rect(cornerRadius: 14))
                             VStack(alignment: .leading, spacing: 6) {
                                 Text(L10n.text("Nhiệt độ")).font(CareFont.headline)
                                 Text(ActivityKind.temperature.entrySubtitle).font(CareFont.footnote).foregroundStyle(CareTheme.secondary)

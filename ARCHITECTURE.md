@@ -67,6 +67,10 @@ Thời tiết trên màn Ghi nhanh: `Services/CareWeatherService.swift` (Weather
 
 Biểu đồ tăng trưởng (`Views/Insights/GrowthChartView.swift`) vẽ theo tháng tuổi với dải P3–P97 và đường P15/P50/P85 theo giới tính. Dữ liệu LMS 0–60 tháng (`Domain/GrowthReferenceData.swift`) sinh bằng `Tools/Growth/generate.py` từ bảng WHO 2006 (mặc định) và CDC 2000 (tham chiếu Mỹ). Chụm hai ngón hoặc dùng nút kính lúp để phóng to; trục y co theo khoảng tháng đang xem.
 
+## Giao diện sáng/tối (25/10/2026)
+
+Mặc định theo cài đặt của máy; Cài đặt → Giao diện cho chọn Theo thiết bị / Sáng / Tối (`AppAppearance`, khoá `care.appearance`). Lựa chọn được áp bằng `UIWindow.overrideUserInterfaceStyle` cho mọi cửa sổ (`careAppearance()` ở gốc app), vì `preferredColorScheme(nil)` không luôn trả lại giao diện của máy sau khi đã ép sáng/tối. Mỗi màu trong `Assets.xcassets` (`CareBackground`, `CareSurface`, `CareText`, `CareSecondary`, `CareBorder`, `AccentColor` và ba cặp màu nhóm) có biến thể tối; chữ màu trên nền tối đạt ≥ 4,6:1, chữ trắng trên nút màu ≥ 3,4:1 (chữ đậm cỡ lớn). Bóng đổ dùng đen thay cho màu chữ, nút Đăng nhập với Apple đổi trắng/đen theo giao diện, còn PDF báo cáo luôn vẽ chữ đen trên nền trắng. Launch screen theo giao diện của máy vì iOS dựng nó trước khi app chạy; câu quote ngẫu nhiên nằm ở màn splash (`CareQuotes`), không lặp lại câu của lần mở trước.
+
 ## Tài khoản và tối đa 4 bé (12/09/2026)
 
 App không còn màn chọn/tạo family hay thao tác chọn family trong Cài đặt. Sau đăng nhập, SessionViewModel tự mở vùng dữ liệu trước đó; tài khoản mới tự tạo vùng dữ liệu rồi vào bước tạo bé. Lỗi tải tài khoản hiển thị Thử lại/Đăng xuất.

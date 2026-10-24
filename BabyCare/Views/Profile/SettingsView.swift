@@ -31,6 +31,7 @@ struct SettingsView: View {
             }
             Section(L10n.text("Trải nghiệm & Hiển thị")) {
                 LanguagePicker()
+                AppearancePicker()
                 Button { showingTextSize = true } label: {
                     settingsRow(L10n.text("Cỡ chữ"), subtitle: textSizeTitle, icon: "Stitch_format_size", color: CareTheme.accent)
                 }.buttonStyle(.plain)

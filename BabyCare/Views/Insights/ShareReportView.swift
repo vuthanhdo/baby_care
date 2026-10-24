@@ -262,7 +262,7 @@ enum CareReportPDF {
         let data = renderer.pdfData { context in
             var y: CGFloat = 48
             var page = 1
-            let body: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 12), .foregroundColor: UIColor.label]
+            let body: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 12), .foregroundColor: UIColor.black]
             let title: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 17), .foregroundColor: UIColor(red: 0.08, green: 0.42, blue: 0.38, alpha: 1)]
             func beginPage() {
                 context.beginPage()

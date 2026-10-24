@@ -25,7 +25,7 @@ struct CareCard<Content: View>: View {
             .padding(16)
             .background(CareTheme.surface, in: .rect(cornerRadius: 16))
             .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(CareTheme.border, lineWidth: 1))
-            .shadow(color: CareTheme.text.opacity(0.035), radius: 8, y: 2)
+            .shadow(color: .black.opacity(0.035), radius: 8, y: 2)
     }
 }
 
@@ -168,7 +168,7 @@ struct CareToastBanner: ViewModifier {
                     Text(toast).font(CareFont.subheadline.weight(.semibold)).multilineTextAlignment(.center)
                         .padding(.horizontal, 18).padding(.vertical, 12).foregroundStyle(.white)
                         .background(CareTheme.text, in: .capsule)
-                        .shadow(color: CareTheme.text.opacity(0.18), radius: 10, y: 4)
+                        .shadow(color: .black.opacity(0.18), radius: 10, y: 4)
                         .padding(.horizontal, 20).padding(.top, 8)
                         .transition(.move(edge: .top).combined(with: .opacity))
                         .accessibilityAddTraits(.updatesFrequently)
