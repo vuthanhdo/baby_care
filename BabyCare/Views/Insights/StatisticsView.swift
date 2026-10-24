@@ -209,14 +209,26 @@ struct StatisticsView: View {
             let value = kind == .sleep ? InsightData.sleepHours(viewModel.activities, in: dayInterval) : InsightData.sum(activities.filter { calendar.isDate($0.date, inSameDayAs: day) }, kind: .milk, unit: "ml")
             return value.map { (day, $0) }
         }
+        // Sleep is drawn over the recommended range for the baby's age.
+        let recommended = kind == .sleep ? SleepRecommendation.band(birthDate: viewModel.baby.birthDate) : nil
         return VStack(alignment: .leading, spacing: 10) {
             Text(title).font(CareFont.headline)
             if values.isEmpty {
                 Text(L10n.text("Chưa ghi nhận")).foregroundStyle(CareTheme.secondary).frame(maxWidth: .infinity, minHeight: 100)
             } else {
-                Chart(values, id: \.date) { value in
-                    BarMark(x: .value(L10n.text("Ngày"), value.date, unit: .day), y: .value(title, value.value)).foregroundStyle(color).cornerRadius(5)
+                Chart {
+                    if let recommended {
+                        RectangleMark(yStart: .value(title, Double(recommended.hours.lowerBound)), yEnd: .value(title, Double(recommended.hours.upperBound)))
+                            .foregroundStyle(color.opacity(0.12))
+                    }
+                    ForEach(values, id: \.date) { value in
+                        BarMark(x: .value(L10n.text("Ngày"), value.date, unit: .day), y: .value(title, value.value)).foregroundStyle(color).cornerRadius(5)
+                    }
                 }.frame(height: 160).chartXAxis { AxisMarks(values: .automatic(desiredCount: 4)) { _ in AxisValueLabel(format: .dateTime.day().month()) } }
+            }
+            if let recommended {
+                Text(L10n.text("Vùng tô: khuyến cáo {0} cho bé {1}, gồm cả ngủ ngày (WHO).", SleepRecommendation.text(recommended), L10n.text(recommended.title)))
+                    .font(CareFont.caption).foregroundStyle(CareTheme.secondary)
             }
         }
     }

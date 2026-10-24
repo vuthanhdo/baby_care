@@ -46,6 +46,23 @@ Khi RLS thu hồi quyền family, provider xóa cache của family đó trước
 Ảnh cloud đã có ở giai đoạn sau (`CloudMedia`, `SupabaseRemote.syncMedia`): byte ảnh nằm trong outbox cho tới khi cả bản ghi và file được xác nhận. Import dữ liệu SwiftData cũ chưa thuộc giai đoạn này; dữ liệu trên máy không tự được gửi lên khi đăng nhập.
 
 
+## Trường có cấu trúc trong hoạt động (24/10/2026)
+
+Các trường mới được lưu bằng chữ tiếng Việt trong các cột sẵn có (`value`, `unit`, `detail`, `babies.allergies`), nên contract cloud và SwiftData không đổi và bản 1.0.x vẫn đọc được dưới dạng chữ thường. Parser nằm trong `Domain/CareEntryDetails.swift`, đọc lỏng: chữ không đúng dạng được giữ nguyên.
+
+| Dữ liệu | Cột | Ví dụ |
+| --- | --- | --- |
+| Triệu chứng + mức con | `value` | `Sốt (1–2 ngày), Ho (khan)` (`SymptomCatalog`) |
+| Dị ứng: tên · mức độ · độ chắc chắn | `value`; hồ sơ bé: mỗi dòng một dị ứng trong `allergies` | `Trứng gà · Nhẹ · Nghi ngờ` (`AllergyNote`) |
+| Vị trí đo · loại nhiệt kế | `detail` | `Hậu môn · Điện tử` (`TemperatureDetail`) |
+| Bữa ăn: thực phẩm / số lượng (đều tùy chọn) | `value` / `unit` | `Cháo bí đỏ` / `1/2 bát` (`MealEntry`) |
+| Thuốc không tên nhưng có ảnh (chụp bằng camera hoặc chọn từ album) | `detail` rỗng + ảnh đính kèm | `CareValidation.activity` |
+| Đi khám: lý do / chẩn đoán / lời dặn | `value` / `unit` / `detail` | `DoctorVisit` |
+
+Nhịp thở là `ActivityKind.breathing` (đơn vị `lần/phút`, `detail` = lúc đếm), cần migration `202610240011_health_details.sql`. Bản 1.0.x coi kind lạ là dữ liệu hỏng và không tải được cả family, nên `babycare_read_page` chỉ trả kind mới khi client gửi `p_api_version >= 2`; app từ 1.1 gửi 2, gặp server chưa có migration (PGRST202) thì gọi lại kiểu cũ, và bỏ qua kind lạ thay vì báo lỗi. Ngưỡng tham khảo: nhiệt độ theo vị trí (`TemperatureReference`, khoảng thường dùng tại bệnh viện Việt Nam) và mốc thở nhanh của WHO IMCI theo tháng tuổi (`BreathingReference`).
+
+Hai trường cần cột mới (cùng migration 0011): `BabyProfile.medicalHistory` (`babies.medical_history`) và `CareActivity.followUpDate` của lần đi khám (`care_activities.follow_up_at`, `detail` là lời dặn của bác sĩ). `babycare_apply` gộp field gửi lên vào bản ghi cũ nên bản 1.0.x sửa bản ghi không xoá hai cột này. App chỉ gửi hai cột khi có giá trị và gửi giá trị rỗng khi người dùng xoá (`CloudMapping.optionalColumns`). Outbox bỏ một thay đổi bị server từ chối vì dữ liệu (SQLSTATE 22/23, `CloudError.rejected`), phát lại các thay đổi sau trên bản đã lưu và báo một lần, thay vì để nó chặn mọi lần lưu và tải. Trên máy, SwiftData V3 thêm hai bảng phụ `BabyDetailsEntity`/`ActivityFollowUpEntity` theo id bản ghi (giống `VaccinationEntity`), để entity V1/V2 giữ nguyên. Lịch khám lại được nhắc trước 2 ngày (`DoctorFollowUp`, `LocalCareReminderService`) và hiện trên màn Ghi nhanh khi còn trong 14 ngày. Giờ ngủ khuyến cáo theo tuổi: `SleepRecommendation` (WHO 2019 dưới 5 tuổi, AASM từ 6 tuổi).
+
 ## Tài khoản và tối đa 4 bé (12/09/2026)
 
 App không còn màn chọn/tạo family hay thao tác chọn family trong Cài đặt. Sau đăng nhập, SessionViewModel tự mở vùng dữ liệu trước đó; tài khoản mới tự tạo vùng dữ liệu rồi vào bước tạo bé. Lỗi tải tài khoản hiển thị Thử lại/Đăng xuất.

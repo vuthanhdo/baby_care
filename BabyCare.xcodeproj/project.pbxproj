@@ -409,6 +409,7 @@
 				INFOPLIST_FILE = Configuration/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Bé Khỏe";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Bé Khỏe dùng camera khi bạn bấm Chụp ảnh để lưu ảnh hộp hoặc chai thuốc của bé.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Bé Khỏe dùng micrô khi bạn bấm ghi âm để nhập hoạt động chăm sóc bé bằng giọng nói.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Bé Khỏe chuyển lời nói tiếng Việt thành văn bản để bạn xem lại trước khi lưu. Âm thanh có thể được gửi tới Apple để nhận dạng.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -457,6 +458,7 @@
 				INFOPLIST_FILE = Configuration/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Bé Khỏe";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Bé Khỏe dùng camera khi bạn bấm Chụp ảnh để lưu ảnh hộp hoặc chai thuốc của bé.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Bé Khỏe dùng micrô khi bạn bấm ghi âm để nhập hoạt động chăm sóc bé bằng giọng nói.";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Bé Khỏe chuyển lời nói tiếng Việt thành văn bản để bạn xem lại trước khi lưu. Âm thanh có thể được gửi tới Apple để nhận dạng.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;

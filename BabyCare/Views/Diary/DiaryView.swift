@@ -217,6 +217,10 @@ struct DiaryActivityCardView: View {
                     Text([activity.displayDetail, activity.note].filter { !$0.isEmpty }.joined(separator: " · "))
                         .font(CareFont.caption).foregroundStyle(CareTheme.secondary)
                 }
+                if let followUp = activity.followUpDate {
+                    Label(L10n.text("Khám lại {0}", followUp.careFormatted(date: .abbreviated, time: .shortened)), systemImage: "calendar.badge.clock")
+                        .font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.accent)
+                }
                 if showsDate { Text(activity.date, format: .dateTime.day().month().year()).font(CareFont.caption).foregroundStyle(CareTheme.secondary) }
             }
         }.foregroundStyle(CareTheme.text)

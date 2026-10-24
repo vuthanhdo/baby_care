@@ -59,6 +59,11 @@ final class LocalCareReminderService: CareReminderService {
             for item in baby.medicationReminders where item.enabled && item.nextDate > now {
                 result.append(CareNotification(id: scope + "medication." + item.id.uuidString, date: item.nextDate))
             }
+            for visit in baby.activities where visit.kind == .doctor {
+                if let appointment = visit.followUpDate, DoctorFollowUp.reminderDate(for: appointment) > now {
+                    result.append(CareNotification(id: scope + "followup." + visit.id.uuidString, date: DoctorFollowUp.reminderDate(for: appointment)))
+                }
+            }
             for item in baby.vaccinations where item.reminderEnabled {
                 if let date = item.reminderDate, let next = item.nextDoseDate, date > now && date < next {
                     result.append(CareNotification(id: scope + "vaccination." + item.id.uuidString, date: date))

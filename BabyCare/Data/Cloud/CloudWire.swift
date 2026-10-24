@@ -63,14 +63,20 @@ nonisolated struct CloudSnapshot: Codable, Sendable {
 /// Explicit SQL column mapping: domain Codable never becomes the server contract.
 nonisolated enum CloudMapping {
     static let entities = ["babies", "care_activities", "body_measurements", "baby_care_states", "medication_reminders", "media_assets", "vaccinations"]
+    /// `p_api_version` sent to `babycare_read_page`; 2 includes activity kinds added after 1.0.x (breathing).
+    static let readVersion = 2
     static func rows(_ database: CareDatabase) -> [String: [UUID: CloudRow]] {
         var result: [String: [UUID: CloudRow]] = [:]
         for b in database.babies {
             let p = b.profile
-            result["babies", default: [:]][p.id] = ["name": .string(p.name), "birth_date": .date(p.birthDate), "gender": .string(p.gender.rawValue), "blood_type": .string(p.bloodType), "allergies": .string(p.allergies), "health_notes": .string(p.healthNotes)]
+            var baby: CloudRow = ["name": .string(p.name), "birth_date": .date(p.birthDate), "gender": .string(p.gender.rawValue), "blood_type": .string(p.bloodType), "allergies": .string(p.allergies), "health_notes": .string(p.healthNotes)]
+            if !p.medicalHistory.isEmpty { baby["medical_history"] = .string(p.medicalHistory) }
+            result["babies", default: [:]][p.id] = baby
             result["baby_care_states", default: [:]][p.id] = ["is_tracking_illness": .bool(b.isTrackingIllness), "illness_title": .string(b.illnessTitle), "illness_start_date": .date(b.isTrackingIllness ? b.illnessStartDate : nil), "sleep_start_date": .date(b.sleepStartDate)]
             for a in b.activities {
-                result["care_activities", default: [:]][a.id] = ["kind": .string(a.kind.rawValue), "occurred_at": .date(a.date), "value": .string(a.value), "unit": .string(a.unit), "note": .string(a.note), "detail": .string(a.detail)]
+                var row: CloudRow = ["kind": .string(a.kind.rawValue), "occurred_at": .date(a.date), "value": .string(a.value), "unit": .string(a.unit), "note": .string(a.note), "detail": .string(a.detail)]
+                if let followUp = a.followUpDate { row["follow_up_at"] = .date(followUp) }
+                result["care_activities", default: [:]][a.id] = row
             }
             for m in b.measurements {
                 result["body_measurements", default: [:]][m.id] = ["measured_at": .date(m.date), "weight": m.weight.map(CloudValue.number) ?? .null, "height": m.height.map(CloudValue.number) ?? .null, "head_circumference": m.headCircumference.map(CloudValue.number) ?? .null, "method": .string(m.method), "notes": .string(m.notes)]
@@ -84,6 +90,11 @@ nonisolated enum CloudMapping {
         }
         return result
     }
+
+    /// Columns added by migration 0011 are sent only when they hold something, so a server without them keeps
+    /// accepting everything else. Clearing one sends its empty value explicitly: the server merges sent fields
+    /// into the stored row, so leaving the key out would keep the old value.
+    static let optionalColumns: [String: CloudValue] = ["medical_history": .string(""), "follow_up_at": .null]
 
     static func changes(from old: CloudSnapshot, to next: CareDatabase) throws -> [CloudChange] {
         let before = rows(old.database), after = rows(next)
@@ -101,8 +112,12 @@ nonisolated enum CloudMapping {
                     default: false
                     }
                 }?.profile.id
+                var data = b[id] ?? [:]
+                if b[id] != nil, let before = a[id] {
+                    for (key, empty) in optionalColumns where before[key] != nil && data[key] == nil { data[key] = empty }
+                }
                 changes.append(CloudChange(entity: entity, id: id, baby_id: entity == "babies" ? nil : babyID,
-                    expected_version: old.versions[CloudSnapshot.key(entity, id)] ?? 0, data: b[id] ?? [:], deleted: b[id] == nil))
+                    expected_version: old.versions[CloudSnapshot.key(entity, id)] ?? 0, data: data, deleted: b[id] == nil))
             }
         }
         guard changes.count <= 100 else { throw CareDataError.invalidInput(L10n.text("Thao tác vượt quá 100 bản ghi. Hãy chia thành các lần lưu nhỏ hơn.")) }
@@ -149,11 +164,16 @@ nonisolated enum CloudMapping {
         for r in live["babies"] ?? [] {
             let babyID = try id(r)
             guard let gender = BabyGender(rawValue: try text(r,"gender")) else { throw CareDataError.corruptData }
-            let profile = try BabyProfile(id: babyID, name: text(r,"name"), birthDate: date(r,"birth_date"), gender: gender, bloodType: text(r,"blood_type"), allergies: text(r,"allergies"), healthNotes: text(r,"health_notes"))
+            let profile = try BabyProfile(id: babyID, name: text(r,"name"), birthDate: date(r,"birth_date"), gender: gender, bloodType: text(r,"blood_type"), allergies: text(r,"allergies"), healthNotes: text(r,"health_notes"),
+                medicalHistory: r["medical_history"]?.text ?? "")
             var baby = BabyData(profile: profile)
             for a in live["care_activities"] ?? [] where try id(a,"baby_id") == babyID {
-                guard let kind = ActivityKind(rawValue: try text(a,"kind")) else { throw CareDataError.corruptData }
-                baby.activities.append(try CareActivity(id: id(a), kind: kind, date: date(a,"occurred_at"), value: text(a,"value"), unit: text(a,"unit"), note: text(a,"note"), detail: text(a,"detail")))
+                // A kind from a newer app version is left out rather than failing the whole family;
+                // the row stays on the server untouched because changes are only sent for loaded rows.
+                guard let kind = ActivityKind(rawValue: try text(a,"kind")) else { continue }
+                let followUp = a["follow_up_at"].flatMap { $0 == .null ? nil : $0 }
+                baby.activities.append(try CareActivity(id: id(a), kind: kind, date: date(a,"occurred_at"), value: text(a,"value"), unit: text(a,"unit"), note: text(a,"note"), detail: text(a,"detail"),
+                    followUpDate: followUp == nil ? nil : date(a,"follow_up_at")))
             }
             for m in live["body_measurements"] ?? [] where try id(m,"baby_id") == babyID {
                 baby.measurements.append(try BodyMeasurement(id: id(m), date: date(m,"measured_at"), weight: m["weight"]?.number, height: m["height"]?.number, headCircumference: m["head_circumference"]?.number, method: text(m,"method"), notes: text(m,"notes")))

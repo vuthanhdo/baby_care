@@ -44,7 +44,7 @@ actor SwiftDataCareDataProvider: CareDataProvider {
 
     private func preparedContext() throws -> ModelContext {
         if container == nil {
-            let schema = Schema(versionedSchema: BabyCareSchemaV2.self)
+            let schema = Schema(versionedSchema: BabyCareSchemaV3.self)
             let modelConfiguration: ModelConfiguration
             if configuration.inMemory {
                 modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true, cloudKitDatabase: .none)
@@ -90,8 +90,18 @@ actor SwiftDataCareDataProvider: CareDataProvider {
         var babies = try entities.map { try $0.value() }
         let vaccinations = try context.fetch(FetchDescriptor<VaccinationEntity>())
         guard vaccinations.allSatisfy({ v in babies.contains { $0.profile.id == v.babyID } }) else { throw CareDataError.corruptData }
+        let details = try context.fetch(FetchDescriptor<BabyDetailsEntity>())
+        let followUps = try context.fetch(FetchDescriptor<ActivityFollowUpEntity>())
+        guard details.allSatisfy({ d in babies.contains { $0.profile.id == d.babyID } }),
+              followUps.allSatisfy({ f in babies.contains { $0.profile.id == f.babyID } }) else { throw CareDataError.corruptData }
         for index in babies.indices {
-            babies[index].vaccinations = vaccinations.filter { $0.babyID == babies[index].profile.id }.map { $0.value() }.sorted { $0.date > $1.date }
+            let babyID = babies[index].profile.id
+            babies[index].vaccinations = vaccinations.filter { $0.babyID == babyID }.map { $0.value() }.sorted { $0.date > $1.date }
+            babies[index].profile.medicalHistory = details.first { $0.babyID == babyID }?.medicalHistory ?? ""
+            for follow in followUps where follow.babyID == babyID {
+                guard let activity = babies[index].activities.firstIndex(where: { $0.id == follow.activityID }) else { throw CareDataError.corruptData }
+                babies[index].activities[activity].followUpDate = follow.date
+            }
         }
         guard metadata.selectedBabyID == nil || babies.contains(where: { $0.profile.id == metadata.selectedBabyID }) else { throw CareDataError.corruptData }
         return CareDatabase(babies: babies, selectedBabyID: metadata.selectedBabyID, hasOnboarded: metadata.hasOnboarded)
@@ -112,6 +122,7 @@ actor SwiftDataCareDataProvider: CareDataProvider {
                 } else { context.insert(VaccinationEntity(value: record, babyID: baby.profile.id)) }
             }
         }
+        try writeDetails(database, in: context)
         let existing = try context.fetch(FetchDescriptor<BabyEntity>())
         let wantedBabyIDs = Set(database.babies.map(\.profile.id))
         for saved in existing where !wantedBabyIDs.contains(saved.id) { context.delete(saved) }
@@ -139,6 +150,31 @@ actor SwiftDataCareDataProvider: CareDataProvider {
                 if let saved = reminders.first(where: { $0.id == entry.id }) { saved.update(entry); saved.sortOrder = index }
                 else { context.insert(ReminderEntity(value: entry, baby: entity, sortOrder: index)) }
             }
+        }
+    }
+
+    /// Side-table rows follow the records they extend: removed records and emptied fields delete their row.
+    private func writeDetails(_ database: CareDatabase, in context: ModelContext) throws {
+        let details = try context.fetch(FetchDescriptor<BabyDetailsEntity>())
+        let wantedDetails = Dictionary(uniqueKeysWithValues: database.babies.compactMap { baby in
+            baby.profile.medicalHistory.isEmpty ? nil : (baby.profile.id, baby.profile.medicalHistory)
+        })
+        for saved in details where wantedDetails[saved.babyID] == nil { context.delete(saved) }
+        for (babyID, history) in wantedDetails {
+            if let saved = details.first(where: { $0.babyID == babyID }) { saved.medicalHistory = history }
+            else { context.insert(BabyDetailsEntity(babyID: babyID, medicalHistory: history)) }
+        }
+        let followUps = try context.fetch(FetchDescriptor<ActivityFollowUpEntity>())
+        var wantedFollowUps: [UUID: (babyID: UUID, date: Date)] = [:]
+        for baby in database.babies {
+            for activity in baby.activities { if let date = activity.followUpDate { wantedFollowUps[activity.id] = (baby.profile.id, date) } }
+        }
+        for saved in followUps where wantedFollowUps[saved.activityID] == nil { context.delete(saved) }
+        for (activityID, wanted) in wantedFollowUps {
+            if let saved = followUps.first(where: { $0.activityID == activityID }) {
+                guard saved.babyID == wanted.babyID else { throw CareDataError.conflict }
+                saved.date = wanted.date
+            } else { context.insert(ActivityFollowUpEntity(activityID: activityID, babyID: wanted.babyID, date: wanted.date)) }
         }
     }
 }

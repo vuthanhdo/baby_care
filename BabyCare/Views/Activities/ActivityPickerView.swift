@@ -126,12 +126,13 @@ extension ActivityKind {
     var entrySubtitle: String {
         switch self {
         case .temperature: L10n.text("Ghi số đo và vị trí đo")
-        case .medicine: L10n.text("Tên thuốc và lượng đã dùng")
+        case .breathing: L10n.text("Đếm số nhịp thở trong 1 phút")
+        case .medicine: L10n.text("Tên hoặc ảnh thuốc, lượng dùng")
         case .symptom: L10n.text("Ghi biểu hiện của bé")
         case .doctor: L10n.text("Lý do khám và lời dặn")
-        case .allergy: L10n.text("Biểu hiện và tác nhân nếu biết")
+        case .allergy: L10n.text("Tác nhân, mức độ và độ chắc chắn")
         case .milk: L10n.text("Bú mẹ, sữa vắt hoặc sữa công thức")
-        case .meal: L10n.text("Món ăn và lượng bé đã ăn")
+        case .meal: L10n.text("Thực phẩm và số lượng nếu muốn")
         case .water: L10n.text("Lượng nước bé đã uống")
         case .sleep: L10n.text("Giờ bắt đầu và kết thúc")
         case .bath: L10n.text("Ghi nhanh lần tắm cho bé")

@@ -108,15 +108,16 @@ private nonisolated struct ShowcaseBuilder {
         let birth = months(-11, after: now, days: -12)
         floor = birth
         var profile = BabyProfile(name: "Bé An", birthDate: birth, gender: .girl, bloodType: "O",
-                                  allergies: "Nổi mẩn nhẹ sau khi ăn trứng (tạm ngưng trứng 2 tuần)",
-                                  healthNotes: "Ngủ đêm từ 20:30, thích nghe nhạc ru. Vitamin D3 mỗi sáng sau cữ bú đầu.")
+                                  allergies: "Trứng gà · Nhẹ · Nghi ngờ",
+                                  healthNotes: "Ngủ đêm từ 20:30, thích nghe nhạc ru. Vitamin D3 mỗi sáng sau cữ bú đầu.",
+                                  medicalHistory: "Sinh đủ tháng (39 tuần), 3,2 kg. Viêm tiểu phế quản lúc 6 tháng, điều trị ngoại trú.")
         profile.avatarData = CarePreviewImages.avatar(emoji: "👧", hue: 0.93)
         var baby = BabyData(profile: profile)
 
         var list = routineAn(days: 30, illnessDays: 3)
         list += episodeAn()
-        add(CareActivity(kind: .allergy, date: at(20, 12, 30), value: "Nổi mẩn đỏ quanh miệng sau khi ăn trứng",
-                         note: "Hết sau 2 giờ, không khó thở. Tạm ngưng trứng 2 tuần rồi thử lại."), to: &list)
+        add(CareActivity(kind: .allergy, date: at(20, 12, 30), value: "Trứng gà · Nhẹ · Nghi ngờ",
+                         note: "Nổi mẩn đỏ quanh miệng sau khi ăn trứng. Hết sau 2 giờ, không khó thở. Tạm ngưng trứng 2 tuần rồi thử lại."), to: &list)
         add(CareActivity(kind: .doctor, date: at(26, 9, 0), value: "Khám định kỳ 10 tháng",
                          note: "Phát triển tốt, bắt đầu tập đứng. Dặn bổ sung thêm bữa phụ."), to: &list)
         baby.activities = list
@@ -183,7 +184,7 @@ private nonisolated struct ShowcaseBuilder {
                                  note: sick && amount < 100 ? "Bú ít hơn thường ngày" : "",
                                  detail: pick(["Sữa công thức", "Bú mẹ", "Sữa mẹ vắt"])), to: &list)
             }
-            add(CareActivity(kind: .meal, date: jitter(at(d, 8, 30), minutes: 15), value: pick(meals), note: sick ? "Ăn được nửa bát" : ""), to: &list)
+            add(CareActivity(kind: .meal, date: jitter(at(d, 8, 30), minutes: 15), value: pick(meals), unit: sick ? "1/2 bát" : "1 bát"), to: &list)
             add(CareActivity(kind: .meal, date: jitter(at(d, 15, 30), minutes: 15), value: pick(snacks)), to: &list)
             add(CareActivity(kind: .water, date: jitter(at(d, 11, 0), minutes: 30), value: "\(int(30...60))", unit: "ml"), to: &list)
             add(CareActivity(kind: .sleep, date: jitter(at(d, 9, 30), minutes: 20), value: "\(int(60...90))", unit: "phút"), to: &list)
@@ -206,8 +207,8 @@ private nonisolated struct ShowcaseBuilder {
     func episodeAn() -> [CareActivity] {
         var list: [CareActivity] = []
         let readings: [(hours: Double, value: String, site: String)] = [
-            (52, "37,9", "Nách"), (48, "38,4", "Nách"), (44, "38,1", "Tai"), (40, "38,6", "Nách"), (34, "37,8", "Trán"),
-            (29, "38,2", "Nách"), (24, "38,5", "Nách"), (19.5, "37,9", "Tai"), (14, "37,6", "Nách"), (8, "37,5", "Nách"), (2.5, "37,3", "Nách")
+            (52, "37,9", "Nách · Điện tử"), (48, "38,4", "Nách · Điện tử"), (44, "38,1", "Tai"), (40, "38,6", "Nách · Điện tử"), (34, "37,8", "Trán"),
+            (29, "38,2", "Nách · Điện tử"), (24, "38,5", "Nách · Điện tử"), (19.5, "37,9", "Tai"), (14, "37,6", "Nách · Điện tử"), (8, "37,5", "Nách · Điện tử"), (2.5, "37,3", "Nách · Điện tử")
         ]
         for reading in readings {
             add(CareActivity(kind: .temperature, date: hoursAgo(reading.hours), value: reading.value, unit: "°C",
@@ -219,12 +220,16 @@ private nonisolated struct ShowcaseBuilder {
         for hours in [37.0, 27.0, 13.0] {
             add(CareActivity(kind: .medicine, date: hoursAgo(hours), value: "2,5", unit: "ml", detail: "Siro ho Prospan"), to: &list)
         }
-        add(CareActivity(kind: .symptom, date: hoursAgo(51), value: "Sổ mũi, Ho", note: "Ho nhẹ, chảy mũi trong"), to: &list)
-        add(CareActivity(kind: .symptom, date: hoursAgo(38), value: "Ho, Mệt", note: "Ho nhiều hơn về đêm, bỏ chơi"), to: &list)
-        add(CareActivity(kind: .symptom, date: hoursAgo(12), value: "Ho", note: "Đỡ hơn, còn ho khi ngủ"), to: &list)
-        add(CareActivity(kind: .doctor, date: hoursAgo(36), value: "Khám viêm họng cấp",
-                         note: "BS Lan – Phòng khám Nhi Đức Tâm. Paracetamol 5 ml khi sốt ≥ 38,5°C, cách tối thiểu 4–6 giờ; siro ho 2,5 ml × 2 lần/ngày. Tái khám nếu sốt quá 3 ngày.",
-                         attachments: [CarePreviewImages.photo("Đơn thuốc", emoji: "💊", hue: 0.55)].compactMap { $0 }), to: &list)
+        add(CareActivity(kind: .symptom, date: hoursAgo(51), value: "Sốt (dưới 24 giờ), Ho (khan), Sổ mũi (nước trong)", note: "Ho nhẹ, chảy mũi trong"), to: &list)
+        add(CareActivity(kind: .symptom, date: hoursAgo(38), value: "Sốt (1–2 ngày), Ho (có đờm), Mệt (quấy khóc)", note: "Ho nhiều hơn về đêm, bỏ chơi"), to: &list)
+        add(CareActivity(kind: .symptom, date: hoursAgo(12), value: "Ho (có đờm)", note: "Đỡ hơn, còn ho khi ngủ"), to: &list)
+        for (hours, rate) in [(39.5, "46"), (25.5, "42"), (13.5, "36")] {
+            add(CareActivity(kind: .breathing, date: hoursAgo(hours), value: rate, unit: "lần/phút", detail: "Lúc ngủ"), to: &list)
+        }
+        add(CareActivity(kind: .doctor, date: hoursAgo(36), value: "Sốt cao, ho về đêm", unit: "Viêm họng cấp", note: "BS Lan – Phòng khám Nhi Đức Tâm",
+                         detail: "Paracetamol 5 ml khi sốt ≥ 38,5°C, cách tối thiểu 4–6 giờ; siro ho 2,5 ml × 2 lần/ngày. Tái khám sớm nếu sốt quá 3 ngày.",
+                         attachments: [CarePreviewImages.photo("Đơn thuốc", emoji: "💊", hue: 0.55)].compactMap { $0 },
+                         followUpDate: calendar.date(byAdding: .hour, value: 9, to: calendar.startOfDay(for: hoursAgo(-80)))), to: &list)
         return list
     }
 
@@ -234,7 +239,8 @@ private nonisolated struct ShowcaseBuilder {
         let birth = months(-38, after: now, days: -5)
         floor = birth
         var profile = BabyProfile(name: "Bé Minh", birthDate: birth, gender: .boy, bloodType: "A",
-                                  healthNotes: "Đi học mẫu giáo cả ngày, ngủ trưa 12:30. Hay quên uống nước – nhắc 3 lần/ngày.")
+                                  healthNotes: "Đi học mẫu giáo cả ngày, ngủ trưa 12:30. Hay quên uống nước – nhắc 3 lần/ngày.",
+                                  medicalHistory: "Sốt xuất huyết lúc 2 tuổi, nằm viện 5 ngày. Đã mổ thoát vị bẹn lúc 18 tháng.")
         profile.avatarData = CarePreviewImages.avatar(emoji: "👦", hue: 0.58)
         var baby = BabyData(profile: profile)
 

@@ -13,12 +13,13 @@ struct OnboardingView: View {
     @State private var name = ""
     @State private var birthDate = Date()
     @State private var gender: BabyGender = .unspecified
+    @State private var medicalHistory = ""
     @State private var confirmDiscard = false
     @State private var photo: PhotosPickerItem?
     @State private var avatarData: Data?
     @State private var photoError: String?
     @State private var photoLoadID: UUID?
-    private var hasDraft: Bool { !validName.isEmpty || avatarData != nil || photo != nil }
+    private var hasDraft: Bool { !validName.isEmpty || avatarData != nil || photo != nil || !medicalHistory.isEmpty }
 
 
     private var validName: String { name.trimmingCharacters(in: .whitespacesAndNewlines) }
@@ -110,6 +111,18 @@ struct OnboardingView: View {
                         genderButton(.unspecified, title: L10n.text("Để sau"))
                     }
                 }
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Text(L10n.text("Tiền sử bệnh lý")).font(CareFont.callout.weight(.semibold))
+                        Spacer()
+                        Text(L10n.text("Tùy chọn")).font(CareFont.caption2).foregroundStyle(CareTheme.secondary)
+                    }
+                    TextField(L10n.text("Ví dụ: sinh non 35 tuần, từng nằm viện vì viêm phổi"), text: $medicalHistory, axis: .vertical)
+                        .lineLimit(2...5).textFieldStyle(EntryInputStyle(shaded: true))
+                        .accessibilityIdentifier("medicalHistoryField")
+                    Text(L10n.text("Bệnh đã mắc, phẫu thuật, nằm viện hoặc bệnh mạn tính. Có thể sửa sau trong Hồ sơ bé."))
+                        .font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
+                }
             }
 
             Group {
@@ -200,7 +213,8 @@ struct OnboardingView: View {
 
     private func createProfile() {
         guard photoLoadID == nil, !viewModel.state.isSaving else { return }
-        let baby = BabyProfile(id: profileID, name: validName, birthDate: Calendar.current.startOfDay(for: birthDate), gender: gender, avatarData: avatarData)
+        let baby = BabyProfile(id: profileID, name: validName, birthDate: Calendar.current.startOfDay(for: birthDate), gender: gender,
+            medicalHistory: medicalHistory.trimmingCharacters(in: .whitespacesAndNewlines), avatarData: avatarData)
         Task {
             guard await viewModel.send(.commit(.createBaby(baby), message: L10n.text("Đã tạo hồ sơ bé {0}", "\(validName)"))) else { return }
             if isAddingBaby { dismiss() }

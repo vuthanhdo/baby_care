@@ -32,6 +32,9 @@ struct QuickLogView: View {
                 if let nextReminder = viewModel.medicationReminders.filter({ $0.enabled }).min(by: { $0.nextDate < $1.nextDate }) {
                     upcomingReminder(nextReminder)
                 }
+                if let visit = DoctorFollowUp.upcoming(in: viewModel.activities), let appointment = visit.followUpDate {
+                    followUpCard(visit, appointment: appointment)
+                }
                 if let sleepStart = viewModel.sleepStartDate { sleepCard(start: sleepStart) }
                 todaySummary
                 if habitSuggestions && lastMilk != nil { suggestions }
@@ -198,6 +201,24 @@ struct QuickLogView: View {
         }.buttonStyle(.plain).accessibilityIdentifier("illness.open").padding(12).foregroundStyle(CareTheme.medical)
             .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(CareTheme.medical))
     }
+    private func followUpCard(_ visit: CareActivity, appointment: Date) -> some View {
+        NavigationLink { ActivityDetailView(activity: visit) } label: {
+            CareCard {
+                HStack(spacing: 12) {
+                    CareIcon(name: "Stitch_local_hospital", color: CareTheme.accent)
+                        .frame(width: 44, height: 44).background(CareTheme.accent.opacity(0.1), in: .rect(cornerRadius: 12))
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(L10n.text("Lịch khám lại")).font(CareFont.headline)
+                        Text(appointment, format: .dateTime.weekday(.wide).day().month(.wide).hour().minute())
+                            .font(CareFont.subheadline.weight(.semibold)).foregroundStyle(CareTheme.accent)
+                        Text(visit.formattedValue).font(CareFont.caption).foregroundStyle(CareTheme.secondary).lineLimit(2)
+                    }
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right").font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                }
+            }
+        }.buttonStyle(.plain).foregroundStyle(CareTheme.text).accessibilityIdentifier("followUp.card")
+    }
     private func sleepCard(start: Date) -> some View {
         CareCard {
             HStack(spacing: 14) {
@@ -236,7 +257,11 @@ struct QuickLogView: View {
                                 summary.breastfeedMinutes.map { L10n.text("{0} phút bú mẹ", InsightData.format($0)) }].compactMap { $0 }.joined(separator: " · "))
                     summaryTile(icon: "Stitch_bedtime", color: CareTheme.routine,
                         value: summary.sleepHours.map { L10n.count(InsightData.format($0), one: "1 giờ", many: "{0} giờ") },
-                        label: summary.sleepCount == 0 ? L10n.text("Ngủ") : L10n.count(summary.sleepCount, one: "Ngủ · 1 giấc", many: "Ngủ · {0} giấc"))
+                        label: [summary.sleepCount == 0 ? L10n.text("Ngủ") : L10n.count(summary.sleepCount, one: "Ngủ · 1 giấc", many: "Ngủ · {0} giấc"),
+                                SleepRecommendation.band(birthDate: viewModel.baby.birthDate).map {
+                                    // Word joiners keep "12–16" on one line in the narrow tile.
+                                    L10n.text("Nên ngủ {0} giờ", "\($0.hours.lowerBound)\u{2060}–\u{2060}\($0.hours.upperBound)") }]
+                            .compactMap { $0 }.joined(separator: "\n"))
                     summaryTile(icon: "Stitch_baby_changing_station", color: CareTheme.routine,
                         value: summary.diaperCount > 0 ? L10n.count(summary.diaperCount, one: "1 lần", many: "{0} lần") : nil,
                         label: summary.lastDiaper.map { L10n.text("Tã · Gần nhất {0}", $0.careFormatted(date: .omitted, time: .shortened)) } ?? L10n.text("Tã"))
@@ -260,7 +285,7 @@ struct QuickLogView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(value ?? "—").font(CareFont.headline).foregroundStyle(CareTheme.text).monospacedDigit()
                     .accessibilityLabel(value ?? L10n.text("Chưa ghi nhận"))
-                Text(label).font(CareFont.caption).foregroundStyle(CareTheme.secondary).lineLimit(2)
+                Text(label).font(CareFont.caption).foregroundStyle(CareTheme.secondary).lineLimit(3)
             }
             Spacer(minLength: 0)
         }.accessibilityElement(children: .combine)
@@ -295,6 +320,11 @@ struct QuickLogView: View {
                         CarePrimaryButton(title: L10n.text("Bắt đầu ngủ"), color: CareTheme.routine, icon: "Stitch_play_arrow") {
                             Task { await viewModel.send(.commit(.startSleep(babyID: viewModel.baby.id, date: Date()))) }
                         }.tint(CareTheme.routine)
+                        // Parents often log a nap only after the baby wakes up.
+                        NavigationLink { ActivityFormView(kind: .sleep) } label: {
+                            Text(L10n.text("Bé đã ngủ dậy? Ghi giấc vừa ngủ")).font(CareFont.subheadline.weight(.semibold))
+                                .frame(maxWidth: .infinity, minHeight: 44)
+                        }.foregroundStyle(CareTheme.routine).accessibilityIdentifier("sleep.logPast")
                     }
                 }
             }

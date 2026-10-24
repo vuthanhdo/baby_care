@@ -135,7 +135,10 @@ final class StitchAppearanceTests: XCTestCase {
         app.buttons["Sửa hoạt động"].tap()
         XCTAssertTrue(app.textFields["temperatureField"].waitForExistence(timeout: 5))
         capture(app, "Stitch — Form nhiệt độ")
-        app.buttons["Chọn thời điểm đo"].tap()
+        // The site, thermometer and reference rows push the time field below the save button.
+        let timeField = app.buttons["Chọn thời điểm đo"]
+        app.reveal(timeField)
+        timeField.tap()
         XCTAssertTrue(app.buttons["Áp dụng"].waitForExistence(timeout: 5))
         capture(app, "Stitch — Chọn ngày giờ")
         app.buttons["Hủy"].firstMatch.tap()

@@ -47,13 +47,32 @@ struct ActivityDetailContent: View {
                         CareBadge(title: L10n.text("Đã ghi"))
                     }
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(current.kind == .temperature ? L10n.text("NHIỆT ĐỘ CƠ THỂ") : L10n.text("NỘI DUNG GHI NHẬN"))
+                        Text(current.kind == .temperature ? L10n.text("NHIỆT ĐỘ CƠ THỂ") : current.kind == .breathing ? L10n.text("NHỊP THỞ") : L10n.text("NỘI DUNG GHI NHẬN"))
                             .font(CareFont.caption).foregroundStyle(CareTheme.secondary)
-                        Text(current.formattedValue).font(CareFont.largeTitle.bold()).foregroundStyle(current.kind.group.color)
+                        Text(current.kind == .doctor ? current.value : current.formattedValue).font(CareFont.largeTitle.bold()).foregroundStyle(current.kind.group.color)
                     }.padding(14).frame(maxWidth: .infinity, alignment: .leading)
                         .background(current.kind.group.background.opacity(0.6), in: .rect(cornerRadius: 14))
                     LabeledContent(L10n.text("Đối tượng"), value: "\(viewModel.baby.name) · \(viewModel.baby.ageDescription)").font(CareFont.subheadline)
-                    if !current.detail.isEmpty { LabeledContent(L10n.text("Thông tin thêm"), value: current.displayDetail).font(CareFont.subheadline) }
+                    if !DoctorVisit.diagnosis(current).isEmpty {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(L10n.text("Chẩn đoán của bác sĩ")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                            Text(DoctorVisit.diagnosis(current)).font(CareFont.subheadline.weight(.semibold))
+                        }
+                    }
+                    if !current.detail.isEmpty {
+                        if current.kind == .doctor {
+                            // Advice is usually several sentences; it reads better under its label than squeezed beside it.
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(L10n.text("Lời dặn của bác sĩ")).font(CareFont.caption).foregroundStyle(CareTheme.secondary)
+                                Text(current.detail).font(CareFont.subheadline)
+                            }
+                        } else {
+                            LabeledContent(L10n.text("Thông tin thêm"), value: current.displayDetail).font(CareFont.subheadline)
+                        }
+                    }
+                    if let followUp = current.followUpDate {
+                        LabeledContent(L10n.text("Lịch khám lại"), value: followUp.careFormatted(date: .abbreviated, time: .shortened)).font(CareFont.subheadline)
+                    }
                 }
             }
             CareCard {
@@ -109,8 +128,10 @@ struct ActivityDetailContent: View {
     }
 
     private var repeatedEntry: CareActivity {
-        CareActivity(kind: current.kind, value: current.kind == .temperature ? "" : current.value,
-            unit: current.unit, detail: current.detail)
+        // A repeated sleep keeps its length and ends now, so it never starts out in the future.
+        let minutes = current.kind == .sleep && current.detail != CareActivity.recordedSleepDetail ? current.numericValue : nil
+        return CareActivity(kind: current.kind, date: Date().addingTimeInterval(-(minutes ?? 0) * 60),
+            value: [.temperature, .breathing].contains(current.kind) ? "" : current.value, unit: current.unit, detail: current.detail)
     }
 }
 #Preview { NavigationStack { ActivityDetailView(activity: BabyCareViewModel.preview().activities[0]) }.environment(BabyCareViewModel.preview()) }

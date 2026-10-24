@@ -173,14 +173,20 @@ nonisolated enum CareValidation {
     }
     static func profile(_ profile: BabyProfile) throws {
         guard !profile.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, profile.birthDate <= Date() else { throw CareDataError.invalidInput(L10n.text("Nhập tên và ngày sinh hợp lệ.")) }
+        guard profile.medicalHistory.count <= 4000 else { throw CareDataError.invalidInput(L10n.text("Tiền sử bệnh tối đa 4000 ký tự.")) }
     }
     static func activity(_ entry: CareActivity) throws {
         guard entry.date <= Date(), !entry.value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { throw CareDataError.invalidInput(L10n.text("Nhập nội dung và thời điểm hợp lệ.")) }
-        if [.temperature, .medicine, .milk, .water, .sleep].contains(entry.kind) {
+        if ActivityKind.numericKinds.contains(entry.kind) {
             guard let value = number(entry.value), value > 0, !entry.unit.isEmpty else { throw CareDataError.invalidInput(L10n.text("Nhập số dương và đơn vị để lưu.")) }
+            if entry.kind == .breathing && value > BreathingReference.maximum { throw CareDataError.invalidInput(L10n.text("Nhịp thở phải từ 1 đến 150 lần/phút.")) }
             if entry.kind == .sleep && entry.detail != CareActivity.recordedSleepDetail && entry.date.addingTimeInterval(value * 60) > Date().addingTimeInterval(60) { throw CareDataError.invalidInput(L10n.text("Giấc ngủ không được kết thúc trong tương lai.")) }
         }
-        if entry.kind == .medicine && entry.detail.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { throw CareDataError.invalidInput(L10n.text("Nhập tên thuốc đã dùng.")) }
+        // A photo of the box or bottle can stand in for the medicine's name.
+        if entry.kind == .medicine && entry.detail.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && entry.attachments.isEmpty { throw CareDataError.invalidInput(L10n.text("Nhập tên thuốc hoặc thêm ảnh thuốc.")) }
+        if let followUp = entry.followUpDate, entry.kind != .doctor || followUp <= entry.date {
+            throw CareDataError.invalidInput(L10n.text("Lịch khám lại phải sau ngày khám."))
+        }
         guard entry.attachments.count <= 3 else { throw CareDataError.invalidInput(L10n.text("Mỗi hoạt động tối đa 3 ảnh.")) }
     }
     static func measurement(_ entry: BodyMeasurement, birthDate: Date) throws {

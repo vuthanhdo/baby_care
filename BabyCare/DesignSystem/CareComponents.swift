@@ -228,3 +228,28 @@ struct CareAsyncButton: View {
         .accessibilityValue(isLoading ? L10n.text("Đang xử lý") : "")
     }
 }
+
+/// One choice out of a few, shown as capsules that wrap; tapping the selected capsule again clears it when `clearable`.
+struct CareChoiceChips: View {
+    let options: [String]
+    @Binding var selection: String
+    var clearable = true
+    var color = CareTheme.accent
+    var title: (String) -> String = { L10n.text($0) }
+    @Environment(\.locale) private var appLocale
+    var body: some View {
+        let _ = appLocale
+        CareWrapLayout(spacing: 8) {
+            ForEach(options, id: \.self) { option in
+                let selected = selection == option
+                Button { selection = selected && clearable ? "" : option } label: {
+                    Text(title(option)).font(CareFont.footnote.weight(.semibold))
+                        .padding(.horizontal, 14).frame(minHeight: 44)
+                        .foregroundStyle(selected ? color : CareTheme.secondary)
+                        .background(selected ? color.opacity(0.1) : CareTheme.background, in: .capsule)
+                        .overlay(Capsule().strokeBorder(selected ? color : CareTheme.border))
+                }.buttonStyle(.plain).accessibilityAddTraits(selected ? .isSelected : [])
+            }
+        }
+    }
+}

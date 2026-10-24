@@ -9,8 +9,11 @@ enum BabyCareSchemaV1: VersionedSchema {
 }
 
 enum BabyCareSchemaMigrationPlan: SchemaMigrationPlan {
-    static var schemas: [any VersionedSchema.Type] { [BabyCareSchemaV1.self, BabyCareSchemaV2.self] }
-    static var stages: [MigrationStage] { [.lightweight(fromVersion: BabyCareSchemaV1.self, toVersion: BabyCareSchemaV2.self)] }
+    static var schemas: [any VersionedSchema.Type] { [BabyCareSchemaV1.self, BabyCareSchemaV2.self, BabyCareSchemaV3.self] }
+    static var stages: [MigrationStage] {
+        [.lightweight(fromVersion: BabyCareSchemaV1.self, toVersion: BabyCareSchemaV2.self),
+         .lightweight(fromVersion: BabyCareSchemaV2.self, toVersion: BabyCareSchemaV3.self)]
+    }
 }
 
 @Model
@@ -235,5 +238,36 @@ nonisolated final class VaccinationEntity {
     func value() -> VaccinationRecord {
         VaccinationRecord(id: id, vaccineName: vaccineName, date: date, doseNumber: doseNumber,
             nextDoseDate: nextDoseDate, clinic: clinic, notes: notes, reminderEnabled: reminderEnabled, reminderDate: reminderDate)
+    }
+}
+
+// V1 and V2 entities stay unchanged, so their stores keep matching those schema versions. Fields added in 1.1
+// live in side tables keyed by the record they extend, the same way vaccinations are owned by babyID.
+enum BabyCareSchemaV3: VersionedSchema {
+    static var versionIdentifier: Schema.Version { Schema.Version(3, 0, 0) }
+    static var models: [any PersistentModel.Type] { BabyCareSchemaV2.models + [BabyDetailsEntity.self, ActivityFollowUpEntity.self] }
+}
+
+/// Profile fields added after V2; a row exists only when one of them is filled in.
+@Model
+nonisolated final class BabyDetailsEntity {
+    @Attribute(.unique) var babyID: UUID
+    var medicalHistory: String
+    init(babyID: UUID, medicalHistory: String) {
+        self.babyID = babyID
+        self.medicalHistory = medicalHistory
+    }
+}
+
+/// The follow-up appointment of a doctor visit.
+@Model
+nonisolated final class ActivityFollowUpEntity {
+    @Attribute(.unique) var activityID: UUID
+    var babyID: UUID
+    var date: Date
+    init(activityID: UUID, babyID: UUID, date: Date) {
+        self.activityID = activityID
+        self.babyID = babyID
+        self.date = date
     }
 }

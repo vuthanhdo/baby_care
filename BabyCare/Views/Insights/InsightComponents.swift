@@ -171,7 +171,7 @@ struct SymptomChips: View {
         let _ = appLocale
         CareWrapLayout(spacing: 6) {
             ForEach(names, id: \.self) { name in
-                Text(L10n.text(name)).font(CareFont.caption.weight(.medium)).foregroundStyle(CareTheme.medical)
+                Text(SymptomChoice(token: name).displayName).font(CareFont.caption.weight(.medium)).foregroundStyle(CareTheme.medical)
                     .padding(.horizontal, 9).padding(.vertical, 4).background(CareTheme.medicalBackground, in: Capsule())
             }
         }.accessibilityElement(children: .combine)
@@ -236,7 +236,7 @@ struct InsightActivityRow: View {
                 .padding(9).background(activity.kind.group.background, in: Circle())
             VStack(alignment: .leading, spacing: 4) {
                 Text(activity.kind.title).font(CareFont.subheadline.weight(.semibold))
-                Text([activity.detail, [activity.value, activity.unit].filter { !$0.isEmpty }.joined(separator: " ")].filter { !$0.isEmpty }.joined(separator: " · "))
+                Text([activity.displayDetail, activity.formattedValue].filter { !$0.isEmpty }.joined(separator: " · "))
                     .font(CareFont.caption).foregroundStyle(CareTheme.secondary)
             }
             Spacer(minLength: 4)

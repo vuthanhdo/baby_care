@@ -1,2 +1,3 @@
 "NSMicrophoneUsageDescription" = "Bé Khỏe dùng micrô khi bạn bấm ghi âm để nhập hoạt động chăm sóc bé bằng giọng nói.";
 "NSSpeechRecognitionUsageDescription" = "Bé Khỏe chuyển lời nói tiếng Việt thành nội dung hoạt động. Âm thanh có thể được gửi tới Apple để nhận dạng.";
+"NSCameraUsageDescription" = "Bé Khỏe dùng camera khi bạn bấm Chụp ảnh để lưu ảnh hộp hoặc chai thuốc của bé.";

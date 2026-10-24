@@ -35,8 +35,9 @@ struct ReportPreviewView: View {
                         CareCard {
                             VStack(alignment: .leading, spacing: 10) {
                                 CareSectionTitle(title: L10n.text("Lưu ý sức khỏe"))
+                                Text(L10n.text("Tiền sử bệnh: {0}", "\(snapshot.baby.medicalHistory.isEmpty ? L10n.text("Chưa cung cấp") : snapshot.baby.medicalHistory)")).font(CareFont.subheadline)
                                 Text(snapshot.baby.healthNotes.isEmpty ? L10n.text("Chưa cung cấp lưu ý sức khỏe") : snapshot.baby.healthNotes).font(CareFont.subheadline)
-                                Text(L10n.text("Dị ứng: {0}", "\(snapshot.baby.allergies.isEmpty ? L10n.text("Chưa cung cấp") : snapshot.baby.allergies)")).font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
+                                Text(L10n.text("Dị ứng: {0}", "\(snapshot.baby.allergies.isEmpty ? L10n.text("Chưa cung cấp") : AllergyNote.display(snapshot.baby.allergies, separator: "; "))")).font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
                             }
                         }
                     }

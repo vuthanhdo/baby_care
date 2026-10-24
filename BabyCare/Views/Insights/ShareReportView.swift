@@ -54,7 +54,8 @@ struct CareReportSnapshot: Identifiable {
             if includeBirthDate { lines += [L10n.text("Ngày sinh: {0} · {1}", "\(baby.birthDate.careFormatted(date: .abbreviated, time: .omitted))", "\(baby.gender.title)")] }
         }
         if includeHealthNotes {
-            lines += [L10n.text("Lưu ý sức khỏe: {0}", "\(baby.healthNotes.isEmpty ? L10n.text("Chưa cung cấp") : baby.healthNotes)"), L10n.text("Thông tin dị ứng: {0}", "\(baby.allergies.isEmpty ? L10n.text("Chưa cung cấp") : baby.allergies)")]
+            lines += [L10n.text("Tiền sử bệnh: {0}", "\(baby.medicalHistory.isEmpty ? L10n.text("Chưa cung cấp") : baby.medicalHistory)"),
+                      L10n.text("Lưu ý sức khỏe: {0}", "\(baby.healthNotes.isEmpty ? L10n.text("Chưa cung cấp") : baby.healthNotes)"), L10n.text("Thông tin dị ứng: {0}", "\(baby.allergies.isEmpty ? L10n.text("Chưa cung cấp") : AllergyNote.display(baby.allergies, separator: "; "))")]
         }
         if !illnessTitle.isEmpty { lines += [L10n.text("Đợt theo dõi: {0}", "\(illnessTitle)")] }
         for section in ReportSection.allCases where sections.contains(section) {
@@ -69,7 +70,8 @@ struct CareReportSnapshot: Identifiable {
                 let items = activities.filter { $0.kind.group == section.group }
                 if items.isEmpty { lines += [L10n.text("Chưa có ghi nhận trong khoảng này")] }
                 for item in items {
-                    lines += ["\(item.date.careFormatted(date: .abbreviated, time: .shortened)) · \(item.kind.title)", [item.displayDetail, item.formattedValue, item.note].filter { !$0.isEmpty }.joined(separator: " · ")]
+                    lines += ["\(item.date.careFormatted(date: .abbreviated, time: .shortened)) · \(item.kind.title)", [item.displayDetail, item.formattedValue, item.note,
+                        item.followUpDate.map { L10n.text("Khám lại {0}", $0.careFormatted(date: .abbreviated, time: .shortened)) } ?? ""].filter { !$0.isEmpty }.joined(separator: " · ")]
                 }
             }
         }

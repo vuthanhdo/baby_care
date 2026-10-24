@@ -85,10 +85,17 @@ struct BabyProfileView: View {
                 Button { editingHealth = true } label: {
                     VStack(alignment: .leading, spacing: 12) {
                         profileRow(L10n.text("Dị ứng & Phản ứng thuốc"), icon: "Stitch_healing", color: CareTheme.medical)
-                        Text(viewModel.baby.allergies.isEmpty ? L10n.text("Chưa cung cấp thông tin dị ứng") : viewModel.baby.allergies)
+                        Text(viewModel.baby.allergies.isEmpty ? L10n.text("Chưa cung cấp thông tin dị ứng") : AllergyNote.display(viewModel.baby.allergies))
                             .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
                     }.padding(.vertical, 6)
                 }.buttonStyle(.plain)
+                Button { editingHealth = true } label: {
+                    VStack(alignment: .leading, spacing: 12) {
+                        profileRow(L10n.text("Tiền sử bệnh lý"), icon: "Stitch_clinical_notes", color: CareTheme.medical)
+                        Text(viewModel.baby.medicalHistory.isEmpty ? L10n.text("Chưa cung cấp tiền sử bệnh") : viewModel.baby.medicalHistory)
+                            .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
+                    }.padding(.vertical, 6)
+                }.buttonStyle(.plain).accessibilityIdentifier("profile.medicalHistory")
                 Button { editingHealth = true } label: {
                     VStack(alignment: .leading, spacing: 12) {
                         profileRow(L10n.text("Thói quen & Lưu ý chăm sóc"), icon: "Stitch_bedtime", color: CareTheme.routine)
@@ -259,15 +266,42 @@ private struct ProfileEditorView: View {
 private struct ProfileHealthEditorView: View {
     @Environment(BabyCareViewModel.self) private var viewModel
     @Environment(\.dismiss) private var dismiss
-    @State var profile: BabyProfile
+    @State private var profile: BabyProfile
+    @State private var allergies: [EditableAllergy]
+
+    private struct EditableAllergy: Identifiable {
+        let id = UUID()
+        var note = AllergyNote()
+    }
+
+    init(profile: BabyProfile) {
+        _profile = State(initialValue: profile)
+        _allergies = State(initialValue: AllergyNote.list(profile.allergies).map { EditableAllergy(note: $0) })
+    }
 
     @Environment(\.locale) private var appLocale
     var body: some View {
         let _ = appLocale
         Form {
-            Section(L10n.text("Dị ứng & Phản ứng thuốc")) {
-                TextField(L10n.text("Thông tin gia đình cung cấp"), text: $profile.allergies, axis: .vertical).lineLimit(3...6)
+            Section {
+                ForEach($allergies) { $item in
+                    VStack(alignment: .leading, spacing: 10) {
+                        AllergyNoteFields(note: $item.note)
+                        Button(L10n.text("Xóa dị ứng này"), role: .destructive) { allergies.removeAll { $0.id == item.id } }
+                            .buttonStyle(.borderless).font(CareFont.footnote).foregroundStyle(CareTheme.medical)
+                    }.padding(.vertical, 6)
+                }
+                Button(L10n.text("+ Thêm dị ứng")) { allergies.append(EditableAllergy()) }
+                    .buttonStyle(.borderless).foregroundStyle(CareTheme.accent).accessibilityIdentifier("allergy.add")
+            } header: {
+                Text(L10n.text("Dị ứng & Phản ứng thuốc"))
+            } footer: {
+                Text(L10n.text("Mỗi dị ứng gồm tên chất, mức độ phản ứng và độ chắc chắn."))
             }
+            Section {
+                TextField(L10n.text("Bệnh đã mắc, phẫu thuật, nằm viện hoặc bệnh mạn tính"), text: $profile.medicalHistory, axis: .vertical).lineLimit(3...8)
+                    .accessibilityIdentifier("medicalHistoryField")
+            } header: { Text(L10n.text("Tiền sử bệnh lý")) }
             Section(L10n.text("Thói quen & Lưu ý chăm sóc")) {
                 TextField(L10n.text("Thói quen, lời dặn hoặc thông tin cần lưu ý"), text: $profile.healthNotes, axis: .vertical).lineLimit(4...8)
             }
@@ -281,6 +315,9 @@ private struct ProfileHealthEditorView: View {
             ToolbarItem(placement: .cancellationAction) { Button(L10n.text("Hủy")) { dismiss() } }
             ToolbarItem(placement: .confirmationAction) {
                 CareAsyncButton(L10n.text("Lưu")) {
+                        var profile = profile
+                        profile.allergies = AllergyNote.text(allergies.map(\.note))
+                        profile.medicalHistory = profile.medicalHistory.trimmingCharacters(in: .whitespacesAndNewlines)
                         guard await viewModel.send(.commit(.updateBaby(profile), message: L10n.text("Đã cập nhật lưu ý sức khỏe"))) else { return }
                         dismiss()
                 }.disabled(viewModel.state.isSaving)
