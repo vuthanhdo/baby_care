@@ -1,7 +1,7 @@
 # Nội dung App Store Connect — Bé Khỏe (BabyCare)
 
 App đã tạo trên App Store Connect (id 6824822487) với tên **Bé Khỏe – Baby Care Diary**, ngôn ngữ chính **English (U.K.)**. Mỗi mục dưới đây có bản tiếng Anh (dán vào localization English U.K.) và bản tiếng Việt (dán vào localization Vietnamese, thêm bằng nút English (U.K.) ▾ → Add Localization). Giới hạn ký tự ghi trong ngoặc, tất cả đã kiểm tra.
-Screenshot: `screenshots/iphone-6.3/<en|vi>` cho khung iPhone (medium display), `screenshots/ipad-13/<en|vi>` cho khung iPad 13".
+Screenshot: `screenshots/iphone-6.3/<en|vi>` cho khung iPhone (medium display), `screenshots/ipad-13/<en|vi>` cho khung iPad 13", `screenshots/iphone-duo/<en|vi>` cho iPhone Duo. Từ 1.1 upload bản có tiêu đề trong `screenshots/captioned/…`, sinh bằng `swift Tools/store_captions.swift` từ tiêu đề trong `captions.json` (đổi chữ ở đó rồi chạy lại). Ảnh bị khóa khi bản đang Waiting for Review; keyword và promotional text thì vẫn sửa được. Link chiến dịch cho từng kênh: `CAMPAIGNS.md`.
 
 ## 1. Thông tin chung (không theo ngôn ngữ)
 
@@ -28,11 +28,12 @@ Screenshot: `screenshots/iphone-6.3/<en|vi>` cho khung iPhone (medium display), 
 
 **Subtitle (30):** `Fever, meds, feeds, vaccines`
 
-**Promotional text (170):**
-`Log temperature, medicines, feeds, sleep and diapers in seconds; follow an illness with dose reminders; export a PDF report for the doctor. Cloud sync for the family.`
+**Promotional text (170):** 1.0.x: chưa điền. 1.1:
+`New in 1.1: weather and what to dress your baby in, a 60-second breathing counter, follow-up visit reminders, growth reference curves and dark mode.`
 
-**Keywords (100):**
-`baby tracker,newborn,feeding,sleep,diaper,fever,medication,vaccine,growth,baby log,parenting,infant`
+**Keywords (100):** từ 1.1 (25/10/2026). Tên và subtitle đã được Apple đánh chỉ mục, nên không lặp lại baby/care/diary/fever/meds/feeds/vaccines:
+`tracker,newborn,infant,toddler,feeding,breastfeeding,pumping,nap,sleep,diaper,temperature,growth,log`
+1.0.x: `baby tracker,newborn,feeding,sleep,diaper,fever,medication,vaccine,growth,baby log,parenting,infant`
 
 **Description (4000):**
 ```
@@ -98,11 +99,12 @@ Bé Khỏe records what the family enters. It does not diagnose, prescribe or re
 
 **Subtitle (30):** `Sốt, thuốc, bú ngủ, tiêm chủng`
 
-**Promotional text (170):**
-`Ghi nhanh nhiệt độ, thuốc, bú, ngủ, tã; theo dõi đợt ốm với lịch nhắc thuốc; xuất báo cáo PDF cho bác sĩ. Dữ liệu đồng bộ cloud, chia sẻ cho cả nhà.`
+**Promotional text (170):** 1.0.x: chưa điền. 1.1:
+`Mới ở bản 1.1: thời tiết và gợi ý trang phục cho bé, đếm nhịp thở 60 giây, nhắc lịch tái khám, biểu đồ tăng trưởng có đường chuẩn và giao diện tối.`
 
-**Keywords (100):**
-`nhật ký bé,chăm sóc trẻ,sốt,nhiệt độ,thuốc,tiêm chủng,bú sữa,giấc ngủ,tã,tăng trưởng,baby tracker`
+**Keywords (100):** từ 1.1 (25/10/2026), không lặp từ đã có trong tên/subtitle (bé, khỏe, nhật ký, chăm, sốt, thuốc, bú, ngủ, tiêm chủng). Giới hạn tính theo ký tự, không theo byte:
+`theo dõi,trẻ sơ sinh,ăn dặm,sữa mẹ,hút sữa,nhiệt độ,nhiệt kế,hạ sốt,tã,cân nặng,chiều cao,vắc xin`
+1.0.x: `nhật ký bé,chăm sóc trẻ,sốt,nhiệt độ,thuốc,tiêm chủng,bú sữa,giấc ngủ,tã,tăng trưởng,baby tracker`
 
 **Description (4000):**
 ```
