@@ -29,19 +29,15 @@ nonisolated struct GrowthLMS: Equatable, Sendable {
     func zScore(_ x: Double) -> Double { abs(l) < 1e-9 ? log(x / m) / s : (pow(x / m, l) - 1) / (l * s) }
 }
 
-/// Reference populations a family can compare with. WHO is the international standard used in Vietnam;
-/// CDC is the US reference, built from American children.
+/// Reference populations a family can compare with. Only the CDC 2000 reference (US public domain) ships:
+/// the WHO 2006 tables are licensed for non-commercial use, so `.who` comes back only with WHO's permission
+/// (see Tools/Growth/generate.py --with-who).
 nonisolated enum GrowthStandard: String, CaseIterable, Identifiable, Sendable {
-    case who, cdc
+    case cdc
     static let preferenceKey = "care.growthStandard"
     var id: Self { self }
-    var shortTitle: String { self == .who ? "WHO" : "CDC" }
-    var title: String {
-        switch self {
-        case .who: L10n.text("WHO 2006 · chuẩn quốc tế, Việt Nam đang dùng")
-        case .cdc: L10n.text("CDC 2000 · tham chiếu của Mỹ")
-        }
-    }
+    var shortTitle: String { "CDC" }
+    var title: String { L10n.text("CDC 2000 · tham chiếu của Mỹ") }
 }
 
 nonisolated enum GrowthReference {
@@ -70,10 +66,6 @@ nonisolated enum GrowthReference {
     static func table(_ standard: GrowthStandard, _ metric: GrowthMetric, _ gender: BabyGender) -> [GrowthLMS] {
         switch (standard, metric, gender) {
         case (_, _, .unspecified): []
-        case (.who, .weight, .boy): GrowthReferenceData.whoWeightBoys
-        case (.who, .weight, .girl): GrowthReferenceData.whoWeightGirls
-        case (.who, .height, .boy): GrowthReferenceData.whoHeightBoys
-        case (.who, .height, .girl): GrowthReferenceData.whoHeightGirls
         case (.cdc, .weight, .boy): GrowthReferenceData.cdcWeightBoys
         case (.cdc, .weight, .girl): GrowthReferenceData.cdcWeightGirls
         case (.cdc, .height, .boy): GrowthReferenceData.cdcHeightBoys

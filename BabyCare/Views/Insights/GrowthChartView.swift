@@ -10,7 +10,7 @@ struct GrowthChartView<Accessory: View>: View {
     var height: CGFloat = 240
     @ViewBuilder var accessory: (BodyMeasurement) -> Accessory
 
-    @AppStorage(GrowthStandard.preferenceKey) private var standardRaw = GrowthStandard.who.rawValue
+    @AppStorage(GrowthStandard.preferenceKey) private var standardRaw = GrowthStandard.cdc.rawValue
     @State private var visibleMonths: Double?
     @State private var zoomStart: Double?
     @State private var scrollX: Double?
@@ -23,7 +23,7 @@ struct GrowthChartView<Accessory: View>: View {
         let value: Double
         var id: UUID { item.id }
     }
-    private var standard: GrowthStandard { GrowthStandard(rawValue: standardRaw) ?? .who }
+    private var standard: GrowthStandard { GrowthStandard(rawValue: standardRaw) ?? .cdc }
     private var points: [Point] {
         measurements.compactMap { item in
             metric.value(item).map { Point(item: item, age: GrowthReference.ageInMonths(from: profile.birthDate, to: item.date), value: $0) }
@@ -58,14 +58,17 @@ struct GrowthChartView<Accessory: View>: View {
         let _ = appLocale
         VStack(alignment: .leading, spacing: 10) {
             HStack(spacing: 8) {
-                Menu {
-                    Picker(L10n.text("Chuẩn tăng trưởng"), selection: $standardRaw) {
-                        ForEach(GrowthStandard.allCases) { Text($0.title).tag($0.rawValue) }
-                    }
-                } label: {
-                    Label(standard.shortTitle, systemImage: "chart.line.uptrend.xyaxis").font(CareFont.caption.weight(.semibold))
-                        .padding(.horizontal, 10).frame(minHeight: 32).background(CareTheme.accent.opacity(0.08), in: .capsule)
-                }.accessibilityIdentifier("growth.standard")
+                let badge = Label(standard.shortTitle, systemImage: "chart.line.uptrend.xyaxis").font(CareFont.caption.weight(.semibold))
+                    .padding(.horizontal, 10).frame(minHeight: 32).background(CareTheme.accent.opacity(0.08), in: .capsule)
+                if GrowthStandard.allCases.count > 1 {
+                    Menu {
+                        Picker(L10n.text("Chuẩn tăng trưởng"), selection: $standardRaw) {
+                            ForEach(GrowthStandard.allCases) { Text($0.title).tag($0.rawValue) }
+                        }
+                    } label: { badge }.accessibilityIdentifier("growth.standard")
+                } else {
+                    badge.foregroundStyle(CareTheme.accent).accessibilityLabel(standard.title).accessibilityIdentifier("growth.standard")
+                }
                 Spacer(minLength: 0)
                 zoomButton("minus.magnifyingglass", label: L10n.text("Thu nhỏ biểu đồ"), factor: 1.6).disabled(visible >= span.upperBound)
                 zoomButton("plus.magnifyingglass", label: L10n.text("Phóng to biểu đồ"), factor: 1 / 1.6).disabled(visible <= GrowthChartZoom.minimumMonths)

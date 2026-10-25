@@ -179,19 +179,20 @@ struct CareEntryDetailsTests {
 }
 
 struct GrowthReferenceTests {
-    @Test func whoTablesMatchPublishedMediansAndPercentiles() throws {
-        let boys = GrowthReferenceData.whoWeightBoys
-        #expect(boys.count == 61 && boys.first?.month == 0 && boys.last?.month == 60)
-        #expect(boys[12].m == 9.6479)
-        #expect(GrowthReferenceData.whoHeightGirls[12].m == 74.0149)
-        // At the median the percentile is 50; the published WHO P3 for boys at 12 months is 7.8 kg.
-        #expect(GrowthReference.percentile(of: 9.6479, ageInMonths: 12, standard: .who, metric: .weight, gender: .boy) == 50)
-        #expect(abs(boys[12].value(z: -GrowthReference.z3) - 7.8) < 0.05)
-        #expect(GrowthReference.percentile(of: 9.6, ageInMonths: 12, standard: .who, metric: .weight, gender: .unspecified) == nil)
-        #expect(GrowthReference.percentile(of: 20, ageInMonths: 61, standard: .who, metric: .weight, gender: .girl) == nil)
+    @Test func cdcTablesMatchPublishedMediansAndPercentiles() throws {
+        let boys = GrowthReferenceData.cdcWeightBoys
+        #expect(boys.first?.month == 0 && boys.last?.month == 60.5)
+        // CDC 2000 infant chart, boys' weight at 11.5 months, and girls' length at 12.5 months.
+        let row = try #require(boys.first { $0.month == 11.5 })
+        #expect(row.m == 10.1615)
+        #expect(GrowthReferenceData.cdcHeightGirls.first { $0.month == 12.5 }?.m == 74.3956)
+        #expect(GrowthReference.percentile(of: row.m, ageInMonths: 11.5, standard: .cdc, metric: .weight, gender: .boy) == 50)
+        #expect(GrowthReference.percentile(of: 9.6, ageInMonths: 12, standard: .cdc, metric: .weight, gender: .unspecified) == nil)
+        #expect(GrowthReference.percentile(of: 20, ageInMonths: 61, standard: .cdc, metric: .weight, gender: .girl) == nil)
     }
 
     @Test func everyTableIsOrderedAndCoversFiveYears() {
+        #expect(GrowthStandard.allCases == [.cdc]) // WHO ships only with WHO's permission.
         for standard in GrowthStandard.allCases {
             for metric in GrowthMetric.allCases {
                 for gender in [BabyGender.boy, .girl] {
@@ -206,13 +207,14 @@ struct GrowthReferenceTests {
     }
 
     @Test func curvesStopJustPastTheShownAgeAndInterpolate() throws {
-        let curves = GrowthReference.curves(standard: .who, metric: .height, gender: .girl, through: 7.5)
-        #expect(curves.map(\.age) == Array(0...8).map(Double.init))
+        let curves = GrowthReference.curves(standard: .cdc, metric: .height, gender: .girl, through: 7.2)
+        #expect(curves.map(\.age) == [0, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5])
         #expect(curves.allSatisfy { $0.p3 < $0.p15 && $0.p15 < $0.p50 && $0.p50 < $0.p85 && $0.p85 < $0.p97 })
-        #expect(GrowthReference.curves(standard: .who, metric: .weight, gender: .unspecified, through: 12).isEmpty)
-        let rows = GrowthReferenceData.whoWeightGirls
-        let middle = try #require(GrowthReference.lms(at: 6.5, in: rows))
-        #expect(abs(middle.m - (rows[6].m + rows[7].m) / 2) < 1e-9)
+        #expect(GrowthReference.curves(standard: .cdc, metric: .weight, gender: .unspecified, through: 12).isEmpty)
+        let rows = GrowthReferenceData.cdcWeightGirls
+        let middle = try #require(GrowthReference.lms(at: 12, in: rows))
+        let a = try #require(rows.first { $0.month == 11.5 }), b = try #require(rows.first { $0.month == 12.5 })
+        #expect(abs(middle.m - (a.m + b.m) / 2) < 1e-9)
         #expect(GrowthReference.ageInMonths(from: Date(timeIntervalSince1970: 0), to: Date(timeIntervalSince1970: 30.4375 * 86_400 * 6)) == 6)
     }
 }
