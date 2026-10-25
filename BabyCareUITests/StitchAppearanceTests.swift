@@ -128,6 +128,8 @@ final class StitchAppearanceTests: XCTestCase {
         XCTAssertTrue(app.buttons["tab.diary"].waitForExistence(timeout: 10))
         app.buttons["tab.diary"].tap()
         let entry = app.buttons.containing(.staticText, identifier: "Nhiệt độ").firstMatch
+        // The fixture logs readings a few hours before launch; just after midnight they belong to yesterday.
+        if !entry.waitForExistence(timeout: 3) { app.buttons["Ngày trước"].tap() }
         XCTAssertTrue(entry.waitForExistence(timeout: 5))
         entry.tap()
         XCTAssertTrue(app.staticTexts["NHIỆT ĐỘ CƠ THỂ"].waitForExistence(timeout: 5))
