@@ -75,7 +75,10 @@ struct WeatherCardView: View {
 
     @ViewBuilder private var attributionRow: some View {
         if weather.isSample {
-            Text(L10n.text("Thời tiết mẫu")).font(CareFont.caption2).foregroundStyle(CareTheme.secondary)
+            // Store screenshots show the card as a real user sees it, like the hidden "Dữ liệu mẫu" badge.
+            if !CareDemoMode.hidesDemoBadge {
+                Text(L10n.text("Thời tiết mẫu")).font(CareFont.caption2).foregroundStyle(CareTheme.secondary)
+            }
         } else if let attribution = weather.attribution {
             HStack(spacing: 8) {
                 AsyncImage(url: colorScheme == .dark ? attribution.darkMark : attribution.lightMark) { image in
