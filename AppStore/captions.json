@@ -1,0 +1,70 @@
+{
+  "vi": {
+    "01-quick-log": [
+      "Ghi nhanh trong vài giây",
+      "Kèm thời tiết và gợi ý trang phục cho bé"
+    ],
+    "02-illness": [
+      "Theo dõi đợt ốm",
+      "Nhiệt độ, thuốc, triệu chứng ở một chỗ"
+    ],
+    "03-illness-chart": [
+      "Biểu đồ sốt, nhắc thuốc",
+      "Nhắc đúng giờ bố mẹ đã đặt"
+    ],
+    "04-statistics": [
+      "Ăn, ngủ, sức khỏe",
+      "Xem hôm nay, 48 giờ hoặc 7 ngày"
+    ],
+    "05-growth": [
+      "Biểu đồ tăng trưởng",
+      "Có đường chuẩn cho bé trai, bé gái"
+    ],
+    "06-diary": [
+      "Nhật ký từng ngày",
+      "Tìm lại mọi cữ ăn, giấc ngủ, lần đo"
+    ],
+    "07-profile": [
+      "Hồ sơ sức khỏe của bé",
+      "Dị ứng, tiền sử bệnh, số đo; tối đa 4 bé"
+    ],
+    "08-vaccinations": [
+      "Lịch tiêm chủng",
+      "Ghi mũi đã tiêm, nhắc mũi tiếp theo"
+    ]
+  },
+  "en": {
+    "01-quick-log": [
+      "Log it in seconds",
+      "Plus the weather and what to wear outside"
+    ],
+    "02-illness": [
+      "Track an illness",
+      "Temperature, medicines and symptoms together"
+    ],
+    "03-illness-chart": [
+      "Fever chart, dose reminders",
+      "Reminders at the times you set"
+    ],
+    "04-statistics": [
+      "Feeds, sleep and health",
+      "Today, the last 48 hours or 7 days"
+    ],
+    "05-growth": [
+      "Growth charts",
+      "Reference curves for boys and girls"
+    ],
+    "06-diary": [
+      "A diary for every day",
+      "Find any feed, nap or reading"
+    ],
+    "07-profile": [
+      "Your baby's health profile",
+      "Allergies, history, measurements; up to 4 babies"
+    ],
+    "08-vaccinations": [
+      "Vaccination record",
+      "Log each dose, get reminded of the next"
+    ]
+  }
+}
