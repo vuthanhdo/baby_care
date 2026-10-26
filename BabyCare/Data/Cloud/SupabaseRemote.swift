@@ -39,6 +39,20 @@ nonisolated enum CloudError: Error, LocalizedError, Sendable, Equatable {
             if e.message == "CONSENT_REQUIRED" { return CloudError.consentRequired }
             if e.code == "P0001", e.message == "Baby limit reached" { return CareDataError.invalidInput(L10n.text("Bạn chỉ có thể tạo tối đa 4 hồ sơ bé.")) }
             if e.code == "40001" || e.code == "23505" { return CloudError.conflict }
+            // Still a member, just not allowed to do this: refused like bad data, never treated as removal.
+            if e.code == "42501", e.message == "Write access denied" {
+                return CloudError.rejected(L10n.text("Bạn chỉ có quyền xem trong gia đình này nên thay đổi chưa được lưu."))
+            }
+            if e.code == "42501", e.message == "Owner access required" {
+                return CloudError.rejected(L10n.text("Chỉ chủ gia đình mới làm được việc này."))
+            }
+            if e.code == "P0001", e.message == "Cannot leave own family" {
+                return CloudError.rejected(L10n.text("Đây là gia đình của tài khoản bạn nên không thể rời đi."))
+            }
+            if e.code == "P0001", e.message == "Family is full" { return CloudError.rejected(L10n.text("Gia đình này đã đủ 6 thành viên.")) }
+            if e.code == "P0001", e.message == "Too many open invites" {
+                return CloudError.rejected(L10n.text("Đang có 5 lời mời chưa dùng. Hủy bớt rồi tạo mã mới."))
+            }
             if e.code == "42501" || e.code == "PGRST301" || e.code == "PGRST302" { return CloudError.accessDenied }
             if e.code == "PGRST202" {
                 // The message names the function and parameters PostgREST looked for: the server is missing a migration.
@@ -76,13 +90,13 @@ nonisolated enum CloudPrivacyDeletion {
         try await remove(paths: paths, client: client)
     }
 
-    static func removeOwnedAccountMedia(client: SupabaseClient, userID: UUID) async throws {
+    static func removeOwnedAccountMedia(client: SupabaseClient, userID: UUID, keeping shared: Set<UUID> = []) async throws {
         var offset = 0
         while true {
             let families: [OwnedFamily] = try await client.from("families").select("id")
                 .eq("created_by", value: userID).order("id")
                 .range(from: offset, to: offset + pageSize - 1).execute().value
-            for family in families {
+            for family in families where !shared.contains(family.id) {
                 try await remove(paths: mediaPaths(client: client, familyID: family.id, babyID: nil), client: client)
             }
             guard families.count == pageSize else { break }
@@ -123,10 +137,13 @@ nonisolated protocol CareCloudRemote: Sendable {
     func apply(_ envelope: CloudEnvelope) async throws -> CloudReceipt
     func syncMedia(from old: CloudSnapshot, to next: CareDatabase, operationID: UUID) async throws -> CloudMediaSyncResult
     func deleteBaby(_ id: UUID) async throws
+    /// The family's current revision, or nil when the remote cannot tell without a full read.
+    func revision() async throws -> Int?
     func invalidate() async
 }
 extension CareCloudRemote {
     func deleteBaby(_ id: UUID) async throws { throw CareDataError.invalidInput(L10n.text("Cloud chưa hỗ trợ xoá hồ sơ bé.")) }
+    func revision() async throws -> Int? { nil }
 }
 
 actor CloudSessionLease {
@@ -178,6 +195,10 @@ actor SupabaseRemote: CareCloudRemote {
     func deleteBaby(_ id: UUID) async throws {
         struct Params: Encodable { let p_family_id: UUID; let p_baby_id: UUID }
         do {
+            try await lease.check()
+            // In a shared family Storage keeps the photos unless this deletion was announced first (migration 0012).
+            do { _ = try await client.rpc("babycare_begin_baby_deletion", params: Params(p_family_id: familyID, p_baby_id: id)).execute() }
+            catch let error as PostgrestError where error.code == "PGRST202" { }
             try await lease.check()
             try await CloudPrivacyDeletion.removeBabyMedia(client: client, familyID: familyID, babyID: id)
             try await lease.check()
@@ -262,6 +283,14 @@ actor SupabaseRemote: CareCloudRemote {
             return CloudMediaSyncResult(assets: assets, revision: revision, records: records)
         } catch { throw CloudError.normalize(error) }
     }
+    func revision() async throws -> Int? {
+        do {
+            try await lease.check()
+            let families: [CloudFamily] = try await client.from("families").select().eq("id", value: familyID).execute().value
+            guard let family = families.first else { throw CloudError.accessDenied }
+            return family.revision
+        } catch { throw CloudError.normalize(error) }
+    }
     func fetch(selected: UUID?) async throws -> CloudSnapshot {
         struct Page: Decodable { var revision: Int; var rows: [CloudRow]; var next_after_id: UUID? }
         struct Params: Encodable { var p_family_id: UUID; var p_entity: String; var p_at_revision: Int; var p_after_id: UUID?; var p_limit = 200; var p_api_version: Int? }
@@ -303,6 +332,7 @@ actor SupabaseRemote: CareCloudRemote {
                     try await lease.check()
                     var snapshot = try CloudMapping.decode(tables, revision: family.revision, selected: selected)
                     snapshot.supportsVaccinations = vaccinationsAvailable
+                    snapshot.readVersion = readVersion
                     var hydrated: [CloudMediaAsset] = []
                     for var asset in (snapshot.mediaAssets ?? []).sorted(by: { $0.id.uuidString < $1.id.uuidString }) where asset.status == "ready" {
                         try await lease.check()

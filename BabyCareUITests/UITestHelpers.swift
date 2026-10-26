@@ -23,10 +23,13 @@ extension XCUIApplication {
             // On wide windows (open iPhone Duo, iPad landscape) the gutter sits right of the leading tab rail.
             // In iPhone landscape the window edge is the Dynamic Island's safe-area inset, outside the scroll
             // view, so the drag starts just left of the element's column instead.
+            // A snapshot instead of `frame`: during a push the tabs can vanish between `exists` and the read,
+            // and a failed `frame` read fails the test.
             let rail = buttons["tab.quick"]
-            let hasRail = rail.exists && rail.frame.midY < window.midY // bottom tabs sit in the lower half
+            let railFrame = rail.exists ? (try? rail.snapshot())?.frame : nil
+            let hasRail = railFrame.map { $0.midY < window.midY } ?? false // bottom tabs sit in the lower half
             let column = exists ? (element.frame.minX - 10 - window.minX) / max(window.width, 1) : 0
-            let gutter = hasRail ? (rail.frame.maxX + 10) / max(window.width, 1) : max(0.04, min(column, 0.3))
+            let gutter = hasRail ? ((railFrame?.maxX ?? 0) + 10) / max(window.width, 1) : max(0.04, min(column, 0.3))
             let anchor = windows.firstMatch.exists ? windows.firstMatch : self // same space as `windowFrame`
             let start = anchor.coordinate(withNormalizedOffset: CGVector(dx: gutter, dy: 0.55))
             let end = start.withOffset(CGVector(dx: 0, dy: center > high ? -step : step))

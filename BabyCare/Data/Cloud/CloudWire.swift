@@ -57,6 +57,8 @@ nonisolated struct CloudSnapshot: Codable, Sendable {
     var revision = 0
     var mediaAssets: [CloudMediaAsset]?
     var supportsVaccinations: Bool? = true
+    /// `babycare_read_page` version the rows were read with; nil for caches written before it was recorded.
+    var readVersion: Int?
     static func key(_ entity: String, _ id: UUID) -> String { "\(entity):\(id.uuidString.lowercased())" }
 }
 

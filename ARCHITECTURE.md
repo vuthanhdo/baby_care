@@ -71,6 +71,26 @@ Biểu đồ tăng trưởng (`Views/Insights/GrowthChartView.swift`) vẽ theo 
 
 Mặc định theo cài đặt của máy; Cài đặt → Giao diện cho chọn Theo thiết bị / Sáng / Tối (`AppAppearance`, khoá `care.appearance`). Lựa chọn được áp bằng `UIWindow.overrideUserInterfaceStyle` cho mọi cửa sổ (`careAppearance()` ở gốc app), vì `preferredColorScheme(nil)` không luôn trả lại giao diện của máy sau khi đã ép sáng/tối. Mỗi màu trong `Assets.xcassets` (`CareBackground`, `CareSurface`, `CareText`, `CareSecondary`, `CareBorder`, `AccentColor` và ba cặp màu nhóm) có biến thể tối; chữ màu trên nền tối đạt ≥ 4,6:1, chữ trắng trên nút màu ≥ 3,4:1 (chữ đậm cỡ lớn). Bóng đổ dùng đen thay cho màu chữ, nút Đăng nhập với Apple đổi trắng/đen theo giao diện, còn PDF báo cáo luôn vẽ chữ đen trên nền trắng. Launch screen theo giao diện của máy vì iOS dựng nó trước khi app chạy; câu quote ngẫu nhiên nằm ở màn splash (`CareQuotes`), không lặp lại câu của lần mở trước.
 
+## Chia sẻ gia đình (26/10/2026, bản 1.2)
+
+Chia sẻ theo family, không theo từng bé: thành viên thấy mọi bé của family và giữ nguyên RLS `has_role` đang có. Migration `202610260012_shared_care.sql` (chỉ thêm) có:
+- **Bảng mời** `babycare_private.family_invites`: chỉ lưu hash của mã 8 ký tự, dùng một lần, hết hạn sau 48 giờ; tối đa 5 lời mời mở và 6 thành viên mỗi family.
+- **RPC:** `babycare_create_invite`, `babycare_accept_invite` (trả status thay vì raise để lần nhập sai vẫn được đếm; 10 lần sai mỗi giờ thì khoá), `babycare_my_families`, `babycare_family_sharing`, `babycare_revoke_invite`, `babycare_set_member_role`, `babycare_remove_member`, `babycare_leave_family`.
+- **Xoá tài khoản:** family còn người khác được chuyển cho thành viên lâu nhất (ưu tiên owner, rồi caregiver, rồi viewer), người đó thành owner và `created_by`.
+- **Xoá ảnh:** Storage chỉ cho owner xoá ảnh của family dùng chung khi đã gọi `babycare_begin_baby_deletion` trong vòng 1 giờ, để bản app cũ xoá tài khoản không làm mất ảnh của người còn lại.
+
+Test: `supabase/tests/sharing.sql` (PGlite).
+
+Trong app:
+- `SessionViewModel` giữ `families` và `familyID`, mở family theo `role`, nhận mã từ Cài đặt hoặc từ link `babycare://invite?code=…`. Link mở trước khi đăng nhập được giữ lại và tham gia sau khi vào tài khoản.
+- `BabyCareViewModel.access`: viewer chỉ đọc, chỉ owner xoá bé; server cũng chặn.
+- Server từ chối ghi (`Write access denied`, `Owner access required`) thì client coi là `CloudError.rejected`, không phải mất quyền.
+- Mất quyền thật (bị gỡ khỏi family) thì provider xoá cache kèm thông báo số thay đổi chưa gửi bị bỏ. `state.accessLost` báo cho session tự mở family khác.
+- Dữ liệu tự tải lại khi app quay lại sau 30 giây và khi kéo để làm mới; lần tải ngầm không về splash (`isRefreshing`).
+- Provider so `families.revision` trước khi đọc toàn bộ. `CloudSnapshot.readVersion` ngăn cache của bản đọc v1 (thiếu kind mới) được coi là đủ.
+- Màn: Cài đặt → Gia đình & chia sẻ (`FamilySharingView`).
+- UI test dùng `-ui-testing-sharing` (`SharingUITestFixture`, không gọi Supabase).
+
 ## Tài khoản và tối đa 4 bé (12/09/2026)
 
 App không còn màn chọn/tạo family hay thao tác chọn family trong Cài đặt. Sau đăng nhập, SessionViewModel tự mở vùng dữ liệu trước đó; tài khoản mới tự tạo vùng dữ liệu rồi vào bước tạo bé. Lỗi tải tài khoản hiển thị Thử lại/Đăng xuất.

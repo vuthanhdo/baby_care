@@ -9,7 +9,8 @@ struct AppRootView: View {
     @Environment(\.scenePhase) private var scenePhase
     init() {
         #if DEBUG
-        _session = State(initialValue: ConsentUITestFixture.enabled ? ConsentUITestFixture.makeSession() : SessionViewModel())
+        _session = State(initialValue: ConsentUITestFixture.enabled ? ConsentUITestFixture.makeSession()
+            : SharingUITestFixture.enabled ? SharingUITestFixture.makeSession() : SessionViewModel())
         #else
         _session = State(initialValue: SessionViewModel())
         #endif
@@ -57,15 +58,24 @@ struct AppRootView: View {
         .task {
             #if DEBUG
             if ConsentUITestFixture.enabled { session.start(events: ConsentUITestFixture.events()); return }
+            if SharingUITestFixture.enabled { return } // already signed in, no auth listener
             #endif
             if !bypass && !authPreview { session.start() }
         }
         .onOpenURL { url in Task { await session.handleCallback(url) } }
         .onChange(of: scenePhase) { _, phase in
-            if phase == .active && !bypass && !authPreview { Task { await session.checkConsent() } }
+            guard phase == .active && !bypass && !authPreview else { return }
+            Task {
+                await session.checkConsent()
+                // Another member may have logged a dose meanwhile; reload so it is not given twice.
+                await session.viewModel?.refreshIfStale()
+            }
         }
         .onChange(of: session.viewModel?.state.requiresConsent) { _, required in
             if required == true { Task { await session.checkConsent() } }
+        }
+        .onChange(of: session.viewModel?.state.accessLost) { _, reason in
+            if let reason { Task { await session.recoverFromLostAccess(reason) } }
         }
         .careAdaptiveRoot()
         .tint(CareTheme.accent)
@@ -400,6 +410,12 @@ struct CareAccountSection: View {
                 if session.isLocal {
                     CareAsyncButton(L10n.text("Đăng nhập để lưu trên cloud")) { await session.openCloud() }
                 } else {
+                    NavigationLink { FamilySharingView() } label: {
+                        LabeledContent {
+                            Text(session.currentFamily.map { session.title(of: $0) } ?? "")
+                        } label: { Label(L10n.text("Gia đình & chia sẻ"), systemImage: "person.2") }
+                    }
+                    .accessibilityIdentifier("settings.family")
                     CareAsyncButton(L10n.text("Đăng xuất"), role: .destructive) { await session.signOut() }
                 }
             }.disabled(session.busy)

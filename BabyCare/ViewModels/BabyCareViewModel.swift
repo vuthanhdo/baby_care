@@ -18,6 +18,10 @@ struct BabyCareState {
     var storage: CareStorageStatus = .device
     var vaccinationsAvailable = true
     var requiresConsent = false
+    /// A reload of data already shown; the screens stay up instead of the splash.
+    var isRefreshing = false
+    /// Set when the family is no longer readable (the member was removed); the session then picks another family.
+    var accessLost: String?
 }
 
 /// The single owner of shared UI state. Views dispatch actions and read snapshots.
@@ -25,6 +29,8 @@ struct BabyCareState {
 final class BabyCareViewModel {
     private(set) var state = BabyCareState()
     let isDemo: Bool
+    /// The signed-in member's role in this family; device storage and demos are always the owner.
+    let access: CareFamilyRole
     /// Bumped when it is a good moment to ask for an App Store rating; the root view asks StoreKit.
     private(set) var reviewRequests = 0
     @ObservationIgnored private let provider: any CareDataProvider
@@ -33,10 +39,14 @@ final class BabyCareViewModel {
     @ObservationIgnored private var toastTask: Task<Void, Never>?
     @ObservationIgnored private let emptyProfile = BabyProfile()
     @ObservationIgnored private var active = true
+    @ObservationIgnored private var loadedAt: Date?
+    static let refreshInterval: TimeInterval = 30
 
     init(provider: any CareDataProvider, notifications: (any CareReminderService)? = nil,
-         initialData: CareDatabase? = nil, isDemo: Bool = false, reviews: CareReviewTracker? = nil) {
+         initialData: CareDatabase? = nil, isDemo: Bool = false, reviews: CareReviewTracker? = nil,
+         access: CareFamilyRole = .owner) {
         self.provider = provider
+        self.access = access
         self.notifications = notifications ?? NoopCareReminderService()
         self.reviews = reviews
         self.isDemo = isDemo
@@ -63,9 +73,10 @@ final class BabyCareViewModel {
         case .showMessage(let message): showMessage(message); return true
         case .dismissError: state.error = nil; return true
         case .load:
-            guard !state.isSaving, state.phase != .loading else { return false }
+            guard !state.isSaving, state.phase != .loading, !state.isRefreshing else { return false }
             let wasReady = state.phase == .ready
-            state.phase = .loading
+            if wasReady { state.isRefreshing = true } else { state.phase = .loading }
+            defer { state.isRefreshing = false }
             state.error = nil
             do {
                 let previous = state.database
@@ -79,6 +90,7 @@ final class BabyCareViewModel {
                 state.database = loaded
                 state.storage = storage
                 state.phase = .ready
+                loadedAt = Date()
                 if let notice = await provider.takeNotice() { state.error = notice }
                 if let warning = await notifications.reconcile(previous: previous, current: loaded) { showMessage(warning) }
                 guard active else { return false }
@@ -89,6 +101,7 @@ final class BabyCareViewModel {
                 if error as? CloudError == .accessDenied || error as? CloudError == .signedOut {
                     state.database = CareDatabase(); state.phase = .failed
                     state.error = error.localizedDescription
+                    if error as? CloudError == .accessDenied { state.accessLost = await provider.takeNotice() ?? error.localizedDescription }
                     await notifications.invalidate()
                     return false
                 }
@@ -98,9 +111,16 @@ final class BabyCareViewModel {
             }
         case .commit(let mutation, let message):
             guard state.phase == .ready, !state.isSaving else { return false }
+            if let refusal = refusal(for: mutation) { state.error = refusal; return false }
             state.isSaving = true
             state.error = nil
             defer { state.isSaving = false }
+            // A background refresh holds the provider: the save waits for it instead of failing.
+            while state.isRefreshing {
+                try? await Task.sleep(for: .milliseconds(50))
+                guard active else { return false }
+            }
+            guard state.phase == .ready else { return false }
             do {
                 let previous = state.database
                 let saved = try await provider.apply(mutation)
@@ -128,10 +148,25 @@ final class BabyCareViewModel {
                     state.database = current
                     _ = await notifications.reconcile(previous: previous, current: current)
                 }
+                if error as? CloudError == .accessDenied { state.accessLost = await provider.takeNotice() ?? error.localizedDescription }
                 state.error = error.localizedDescription
                 return false
             }
         }
+    }
+
+    /// Reloads when the app comes back after a while, so a dose given on the other parent's phone shows up.
+    func refreshIfStale(now: Date = Date()) async {
+        guard state.phase == .ready, let loadedAt, now.timeIntervalSince(loadedAt) >= Self.refreshInterval else { return }
+        await send(.load)
+    }
+
+    /// Viewers only read; only owners delete a baby. The server refuses the same, this says why up front.
+    private func refusal(for mutation: CareDataMutation) -> String? {
+        if case .selectBaby = mutation { return nil }
+        if !access.canWrite { return L10n.text("Bạn đang ở chế độ chỉ xem trong gia đình này. Nhờ chủ gia đình đổi sang Cùng chăm sóc để ghi.") }
+        if case .deleteBaby = mutation, access != .owner { return L10n.text("Chỉ chủ gia đình mới xóa được hồ sơ bé.") }
+        return nil
     }
 
     /// A moment outside a data change that may deserve a rating prompt, such as a shared report.

@@ -29,6 +29,13 @@ struct QuickLogView: View {
                     Spacer()
                     CareBadge(title: viewModel.isDemo && !CareDemoMode.hidesDemoBadge ? L10n.text("Dữ liệu mẫu") : viewModel.state.storage == .device ? L10n.text("Trên thiết bị") : "Cloud")
                 }
+                if !viewModel.access.canWrite {
+                    Label(L10n.text("Bạn đang chỉ xem gia đình này. Chủ gia đình có thể cho bạn cùng ghi."), systemImage: "eye")
+                        .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading).padding(12)
+                        .background(CareTheme.surface, in: .rect(cornerRadius: 12))
+                        .accessibilityIdentifier("quick.readOnly")
+                }
                 if let weather { WeatherCardView(weather: weather, baby: viewModel.baby) }
                 if viewModel.isTrackingIllness { illnessCard }
                 if let nextReminder = viewModel.medicationReminders.filter({ $0.enabled }).min(by: { $0.nextDate < $1.nextDate }) {
@@ -86,6 +93,8 @@ struct QuickLogView: View {
                 }
             }
         }
+        // Pull down for what other family members logged since.
+        .refreshable { await viewModel.send(.load) }
         .careScreen()
         .toolbar(.hidden, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)

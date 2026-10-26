@@ -46,16 +46,22 @@ struct DataManagementView: View {
                 LabeledContent(L10n.text("Lịch nhắc"), value: "\(viewModel.medicationReminders.count)")
                 Text(L10n.text("Xóa hồ sơ sẽ xóa thông tin bé, nhật ký, số đo, tiêm chủng, lịch nhắc và ảnh đính kèm của bé này."))
                     .font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
+                if viewModel.access != .owner {
+                    Text(L10n.text("Chỉ chủ gia đình mới xóa được hồ sơ bé."))
+                        .font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
+                }
                 Button(L10n.text("Xóa toàn bộ dữ liệu {0}", viewModel.baby.name), systemImage: "person.crop.circle.badge.minus", role: .destructive) {
                     confirmBabyDeletion = true
                 }
-                .disabled(viewModel.state.isSaving || deletingAll)
+                .disabled(viewModel.state.isSaving || deletingAll || viewModel.access != .owner)
                 .accessibilityIdentifier("data.deleteBaby")
             }
 
             Section(L10n.text(isCloudAccount ? "Hủy tài khoản & xóa toàn bộ" : "Xóa toàn bộ dữ liệu trên thiết bị")) {
                 if isCloudAccount {
                     Text(L10n.text("Xóa tài khoản sẽ xóa mọi gia đình do tài khoản sở hữu, toàn bộ hồ sơ bé, dữ liệu cloud và cache của tài khoản trên thiết bị này; sau đó bạn sẽ được đăng xuất."))
+                        .font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
+                    Text(L10n.text("Gia đình đang chia sẻ với người khác không bị xóa: quyền chủ gia đình được chuyển cho thành viên lâu nhất, và bạn rời khỏi gia đình đó."))
                         .font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
                     if let email = session?.email, !email.isEmpty { LabeledContent(L10n.text("Tài khoản"), value: email) }
                     Button(L10n.text("Xóa vĩnh viễn tài khoản & toàn bộ dữ liệu"), systemImage: "trash", role: .destructive) {

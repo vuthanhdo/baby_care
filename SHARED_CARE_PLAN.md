@@ -1,6 +1,10 @@
 # Hai người cùng chăm một bé – nghiên cứu (24/10/2026)
 
-Chỉ là phân tích, chưa có code. Mục tiêu: bố/mẹ (hoặc ông bà, người giữ trẻ) cùng xem và cùng ghi cho một bé trên hai tài khoản khác nhau.
+**Đã làm 26/10/2026 cho bản 1.2**, theo thiết kế dưới đây; xem ARCHITECTURE.md "Chia sẻ gia đình". Khác với bản nháp:
+- Không bắt mọi người đồng ý lại: chỉ cập nhật nội dung chính sách và điều khoản, vẫn phiên bản 1.0.
+- Giới hạn 4 bé vẫn đếm theo người tạo family.
+
+Phần dưới đây giữ nguyên bản phân tích ban đầu. Mục tiêu: bố/mẹ (hoặc ông bà, người giữ trẻ) cùng xem và cùng ghi cho một bé trên hai tài khoản khác nhau.
 
 ## Backend đã có gì
 

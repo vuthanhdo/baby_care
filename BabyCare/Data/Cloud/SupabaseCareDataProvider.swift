@@ -75,6 +75,13 @@ actor SupabaseCareDataProvider: CareDataProvider {
         try await prepare()
         do {
             try await flushQueuedWrites(allowRebase: true)
+            // Nothing changed since the cached snapshot: skip reading every row and photo again.
+            if state.queuedWrites.isEmpty, let cached = state.snapshot, cached.readVersion == CloudMapping.readVersion,
+               let revision = try await remote.revision(), revision == cached.revision {
+                try check()
+                storage = .cloud
+                return cached.database
+            }
             var fetched = try await remote.fetch(selected: visibleDatabase?.selectedBabyID)
             preserveUnavailableVaccinations(in: &fetched)
             try check()
@@ -84,9 +91,7 @@ actor SupabaseCareDataProvider: CareDataProvider {
             return fetched.database
         } catch {
             try check()
-            if error as? CloudError == .accessDenied {
-                state = CloudCacheState(); try await cache.write(state)
-            }
+            if error as? CloudError == .accessDenied { try await forgetFamily() }
             if error as? CloudError == .vaccinationsUnavailable, let visibleDatabase {
                 state.snapshot?.supportsVaccinations = false
                 storage = .pending
@@ -198,9 +203,7 @@ actor SupabaseCareDataProvider: CareDataProvider {
                     notice = L10n.text("Cloud không nhận một thay đổi nên thay đổi đó chưa được lưu; các thay đổi khác vẫn được đồng bộ. {0}", reason)
                     continue
                 }
-                if error as? CloudError == .accessDenied {
-                    state = CloudCacheState(); try await cache.write(state)
-                } else { storage = .pending }
+                if error as? CloudError == .accessDenied { try await forgetFamily() } else { storage = .pending }
                 throw error
             }
             try check()
@@ -211,9 +214,7 @@ actor SupabaseCareDataProvider: CareDataProvider {
                                                   operationID: pending.envelope.p_operation_id)
             } catch {
                 try check()
-                if error as? CloudError == .accessDenied {
-                    state = CloudCacheState(); try await cache.write(state)
-                } else { storage = .pending }
+                if error as? CloudError == .accessDenied { try await forgetFamily() } else { storage = .pending }
                 throw error
             }
             try check()
@@ -234,6 +235,16 @@ actor SupabaseCareDataProvider: CareDataProvider {
             }
         }
         if storage != .cacheWarning { storage = .cloud }
+    }
+
+    /// The member was removed from the family: its data and unsent changes go, and the parent is told how many.
+    private func forgetFamily() async throws {
+        let unsent = state.queuedWrites.count
+        state = CloudCacheState(); try await cache.write(state)
+        if unsent > 0 {
+            notice = L10n.count(unsent, one: "Bạn không còn ở trong gia đình này; 1 thay đổi chưa gửi đã bị bỏ.",
+                                many: "Bạn không còn ở trong gia đình này; {0} thay đổi chưa gửi đã bị bỏ.")
+        }
     }
 
     /// Drops the refused head write and replays the rest on the committed data. Writes that only made sense
