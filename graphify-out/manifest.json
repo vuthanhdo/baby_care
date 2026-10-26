@@ -1,15 +1,15 @@
 {
   "BabyCare/AppDependencies.swift": {
-    "mtime": 1789209450.7287076,
-    "seen": 1789228449.7941482,
-    "ast_hash": "417d051de62cc8ec4155bda3b9845743",
-    "semantic_hash": "417d051de62cc8ec4155bda3b9845743"
+    "mtime": 1792942182.006524,
+    "seen": 1792986076.037418,
+    "ast_hash": "75e64c5bad8a28d1bcaf827fde6e5d46",
+    "semantic_hash": ""
   },
   "BabyCare/Assets.xcassets/AccentColor.colorset/Contents.json": {
-    "mtime": 1788963148.0447214,
-    "seen": 1789228449.7941499,
-    "ast_hash": "fa44e5d9b370082574ebfea050272a00",
-    "semantic_hash": "fa44e5d9b370082574ebfea050272a00"
+    "mtime": 1792862054.2519372,
+    "seen": 1792942098.0120509,
+    "ast_hash": "8f8e128a0e863c01cb1e6c7889b4a1a7",
+    "semantic_hash": ""
   },
   "BabyCare/Assets.xcassets/ActivityAddCircle.imageset/Contents.json": {
     "mtime": 1788885036.7486658,
@@ -144,8 +144,8 @@
     "semantic_hash": "2184b6899b358a2e1fd0f916eaa7ab0f"
   },
   "BabyCare/Assets.xcassets/AppIcon.appiconset/Contents.json": {
-    "mtime": 1789048380.0388587,
-    "seen": 1789228449.794158,
+    "mtime": 1792482929.3401597,
+    "seen": 1792942098.012545,
     "ast_hash": "21c0b43c2865a8037cc101e87b19388e",
     "semantic_hash": "21c0b43c2865a8037cc101e87b19388e"
   },
@@ -156,70 +156,70 @@
     "semantic_hash": "4183777d196d23f513b840efa562727a"
   },
   "BabyCare/Assets.xcassets/CareBackground.colorset/Contents.json": {
-    "mtime": 1788963148.0449216,
-    "seen": 1789228449.794158,
-    "ast_hash": "a0e052cc9eb3eddd71d98fb847ceab2b",
-    "semantic_hash": "a0e052cc9eb3eddd71d98fb847ceab2b"
+    "mtime": 1792862054.2521284,
+    "seen": 1792942098.012566,
+    "ast_hash": "893b89220a63b6cd3d55a2aff7315ec4",
+    "semantic_hash": ""
   },
   "BabyCare/Assets.xcassets/CareBorder.colorset/Contents.json": {
-    "mtime": 1788963148.046558,
-    "seen": 1789228449.7941592,
-    "ast_hash": "70945747b898b091fb6fb89a23447df6",
-    "semantic_hash": "70945747b898b091fb6fb89a23447df6"
+    "mtime": 1792862054.252584,
+    "seen": 1792942098.012566,
+    "ast_hash": "bcf30f070ed04399969627d715059aca",
+    "semantic_hash": ""
   },
   "BabyCare/Assets.xcassets/CareFeeding.colorset/Contents.json": {
-    "mtime": 1788963148.0468786,
-    "seen": 1789228449.7941592,
-    "ast_hash": "856b6574858b036f3106e47cc74c05ef",
-    "semantic_hash": "856b6574858b036f3106e47cc74c05ef"
+    "mtime": 1792862054.2528865,
+    "seen": 1792942098.012567,
+    "ast_hash": "3c48491ff573e4e710f57c6ecb10719e",
+    "semantic_hash": ""
   },
   "BabyCare/Assets.xcassets/CareFeedingBackground.colorset/Contents.json": {
-    "mtime": 1788963148.0469725,
-    "seen": 1789228449.7941592,
-    "ast_hash": "dae6f01f76c580ac17dda5b79bc085de",
-    "semantic_hash": "dae6f01f76c580ac17dda5b79bc085de"
+    "mtime": 1792862054.252986,
+    "seen": 1792942098.012567,
+    "ast_hash": "534d8160677119161197457e309662aa",
+    "semantic_hash": ""
   },
   "BabyCare/Assets.xcassets/CareMedical.colorset/Contents.json": {
-    "mtime": 1788963148.0466256,
-    "seen": 1789228449.7941601,
-    "ast_hash": "ec5d7022b0be2ab159af34641c0755c9",
-    "semantic_hash": "ec5d7022b0be2ab159af34641c0755c9"
+    "mtime": 1792862054.2526858,
+    "seen": 1792942098.012568,
+    "ast_hash": "e6f90a6b48a793b755d21293ce24cc9c",
+    "semantic_hash": ""
   },
   "BabyCare/Assets.xcassets/CareMedicalBackground.colorset/Contents.json": {
-    "mtime": 1788963148.04679,
-    "seen": 1789228449.7941601,
-    "ast_hash": "073cc201ff6b28b70b8ab0bf95c4ce8b",
-    "semantic_hash": "073cc201ff6b28b70b8ab0bf95c4ce8b"
+    "mtime": 1792862054.2527847,
+    "seen": 1792942098.012568,
+    "ast_hash": "9bed4242900734fbbf51001cf6a466cb",
+    "semantic_hash": ""
   },
   "BabyCare/Assets.xcassets/CareRoutine.colorset/Contents.json": {
-    "mtime": 1788963148.0471826,
-    "seen": 1789228449.7941601,
-    "ast_hash": "75d8c926b82471f0312494435f8c7d1f",
-    "semantic_hash": "75d8c926b82471f0312494435f8c7d1f"
+    "mtime": 1792862054.2530818,
+    "seen": 1792942098.0125692,
+    "ast_hash": "fe87c87de0a61d440d01012c47860b69",
+    "semantic_hash": ""
   },
   "BabyCare/Assets.xcassets/CareRoutineBackground.colorset/Contents.json": {
-    "mtime": 1788963148.0472908,
-    "seen": 1789228449.7941601,
-    "ast_hash": "14be29628219f6c3e14dac637551d7c3",
-    "semantic_hash": "14be29628219f6c3e14dac637551d7c3"
+    "mtime": 1792862054.2531834,
+    "seen": 1792942098.0125692,
+    "ast_hash": "a4e81944c8e79b68ded8e215cb02db17",
+    "semantic_hash": ""
   },
   "BabyCare/Assets.xcassets/CareSecondary.colorset/Contents.json": {
-    "mtime": 1788963148.046391,
-    "seen": 1789228449.7941608,
-    "ast_hash": "703a9ab2d977c03d78d21f522404d91b",
-    "semantic_hash": "703a9ab2d977c03d78d21f522404d91b"
+    "mtime": 1792862054.2524736,
+    "seen": 1792942098.0125692,
+    "ast_hash": "e86ef3f702eda9a35f871c1443d84da6",
+    "semantic_hash": ""
   },
   "BabyCare/Assets.xcassets/CareSurface.colorset/Contents.json": {
-    "mtime": 1788963148.0459473,
-    "seen": 1789228449.7941608,
-    "ast_hash": "60e903d8796431da7a1e50776deee7b6",
-    "semantic_hash": "60e903d8796431da7a1e50776deee7b6"
+    "mtime": 1792862054.2522573,
+    "seen": 1792942098.0125701,
+    "ast_hash": "a50cd7d99197444bf7e8872dafa149c2",
+    "semantic_hash": ""
   },
   "BabyCare/Assets.xcassets/CareText.colorset/Contents.json": {
-    "mtime": 1788963148.046193,
-    "seen": 1789228449.7941608,
-    "ast_hash": "4b1870c212eece7cb5ee098ea1dc2069",
-    "semantic_hash": "4b1870c212eece7cb5ee098ea1dc2069"
+    "mtime": 1792862054.252366,
+    "seen": 1792942098.0125701,
+    "ast_hash": "a5de0e054625cfa8dda0c10057dbafe7",
+    "semantic_hash": ""
   },
   "BabyCare/Assets.xcassets/Contents.json": {
     "mtime": 1788884283.2792125,
@@ -1578,15 +1578,15 @@
     "semantic_hash": "42060234fae09fa196e595a44ebdd05c"
   },
   "BabyCare/ContentView.swift": {
-    "mtime": 1789209450.729722,
-    "seen": 1789228449.794233,
-    "ast_hash": "4c8280b285c6ae08efeee41cfeedc355",
-    "semantic_hash": "4c8280b285c6ae08efeee41cfeedc355"
+    "mtime": 1792942204.9793305,
+    "seen": 1792986076.043565,
+    "ast_hash": "2a88efacd963ca6aab477de0e9893b45",
+    "semantic_hash": ""
   },
   "BabyCare/Data/CareDataProvider.swift": {
-    "mtime": 1789291494.5221066,
-    "seen": 1789545164.908076,
-    "ast_hash": "49a245d488763786b1cc0694d99cf884",
+    "mtime": 1792859652.9418201,
+    "seen": 1792942098.017183,
+    "ast_hash": "72a882af0ec3928595f18b80664972f2",
     "semantic_hash": ""
   },
   "BabyCare/Data/Cloud/CloudCache.swift": {
@@ -1602,21 +1602,21 @@
     "semantic_hash": "be47741d8292da68ccba86f8cb820125"
   },
   "BabyCare/Data/Cloud/CloudWire.swift": {
-    "mtime": 1789291494.5216649,
-    "seen": 1789545164.9081001,
-    "ast_hash": "351680dd0a409ab797953f159bc3d1ba",
+    "mtime": 1792946493.12811,
+    "seen": 1792986076.043634,
+    "ast_hash": "f878849f57ae22e975c4799e6be43ea5",
     "semantic_hash": ""
   },
   "BabyCare/Data/Cloud/SupabaseCareDataProvider.swift": {
-    "mtime": 1789544281.4272635,
-    "seen": 1789545164.908101,
-    "ast_hash": "1a5a8124cfbccab3b64b94c7eff6b4a1",
+    "mtime": 1792946493.1290734,
+    "seen": 1792986076.043635,
+    "ast_hash": "53af457ee3878ff6e2da2cebf667f412",
     "semantic_hash": ""
   },
   "BabyCare/Data/Cloud/SupabaseRemote.swift": {
-    "mtime": 1789546651.4391277,
-    "seen": 1789546912.671087,
-    "ast_hash": "c56c55c05eb4ca7ff722a23553dd693c",
+    "mtime": 1792969210.526122,
+    "seen": 1792986076.043636,
+    "ast_hash": "e9733479d20a6b06abdcf48f2c4b6152",
     "semantic_hash": ""
   },
   "BabyCare/Data/Migration/LegacyJSONMigration.swift": {
@@ -1626,22 +1626,22 @@
     "semantic_hash": "e8fffad702a3ea9d1dc010bc1b0d12e3"
   },
   "BabyCare/Data/SwiftData/BabyCareSchema.swift": {
-    "mtime": 1789230530.0327814,
-    "seen": 1789545164.908122,
-    "ast_hash": "963a93fb712859ac999d2cf67d36ddcc",
+    "mtime": 1792857827.6192188,
+    "seen": 1792942098.017291,
+    "ast_hash": "dfa09ce678cadd4dfd68223bd848f4c3",
     "semantic_hash": ""
   },
   "BabyCare/Data/SwiftData/SwiftDataCareDataProvider.swift": {
-    "mtime": 1789544300.981943,
-    "seen": 1789545164.908122,
-    "ast_hash": "72e8a6ccd1d35e90bc313b67cc09bce4",
+    "mtime": 1792857827.6195219,
+    "seen": 1792942098.017292,
+    "ast_hash": "e726df9e82dcfae67dc07ccacfb07e7f",
     "semantic_hash": ""
   },
   "BabyCare/DesignSystem/CareComponents.swift": {
-    "mtime": 1789209576.6090796,
-    "seen": 1789228449.794236,
-    "ast_hash": "3b37adcc2921744c45f27e13b0c897b5",
-    "semantic_hash": "3b37adcc2921744c45f27e13b0c897b5"
+    "mtime": 1792862054.25425,
+    "seen": 1792942098.0172958,
+    "ast_hash": "0927637891e79e95ad88ebd97df7e6ce",
+    "semantic_hash": ""
   },
   "BabyCare/DesignSystem/EntryFormStyle.swift": {
     "mtime": 1789209450.7378497,
@@ -1650,28 +1650,28 @@
     "semantic_hash": "ce5be78ca08a8275b99aaf5394240884"
   },
   "BabyCare/DesignSystem/StitchStyle.swift": {
-    "mtime": 1789209450.7360637,
-    "seen": 1789228449.794237,
-    "ast_hash": "8c079510623a1d5c4f315bc4b93c1246",
-    "semantic_hash": "8c079510623a1d5c4f315bc4b93c1246"
+    "mtime": 1792861820.4683664,
+    "seen": 1792942098.017329,
+    "ast_hash": "ad5d1aa136a123a5e9cf3e9354774259",
+    "semantic_hash": ""
   },
   "BabyCare/Domain/CareDatabase.swift": {
-    "mtime": 1789544265.1718352,
-    "seen": 1789545164.9082181,
-    "ast_hash": "b40efb3c0d64bdb25ad6574e799fbf93",
+    "mtime": 1792857842.451131,
+    "seen": 1792942098.017329,
+    "ast_hash": "0592becd09255a8ba2365e81646c4a8d",
     "semantic_hash": ""
   },
   "BabyCare/Domain/CareModels.swift": {
-    "mtime": 1789230530.0297658,
-    "seen": 1789545164.9082189,
-    "ast_hash": "df069659faf464f8ebfa602893eb608f",
+    "mtime": 1792860616.570887,
+    "seen": 1792942098.01734,
+    "ast_hash": "b284659bdb6f632152a38db732565346",
     "semantic_hash": ""
   },
   "BabyCare/Domain/CarePreviewData.swift": {
-    "mtime": 1789209450.7937005,
-    "seen": 1789228449.7942379,
-    "ast_hash": "83bf3e3eccc1b360180f501cdbe0ebe7",
-    "semantic_hash": "83bf3e3eccc1b360180f501cdbe0ebe7"
+    "mtime": 1792860629.284077,
+    "seen": 1792942098.017341,
+    "ast_hash": "01c840a469373192ee5579a1c73b79e7",
+    "semantic_hash": ""
   },
   "BabyCare/Domain/VoiceActivityParser.swift": {
     "mtime": 1789209450.7948925,
@@ -1686,10 +1686,10 @@
     "semantic_hash": "e342c46516efca1703c66247aec12423"
   },
   "BabyCare/Localization/AppLanguage.swift": {
-    "mtime": 1789209450.8007543,
-    "seen": 1789228449.794239,
-    "ast_hash": "ec3573a43e164ac9b1438c4c7a21b212",
-    "semantic_hash": "ec3573a43e164ac9b1438c4c7a21b212"
+    "mtime": 1791940292.334089,
+    "seen": 1792942098.017408,
+    "ast_hash": "9b5e8b26f419330fd1f7305aac92b504",
+    "semantic_hash": ""
   },
   "BabyCare/Services/CareImageProcessor.swift": {
     "mtime": 1789209450.8002203,
@@ -1698,9 +1698,9 @@
     "semantic_hash": "69164bb5cb0481fa4afa1a8ca3a5f957"
   },
   "BabyCare/Services/CareReminderService.swift": {
-    "mtime": 1789231120.6807046,
-    "seen": 1789545164.9083169,
-    "ast_hash": "c2fe51ce88a33af38500b2a9dc3deb97",
+    "mtime": 1792857992.9150374,
+    "seen": 1792942098.017462,
+    "ast_hash": "6ae7c323542f4b91fc750537f94b4c3c",
     "semantic_hash": ""
   },
   "BabyCare/Services/SpeechInputProvider.swift": {
@@ -1710,21 +1710,21 @@
     "semantic_hash": "d287d50d9206fa55e4fc7fda90bd15f5"
   },
   "BabyCare/ViewModels/ActivityFormViewModel.swift": {
-    "mtime": 1789209814.0619924,
-    "seen": 1789228449.79424,
-    "ast_hash": "0e9d352c2e67272a4526789fd3c90803",
-    "semantic_hash": "0e9d352c2e67272a4526789fd3c90803"
+    "mtime": 1792860616.5715156,
+    "seen": 1792942098.017486,
+    "ast_hash": "054f05f8a00f3c6336afba4b0d3ccc26",
+    "semantic_hash": ""
   },
   "BabyCare/ViewModels/BabyCareViewModel.swift": {
-    "mtime": 1789291494.5237105,
-    "seen": 1789545164.908353,
-    "ast_hash": "7d34e08afae4af0cc4e8c1e08d8bc79b",
+    "mtime": 1792968979.3803372,
+    "seen": 1792986076.0441332,
+    "ast_hash": "8a6e0bafda800cac73de58bb1ce43bf9",
     "semantic_hash": ""
   },
   "BabyCare/ViewModels/SessionViewModel.swift": {
-    "mtime": 1789546651.4936733,
-    "seen": 1789546912.671366,
-    "ast_hash": "f69a4115a3f251ff20e8265029cf0275",
+    "mtime": 1792984944.5479994,
+    "seen": 1792986076.044152,
+    "ast_hash": "2fcc39b2c103e6a350e328c43858402f",
     "semantic_hash": ""
   },
   "BabyCare/ViewModels/VoiceInputViewModel.swift": {
@@ -1734,70 +1734,70 @@
     "semantic_hash": "99ef159e3ca338e0c4c47dc1410ea503"
   },
   "BabyCare/Views/Activities/ActivityDetailView.swift": {
-    "mtime": 1789209450.8016162,
-    "seen": 1789228449.794241,
-    "ast_hash": "337704090b4527bc244e991cecb5efb2",
-    "semantic_hash": "337704090b4527bc244e991cecb5efb2"
+    "mtime": 1792860616.5719688,
+    "seen": 1792942098.01751,
+    "ast_hash": "ed693cff3f84e3acedb1841cad7d6243",
+    "semantic_hash": ""
   },
   "BabyCare/Views/Activities/ActivityFormView.swift": {
-    "mtime": 1789209450.8010018,
-    "seen": 1789228449.7942421,
-    "ast_hash": "c4928b83edd47a5cc81e7197190f2042",
-    "semantic_hash": "c4928b83edd47a5cc81e7197190f2042"
+    "mtime": 1792860669.3411515,
+    "seen": 1792942098.017511,
+    "ast_hash": "2328a9b3b5a1c1e2ccd44631941ad8c2",
+    "semantic_hash": ""
   },
   "BabyCare/Views/Activities/ActivityPickerView.swift": {
-    "mtime": 1789209450.7914696,
-    "seen": 1789228449.7942421,
-    "ast_hash": "520eace12c0809b33e48549066f237c8",
-    "semantic_hash": "520eace12c0809b33e48549066f237c8"
+    "mtime": 1792862054.2543814,
+    "seen": 1792942098.0175118,
+    "ast_hash": "fac40843ac26edf758de9e716ee50911",
+    "semantic_hash": ""
   },
   "BabyCare/Views/Activities/VoiceEntryView.swift": {
-    "mtime": 1789209450.7869387,
-    "seen": 1789228449.7942421,
-    "ast_hash": "ec8ce635613d1a362059c7e8d7df385f",
-    "semantic_hash": "ec8ce635613d1a362059c7e8d7df385f"
+    "mtime": 1791940292.335848,
+    "seen": 1792942098.017514,
+    "ast_hash": "8afadef7080b8ecf340693e85524c3f2",
+    "semantic_hash": ""
   },
   "BabyCare/Views/Diary/DiaryView.swift": {
-    "mtime": 1789209450.8013928,
-    "seen": 1789228449.7942421,
-    "ast_hash": "833d275d6f63fea1e1125f0c65faab05",
-    "semantic_hash": "833d275d6f63fea1e1125f0c65faab05"
+    "mtime": 1792957711.70742,
+    "seen": 1792986076.0442681,
+    "ast_hash": "d3d286a81cd8954c7bc04d6f0b3940ff",
+    "semantic_hash": ""
   },
   "BabyCare/Views/Insights/IllnessTrackingView.swift": {
-    "mtime": 1789209450.7697215,
-    "seen": 1789228449.794243,
-    "ast_hash": "716eaeb7a075c68925302a8015dfbd50",
-    "semantic_hash": "716eaeb7a075c68925302a8015dfbd50"
+    "mtime": 1792736674.6453252,
+    "seen": 1792942098.0175161,
+    "ast_hash": "c037e72d26c54387b80e1b63c013d5ec",
+    "semantic_hash": ""
   },
   "BabyCare/Views/Insights/InsightComponents.swift": {
-    "mtime": 1789209450.7625597,
-    "seen": 1789228449.794243,
-    "ast_hash": "8db5404150ceb05808e2bbcc25c077ef",
-    "semantic_hash": "8db5404150ceb05808e2bbcc25c077ef"
+    "mtime": 1792855926.050938,
+    "seen": 1792942098.017517,
+    "ast_hash": "867d2c057ce48fcdde598bf35dc283f4",
+    "semantic_hash": ""
   },
   "BabyCare/Views/Insights/ReportPreviewView.swift": {
-    "mtime": 1789209450.767448,
-    "seen": 1789228449.794243,
-    "ast_hash": "745d86f09a70cf04b116ea2d8382a95e",
-    "semantic_hash": "745d86f09a70cf04b116ea2d8382a95e"
+    "mtime": 1792942222.396906,
+    "seen": 1792986076.0443258,
+    "ast_hash": "8d3446fed3ada6ff97e4dc74595ccc19",
+    "semantic_hash": ""
   },
   "BabyCare/Views/Insights/ShareReportView.swift": {
-    "mtime": 1789209450.801751,
-    "seen": 1789228449.794244,
-    "ast_hash": "345b8c94d1f1ea7a0212c64ff412cea0",
-    "semantic_hash": "345b8c94d1f1ea7a0212c64ff412cea0"
+    "mtime": 1792942249.191531,
+    "seen": 1792986076.0443258,
+    "ast_hash": "c80eb6510b276e18aa57475289968428",
+    "semantic_hash": ""
   },
   "BabyCare/Views/Insights/StatisticsView.swift": {
-    "mtime": 1789209450.761089,
-    "seen": 1789228449.794244,
-    "ast_hash": "450a8b01845f92ba75851fe695c8e0cb",
-    "semantic_hash": "450a8b01845f92ba75851fe695c8e0cb"
+    "mtime": 1792858009.5009139,
+    "seen": 1792942098.017518,
+    "ast_hash": "e134f106b02a8835231b09df42bae494",
+    "semantic_hash": ""
   },
   "BabyCare/Views/Profile/AccountView.swift": {
-    "mtime": 1789209450.779509,
-    "seen": 1789228449.794244,
-    "ast_hash": "fc9d87edd66a9e950505f7f6804defb8",
-    "semantic_hash": "fc9d87edd66a9e950505f7f6804defb8"
+    "mtime": 1792984379.7328305,
+    "seen": 1792986076.0443468,
+    "ast_hash": "13e663f5095a893b13b52e9a873d2656",
+    "semantic_hash": ""
   },
   "BabyCare/Views/Profile/AuthCaptchaView.swift": {
     "mtime": 1789209450.7706327,
@@ -1806,9 +1806,9 @@
     "semantic_hash": "024b345a6979a87b14b6bd42c94787c2"
   },
   "BabyCare/Views/Profile/BabyProfileView.swift": {
-    "mtime": 1789230644.746165,
-    "seen": 1789545164.908604,
-    "ast_hash": "a6db28f4a11b6b9a3daf9a2b1523556f",
+    "mtime": 1792858047.0627232,
+    "seen": 1792942098.017544,
+    "ast_hash": "e2f140e55b2931eef7e731c615dcff53",
     "semantic_hash": ""
   },
   "BabyCare/Views/Profile/MeasurementEntryView.swift": {
@@ -1818,28 +1818,28 @@
     "semantic_hash": "c42a10b772555291c07a866eacac1506"
   },
   "BabyCare/Views/Profile/OnboardingView.swift": {
-    "mtime": 1789544362.2040386,
-    "seen": 1789545164.908625,
-    "ast_hash": "913c208463d02e7c6f9b8f50b07f3929",
+    "mtime": 1792858047.0624077,
+    "seen": 1792942098.0175848,
+    "ast_hash": "fd483ab157b1923491c391b187e00430",
     "semantic_hash": ""
   },
   "BabyCare/Views/Profile/SettingsView.swift": {
-    "mtime": 1789544500.2156627,
-    "seen": 1789545164.9086258,
-    "ast_hash": "323e2138837e323f8056fdb062c54e74",
+    "mtime": 1792862054.2539997,
+    "seen": 1792942098.017586,
+    "ast_hash": "4a10344405c3a3274d5accba638cd538",
     "semantic_hash": ""
   },
   "BabyCare/Views/QuickLog/QuickLogView.swift": {
-    "mtime": 1789209450.7858534,
-    "seen": 1789228449.794246,
-    "ast_hash": "7379e6f8898a5802743d5f5496a3b903",
-    "semantic_hash": "7379e6f8898a5802743d5f5496a3b903"
+    "mtime": 1792957694.1708922,
+    "seen": 1792986076.0444748,
+    "ast_hash": "be475a2886ad833c2acbd719ad8e07b5",
+    "semantic_hash": ""
   },
   "BabyCareTests/AuthValidationTests.swift": {
-    "mtime": 1789206108.6383946,
-    "seen": 1789228449.794246,
-    "ast_hash": "ac55aa7a0c16e56dc3de44a0b9a1c5ae",
-    "semantic_hash": "ac55aa7a0c16e56dc3de44a0b9a1c5ae"
+    "mtime": 1792556609.5546517,
+    "seen": 1792942098.01761,
+    "ast_hash": "8829f60cd3030900ac016b4b017aca52",
+    "semantic_hash": ""
   },
   "BabyCareTests/BabyCareTests.swift": {
     "mtime": 1789545705.3472993,
@@ -1854,16 +1854,16 @@
     "semantic_hash": "c577dc9b0299988f52fd662ba958483d"
   },
   "BabyCareTests/CloudProviderTests.swift": {
-    "mtime": 1789544676.944013,
-    "seen": 1789545164.908683,
-    "ast_hash": "9a5aa223bceadb43f8a5a18c38a6e654",
+    "mtime": 1792859751.6254008,
+    "seen": 1792942098.017647,
+    "ast_hash": "80a786b9d2b0dae9c5c0c6e128e78bf6",
     "semantic_hash": ""
   },
   "BabyCareTests/LocalizationTests.swift": {
-    "mtime": 1789209450.8350635,
-    "seen": 1789228449.794247,
-    "ast_hash": "273d112e63c5d8ff63d9db1fc3877028",
-    "semantic_hash": "273d112e63c5d8ff63d9db1fc3877028"
+    "mtime": 1791940312.7328994,
+    "seen": 1792942098.017649,
+    "ast_hash": "2e9f3460ca2b4e080ad2352a3120e115",
+    "semantic_hash": ""
   },
   "BabyCareTests/RuntimeSafetyTests.swift": {
     "mtime": 1789083845.357659,
@@ -1872,10 +1872,10 @@
     "semantic_hash": "2f8c53c99ec7b8e3d0198f9f5801dbab"
   },
   "BabyCareTests/StitchAssetTests.swift": {
-    "mtime": 1789120156.0409155,
-    "seen": 1789228449.7942479,
-    "ast_hash": "372dc401b85d73b098c24f106fa45186",
-    "semantic_hash": "372dc401b85d73b098c24f106fa45186"
+    "mtime": 1792856909.1113496,
+    "seen": 1792942098.017667,
+    "ast_hash": "5933746e6c132d39cb19aa5ed4bf6d34",
+    "semantic_hash": ""
   },
   "BabyCareTests/VoiceActivityParserTests.swift": {
     "mtime": 1789026697.755496,
@@ -1890,28 +1890,28 @@
     "semantic_hash": "49fad2eff5d5a12400850d9eb7f5470f"
   },
   "BabyCareUITests/BabyCareUITests.swift": {
-    "mtime": 1789545030.4175394,
-    "seen": 1789545164.908761,
-    "ast_hash": "71711fb0114dc27cda5bca2a317ae4b4",
+    "mtime": 1791964639.1110113,
+    "seen": 1792942098.017719,
+    "ast_hash": "54dce055a4d8f203d0e16f1d174f0901",
     "semantic_hash": ""
   },
   "BabyCareUITests/BabyCareUITestsLaunchTests.swift": {
-    "mtime": 1789209576.610144,
-    "seen": 1789228449.794249,
-    "ast_hash": "6cb48fcbf10ebc18495981bd42324c06",
-    "semantic_hash": "6cb48fcbf10ebc18495981bd42324c06"
+    "mtime": 1791977080.477533,
+    "seen": 1792942098.01772,
+    "ast_hash": "c638e1148b5375ba3f4152eabadeb48b",
+    "semantic_hash": ""
   },
   "BabyCareUITests/LanguageUITests.swift": {
-    "mtime": 1789545030.4770422,
-    "seen": 1789545164.908778,
-    "ast_hash": "4520eb04f60c44c234ff3c3434a700d9",
+    "mtime": 1791968035.3378606,
+    "seen": 1792942098.0177212,
+    "ast_hash": "58d4dcc6f2aff04031623474a676f250",
     "semantic_hash": ""
   },
   "BabyCareUITests/StitchAppearanceTests.swift": {
-    "mtime": 1789209576.6095743,
-    "seen": 1789228449.79425,
-    "ast_hash": "46564784c28792611f0a2c2d9bdd2cde",
-    "semantic_hash": "46564784c28792611f0a2c2d9bdd2cde"
+    "mtime": 1792863586.3079917,
+    "seen": 1792942098.0177221,
+    "ast_hash": "25fe3c5a8a60757caf7d3d71abf442fb",
+    "semantic_hash": ""
   },
   "DesignReference/Stitch/material-symbols.json": {
     "mtime": 1789120060.6636164,
@@ -1926,9 +1926,9 @@
     "semantic_hash": "5b27f0b3a4a828bf5d6edeec122dd5fb"
   },
   "Tools/Localization/translations.json": {
-    "mtime": 1789544782.8365152,
-    "seen": 1789545164.908832,
-    "ast_hash": "b4ffad938ba12c0320e9558e30331b22",
+    "mtime": 1792984895.9022207,
+    "seen": 1792986076.0451221,
+    "ast_hash": "05143e8e0afc24d374ab3d61aba4bd58",
     "semantic_hash": ""
   },
   "Tools/import_stitch_icons.py": {
@@ -1938,15 +1938,15 @@
     "semantic_hash": "17f033552adff78d1ee52f577d4b823e"
   },
   "BabyCare/Views/Profile/DataManagementView.swift": {
-    "mtime": 1789545705.2915704,
-    "seen": 1789545748.66385,
-    "ast_hash": "ef59a5d3b3e6eba0462fcb438b125252",
+    "mtime": 1792968979.380464,
+    "seen": 1792986076.044387,
+    "ast_hash": "e74fc855415347f2e7705ca98ab78b39",
     "semantic_hash": ""
   },
   "BabyCare/Views/Profile/LegalViews.swift": {
-    "mtime": 1789545030.3552866,
-    "seen": 1789545164.908606,
-    "ast_hash": "b0d77de6e67c93d1ac30fba17d9a370d",
+    "mtime": 1792984895.9008458,
+    "seen": 1792986076.044388,
+    "ast_hash": "f34244d4c90958b49c0ead3ae3add789",
     "semantic_hash": ""
   },
   "BabyCare/Views/Profile/VaccinationView.swift": {
@@ -1962,9 +1962,9 @@
     "semantic_hash": ""
   },
   "BabyCareUITests/VaccinationUITests.swift": {
-    "mtime": 1789230968.3654559,
-    "seen": 1789545164.908793,
-    "ast_hash": "0b54b302487d85342f248a0f300f2b3e",
+    "mtime": 1791968035.3376632,
+    "seen": 1792942098.0177238,
+    "ast_hash": "4e9639698ba2843cad117aff88677573",
     "semantic_hash": ""
   },
   "AGENTS.md": {
@@ -1974,9 +1974,9 @@
     "semantic_hash": ""
   },
   "ARCHITECTURE.md": {
-    "mtime": 1789209648.8950741,
-    "seen": 1789545164.908849,
-    "ast_hash": "63ec968ad9657713574232713575f41d",
+    "mtime": 1792984930.1470258,
+    "seen": 1792986076.045253,
+    "ast_hash": "9439780bea03957bfa4b1a7e9b0477ed",
     "semantic_hash": ""
   },
   "BabyCare/Resources/Fonts/OFL.txt": {
@@ -2112,9 +2112,9 @@
     "semantic_hash": ""
   },
   "DesignReference/Stitch/IMPLEMENTATION.md": {
-    "mtime": 1789010665.678301,
-    "seen": 1789545164.908863,
-    "ast_hash": "0e7790688b9b5f19cf161168056cbadf",
+    "mtime": 1791964655.445337,
+    "seen": 1792942098.0182998,
+    "ast_hash": "e058b266c6a7c5aa41b698aa6996fab0",
     "semantic_hash": ""
   },
   "DesignReference/Stitch/Review-2026-09-11/index.html": {
@@ -2136,9 +2136,9 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1789050754.756445,
-    "seen": 1789545164.908865,
-    "ast_hash": "16933530e874b29b732be27457636fee",
+    "mtime": 1792737757.7356014,
+    "seen": 1792942098.018361,
+    "ast_hash": "c88b588edbc3077598cdc3f77c125620",
     "semantic_hash": ""
   },
   "RUNTIME_SAFETY_REVIEW.md": {
@@ -2172,15 +2172,15 @@
     "semantic_hash": ""
   },
   "supabase/AUTH_SETUP.md": {
-    "mtime": 1789138953.863961,
-    "seen": 1789545164.9088671,
-    "ast_hash": "9dba59f5af786c83930c883dc5aeef5b",
+    "mtime": 1792470066.5198338,
+    "seen": 1792942098.018451,
+    "ast_hash": "105a6cb916b328691c97919f7b75fd11",
     "semantic_hash": ""
   },
   "supabase/README.md": {
-    "mtime": 1789137430.4128046,
-    "seen": 1789545164.908868,
-    "ast_hash": "3c107c2a3c86b69db76970bd10e8a364",
+    "mtime": 1792984930.182533,
+    "seen": 1792986076.0463538,
+    "ast_hash": "702f16f49fd79644b2c25d107d4f8493",
     "semantic_hash": ""
   },
   "supabase/templates/confirm-sign-up.html": {
@@ -2322,8 +2322,8 @@
     "semantic_hash": ""
   },
   "BabyCare/Assets.xcassets/AppIcon.appiconset/AppIcon.png": {
-    "mtime": 1789048379.9261363,
-    "seen": 1789545164.9088771,
+    "mtime": 1792482929.3400252,
+    "seen": 1792942098.018934,
     "ast_hash": "dd4c1b9dd976ccd4cd7c0458ccc065ea",
     "semantic_hash": ""
   },
@@ -4053,6 +4053,372 @@
     "mtime": 1788996997.4995472,
     "seen": 1789545164.9089851,
     "ast_hash": "61d1efe897ec624cc9761836c10765e9",
+    "semantic_hash": ""
+  },
+  "AppStore/captions.json": {
+    "mtime": 1792940635.3729339,
+    "seen": 1792942098.012046,
+    "ast_hash": "9ad0c6690f2c86c225c0df674bbf4c8e",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/LaunchLogo.imageset/Contents.json": {
+    "mtime": 1792861297.767547,
+    "seen": 1792942098.014077,
+    "ast_hash": "7a37dc9a5b411c9dde47bb38ae03687f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_pulmonology.imageset/Contents.json": {
+    "mtime": 1792855573.41698,
+    "seen": 1792942098.016191,
+    "ast_hash": "2cba7c3209ffa75ef3291e47a340e06a",
+    "semantic_hash": ""
+  },
+  "BabyCare/ConsentUITestFixture.swift": {
+    "mtime": 1791961003.5060532,
+    "seen": 1792942098.017181,
+    "ast_hash": "3fb6514c3bfb7be18d784838804487ac",
+    "semantic_hash": ""
+  },
+  "BabyCare/DesignSystem/CareAdaptiveLayout.swift": {
+    "mtime": 1792737767.8964782,
+    "seen": 1792942098.0172942,
+    "ast_hash": "62da875ddf24285dca6dc54199076bf0",
+    "semantic_hash": ""
+  },
+  "BabyCare/DesignSystem/CareAppearance.swift": {
+    "mtime": 1792862054.25327,
+    "seen": 1792942098.0172951,
+    "ast_hash": "1fb960e7a8523873abcfb99ae2563ca2",
+    "semantic_hash": ""
+  },
+  "BabyCare/Domain/CareEntryDetails.swift": {
+    "mtime": 1792860616.5711977,
+    "seen": 1792942098.01733,
+    "ast_hash": "120b1a6e47208c9fd4425127ba5d1a19",
+    "semantic_hash": ""
+  },
+  "BabyCare/Domain/CareQuotes.swift": {
+    "mtime": 1792861797.7646823,
+    "seen": 1792942098.0173419,
+    "ast_hash": "bd577daae948facccb0145c66a7bcfab",
+    "semantic_hash": ""
+  },
+  "BabyCare/Domain/CareWeather.swift": {
+    "mtime": 1792861040.5101206,
+    "seen": 1792942098.017343,
+    "ast_hash": "91c68bc4aaacf881fab877fe391e1207",
+    "semantic_hash": ""
+  },
+  "BabyCare/Domain/GrowthReference.swift": {
+    "mtime": 1792863143.8253555,
+    "seen": 1792942098.017344,
+    "ast_hash": "0d1a4d9c320603af9d48d271a4eede63",
+    "semantic_hash": ""
+  },
+  "BabyCare/Domain/GrowthReferenceData.swift": {
+    "mtime": 1792863143.8611028,
+    "seen": 1792942098.017344,
+    "ast_hash": "eee74a443dffea01eec064706ffd3b47",
+    "semantic_hash": ""
+  },
+  "BabyCare/Services/AppleSignIn.swift": {
+    "mtime": 1792025062.2928057,
+    "seen": 1792942098.017409,
+    "ast_hash": "d501f9654460d5f515be32d81305c146",
+    "semantic_hash": ""
+  },
+  "BabyCare/Services/CareWeatherService.swift": {
+    "mtime": 1792861069.832349,
+    "seen": 1792942098.017463,
+    "ast_hash": "5d7b9e98c40a1e798e31b97e37b01b01",
+    "semantic_hash": ""
+  },
+  "BabyCare/ViewModels/ConsentViewModel.swift": {
+    "mtime": 1791962050.1040096,
+    "seen": 1792942098.017487,
+    "ast_hash": "38ee213c5885d8c5b2625518f71bfa32",
+    "semantic_hash": ""
+  },
+  "BabyCare/Views/Activities/EntryDetailViews.swift": {
+    "mtime": 1792860669.3192525,
+    "seen": 1792942098.017513,
+    "ast_hash": "fcd44b2b40e8c466dd4bbdb4925928ef",
+    "semantic_hash": ""
+  },
+  "BabyCare/Views/Insights/GrowthChartView.swift": {
+    "mtime": 1792863143.8257127,
+    "seen": 1792942098.017515,
+    "ast_hash": "895d47f5bd38c9b6dba220637461651f",
+    "semantic_hash": ""
+  },
+  "BabyCare/Views/QuickLog/WeatherCardView.swift": {
+    "mtime": 1792892208.242688,
+    "seen": 1792942098.017607,
+    "ast_hash": "e4f4d63adacfa267b35728b096c8b6b7",
+    "semantic_hash": ""
+  },
+  "BabyCareTests/AdaptiveLayoutTests.swift": {
+    "mtime": 1792737368.6982267,
+    "seen": 1792942098.017608,
+    "ast_hash": "b75457dd450570a4f54a12c33c0443bd",
+    "semantic_hash": ""
+  },
+  "BabyCareTests/AppleSignInTests.swift": {
+    "mtime": 1792025062.2947943,
+    "seen": 1792942098.017609,
+    "ast_hash": "58af6f8b5e055086c3fecd819777e4eb",
+    "semantic_hash": ""
+  },
+  "BabyCareTests/CareEntryDetailsTests.swift": {
+    "mtime": 1792863143.8261576,
+    "seen": 1792942098.017647,
+    "ast_hash": "0724ea5445cc428e8688e37f9084bd0b",
+    "semantic_hash": ""
+  },
+  "BabyCareTests/ConsentTests.swift": {
+    "mtime": 1791962108.8975408,
+    "seen": 1792942098.0176482,
+    "ast_hash": "0b305a131d90dd7886f4e6d9f96f77fc",
+    "semantic_hash": ""
+  },
+  "BabyCareTests/InsightDaySummaryTests.swift": {
+    "mtime": 1791897993.922398,
+    "seen": 1792942098.0176482,
+    "ast_hash": "60c37043617ba928ccdecc2ec4d8afd5",
+    "semantic_hash": ""
+  },
+  "BabyCareTests/InsightEpisodeSummaryTests.swift": {
+    "mtime": 1791964639.1693153,
+    "seen": 1792942098.017649,
+    "ast_hash": "2018fa84975e52ecaad00b61a12829be",
+    "semantic_hash": ""
+  },
+  "BabyCareTests/ShowcaseDataTests.swift": {
+    "mtime": 1791967686.9436228,
+    "seen": 1792942098.017667,
+    "ast_hash": "20c7debe0b889df1a164438e103b2d73",
+    "semantic_hash": ""
+  },
+  "BabyCareUITests/AdaptiveLayoutUITests.swift": {
+    "mtime": 1792740690.691797,
+    "seen": 1792942098.017718,
+    "ast_hash": "03d07e09b4693991a1e7cdd25f620c14",
+    "semantic_hash": ""
+  },
+  "BabyCareUITests/ConsentUITests.swift": {
+    "mtime": 1791974296.3218825,
+    "seen": 1792942098.01772,
+    "ast_hash": "f712e5c47a27db58d26fe68a22ccee84",
+    "semantic_hash": ""
+  },
+  "BabyCareUITests/MedicationFlowUITests.swift": {
+    "mtime": 1791974296.3215506,
+    "seen": 1792942098.0177212,
+    "ast_hash": "8589f9646b022778785abd60430f6100",
+    "semantic_hash": ""
+  },
+  "BabyCareUITests/StoreScreenshotsUITests.swift": {
+    "mtime": 1792741995.5891366,
+    "seen": 1792942098.0177221,
+    "ast_hash": "e644c11a902f7f4818b58bf2abaebfb7",
+    "semantic_hash": ""
+  },
+  "BabyCareUITests/UITestHelpers.swift": {
+    "mtime": 1792985845.997734,
+    "seen": 1792986076.0450208,
+    "ast_hash": "e26e18a8d2b8b00df050a6b719058d88",
+    "semantic_hash": ""
+  },
+  "Tools/Growth/generate.py": {
+    "mtime": 1792863143.8248696,
+    "seen": 1792942098.017746,
+    "ast_hash": "67068fdae7b56637ccd7edeb1511e34e",
+    "semantic_hash": ""
+  },
+  "Tools/store_captions.swift": {
+    "mtime": 1792940635.324182,
+    "seen": 1792942098.017784,
+    "ast_hash": "4fea0a9623e4f29707aeff1e5627c0f6",
+    "semantic_hash": ""
+  },
+  "Tools/store_screenshots.sh": {
+    "mtime": 1792465420.0330136,
+    "seen": 1792942098.017785,
+    "ast_hash": "8c63cabcf746f8b11674810cbfe99c55",
+    "semantic_hash": ""
+  },
+  "Tools/store_screenshots_duo.sh": {
+    "mtime": 1792742036.8546038,
+    "seen": 1792942098.017785,
+    "ast_hash": "842f06622f338fdac54fdb41af444210",
+    "semantic_hash": ""
+  },
+  "supabase/functions/apple-token/index.ts": {
+    "mtime": 1792426482.9918969,
+    "seen": 1792942098.017786,
+    "ast_hash": "b92fce697003abf7f03cdf30bd14a851",
+    "semantic_hash": ""
+  },
+  "supabase/tests/run-pglite.mjs": {
+    "mtime": 1792942998.745867,
+    "seen": 1792986076.045234,
+    "ast_hash": "52dddba714a70bda2322a85b1fd2c180",
+    "semantic_hash": ""
+  },
+  "AppStore/CAMPAIGNS.md": {
+    "mtime": 1792940727.3259583,
+    "seen": 1792942098.017802,
+    "ast_hash": "7ce30e93a65fcf09cb9630d402a92067",
+    "semantic_hash": ""
+  },
+  "AppStore/LISTING.md": {
+    "mtime": 1792941481.2020776,
+    "seen": 1792942098.017803,
+    "ast_hash": "1f8ac4b70536a21ca0af4133e5cde686",
+    "semantic_hash": ""
+  },
+  "AppStore/README.md": {
+    "mtime": 1792742833.465268,
+    "seen": 1792942098.017803,
+    "ast_hash": "b898c95913faef50b17d3b22b0927e0f",
+    "semantic_hash": ""
+  },
+  "AppStore/RELEASE.md": {
+    "mtime": 1792941912.71742,
+    "seen": 1792942098.0178041,
+    "ast_hash": "e6450a7ae91e40e75fe6688d9d9e81ee",
+    "semantic_hash": ""
+  },
+  "AppStore/REVIEW_REPLY.md": {
+    "mtime": 1792563097.7961593,
+    "seen": 1792942098.017805,
+    "ast_hash": "6dcaf92c6fd0e1a3258b8e8f6679a9f0",
+    "semantic_hash": ""
+  },
+  "CONSENT_FLOW.md": {
+    "mtime": 1792424538.7507262,
+    "seen": 1792942098.017864,
+    "ast_hash": "60574a6d98d2ce87f0aee605d7a34d47",
+    "semantic_hash": ""
+  },
+  "SHARED_CARE_PLAN.md": {
+    "mtime": 1792984930.211947,
+    "seen": 1792986076.046218,
+    "ast_hash": "b6c9eba34fc1e54b3f6d05609d4cfddf",
+    "semantic_hash": ""
+  },
+  "docs/index.html": {
+    "mtime": 1792940744.0170262,
+    "seen": 1792942098.0184488,
+    "ast_hash": "868ff89770f04f0e71c0c88c3c4a0c37",
+    "semantic_hash": ""
+  },
+  "docs/privacy.html": {
+    "mtime": 1792984895.9037142,
+    "seen": 1792986076.046329,
+    "ast_hash": "8786ac7fc84570e8a8909512d0f65b0c",
+    "semantic_hash": ""
+  },
+  "docs/terms.html": {
+    "mtime": 1792984895.9039223,
+    "seen": 1792986076.046329,
+    "ast_hash": "db776b3f892c7d7e9fa8f1986a6461ae",
+    "semantic_hash": ""
+  },
+  "supabase/templates/README.md": {
+    "mtime": 1792043576.6085708,
+    "seen": 1792942098.018452,
+    "ast_hash": "e896db3242e516e35e46c58cac76b818",
+    "semantic_hash": ""
+  },
+  "supabase/templates/change-email.html": {
+    "mtime": 1792043576.6085134,
+    "seen": 1792942098.018453,
+    "ast_hash": "8adfd515ec577e638cfd9c3cab96ccc2",
+    "semantic_hash": ""
+  },
+  "supabase/templates/confirm-signup.html": {
+    "mtime": 1792043576.60837,
+    "seen": 1792942098.018476,
+    "ast_hash": "3fd6f1bbab0fea6b55f33c0e8911e3e1",
+    "semantic_hash": ""
+  },
+  "AppStore/campaigns/qr-clinic.png": {
+    "mtime": 1792940693.306857,
+    "seen": 1792942098.018477,
+    "ast_hash": "e9696b020377b5aee9400939bfb8a07a",
+    "semantic_hash": ""
+  },
+  "AppStore/campaigns/qr-flyer.png": {
+    "mtime": 1792940693.3718216,
+    "seen": 1792942098.018477,
+    "ast_hash": "d2197ca2bbaf1182ed7ba6a91882250c",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/LaunchLogo.imageset/LaunchLogo@1x.png": {
+    "mtime": 1792861297.385778,
+    "seen": 1792942098.020471,
+    "ast_hash": "22cc5a87fb1c9873fa39dfb89787e655",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/LaunchLogo.imageset/LaunchLogo@2x.png": {
+    "mtime": 1792861297.573281,
+    "seen": 1792942098.020471,
+    "ast_hash": "d3ddd38383ff2a0a96f02b9a63b282ad",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/LaunchLogo.imageset/LaunchLogo@3x.png": {
+    "mtime": 1792861297.7627344,
+    "seen": 1792942098.020472,
+    "ast_hash": "2984dd8df9fc0994ef7ec3650a51e1d2",
+    "semantic_hash": ""
+  },
+  "BabyCare/Assets.xcassets/Stitch_pulmonology.imageset/Stitch_pulmonology.svg": {
+    "mtime": 1792855573.4132884,
+    "seen": 1792942098.0226612,
+    "ast_hash": "d7f7a95f91a839ab875e56802a7c0159",
+    "semantic_hash": ""
+  },
+  "BabyCare/Data/Cloud/CloudSharing.swift": {
+    "mtime": 1792968979.379824,
+    "seen": 1792986076.043633,
+    "ast_hash": "d06a9b97791aa1feedb4922adae0f8c0",
+    "semantic_hash": ""
+  },
+  "BabyCare/Domain/CareGrowth.swift": {
+    "mtime": 1792942169.2206674,
+    "seen": 1792986076.043843,
+    "ast_hash": "9ccbf6dccf5897adac5aef94d08d98d9",
+    "semantic_hash": ""
+  },
+  "BabyCare/SharingUITestFixture.swift": {
+    "mtime": 1792984372.064311,
+    "seen": 1792986076.044111,
+    "ast_hash": "7a35322ccfda300ef7fc6d0b709a2fc2",
+    "semantic_hash": ""
+  },
+  "BabyCare/Views/Profile/FamilySharingView.swift": {
+    "mtime": 1792968979.3799646,
+    "seen": 1792986076.044387,
+    "ast_hash": "4c44788edaf871367fba00f840fbc878",
+    "semantic_hash": ""
+  },
+  "BabyCareTests/GrowthLoopTests.swift": {
+    "mtime": 1792942313.3554604,
+    "seen": 1792986076.044672,
+    "ast_hash": "eed4320c818b584d91ed03170ceebda3",
+    "semantic_hash": ""
+  },
+  "BabyCareTests/SharedCareTests.swift": {
+    "mtime": 1792984295.1617694,
+    "seen": 1792986076.044754,
+    "ast_hash": "64f31bb2a03a8890943a91e4f417e034",
+    "semantic_hash": ""
+  },
+  "BabyCareUITests/FamilySharingUITests.swift": {
+    "mtime": 1792985846.0219884,
+    "seen": 1792986076.04494,
+    "ast_hash": "83109605ba67b21f000691139ea580ea",
     "semantic_hash": ""
   }
 }
