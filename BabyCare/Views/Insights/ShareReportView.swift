@@ -1,3 +1,4 @@
+import CoreImage.CIFilterBuiltins
 import SwiftUI
 #if canImport(UIKit)
 import UIKit
@@ -98,6 +99,7 @@ struct ShareReportView: View {
     private var canPreview: Bool { includeProfile || includeHealthNotes || !sections.isEmpty }
 
     @Environment(\.locale) private var appLocale
+    @Environment(\.isPresented) private var isPresented
     @Environment(\.careWindow) private var window
     @Environment(\.dynamicTypeSize) private var typeSize
     private var columns: Bool { window.allowsColumns(typeSize: typeSize) }
@@ -214,6 +216,8 @@ struct ShareReportView: View {
         .onChange(of: includeProfile) { _, _ in invalidatePreview() }
         .onChange(of: includeBirthDate) { _, _ in invalidatePreview() }
         .onChange(of: includeHealthNotes) { _, _ in invalidatePreview() }
+        // Leaving with a PDF made is a good moment for a rating prompt; opening the preview is not leaving.
+        .onChange(of: isPresented) { _, presented in if !presented, exportURL != nil { viewModel.noteReviewMoment(.reportShared) } }
         .onAppear {
             guard !didInitialize else { return }
             didInitialize = true
@@ -293,6 +297,16 @@ enum CareReportPDF {
                 }
                 y += 5
             }
+            // Closing note: a QR to the app for the doctor or caregiver who receives the report. The link
+            // carries only the campaign name, nothing about the baby.
+            if y + 96 > 770 { beginPage() }
+            y += 14
+            if let code = qrCode(CareAppStore.link(campaign: "pdf-report"), side: 64) {
+                context.cgContext.interpolationQuality = .none
+                code.draw(in: CGRect(x: 48, y: y, width: 64, height: 64))
+            }
+            (L10n.text("Tạo bằng ứng dụng Bé Khỏe") as NSString).draw(at: CGPoint(x: 124, y: y + 16), withAttributes: [.font: UIFont.boldSystemFont(ofSize: 11), .foregroundColor: UIColor.black])
+            (L10n.text("Quét mã để tải miễn phí trên App Store") as NSString).draw(at: CGPoint(x: 124, y: y + 34), withAttributes: [.font: UIFont.systemFont(ofSize: 10), .foregroundColor: UIColor.darkGray])
         }
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("Be-Khoe-\(snapshot.id.uuidString).pdf")
         try data.write(to: url, options: .atomic)
@@ -301,6 +315,20 @@ enum CareReportPDF {
         throw CocoaError(.featureUnsupported)
         #endif
     }
+
+    #if canImport(UIKit)
+    /// A sharp QR code for print: rendered at four times the drawn size, without smoothing.
+    static func qrCode(_ url: URL, side: CGFloat) -> UIImage? {
+        let filter = CIFilter.qrCodeGenerator()
+        filter.message = Data(url.absoluteString.utf8)
+        filter.correctionLevel = "M"
+        guard let output = filter.outputImage else { return nil }
+        let scale = side * 4 / output.extent.width
+        let scaled = output.transformed(by: CGAffineTransform(scaleX: scale, y: scale))
+        guard let image = CIContext().createCGImage(scaled, from: scaled.extent) else { return nil }
+        return UIImage(cgImage: image)
+    }
+    #endif
 }
 
 #Preview { NavigationStack { ShareReportView() }.environment(BabyCareViewModel.preview()) }

@@ -51,7 +51,8 @@ import Foundation
             return BabyCareViewModel(provider: SwiftDataCareDataProvider(configuration: CarePersistenceConfiguration(storeURL: url)))
         }
         #endif
-        return BabyCareViewModel(provider: SwiftDataCareDataProvider(), notifications: LocalCareReminderService())
+        // Only the real app asks for ratings; demo and UI-test builds never do.
+        return BabyCareViewModel(provider: SwiftDataCareDataProvider(), notifications: LocalCareReminderService(), reviews: CareReviewTracker())
     }
 
     /// Home-screen weather. UI tests (`-demo`, `-ui-testing…`) get none so the layout they check stays put;

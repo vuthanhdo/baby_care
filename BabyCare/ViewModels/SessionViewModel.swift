@@ -163,7 +163,8 @@ import UserNotifications
         let ticket = await detach(); guard generation == ticket else { return }
         let remote = SupabaseRemote(authClient: client, userID: userID, familyID: id)
         let provider = SupabaseCareDataProvider(remote: remote, cache: SwiftDataCloudCache(userID: userID, familyID: id), familyID: id)
-        viewModel = BabyCareViewModel(provider: provider, notifications: LocalCareReminderService(scope: "cloud.\(userID.uuidString).\(id.uuidString)"))
+        viewModel = BabyCareViewModel(provider: provider, notifications: LocalCareReminderService(scope: "cloud.\(userID.uuidString).\(id.uuidString)"),
+                                      reviews: CareReviewTracker())
         defaults.set(id.uuidString, forKey: "care.family.\(userID)")
         phase = .content; busy = false
     }

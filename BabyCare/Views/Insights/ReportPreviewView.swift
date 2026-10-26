@@ -16,6 +16,7 @@ struct ReportPreviewView: View {
     init(snapshot: CareReportSnapshot? = nil) { _snapshot = State(initialValue: snapshot) }
 
     @Environment(\.locale) private var appLocale
+    @Environment(\.isPresented) private var isPresented
     var body: some View {
         let _ = appLocale
         ScrollView {
@@ -71,6 +72,7 @@ struct ReportPreviewView: View {
         .background(CareTheme.background).foregroundStyle(CareTheme.text)
         .navigationTitle(L10n.text("Xem trước báo cáo")).navigationBarTitleDisplayMode(.inline).toolbar(.visible, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)
+        .onChange(of: isPresented) { _, presented in if !presented, exportURL != nil { viewModel.noteReviewMoment(.reportShared) } }
         .onAppear {
             if snapshot == nil { snapshot = CareReportSnapshot(viewModel: viewModel, interval: InsightRange.hours48.interval(), sections: Set(ReportSection.allCases)) }
         }

@@ -1,3 +1,4 @@
+import StoreKit
 import SwiftUI
 
 enum CareTab: Hashable { case quick, diary, statistics }
@@ -7,6 +8,7 @@ struct ContentView: View {
     @Environment(\.dynamicTypeSize) private var systemTextSize
     @AppStorage("care.textSize") private var textSize = "system"
     @State private var selectedTab: CareTab = .quick
+    @Environment(\.requestReview) private var requestReview
 
     @Environment(\.locale) private var appLocale
     var body: some View {
@@ -54,6 +56,10 @@ struct ContentView: View {
 //            }
 //        }
         .task { if viewModel.state.phase == .idle { await viewModel.send(.load) } }
+        .onChange(of: viewModel.reviewRequests) { _, _ in
+            // After the confirmation toast or the closing share sheet, not on top of them.
+            Task { try? await Task.sleep(for: .seconds(1.5)); requestReview() }
+        }
         .alert(L10n.text("Chưa hoàn tất thao tác"), isPresented: Binding(
             get: { viewModel.state.phase == .ready && viewModel.state.error != nil },
             set: { if !$0 { Task { await viewModel.send(.dismissError) } } }

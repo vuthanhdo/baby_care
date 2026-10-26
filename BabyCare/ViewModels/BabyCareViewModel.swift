@@ -25,16 +25,20 @@ struct BabyCareState {
 final class BabyCareViewModel {
     private(set) var state = BabyCareState()
     let isDemo: Bool
+    /// Bumped when it is a good moment to ask for an App Store rating; the root view asks StoreKit.
+    private(set) var reviewRequests = 0
     @ObservationIgnored private let provider: any CareDataProvider
+    @ObservationIgnored private let reviews: CareReviewTracker?
     @ObservationIgnored private let notifications: any CareReminderService
     @ObservationIgnored private var toastTask: Task<Void, Never>?
     @ObservationIgnored private let emptyProfile = BabyProfile()
     @ObservationIgnored private var active = true
 
     init(provider: any CareDataProvider, notifications: (any CareReminderService)? = nil,
-         initialData: CareDatabase? = nil, isDemo: Bool = false) {
+         initialData: CareDatabase? = nil, isDemo: Bool = false, reviews: CareReviewTracker? = nil) {
         self.provider = provider
         self.notifications = notifications ?? NoopCareReminderService()
+        self.reviews = reviews
         self.isDemo = isDemo
         if let initialData { state.database = initialData; state.phase = .ready }
     }
@@ -110,6 +114,7 @@ final class BabyCareViewModel {
                 guard active else { return false }
                 if let message = warning ?? message { showMessage(message) }
                 if let notice = await provider.takeNotice() { state.error = notice }
+                if reviews?.didCommit(mutation) == true { reviewRequests += 1 }
                 return true
             } catch {
                 guard active else { return false }
@@ -127,6 +132,11 @@ final class BabyCareViewModel {
                 return false
             }
         }
+    }
+
+    /// A moment outside a data change that may deserve a rating prompt, such as a shared report.
+    func noteReviewMoment(_ moment: CareReviewPolicy.Moment) {
+        if reviews?.ask(after: moment) == true { reviewRequests += 1 }
     }
 
     deinit { toastTask?.cancel() }
