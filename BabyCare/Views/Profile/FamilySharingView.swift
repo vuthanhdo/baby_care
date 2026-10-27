@@ -195,7 +195,8 @@ private struct InviteCodeSheet: View {
     }
 }
 
-private struct JoinFamilySheet: View {
+/// Join by code; also offered on the first-run screen so an invited caregiver need not create a baby first.
+struct JoinFamilySheet: View {
     @Environment(SessionViewModel.self) private var session
     @Environment(\.dismiss) private var dismiss
     @State private var code = ""

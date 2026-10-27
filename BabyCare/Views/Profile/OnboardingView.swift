@@ -7,8 +7,10 @@ import UIKit
 /// Stitch A — native view backed by the existing data provider.
 struct OnboardingView: View {
     @Environment(BabyCareViewModel.self) private var viewModel
+    @Environment(SessionViewModel.self) private var session: SessionViewModel?
     @Environment(\.dismiss) private var dismiss
     var isAddingBaby = false
+    @State private var joining = false
     @State private var profileID = UUID()
     @State private var name = ""
     @State private var birthDate = Date()
@@ -43,6 +45,14 @@ struct OnboardingView: View {
                         .font(.custom("BeVietnamPro-Bold", size: 26, relativeTo: .title)).foregroundStyle(CareTheme.text)
                     Text(L10n.text("Tạo hồ sơ cho bé để bắt đầu theo dõi cữ sữa, giấc ngủ và nhiệt độ."))
                         .font(CareFont.callout).foregroundStyle(CareTheme.secondary)
+                    // An invited grandparent or nanny joins the family instead of creating a baby of their own.
+                    if !isAddingBaby, session?.canShare == true {
+                        Button { joining = true } label: {
+                            Label(L10n.text("Có mã mời từ người thân? Tham gia gia đình của họ"), systemImage: "key")
+                                .font(CareFont.subheadline.weight(.semibold))
+                        }
+                        .accessibilityIdentifier("onboarding.join")
+                    }
                 }
                 .padding(.vertical, 8)
             }
@@ -166,6 +176,7 @@ struct OnboardingView: View {
             }
         }
         .interactiveDismissDisabled(isAddingBaby && hasDraft)
+        .sheet(isPresented: $joining) { JoinFamilySheet() }
         .task(id: photo) {
             guard let selection = photo else { photoLoadID = nil; return }
             let loadID = UUID()
