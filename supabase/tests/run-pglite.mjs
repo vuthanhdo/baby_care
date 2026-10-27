@@ -29,7 +29,7 @@ try {
     await db.exec(await readFile(`${root}/migrations/${file}`, 'utf8'));
     console.log(`Applied ${file}`);
   }
-  for (const name of ['consent', 'backend', 'sharing', 'feedback']) {
+  for (const name of ['consent', 'backend', 'sharing', 'feedback', 'features']) {
     const results = await db.exec(await readFile(`${root}/tests/${name}.sql`, 'utf8'));
     const summary = results.find(result => result.rows?.[0]?.passed_checks)?.rows[0];
     console.log(`${name}: PASS`, summary);

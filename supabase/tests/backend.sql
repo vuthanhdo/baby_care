@@ -200,6 +200,6 @@ select pg_temp.rejects('select * from public.babies','42501','anonymous read den
 select pg_temp.rejects('select public.babycare_create_family(gen_random_uuid(),''Anon'')','42501','anonymous RPC denied');
 reset role;
 select pg_temp.check_true((select not public and file_size_limit=5242880 from storage.buckets where id='babycare-media'),'private bucket and 5 MiB limit');
-select pg_temp.check_true((select count(*)=15 and bool_and(relrowsecurity) from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='public' and c.relkind='r'),'all fifteen app tables have RLS');
+select pg_temp.check_true((select count(*)=18 and bool_and(relrowsecurity) from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='public' and c.relkind='r'),'all eighteen app tables have RLS');
 select count(*) as passed_checks, bool_and(passed) as all_passed from test_results;
 rollback;

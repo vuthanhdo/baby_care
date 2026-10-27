@@ -11,6 +11,24 @@
 
 Backend có 10 bảng, RLS theo family, 3 public RPC và private bucket `babycare-media`. App iOS đã có đăng nhập email/mật khẩu, provider Supabase, SwiftData cache/outbox và upload ảnh. Google OAuth/OTP đã có code; chủ project đã xác nhận bật Google provider. Cần kiểm chứng Google login thực tế và cấu hình SMTP cho email. Xem [hướng dẫn thiết lập](AUTH_SETUP.md).
 
+**Đã áp dụng 27/10/2026 (SQL Editor):** `202610270014_feature_board.sql` (bình chọn tính năng trong tab Góp ý, bản 1.2; đã kiểm tra: 3 bảng bật RLS, 4 hàm trùng với repo, chỉ người đã đăng nhập gọi được; đã thử gửi, duyệt và bình chọn từ simulator). Thêm:
+- 3 bảng `feature_requests`, `feature_votes`, `feature_reports`, đều bật RLS và không có policy; app chỉ đọc và ghi qua RPC.
+- RPC `babycare_feature_board`, `babycare_submit_feature` (tối đa 5 đề xuất mỗi ngày), `babycare_toggle_feature_vote`, `babycare_report_feature`.
+- View `babycare_private.feature_inbox`.
+- SQL Editor cảnh báo "destructive operations" vì có `on delete cascade` và lệnh `delete` trong hàm bỏ phiếu; chạy migration không xoá dữ liệu.
+
+Người gửi không hiện tên với ai. Xoá tài khoản thì xoá đề xuất, phiếu và báo cáo của người đó.
+
+**Duyệt đề xuất (nội dung do người dùng tạo, quy định 1.2 của App Store):**
+- Đề xuất mới ở `pending`, chỉ người gửi thấy.
+- Xem hàng chờ: Table Editor → schema `babycare_private` → `feature_inbox`. Đề xuất chờ duyệt lên đầu, có số phiếu, số báo cáo và email người gửi.
+- Đổi `status` trong bảng `public.feature_requests`:
+  - `open`: hiện cho mọi người và nhận phiếu.
+  - `planned`: vẫn nhận phiếu, gắn nhãn "Đã lên kế hoạch".
+  - `done`: gắn nhãn "Đã có trong app", không nhận phiếu nữa.
+  - `declined`: ẩn với mọi người, chỉ người gửi thấy.
+- Có báo cáo thì đổi sang `declined` hoặc xoá dòng.
+
 **Đã áp dụng 27/10/2026 (SQL Editor):** `202610270013_feedback.sql` (góp ý trong app, bản 1.2; đã kiểm tra: bảng bật RLS, 3 policy Storage, hàm trùng với repo). Thêm:
 - Bảng `public.app_feedback` bật RLS; người gửi chỉ đọc được dòng của mình, mọi lần ghi đi qua RPC `babycare_send_feedback` (tối đa 10 lần mỗi giờ, gửi lại cùng id thì không tạo bản trùng).
 - Bucket riêng tư `babycare-feedback` cho ảnh chụp màn hình, tối đa 3 ảnh, mỗi ảnh 5 MB.
