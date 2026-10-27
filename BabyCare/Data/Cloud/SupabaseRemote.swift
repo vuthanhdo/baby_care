@@ -49,6 +49,15 @@ nonisolated enum CloudError: Error, LocalizedError, Sendable, Equatable {
             if e.code == "P0001", e.message == "Cannot leave own family" {
                 return CloudError.rejected(L10n.text("Đây là gia đình của tài khoản bạn nên không thể rời đi."))
             }
+            if e.code == "P0001", e.message == "Too many suggestions" {
+                return CloudError.rejected(L10n.text("Bạn đã gửi 5 đề xuất hôm nay. Hãy gửi tiếp vào ngày mai."))
+            }
+            if e.code == "P0001", e.message == "Not open for votes" {
+                return CloudError.rejected(L10n.text("Đề xuất này không còn nhận bình chọn."))
+            }
+            if e.code == "P0001", e.message == "Too much feedback" {
+                return CloudError.rejected(L10n.text("Bạn đã gửi 10 góp ý trong 1 giờ qua. Hãy thử lại sau ít phút."))
+            }
             if e.code == "P0001", e.message == "Family is full" { return CloudError.rejected(L10n.text("Gia đình này đã đủ 6 thành viên.")) }
             if e.code == "P0001", e.message == "Too many open invites" {
                 return CloudError.rejected(L10n.text("Đang có 5 lời mời chưa dùng. Hủy bớt rồi tạo mã mới."))
@@ -101,6 +110,22 @@ nonisolated enum CloudPrivacyDeletion {
             }
             guard families.count == pageSize else { break }
             offset += pageSize
+        }
+    }
+
+    /// Screenshots sent with feedback (migration 0013); the rows go with the account, the files must go first.
+    static func removeFeedback(client: SupabaseClient) async throws {
+        struct Row: Decodable, Sendable { let attachments: [String] }
+        let rows: [Row]
+        do {
+            rows = try await client.from("app_feedback").select("attachments").execute().value
+        } catch let error as PostgrestError where ["42P01", "PGRST205"].contains(error.code ?? "") {
+            return // a server without the feedback table has nothing to remove
+        }
+        let paths = rows.flatMap(\.attachments)
+        let bucket = client.storage.from(SupabaseFeedbackRemote.bucket)
+        for start in stride(from: 0, to: paths.count, by: 100) {
+            _ = try await bucket.remove(paths: Array(paths[start..<min(start + 100, paths.count)]))
         }
     }
 

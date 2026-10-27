@@ -14,6 +14,7 @@
 "1 lần" = "1 time";
 "1 ngày" = "1 day";
 "1 ngày tuổi" = "1 day old";
+"1 phiếu" = "1 vote";
 "1 số đo" = "1 measurement";
 "1 số đo trong khoảng" = "1 measurement in this period";
 "1 sự kiện" = "1 event";
@@ -75,7 +76,10 @@
 "Báo cáo PDF trên thiết bị" = "PDF reports on this device";
 "Báo cáo chỉ chứa bé và khoảng thời gian bạn chọn; đây không phải bản xuất toàn bộ tài khoản." = "The report contains only the selected baby and date range; it is not a full account export.";
 "Báo cáo do phụ huynh ghi nhận, phục vụ trao đổi với người chăm sóc hoặc bác sĩ. Không thay thế chẩn đoán của nhân viên y tế." = "This report contains parent-recorded information for discussion with caregivers or doctors. It does not replace a medical diagnosis.";
+"Báo cáo nội dung không phù hợp" = "Report inappropriate content";
 "Báo cáo đã chia sẻ" = "Shared reports";
+"Báo cáo đề xuất này?" = "Report this suggestion?";
+"Báo lỗi" = "Report a bug";
 "Bây giờ" = "Now";
 "Bão lớn" = "Hurricane";
 "Bão nhiệt đới" = "Tropical storm";
@@ -95,6 +99,9 @@
 "Bé đang ngủ" = "Baby is sleeping";
 "Bé đã có giấc ngủ đang diễn ra." = "Your baby already has an ongoing sleep session.";
 "Bé đã ngủ dậy? Ghi giấc vừa ngủ" = "Already awake? Log the nap";
+"Bình chọn" = "Vote";
+"Bình chọn tính năng" = "Vote on features";
+"Bình chọn tính năng bạn muốn có. Đề xuất nhiều phiếu được ưu tiên làm trước." = "Vote for the features you want. The most voted ideas are built first.";
 "Bình thường khi đo ở {0}: {1}" = "Normal for {0}: {1}";
 "Bình tĩnh là điều đầu tiên con cần khi con ốm." = "When your child is unwell, your calm is the first thing they need.";
 "Bú mẹ" = "Breastfeeding";
@@ -118,10 +125,14 @@
 "Bạn không còn ở trong gia đình này; 1 thay đổi chưa gửi đã bị bỏ." = "You are no longer in this family; 1 unsent change was discarded.";
 "Bạn không còn ở trong gia đình này; {0} thay đổi chưa gửi đã bị bỏ." = "You are no longer in this family; {0} unsent changes were discarded.";
 "Bạn kiểm soát dữ liệu mình nhập và nội dung chọn đưa vào báo cáo. Hãy kiểm tra người nhận trước khi chia sẻ PDF hoặc liên kết chứa thông tin của trẻ." = "You control the data you enter and choose what appears in reports. Check the recipient before sharing a PDF or link containing a child's information.";
+"Bạn muốn Bé Khỏe có thêm gì, hoặc làm khác đi thế nào?" = "What would you like Bé Khỏe to add or do differently?";
 "Bạn sẽ không xem và ghi được cho các bé của gia đình này nữa. Dữ liệu của gia đình vẫn giữ nguyên." = "You will no longer see or log for this family's babies. The family's data stays as it is.";
 "Bạn đang chỉ xem gia đình này. Chủ gia đình có thể cho bạn cùng ghi." = "You are viewing this family. The owner can let you log too.";
+"Bạn đang làm gì thì gặp lỗi? App hiện ra thế nào, và bạn mong nó làm gì?" = "What were you doing when it went wrong? What did the app show, and what did you expect?";
 "Bạn đang ở chế độ chỉ xem trong gia đình này. Nhờ chủ gia đình đổi sang Cùng chăm sóc để ghi." = "You can only view this family. Ask the owner to make you a caregiver so you can log.";
 "Bạn đã có đủ 4 hồ sơ bé." = "You already have 4 baby profiles.";
+"Bạn đã gửi 10 góp ý trong 1 giờ qua. Hãy thử lại sau ít phút." = "You have sent 10 messages in the past hour. Please try again in a few minutes.";
+"Bạn đã gửi 5 đề xuất hôm nay. Hãy gửi tiếp vào ngày mai." = "You have sent 5 suggestions today. Please send more tomorrow.";
 "Bạn đã nhập sai quá nhiều lần. Hãy thử lại sau 1 giờ." = "Too many wrong codes. Try again in an hour.";
 "Bạn đã ở trong gia đình của {0}." = "You are already in {0}'s family.";
 "BẢN XEM TRƯỚC" = "PREVIEW";
@@ -140,9 +151,11 @@
 "Bắt đầu đồng hành cùng bé yêu." = "Start your baby's care journey.";
 "Bệnh đã mắc, phẫu thuật, nằm viện hoặc bệnh mạn tính" = "Past illnesses, operations, hospital stays or long-term conditions";
 "Bệnh đã mắc, phẫu thuật, nằm viện hoặc bệnh mạn tính. Có thể sửa sau trong Hồ sơ bé." = "Past illnesses, operations, hospital stays or long-term conditions. You can edit this later in the baby's profile.";
+"Bỏ bình chọn" = "Remove vote";
 "Bỏ nội dung" = "Discard";
 "Bỏ nội dung chưa lưu?" = "Discard unsaved changes?";
 "Bỏ trống mức độ hoặc độ chắc chắn nếu chưa rõ." = "Leave severity or certainty empty if you are not sure.";
+"Bỏ ảnh {0}" = "Remove picture {0}";
 "Bố Mẹ An Tâm" = "Peace of mind for parents";
 "Bố mẹ an tâm thì con vui khỏe." = "Calm parents raise happy, healthy children.";
 "Bộ nhớ trên thiết bị" = "Device storage";
@@ -164,6 +177,7 @@
 "Chiều cao" = "Height";
 "Chiều dài" = "Length";
 "Chiều dài / chiều cao" = "Length / height";
+"Cho phép liên hệ lại qua email" = "Allow a reply by email";
 "Cho phép lưu và hiển thị hồ sơ, nhiệt độ, tiêm chủng, dinh dưỡng, giấc ngủ và dữ liệu bạn chủ động nhập." = "Allow BabyCare to store and display the profile, temperature, vaccinations, feeding, sleep, and data you choose to enter.";
 "Chuẩn này không có số liệu cho độ tuổi đang xem." = "This standard has no data for the ages shown.";
 "Chuẩn tăng trưởng" = "Growth standard";
@@ -186,6 +200,7 @@
 "Chưa có số đo" = "No measurements yet";
 "Chưa có số đo trong khoảng này" = "No measurements in this period";
 "Chưa có tài khoản?" = "Don't have an account?";
+"Chưa có đề xuất nào. Hãy gửi đề xuất đầu tiên!" = "No suggestions yet. Send the first one!";
 "Chưa ghi lần nào" = "No dose logged yet";
 "Chưa ghi nhận" = "Not recorded yet";
 "Chưa ghi nhận dùng thuốc" = "No medicine entries";
@@ -205,6 +220,7 @@
 "Chưa nhận được kết quả cuối. Hãy nói lại hoặc sửa văn bản rồi bấm Phân tích và lưu." = "No final result received. Try again or edit the text and tap Parse & save.";
 "Chưa rõ" = "Unknown";
 "Chưa rõ loại sữa" = "Milk type unknown";
+"Chưa thực hiện" = "Not planned";
 "Chưa tạo được PDF. Hãy thử lại." = "Unable to create the PDF. Please try again.";
 "Chưa tải được hồ sơ của bạn" = "Unable to load your profile";
 "Chưa tải được ảnh. Hãy chọn lại." = "Unable to load the photo. Please select it again.";
@@ -247,6 +263,7 @@
 "Chọn đơn vị" = "Select unit";
 "Chọn ảnh hoặc dùng avatar chữ cái theo tên" = "Choose a photo or use initials from your baby's name";
 "Chọn ảnh đại diện" = "Choose profile photo";
+"Chờ duyệt" = "Under review";
 "Chụp ảnh" = "Take photo";
 "Chủ gia đình" = "Family owner";
 "Cloud chưa hỗ trợ xoá hồ sơ bé." = "Cloud does not support deleting a baby profile yet.";
@@ -261,6 +278,7 @@
 "Cân nặng" = "Weight";
 "Cân nặng của bé" = "Baby's weight";
 "Câu có phủ định, dự định hoặc lựa chọn chưa rõ. Hãy nói hoạt động đã xảy ra." = "The sentence contains a negative, a plan or an unclear choice. State an activity that has happened.";
+"Câu hỏi hoặc thông tin bạn muốn gửi cho nhà phát triển." = "A question or anything else you would like to tell the developer.";
 "Câu {0}: {1} Chưa lưu hoạt động nào." = "Sentence {0}: {1} No activities were saved.";
 "Còn {0}" = "{0} left";
 "Còn {0} giây" = "{0} seconds left";
@@ -281,6 +299,8 @@
 "Cùng một lúc, nhiệt độ hậu môn cao nhất, rồi đến tai và miệng; nách thấp nhất. Hãy so số đo với đúng vị trí đã đo." = "At the same moment, rectal readings are highest, then ear and mouth; armpit is lowest. Compare a reading with the site it was taken at.";
 "Cả hai" = "Both";
 "Cảm giác như {0}" = "Feels like {0}";
+"Cảm ơn bạn!" = "Thank you!";
+"Cảm ơn bạn! Đề xuất sẽ hiện cho mọi người sau khi được duyệt." = "Thank you! Your suggestion will appear to everyone once reviewed.";
 "Cần thêm số đo để xem diễn biến" = "Add more measurements to see a trend";
 "Cần tên thuốc, lượng thực tế và đơn vị, ví dụ ml hoặc viên. Không tự suy ra liều thuốc." = "Include the medicine name, actual amount and unit, such as ml or tablets. The app does not infer doses.";
 "Cần đồng ý lại" = "Consent required again";
@@ -378,6 +398,10 @@
 "Giờ bắt đầu và kết thúc" = "Start and end time";
 "Giờ kết thúc phải sau giờ bắt đầu và không ở tương lai." = "The end must be after the start and not in the future.";
 "Gom nhiệt độ, thuốc và triệu chứng vào một đợt để theo dõi diễn biến. Bạn có thể kết thúc bất cứ lúc nào." = "Group temperatures, medicines and symptoms into one episode to follow how it develops. You can end it at any time.";
+"Góp ý" = "Feedback";
+"Góp ý cho Bé Khỏe" = "Feedback for Bé Khỏe";
+"Góp ý đã được gửi tới nhà phát triển." = "Your feedback has reached the developer.";
+"Góp ý đã được gửi tới nhà phát triển. Nếu cần thêm thông tin, chúng tôi sẽ liên hệ qua {0}." = "Your feedback has reached the developer. If more details are needed, we will write to {0}.";
 "Găng tay" = "Mittens";
 "Gỡ khỏi gia đình" = "Remove from family";
 "Gỡ {0} khỏi gia đình?" = "Remove {0} from the family?";
@@ -387,8 +411,13 @@
 "Gợi ý theo thói quen" = "Routine suggestions";
 "Gợi ý trang phục khi ra ngoài" = "What to wear outside";
 "Gợi ý từ lần ghi gần đây; lịch đã đặt vẫn được giữ." = "Suggestions from recent entries. Scheduled reminders are kept.";
+"Gửi" = "Send";
+"Gửi góp ý" = "Send feedback";
+"Gửi góp ý khác" = "Send another message";
+"Gửi kèm thông tin kỹ thuật để dễ tìm lỗi: {0}. Dữ liệu của bé không được gửi, trừ khi có trong ảnh bạn chọn." = "Technical details are sent to help find bugs: {0}. Your baby's data is not sent unless it appears in a picture you choose.";
 "Gửi liên kết đặt lại" = "Send reset link";
 "Gửi lại email xác thực" = "Resend verification email";
+"Gửi lỗi kèm ảnh chụp, góp ý hoặc câu hỏi thẳng tới nhà phát triển." = "Send a bug with screenshots, a suggestion or a question straight to the developer.";
 "Gửi lời mời" = "Send invite";
 "Hiện mật khẩu" = "Show password";
 "Hiện tại: {0}" = "Current age: {0}";
@@ -405,6 +434,8 @@
 "Hãy chăm sóc cả bản thân, vì bé cần bố mẹ khỏe mạnh." = "Look after yourself too; your baby needs you well.";
 "Hãy thử lại." = "Please try again.";
 "Hãy đăng nhập tài khoản cloud để tham gia gia đình." = "Sign in to a cloud account to join a family.";
+"Hãy đăng nhập để bình chọn và đề xuất tính năng." = "Sign in to vote and suggest features.";
+"Hãy đăng nhập để gửi góp ý trong app, hoặc gửi email cho nhà phát triển." = "Sign in to send feedback in the app, or email the developer.";
 "Hôm nay" = "Today";
 "Hôm nay hãy ôm con lâu hơn một chút." = "Hold your little one a little longer today.";
 "Hôm qua" = "Yesterday";
@@ -453,6 +484,7 @@
 "Không xác định đủ hoạt động, số lượng và đơn vị. Ví dụ: Bé uống 120 ml sữa; Bé đo nhiệt độ 37,5 độ; Bé thay tã." = "The activity, amount or unit is unclear. Vietnamese examples: Bé uống 120 ml sữa; Bé đo nhiệt độ 37,5 độ; Bé thay tã.";
 "Không đọc được dữ liệu" = "Unable to load data";
 "Không đọc được dữ liệu đã lưu. Dữ liệu gốc vẫn được giữ." = "Unable to read saved data. The original data is kept.";
+"Không đọc được một ảnh. Hãy chọn ảnh khác." = "One picture could not be read. Please choose another.";
 "Không đọc được ảnh này. Hãy chọn ảnh khác." = "Unable to read this photo. Choose another one.";
 "Không, chỉ ghi nhiệt độ" = "No, just log the temperature";
 "Khăn" = "Scarf";
@@ -472,6 +504,7 @@
 "Liên kết báo cáo đã chia sẻ" = "Shared report links";
 "Liên kết không còn hiệu lực. Hãy yêu cầu email mới." = "This link has expired. Please request a new email.";
 "Logo Bé Khỏe" = "BabyCare logo";
+"Loại" = "Type";
 "Loại nhiệt kế" = "Thermometer";
 "Loại sữa" = "Milk type";
 "Lúc ngủ" = "Asleep";
@@ -538,6 +571,7 @@
 "Mã mời đã hết hạn. Nhờ người mời tạo mã mới." = "This invite code has expired. Ask for a new one.";
 "Món ăn và lượng bé đã ăn" = "Food and amount eaten";
 "Mô tả (tùy chọn)" = "Description (optional)";
+"Mô tả thêm: dùng khi nào, giúp gì cho bạn (không bắt buộc)" = "More details: when you would use it and how it helps (optional)";
 "Mô tả triệu chứng khác · Bắt buộc" = "Describe other symptoms · Required";
 "Mù khô" = "Haze";
 "Mũ" = "Hat";
@@ -561,6 +595,7 @@
 "Mật khẩu nhập lại không khớp." = "The passwords do not match.";
 "Mẹ vừa cho bé uống một trăm hai mươi ml sữa\nCon em uống nước được ba mươi ml\nBé bú mẹ mười lăm phút\nĐo nách được ba mươi bảy phẩy năm độ\nCon mình ngủ được một giờ rưỡi\nBé ngủ nửa tiếng\nThay bỉm cho bé xong\nBé uống sữa 120ml và bé tắm xong" = "Mẹ vừa cho bé uống một trăm hai mươi ml sữa\nCon em uống nước được ba mươi ml\nBé bú mẹ mười lăm phút\nĐo nách được ba mươi bảy phẩy năm độ\nCon mình ngủ được một giờ rưỡi\nBé ngủ nửa tiếng\nThay bỉm cho bé xong\nBé uống sữa 120ml và bé tắm xong";
 "Mệt" = "Tiredness";
+"Mọi người đang muốn" = "What parents want";
 "MỐC TIẾP THEO: {0}" = "NEXT REMINDER: {0}";
 "MỐC ĐÃ ĐẶT: {0}" = "SCHEDULED: {0}";
 "Mốc cho bé {0}: bình thường dưới {1} lần/phút (WHO)." = "For a child aged {0}: under {1} breaths/min is normal (WHO).";
@@ -588,6 +623,7 @@
 "Mở bản xem trước" = "Open preview";
 "Mở cài đặt thiết bị" = "Open device settings";
 "Mở email gửi tới {0} và bấm liên kết để xác minh tài khoản." = "Open the email sent to {0} and tap the link to verify your account.";
+"Mục" = "Section";
 "Mức độ" = "Severity";
 "Mức độ nôn" = "How much";
 "NHIỆT ĐỘ CƠ THỂ" = "BODY TEMPERATURE";
@@ -629,6 +665,7 @@
 "Nhiệt độ bình thường theo vị trí đo" = "Normal temperature by site";
 "Nhiệt độ gần nhất" = "Latest temperature";
 "Nhiệt độ °C" = "Temperature °C";
+"Nhà phát triển sẽ xem lại và ẩn đề xuất nếu nội dung không phù hợp." = "The developer will review it and hide it if the content is inappropriate.";
 "Nhóm máu" = "Blood type";
 "Nhóm máu nếu biết" = "Blood type, if known";
 "Nhận dạng tiếng Việt hiện không khả dụng. Kiểm tra kết nối mạng hoặc thử lại sau." = "Vietnamese speech recognition is unavailable. Check your connection or try again later.";
@@ -804,6 +841,7 @@
 "Thêm số đo mới" = "Add new measurement";
 "Thêm thói quen hoặc lời dặn chăm sóc bé." = "Add routines or care instructions for your baby.";
 "Thêm ảnh ({0}/3)" = "Add photos ({0}/3)";
+"Thêm ảnh chụp màn hình" = "Add a screenshot";
 "Thêm ảnh thuốc" = "Add a photo of the medicine";
 "Thói quen & Lưu ý chăm sóc" = "Routines & care notes";
 "Thói quen, lời dặn hoặc thông tin cần lưu ý" = "Routines, instructions or important notes";
@@ -884,6 +922,7 @@
 "Tìm hoạt động, thuốc, ghi chú…" = "Search activities, medicines, notes…";
 "Tích nhanh tất cả & Tiếp tục" = "Select all and continue";
 "Tính chất phân" = "Stool";
+"Tính năng bạn muốn" = "The feature you want";
 "Tính năng tiêm chủng chưa sẵn sàng trên cloud. Dữ liệu khác vẫn sử dụng được." = "Vaccination tracking is not available on the cloud yet. Your other data is still available.";
 "Tính từ lần vừa ghi" = "Counted from the dose just logged";
 "Tôi là cha mẹ, người giám hộ hoặc người đại diện hợp pháp có quyền cung cấp thông tin của trẻ." = "I am a parent, guardian, or legal representative authorized to provide the child's information.";
@@ -934,6 +973,7 @@
 "Vui lòng xác nhận quyền riêng tư và dữ liệu trước khi tiếp tục." = "Please confirm privacy and data consent before continuing.";
 "Ví dụ: Bé An" = "For example: Alex";
 "Ví dụ: Bé uống 120 ml sữa lúc 7 giờ sáng" = "Vietnamese example: Bé uống 120 ml sữa lúc 7 giờ sáng";
+"Ví dụ: Nhắc bé uống nước" = "For example: water reminders";
 "Ví dụ: bome@email.com" = "For example: parent@email.com";
 "Ví dụ: sinh non 35 tuần, từng nằm viện vì viêm phổi" = "e.g. born at 35 weeks, hospitalised for pneumonia";
 "Ví dụ: “Bé uống 120 ml sữa lúc 7 giờ sáng”" = "Vietnamese example: “Bé uống 120 ml sữa lúc 7 giờ sáng”";
@@ -1045,6 +1085,7 @@
 "{0} ngày" = "{0} days";
 "{0} ngày tuổi" = "{0} days old";
 "{0} ngày {1} giờ" = "{0} d {1} h";
+"{0} phiếu" = "{0} votes";
 "{0} phút" = "{0} min";
 "{0} phút bú mẹ" = "{0} min breastfeeding";
 "{0} số đo" = "{0} measurements";
@@ -1096,6 +1137,7 @@
 "Đang tải thành viên…" = "Loading members…";
 "Đang tải ảnh" = "Loading photos";
 "Đang tải ảnh…" = "Loading photos…";
+"Đang tải…" = "Loading…";
 "Đang xem bé {0}" = "Now viewing {0}";
 "Đang xem bản lưu trên máy" = "Viewing the local copy";
 "Đang xử lý" = "Processing";
@@ -1117,6 +1159,7 @@
 "Đã chọn" = "Selected";
 "Đã chọn dữ liệu trên máy. Hãy đăng nhập để ghi nhận sự đồng ý trước khi tiếp tục; dữ liệu của bé không tự tải lên cloud." = "On-device data selected. Sign in to record your consent before continuing; your child's data will not be uploaded automatically.";
 "Đã có số đo này tại cùng thời điểm. Hãy đổi giờ hoặc sửa bản ghi trong Lịch sử tăng trưởng." = "This measurement already exists at the same time. Change the time or edit the entry in Growth History.";
+"Đã có trong app" = "Available now";
 "Đã có tài khoản?" = "Already have an account?";
 "Đã cập nhật" = "Updated";
 "Đã cập nhật hồ sơ bé" = "Baby profile updated";
@@ -1125,10 +1168,12 @@
 "Đã ghi" = "Recorded";
 "Đã ghi nhận" = "Recorded";
 "Đã ghi {0} {1} lúc {2}. Đặt mốc nhắc tiếp theo theo hướng dẫn bạn đang có." = "Logged {0} {1} at {2}. Set the next reminder according to the instructions you have.";
+"Đã gửi báo cáo. Cảm ơn bạn." = "Report sent. Thank you.";
 "Đã gửi email tới {0}. Bấm liên kết trong email để xác minh tài khoản." = "An email was sent to {0}. Tap the link in the email to verify your account.";
 "Đã gửi lại email xác thực tới {0}." = "A new verification email was sent to {0}.";
 "Đã hủy trước khi bắt đầu nhận dạng. Chưa lưu hoạt động nào." = "Cancelled before recognition started. No activities were saved.";
 "Đã kết thúc theo dõi" = "Tracking ended";
+"Đã lên kế hoạch" = "Planned";
 "Đã lưu 1 hoạt động" = "Saved 1 activity";
 "Đã lưu 1 hoạt động từ giọng nói" = "Saved 1 activity from voice input";
 "Đã lưu cloud · Chưa cập nhật được bản lưu trên máy" = "Saved to cloud · Local copy could not be updated";
@@ -1180,6 +1225,11 @@
 "Đếm đủ 1 phút khi bé ngủ hoặc nằm yên; mỗi lần ngực hoặc bụng nhô lên là 1 nhịp." = "Count for a full minute while your baby sleeps or lies still; each rise of the chest or belly is one breath.";
 "Đếm đủ 60 giây." = "Count for the full 60 seconds.";
 "Đến" = "To";
+"Đề xuất của bạn" = "Your suggestions";
+"Đề xuất hiện cho mọi người sau khi được duyệt. Tên của bạn không được hiển thị." = "Suggestions appear to everyone once reviewed. Your name is never shown.";
+"Đề xuất này không còn nhận bình chọn." = "This suggestion no longer takes votes.";
+"Đề xuất tính năng" = "Suggest a feature";
+"Đề xuất tính năng mới" = "Suggest a new feature";
 "Để sau" = "Later";
 "Để trống thông tin chưa biết. Ghi chú do gia đình cung cấp không phải chẩn đoán." = "Leave unknown information blank. Caregiver notes are not a medical diagnosis.";
 "Đối tượng" = "Baby";
@@ -1195,8 +1245,11 @@
 "Đợt theo dõi" = "Tracking period";
 "Đợt theo dõi: {0}" = "Tracking period: {0}";
 "Đứng đo" = "Standing";
+"Đừng ghi tên, số điện thoại hay thông tin của bé: đề xuất sẽ hiện cho mọi người sau khi được duyệt." = "Do not include names, phone numbers or your baby's details: suggestions appear to everyone once reviewed.";
+"Ảnh chụp màn hình giúp tìm lỗi nhanh hơn. Hãy bỏ những ảnh có thông tin bạn không muốn gửi." = "Screenshots help find bugs faster. Leave out any picture with information you do not want to send.";
 "Ảnh phải có định dạng JPEG, PNG, HEIC hoặc WebP." = "Photos must be JPEG, PNG, HEIC or WebP.";
 "Ảnh đính kèm {0}" = "Attached photo {0}";
+"Ảnh đính kèm · tối đa {0}" = "Attachments · up to {0}";
 "Ảnh đại diện của bé" = "Baby's profile photo";
 "Ảnh đại diện {0}" = "{0}'s profile photo";
 "Ẩn mật khẩu" = "Hide password";

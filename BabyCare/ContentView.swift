@@ -1,7 +1,7 @@
 import StoreKit
 import SwiftUI
 
-enum CareTab: Hashable { case quick, diary, statistics }
+enum CareTab: Hashable { case quick, diary, statistics, feedback }
 
 struct ContentView: View {
     @Environment(BabyCareViewModel.self) private var viewModel
@@ -36,6 +36,9 @@ struct ContentView: View {
                                 .careTabs($selectedTab)
                         }
                     } label: { Label(L10n.text("Thống kê"), systemImage: "chart.bar") }
+                    Tab(value: .feedback) {
+                        NavigationStack { FeedbackView().careTabs($selectedTab) }
+                    } label: { Label(L10n.text("Góp ý"), systemImage: "envelope") }
                 }
                 .toolbar(.hidden, for: .tabBar)
                 .id(viewModel.baby.id)
@@ -118,6 +121,7 @@ struct CareBottomTabs: View {
         tab(.quick, title: L10n.text("Ghi nhanh"), symbol: "bolt", identifier: "tab.quick")
         tab(.diary, title: L10n.text("Nhật ký"), symbol: "auto_stories", identifier: "tab.diary")
         tab(.statistics, title: L10n.text("Thống kê"), symbol: "bar_chart", identifier: "tab.statistics")
+        tab(.feedback, title: L10n.text("Góp ý"), symbol: "contact_mail", identifier: "tab.feedback")
     }
     private func tab(_ value: CareTab, title: String, symbol: String, identifier: String) -> some View {
         Button { selection = value } label: {

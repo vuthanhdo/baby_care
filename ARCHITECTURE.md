@@ -91,6 +91,26 @@ Trong app:
 - Màn: Cài đặt → Gia đình & chia sẻ (`FamilySharingView`).
 - UI test dùng `-ui-testing-sharing` (`SharingUITestFixture`, không gọi Supabase).
 
+## Góp ý trong app (27/10/2026, bản 1.2)
+
+Tab thứ 4 "Góp ý" (`FeedbackView`), mục "Gửi góp ý" (`FeedbackForm`): chọn loại (báo lỗi, góp ý, khác), viết tối đa 4000 ký tự, đính kèm tối đa 3 ảnh đã chuẩn hoá bằng `CareImageProcessor`, và tuỳ chọn cho phép liên hệ lại qua email tài khoản.
+- Thông tin kỹ thuật gửi kèm (`CareFeedbackContext`: phiên bản, build, iOS, kiểu máy, ngôn ngữ, kiểu lưu) hiện cho người dùng thấy trước khi gửi.
+- `SupabaseFeedbackRemote` tải ảnh lên `babycare-feedback/<user>/<feedback id>/n.jpg` rồi gọi `babycare_send_feedback`. Id của bản nháp cố định nên gửi lại sau lỗi không tạo bản trùng.
+- Cần đăng nhập. Chế độ lưu trên máy cũng có tài khoản để ghi nhận đồng ý; nếu không có tài khoản thì màn hiện email của nhà phát triển.
+- Xoá tài khoản gọi `CloudPrivacyDeletion.removeFeedback` trước RPC.
+- Server: migration `202610270013_feedback.sql`; xem góp ý ở `babycare_private.feedback_inbox`.
+- Test: `supabase/tests/feedback.sql`, `FeedbackTests`, `FeedbackUITests` (bản giả trong `SharingUITestFixture`).
+
+## Bình chọn tính năng (27/10/2026, bản 1.2)
+
+Tab Góp ý có hai mục: "Gửi góp ý" (`FeedbackForm`) và "Bình chọn tính năng" (`FeatureBoardView`).
+- **Đề xuất:** gồm tiêu đề 3–120 ký tự và mô tả tối đa 1000 ký tự, gửi qua `babycare_submit_feature`, chờ nhà phát triển duyệt. Người gửi tự có một phiếu.
+- **Bảng:** hiện đề xuất đã duyệt (`open`, `planned`, `done`), nhiều phiếu trước, kèm đề xuất của chính người dùng đang chờ hoặc bị từ chối. Không hiện tên người gửi.
+- **Phiếu:** mỗi người một phiếu cho mỗi đề xuất, bấm lại để bỏ. App đổi số ngay rồi theo câu trả lời của server, lỗi thì trả lại như cũ.
+- **Báo cáo** nội dung không phù hợp nằm trong menu nhấn giữ (quy định 1.2).
+- Server: migration `202610270014_feature_board.sql`; nhà phát triển duyệt ở `babycare_private.feature_inbox`.
+- Test: `supabase/tests/features.sql`, `FeedbackTests`, `FeatureBoardUITests` (bản giả trong `SharingUITestFixture`).
+
 ## Tài khoản và tối đa 4 bé (12/09/2026)
 
 App không còn màn chọn/tạo family hay thao tác chọn family trong Cài đặt. Sau đăng nhập, SessionViewModel tự mở vùng dữ liệu trước đó; tài khoản mới tự tạo vùng dữ liệu rồi vào bước tạo bé. Lỗi tải tài khoản hiển thị Thử lại/Đăng xuất.

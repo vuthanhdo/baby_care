@@ -11,7 +11,7 @@ final class BabyCareUITestsLaunchTests: XCTestCase {
         app.launch()
         // The Stitch tab bar is a custom view, not a UITabBar; its buttons carry identifiers.
         XCTAssertTrue(app.buttons["tab.quick"].waitForExistence(timeout: 10))
-        for (identifier, title) in [("tab.quick", "Ghi nhanh"), ("tab.diary", "Nhật ký"), ("tab.statistics", "Thống kê")] {
+        for (identifier, title) in [("tab.quick", "Ghi nhanh"), ("tab.diary", "Nhật ký"), ("tab.statistics", "Thống kê"), ("tab.feedback", "Góp ý")] {
             let tab = app.buttons[identifier]
             tab.tap()
             XCTAssertTrue(tab.wait(for: \.isSelected, toEqual: true, timeout: 3), "\(title) not selected")

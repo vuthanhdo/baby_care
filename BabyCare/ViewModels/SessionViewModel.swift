@@ -24,6 +24,10 @@ import UserNotifications
     @ObservationIgnored private let consentRemote: (any ConsentRemote)?
     @ObservationIgnored private let sharingRemote: (any CareSharingRemote)?
     @ObservationIgnored lazy var sharing: any CareSharingRemote = sharingRemote ?? SupabaseSharingRemote(client: client)
+    @ObservationIgnored private let feedbackRemote: (any CareFeedbackRemote)?
+    @ObservationIgnored lazy var feedback: any CareFeedbackRemote = feedbackRemote ?? SupabaseFeedbackRemote(client: client)
+    @ObservationIgnored private let featureRemote: (any CareFeatureRemote)?
+    @ObservationIgnored lazy var features: any CareFeatureRemote = featureRemote ?? SupabaseFeatureRemote(client: client)
     @ObservationIgnored private let makeLocalViewModel: @MainActor () -> BabyCareViewModel
     @ObservationIgnored private var userID: UUID?
     @ObservationIgnored private var generation = 0
@@ -33,9 +37,12 @@ import UserNotifications
     private static let pendingSignupKey = "care.auth.pendingSignupEmail"
     static let pendingInviteKey = "care.invite.pendingCode"
 
-    init(consentRemote: (any ConsentRemote)? = nil, sharingRemote: (any CareSharingRemote)? = nil, defaults: UserDefaults = .standard,
+    init(consentRemote: (any ConsentRemote)? = nil, sharingRemote: (any CareSharingRemote)? = nil,
+         feedbackRemote: (any CareFeedbackRemote)? = nil, featureRemote: (any CareFeatureRemote)? = nil,
+         defaults: UserDefaults = .standard,
          makeLocalViewModel: @escaping @MainActor () -> BabyCareViewModel = { AppDependencies.makeViewModel() }) {
         self.consentRemote = consentRemote; self.sharingRemote = sharingRemote
+        self.feedbackRemote = feedbackRemote; self.featureRemote = featureRemote
         self.defaults = defaults; self.makeLocalViewModel = makeLocalViewModel
         pendingSignupEmail = defaults.string(forKey: Self.pendingSignupKey)
         pendingInviteCode = defaults.string(forKey: Self.pendingInviteKey)
@@ -45,6 +52,8 @@ import UserNotifications
     /// The signed-in member's role in the open family; device storage is always the owner's.
     var role: CareFamilyRole { isLocal ? .owner : currentFamily?.role ?? .owner }
     var canShare: Bool { !isLocal && userID != nil && phase == .content }
+    /// Feedback needs a signed-in account; device storage users have one too, for their consent record.
+    var canSendFeedback: Bool { userID != nil }
     /// The family created by this account, which it can never leave.
     var isOwnFamily: Bool { currentFamily.map { $0.createdBy == userID } ?? true }
 
@@ -435,6 +444,7 @@ import UserNotifications
             // A family someone else also uses is handed over by the server with its photos; Storage refuses them too.
             try await CloudPrivacyDeletion.removeOwnedAccountMedia(client: client, userID: deletingUserID,
                                                                    keeping: Set(families.filter { $0.memberCount > 1 }.map(\.id)))
+            try await CloudPrivacyDeletion.removeFeedback(client: client)
             _ = try await client.rpc("babycare_delete_account").execute()
             let ticket = await detach()
             guard generation == ticket else { busy = false; return false }

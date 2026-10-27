@@ -14,6 +14,7 @@
 "1 lần" = "1 lần";
 "1 ngày" = "1 ngày";
 "1 ngày tuổi" = "1 ngày tuổi";
+"1 phiếu" = "1 phiếu";
 "1 số đo" = "1 số đo";
 "1 số đo trong khoảng" = "1 số đo trong khoảng";
 "1 sự kiện" = "1 sự kiện";
@@ -75,7 +76,10 @@
 "Báo cáo PDF trên thiết bị" = "Báo cáo PDF trên thiết bị";
 "Báo cáo chỉ chứa bé và khoảng thời gian bạn chọn; đây không phải bản xuất toàn bộ tài khoản." = "Báo cáo chỉ chứa bé và khoảng thời gian bạn chọn; đây không phải bản xuất toàn bộ tài khoản.";
 "Báo cáo do phụ huynh ghi nhận, phục vụ trao đổi với người chăm sóc hoặc bác sĩ. Không thay thế chẩn đoán của nhân viên y tế." = "Báo cáo do phụ huynh ghi nhận, phục vụ trao đổi với người chăm sóc hoặc bác sĩ. Không thay thế chẩn đoán của nhân viên y tế.";
+"Báo cáo nội dung không phù hợp" = "Báo cáo nội dung không phù hợp";
 "Báo cáo đã chia sẻ" = "Báo cáo đã chia sẻ";
+"Báo cáo đề xuất này?" = "Báo cáo đề xuất này?";
+"Báo lỗi" = "Báo lỗi";
 "Bây giờ" = "Bây giờ";
 "Bão lớn" = "Bão lớn";
 "Bão nhiệt đới" = "Bão nhiệt đới";
@@ -95,6 +99,9 @@
 "Bé đang ngủ" = "Bé đang ngủ";
 "Bé đã có giấc ngủ đang diễn ra." = "Bé đã có giấc ngủ đang diễn ra.";
 "Bé đã ngủ dậy? Ghi giấc vừa ngủ" = "Bé đã ngủ dậy? Ghi giấc vừa ngủ";
+"Bình chọn" = "Bình chọn";
+"Bình chọn tính năng" = "Bình chọn tính năng";
+"Bình chọn tính năng bạn muốn có. Đề xuất nhiều phiếu được ưu tiên làm trước." = "Bình chọn tính năng bạn muốn có. Đề xuất nhiều phiếu được ưu tiên làm trước.";
 "Bình thường khi đo ở {0}: {1}" = "Bình thường khi đo ở {0}: {1}";
 "Bình tĩnh là điều đầu tiên con cần khi con ốm." = "Bình tĩnh là điều đầu tiên con cần khi con ốm.";
 "Bú mẹ" = "Bú mẹ";
@@ -118,10 +125,14 @@
 "Bạn không còn ở trong gia đình này; 1 thay đổi chưa gửi đã bị bỏ." = "Bạn không còn ở trong gia đình này; 1 thay đổi chưa gửi đã bị bỏ.";
 "Bạn không còn ở trong gia đình này; {0} thay đổi chưa gửi đã bị bỏ." = "Bạn không còn ở trong gia đình này; {0} thay đổi chưa gửi đã bị bỏ.";
 "Bạn kiểm soát dữ liệu mình nhập và nội dung chọn đưa vào báo cáo. Hãy kiểm tra người nhận trước khi chia sẻ PDF hoặc liên kết chứa thông tin của trẻ." = "Bạn kiểm soát dữ liệu mình nhập và nội dung chọn đưa vào báo cáo. Hãy kiểm tra người nhận trước khi chia sẻ PDF hoặc liên kết chứa thông tin của trẻ.";
+"Bạn muốn Bé Khỏe có thêm gì, hoặc làm khác đi thế nào?" = "Bạn muốn Bé Khỏe có thêm gì, hoặc làm khác đi thế nào?";
 "Bạn sẽ không xem và ghi được cho các bé của gia đình này nữa. Dữ liệu của gia đình vẫn giữ nguyên." = "Bạn sẽ không xem và ghi được cho các bé của gia đình này nữa. Dữ liệu của gia đình vẫn giữ nguyên.";
 "Bạn đang chỉ xem gia đình này. Chủ gia đình có thể cho bạn cùng ghi." = "Bạn đang chỉ xem gia đình này. Chủ gia đình có thể cho bạn cùng ghi.";
+"Bạn đang làm gì thì gặp lỗi? App hiện ra thế nào, và bạn mong nó làm gì?" = "Bạn đang làm gì thì gặp lỗi? App hiện ra thế nào, và bạn mong nó làm gì?";
 "Bạn đang ở chế độ chỉ xem trong gia đình này. Nhờ chủ gia đình đổi sang Cùng chăm sóc để ghi." = "Bạn đang ở chế độ chỉ xem trong gia đình này. Nhờ chủ gia đình đổi sang Cùng chăm sóc để ghi.";
 "Bạn đã có đủ 4 hồ sơ bé." = "Bạn đã có đủ 4 hồ sơ bé.";
+"Bạn đã gửi 10 góp ý trong 1 giờ qua. Hãy thử lại sau ít phút." = "Bạn đã gửi 10 góp ý trong 1 giờ qua. Hãy thử lại sau ít phút.";
+"Bạn đã gửi 5 đề xuất hôm nay. Hãy gửi tiếp vào ngày mai." = "Bạn đã gửi 5 đề xuất hôm nay. Hãy gửi tiếp vào ngày mai.";
 "Bạn đã nhập sai quá nhiều lần. Hãy thử lại sau 1 giờ." = "Bạn đã nhập sai quá nhiều lần. Hãy thử lại sau 1 giờ.";
 "Bạn đã ở trong gia đình của {0}." = "Bạn đã ở trong gia đình của {0}.";
 "BẢN XEM TRƯỚC" = "BẢN XEM TRƯỚC";
@@ -140,9 +151,11 @@
 "Bắt đầu đồng hành cùng bé yêu." = "Bắt đầu đồng hành cùng bé yêu.";
 "Bệnh đã mắc, phẫu thuật, nằm viện hoặc bệnh mạn tính" = "Bệnh đã mắc, phẫu thuật, nằm viện hoặc bệnh mạn tính";
 "Bệnh đã mắc, phẫu thuật, nằm viện hoặc bệnh mạn tính. Có thể sửa sau trong Hồ sơ bé." = "Bệnh đã mắc, phẫu thuật, nằm viện hoặc bệnh mạn tính. Có thể sửa sau trong Hồ sơ bé.";
+"Bỏ bình chọn" = "Bỏ bình chọn";
 "Bỏ nội dung" = "Bỏ nội dung";
 "Bỏ nội dung chưa lưu?" = "Bỏ nội dung chưa lưu?";
 "Bỏ trống mức độ hoặc độ chắc chắn nếu chưa rõ." = "Bỏ trống mức độ hoặc độ chắc chắn nếu chưa rõ.";
+"Bỏ ảnh {0}" = "Bỏ ảnh {0}";
 "Bố Mẹ An Tâm" = "Bố Mẹ An Tâm";
 "Bố mẹ an tâm thì con vui khỏe." = "Bố mẹ an tâm thì con vui khỏe.";
 "Bộ nhớ trên thiết bị" = "Bộ nhớ trên thiết bị";
@@ -164,6 +177,7 @@
 "Chiều cao" = "Chiều cao";
 "Chiều dài" = "Chiều dài";
 "Chiều dài / chiều cao" = "Chiều dài / chiều cao";
+"Cho phép liên hệ lại qua email" = "Cho phép liên hệ lại qua email";
 "Cho phép lưu và hiển thị hồ sơ, nhiệt độ, tiêm chủng, dinh dưỡng, giấc ngủ và dữ liệu bạn chủ động nhập." = "Cho phép lưu và hiển thị hồ sơ, nhiệt độ, tiêm chủng, dinh dưỡng, giấc ngủ và dữ liệu bạn chủ động nhập.";
 "Chuẩn này không có số liệu cho độ tuổi đang xem." = "Chuẩn này không có số liệu cho độ tuổi đang xem.";
 "Chuẩn tăng trưởng" = "Chuẩn tăng trưởng";
@@ -186,6 +200,7 @@
 "Chưa có số đo" = "Chưa có số đo";
 "Chưa có số đo trong khoảng này" = "Chưa có số đo trong khoảng này";
 "Chưa có tài khoản?" = "Chưa có tài khoản?";
+"Chưa có đề xuất nào. Hãy gửi đề xuất đầu tiên!" = "Chưa có đề xuất nào. Hãy gửi đề xuất đầu tiên!";
 "Chưa ghi lần nào" = "Chưa ghi lần nào";
 "Chưa ghi nhận" = "Chưa ghi nhận";
 "Chưa ghi nhận dùng thuốc" = "Chưa ghi nhận dùng thuốc";
@@ -205,6 +220,7 @@
 "Chưa nhận được kết quả cuối. Hãy nói lại hoặc sửa văn bản rồi bấm Phân tích và lưu." = "Chưa nhận được kết quả cuối. Hãy nói lại hoặc sửa văn bản rồi bấm Phân tích và lưu.";
 "Chưa rõ" = "Chưa rõ";
 "Chưa rõ loại sữa" = "Chưa rõ loại sữa";
+"Chưa thực hiện" = "Chưa thực hiện";
 "Chưa tạo được PDF. Hãy thử lại." = "Chưa tạo được PDF. Hãy thử lại.";
 "Chưa tải được hồ sơ của bạn" = "Chưa tải được hồ sơ của bạn";
 "Chưa tải được ảnh. Hãy chọn lại." = "Chưa tải được ảnh. Hãy chọn lại.";
@@ -247,6 +263,7 @@
 "Chọn đơn vị" = "Chọn đơn vị";
 "Chọn ảnh hoặc dùng avatar chữ cái theo tên" = "Chọn ảnh hoặc dùng avatar chữ cái theo tên";
 "Chọn ảnh đại diện" = "Chọn ảnh đại diện";
+"Chờ duyệt" = "Chờ duyệt";
 "Chụp ảnh" = "Chụp ảnh";
 "Chủ gia đình" = "Chủ gia đình";
 "Cloud chưa hỗ trợ xoá hồ sơ bé." = "Cloud chưa hỗ trợ xoá hồ sơ bé.";
@@ -261,6 +278,7 @@
 "Cân nặng" = "Cân nặng";
 "Cân nặng của bé" = "Cân nặng của bé";
 "Câu có phủ định, dự định hoặc lựa chọn chưa rõ. Hãy nói hoạt động đã xảy ra." = "Câu có phủ định, dự định hoặc lựa chọn chưa rõ. Hãy nói hoạt động đã xảy ra.";
+"Câu hỏi hoặc thông tin bạn muốn gửi cho nhà phát triển." = "Câu hỏi hoặc thông tin bạn muốn gửi cho nhà phát triển.";
 "Câu {0}: {1} Chưa lưu hoạt động nào." = "Câu {0}: {1} Chưa lưu hoạt động nào.";
 "Còn {0}" = "Còn {0}";
 "Còn {0} giây" = "Còn {0} giây";
@@ -281,6 +299,8 @@
 "Cùng một lúc, nhiệt độ hậu môn cao nhất, rồi đến tai và miệng; nách thấp nhất. Hãy so số đo với đúng vị trí đã đo." = "Cùng một lúc, nhiệt độ hậu môn cao nhất, rồi đến tai và miệng; nách thấp nhất. Hãy so số đo với đúng vị trí đã đo.";
 "Cả hai" = "Cả hai";
 "Cảm giác như {0}" = "Cảm giác như {0}";
+"Cảm ơn bạn!" = "Cảm ơn bạn!";
+"Cảm ơn bạn! Đề xuất sẽ hiện cho mọi người sau khi được duyệt." = "Cảm ơn bạn! Đề xuất sẽ hiện cho mọi người sau khi được duyệt.";
 "Cần thêm số đo để xem diễn biến" = "Cần thêm số đo để xem diễn biến";
 "Cần tên thuốc, lượng thực tế và đơn vị, ví dụ ml hoặc viên. Không tự suy ra liều thuốc." = "Cần tên thuốc, lượng thực tế và đơn vị, ví dụ ml hoặc viên. Không tự suy ra liều thuốc.";
 "Cần đồng ý lại" = "Cần đồng ý lại";
@@ -378,6 +398,10 @@
 "Giờ bắt đầu và kết thúc" = "Giờ bắt đầu và kết thúc";
 "Giờ kết thúc phải sau giờ bắt đầu và không ở tương lai." = "Giờ kết thúc phải sau giờ bắt đầu và không ở tương lai.";
 "Gom nhiệt độ, thuốc và triệu chứng vào một đợt để theo dõi diễn biến. Bạn có thể kết thúc bất cứ lúc nào." = "Gom nhiệt độ, thuốc và triệu chứng vào một đợt để theo dõi diễn biến. Bạn có thể kết thúc bất cứ lúc nào.";
+"Góp ý" = "Góp ý";
+"Góp ý cho Bé Khỏe" = "Góp ý cho Bé Khỏe";
+"Góp ý đã được gửi tới nhà phát triển." = "Góp ý đã được gửi tới nhà phát triển.";
+"Góp ý đã được gửi tới nhà phát triển. Nếu cần thêm thông tin, chúng tôi sẽ liên hệ qua {0}." = "Góp ý đã được gửi tới nhà phát triển. Nếu cần thêm thông tin, chúng tôi sẽ liên hệ qua {0}.";
 "Găng tay" = "Găng tay";
 "Gỡ khỏi gia đình" = "Gỡ khỏi gia đình";
 "Gỡ {0} khỏi gia đình?" = "Gỡ {0} khỏi gia đình?";
@@ -387,8 +411,13 @@
 "Gợi ý theo thói quen" = "Gợi ý theo thói quen";
 "Gợi ý trang phục khi ra ngoài" = "Gợi ý trang phục khi ra ngoài";
 "Gợi ý từ lần ghi gần đây; lịch đã đặt vẫn được giữ." = "Gợi ý từ lần ghi gần đây; lịch đã đặt vẫn được giữ.";
+"Gửi" = "Gửi";
+"Gửi góp ý" = "Gửi góp ý";
+"Gửi góp ý khác" = "Gửi góp ý khác";
+"Gửi kèm thông tin kỹ thuật để dễ tìm lỗi: {0}. Dữ liệu của bé không được gửi, trừ khi có trong ảnh bạn chọn." = "Gửi kèm thông tin kỹ thuật để dễ tìm lỗi: {0}. Dữ liệu của bé không được gửi, trừ khi có trong ảnh bạn chọn.";
 "Gửi liên kết đặt lại" = "Gửi liên kết đặt lại";
 "Gửi lại email xác thực" = "Gửi lại email xác thực";
+"Gửi lỗi kèm ảnh chụp, góp ý hoặc câu hỏi thẳng tới nhà phát triển." = "Gửi lỗi kèm ảnh chụp, góp ý hoặc câu hỏi thẳng tới nhà phát triển.";
 "Gửi lời mời" = "Gửi lời mời";
 "Hiện mật khẩu" = "Hiện mật khẩu";
 "Hiện tại: {0}" = "Hiện tại: {0}";
@@ -405,6 +434,8 @@
 "Hãy chăm sóc cả bản thân, vì bé cần bố mẹ khỏe mạnh." = "Hãy chăm sóc cả bản thân, vì bé cần bố mẹ khỏe mạnh.";
 "Hãy thử lại." = "Hãy thử lại.";
 "Hãy đăng nhập tài khoản cloud để tham gia gia đình." = "Hãy đăng nhập tài khoản cloud để tham gia gia đình.";
+"Hãy đăng nhập để bình chọn và đề xuất tính năng." = "Hãy đăng nhập để bình chọn và đề xuất tính năng.";
+"Hãy đăng nhập để gửi góp ý trong app, hoặc gửi email cho nhà phát triển." = "Hãy đăng nhập để gửi góp ý trong app, hoặc gửi email cho nhà phát triển.";
 "Hôm nay" = "Hôm nay";
 "Hôm nay hãy ôm con lâu hơn một chút." = "Hôm nay hãy ôm con lâu hơn một chút.";
 "Hôm qua" = "Hôm qua";
@@ -453,6 +484,7 @@
 "Không xác định đủ hoạt động, số lượng và đơn vị. Ví dụ: Bé uống 120 ml sữa; Bé đo nhiệt độ 37,5 độ; Bé thay tã." = "Không xác định đủ hoạt động, số lượng và đơn vị. Ví dụ: Bé uống 120 ml sữa; Bé đo nhiệt độ 37,5 độ; Bé thay tã.";
 "Không đọc được dữ liệu" = "Không đọc được dữ liệu";
 "Không đọc được dữ liệu đã lưu. Dữ liệu gốc vẫn được giữ." = "Không đọc được dữ liệu đã lưu. Dữ liệu gốc vẫn được giữ.";
+"Không đọc được một ảnh. Hãy chọn ảnh khác." = "Không đọc được một ảnh. Hãy chọn ảnh khác.";
 "Không đọc được ảnh này. Hãy chọn ảnh khác." = "Không đọc được ảnh này. Hãy chọn ảnh khác.";
 "Không, chỉ ghi nhiệt độ" = "Không, chỉ ghi nhiệt độ";
 "Khăn" = "Khăn";
@@ -472,6 +504,7 @@
 "Liên kết báo cáo đã chia sẻ" = "Liên kết báo cáo đã chia sẻ";
 "Liên kết không còn hiệu lực. Hãy yêu cầu email mới." = "Liên kết không còn hiệu lực. Hãy yêu cầu email mới.";
 "Logo Bé Khỏe" = "Logo Bé Khỏe";
+"Loại" = "Loại";
 "Loại nhiệt kế" = "Loại nhiệt kế";
 "Loại sữa" = "Loại sữa";
 "Lúc ngủ" = "Lúc ngủ";
@@ -538,6 +571,7 @@
 "Mã mời đã hết hạn. Nhờ người mời tạo mã mới." = "Mã mời đã hết hạn. Nhờ người mời tạo mã mới.";
 "Món ăn và lượng bé đã ăn" = "Món ăn và lượng bé đã ăn";
 "Mô tả (tùy chọn)" = "Mô tả (tùy chọn)";
+"Mô tả thêm: dùng khi nào, giúp gì cho bạn (không bắt buộc)" = "Mô tả thêm: dùng khi nào, giúp gì cho bạn (không bắt buộc)";
 "Mô tả triệu chứng khác · Bắt buộc" = "Mô tả triệu chứng khác · Bắt buộc";
 "Mù khô" = "Mù khô";
 "Mũ" = "Mũ";
@@ -561,6 +595,7 @@
 "Mật khẩu nhập lại không khớp." = "Mật khẩu nhập lại không khớp.";
 "Mẹ vừa cho bé uống một trăm hai mươi ml sữa\nCon em uống nước được ba mươi ml\nBé bú mẹ mười lăm phút\nĐo nách được ba mươi bảy phẩy năm độ\nCon mình ngủ được một giờ rưỡi\nBé ngủ nửa tiếng\nThay bỉm cho bé xong\nBé uống sữa 120ml và bé tắm xong" = "Mẹ vừa cho bé uống một trăm hai mươi ml sữa\nCon em uống nước được ba mươi ml\nBé bú mẹ mười lăm phút\nĐo nách được ba mươi bảy phẩy năm độ\nCon mình ngủ được một giờ rưỡi\nBé ngủ nửa tiếng\nThay bỉm cho bé xong\nBé uống sữa 120ml và bé tắm xong";
 "Mệt" = "Mệt";
+"Mọi người đang muốn" = "Mọi người đang muốn";
 "MỐC TIẾP THEO: {0}" = "MỐC TIẾP THEO: {0}";
 "MỐC ĐÃ ĐẶT: {0}" = "MỐC ĐÃ ĐẶT: {0}";
 "Mốc cho bé {0}: bình thường dưới {1} lần/phút (WHO)." = "Mốc cho bé {0}: bình thường dưới {1} lần/phút (WHO).";
@@ -588,6 +623,7 @@
 "Mở bản xem trước" = "Mở bản xem trước";
 "Mở cài đặt thiết bị" = "Mở cài đặt thiết bị";
 "Mở email gửi tới {0} và bấm liên kết để xác minh tài khoản." = "Mở email gửi tới {0} và bấm liên kết để xác minh tài khoản.";
+"Mục" = "Mục";
 "Mức độ" = "Mức độ";
 "Mức độ nôn" = "Mức độ nôn";
 "NHIỆT ĐỘ CƠ THỂ" = "NHIỆT ĐỘ CƠ THỂ";
@@ -629,6 +665,7 @@
 "Nhiệt độ bình thường theo vị trí đo" = "Nhiệt độ bình thường theo vị trí đo";
 "Nhiệt độ gần nhất" = "Nhiệt độ gần nhất";
 "Nhiệt độ °C" = "Nhiệt độ °C";
+"Nhà phát triển sẽ xem lại và ẩn đề xuất nếu nội dung không phù hợp." = "Nhà phát triển sẽ xem lại và ẩn đề xuất nếu nội dung không phù hợp.";
 "Nhóm máu" = "Nhóm máu";
 "Nhóm máu nếu biết" = "Nhóm máu nếu biết";
 "Nhận dạng tiếng Việt hiện không khả dụng. Kiểm tra kết nối mạng hoặc thử lại sau." = "Nhận dạng tiếng Việt hiện không khả dụng. Kiểm tra kết nối mạng hoặc thử lại sau.";
@@ -804,6 +841,7 @@
 "Thêm số đo mới" = "Thêm số đo mới";
 "Thêm thói quen hoặc lời dặn chăm sóc bé." = "Thêm thói quen hoặc lời dặn chăm sóc bé.";
 "Thêm ảnh ({0}/3)" = "Thêm ảnh ({0}/3)";
+"Thêm ảnh chụp màn hình" = "Thêm ảnh chụp màn hình";
 "Thêm ảnh thuốc" = "Thêm ảnh thuốc";
 "Thói quen & Lưu ý chăm sóc" = "Thói quen & Lưu ý chăm sóc";
 "Thói quen, lời dặn hoặc thông tin cần lưu ý" = "Thói quen, lời dặn hoặc thông tin cần lưu ý";
@@ -884,6 +922,7 @@
 "Tìm hoạt động, thuốc, ghi chú…" = "Tìm hoạt động, thuốc, ghi chú…";
 "Tích nhanh tất cả & Tiếp tục" = "Tích nhanh tất cả & Tiếp tục";
 "Tính chất phân" = "Tính chất phân";
+"Tính năng bạn muốn" = "Tính năng bạn muốn";
 "Tính năng tiêm chủng chưa sẵn sàng trên cloud. Dữ liệu khác vẫn sử dụng được." = "Tính năng tiêm chủng chưa sẵn sàng trên cloud. Dữ liệu khác vẫn sử dụng được.";
 "Tính từ lần vừa ghi" = "Tính từ lần vừa ghi";
 "Tôi là cha mẹ, người giám hộ hoặc người đại diện hợp pháp có quyền cung cấp thông tin của trẻ." = "Tôi là cha mẹ, người giám hộ hoặc người đại diện hợp pháp có quyền cung cấp thông tin của trẻ.";
@@ -934,6 +973,7 @@
 "Vui lòng xác nhận quyền riêng tư và dữ liệu trước khi tiếp tục." = "Vui lòng xác nhận quyền riêng tư và dữ liệu trước khi tiếp tục.";
 "Ví dụ: Bé An" = "Ví dụ: Bé An";
 "Ví dụ: Bé uống 120 ml sữa lúc 7 giờ sáng" = "Ví dụ: Bé uống 120 ml sữa lúc 7 giờ sáng";
+"Ví dụ: Nhắc bé uống nước" = "Ví dụ: Nhắc bé uống nước";
 "Ví dụ: bome@email.com" = "Ví dụ: bome@email.com";
 "Ví dụ: sinh non 35 tuần, từng nằm viện vì viêm phổi" = "Ví dụ: sinh non 35 tuần, từng nằm viện vì viêm phổi";
 "Ví dụ: “Bé uống 120 ml sữa lúc 7 giờ sáng”" = "Ví dụ: “Bé uống 120 ml sữa lúc 7 giờ sáng”";
@@ -1045,6 +1085,7 @@
 "{0} ngày" = "{0} ngày";
 "{0} ngày tuổi" = "{0} ngày tuổi";
 "{0} ngày {1} giờ" = "{0} ngày {1} giờ";
+"{0} phiếu" = "{0} phiếu";
 "{0} phút" = "{0} phút";
 "{0} phút bú mẹ" = "{0} phút bú mẹ";
 "{0} số đo" = "{0} số đo";
@@ -1096,6 +1137,7 @@
 "Đang tải thành viên…" = "Đang tải thành viên…";
 "Đang tải ảnh" = "Đang tải ảnh";
 "Đang tải ảnh…" = "Đang tải ảnh…";
+"Đang tải…" = "Đang tải…";
 "Đang xem bé {0}" = "Đang xem bé {0}";
 "Đang xem bản lưu trên máy" = "Đang xem bản lưu trên máy";
 "Đang xử lý" = "Đang xử lý";
@@ -1117,6 +1159,7 @@
 "Đã chọn" = "Đã chọn";
 "Đã chọn dữ liệu trên máy. Hãy đăng nhập để ghi nhận sự đồng ý trước khi tiếp tục; dữ liệu của bé không tự tải lên cloud." = "Đã chọn dữ liệu trên máy. Hãy đăng nhập để ghi nhận sự đồng ý trước khi tiếp tục; dữ liệu của bé không tự tải lên cloud.";
 "Đã có số đo này tại cùng thời điểm. Hãy đổi giờ hoặc sửa bản ghi trong Lịch sử tăng trưởng." = "Đã có số đo này tại cùng thời điểm. Hãy đổi giờ hoặc sửa bản ghi trong Lịch sử tăng trưởng.";
+"Đã có trong app" = "Đã có trong app";
 "Đã có tài khoản?" = "Đã có tài khoản?";
 "Đã cập nhật" = "Đã cập nhật";
 "Đã cập nhật hồ sơ bé" = "Đã cập nhật hồ sơ bé";
@@ -1125,10 +1168,12 @@
 "Đã ghi" = "Đã ghi";
 "Đã ghi nhận" = "Đã ghi nhận";
 "Đã ghi {0} {1} lúc {2}. Đặt mốc nhắc tiếp theo theo hướng dẫn bạn đang có." = "Đã ghi {0} {1} lúc {2}. Đặt mốc nhắc tiếp theo theo hướng dẫn bạn đang có.";
+"Đã gửi báo cáo. Cảm ơn bạn." = "Đã gửi báo cáo. Cảm ơn bạn.";
 "Đã gửi email tới {0}. Bấm liên kết trong email để xác minh tài khoản." = "Đã gửi email tới {0}. Bấm liên kết trong email để xác minh tài khoản.";
 "Đã gửi lại email xác thực tới {0}." = "Đã gửi lại email xác thực tới {0}.";
 "Đã hủy trước khi bắt đầu nhận dạng. Chưa lưu hoạt động nào." = "Đã hủy trước khi bắt đầu nhận dạng. Chưa lưu hoạt động nào.";
 "Đã kết thúc theo dõi" = "Đã kết thúc theo dõi";
+"Đã lên kế hoạch" = "Đã lên kế hoạch";
 "Đã lưu 1 hoạt động" = "Đã lưu 1 hoạt động";
 "Đã lưu 1 hoạt động từ giọng nói" = "Đã lưu 1 hoạt động từ giọng nói";
 "Đã lưu cloud · Chưa cập nhật được bản lưu trên máy" = "Đã lưu cloud · Chưa cập nhật được bản lưu trên máy";
@@ -1180,6 +1225,11 @@
 "Đếm đủ 1 phút khi bé ngủ hoặc nằm yên; mỗi lần ngực hoặc bụng nhô lên là 1 nhịp." = "Đếm đủ 1 phút khi bé ngủ hoặc nằm yên; mỗi lần ngực hoặc bụng nhô lên là 1 nhịp.";
 "Đếm đủ 60 giây." = "Đếm đủ 60 giây.";
 "Đến" = "Đến";
+"Đề xuất của bạn" = "Đề xuất của bạn";
+"Đề xuất hiện cho mọi người sau khi được duyệt. Tên của bạn không được hiển thị." = "Đề xuất hiện cho mọi người sau khi được duyệt. Tên của bạn không được hiển thị.";
+"Đề xuất này không còn nhận bình chọn." = "Đề xuất này không còn nhận bình chọn.";
+"Đề xuất tính năng" = "Đề xuất tính năng";
+"Đề xuất tính năng mới" = "Đề xuất tính năng mới";
 "Để sau" = "Để sau";
 "Để trống thông tin chưa biết. Ghi chú do gia đình cung cấp không phải chẩn đoán." = "Để trống thông tin chưa biết. Ghi chú do gia đình cung cấp không phải chẩn đoán.";
 "Đối tượng" = "Đối tượng";
@@ -1195,8 +1245,11 @@
 "Đợt theo dõi" = "Đợt theo dõi";
 "Đợt theo dõi: {0}" = "Đợt theo dõi: {0}";
 "Đứng đo" = "Đứng đo";
+"Đừng ghi tên, số điện thoại hay thông tin của bé: đề xuất sẽ hiện cho mọi người sau khi được duyệt." = "Đừng ghi tên, số điện thoại hay thông tin của bé: đề xuất sẽ hiện cho mọi người sau khi được duyệt.";
+"Ảnh chụp màn hình giúp tìm lỗi nhanh hơn. Hãy bỏ những ảnh có thông tin bạn không muốn gửi." = "Ảnh chụp màn hình giúp tìm lỗi nhanh hơn. Hãy bỏ những ảnh có thông tin bạn không muốn gửi.";
 "Ảnh phải có định dạng JPEG, PNG, HEIC hoặc WebP." = "Ảnh phải có định dạng JPEG, PNG, HEIC hoặc WebP.";
 "Ảnh đính kèm {0}" = "Ảnh đính kèm {0}";
+"Ảnh đính kèm · tối đa {0}" = "Ảnh đính kèm · tối đa {0}";
 "Ảnh đại diện của bé" = "Ảnh đại diện của bé";
 "Ảnh đại diện {0}" = "Ảnh đại diện {0}";
 "Ẩn mật khẩu" = "Ẩn mật khẩu";

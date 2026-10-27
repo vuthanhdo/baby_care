@@ -18,7 +18,7 @@ final class AdaptiveLayoutUITests: XCTestCase {
             waitForRotation(app, landscape: orientation != .portrait)
 
             let padLandscape = orientation != .portrait && UIDevice.current.userInterfaceIdiom == .pad
-            for tab in ["tab.quick", "tab.diary", "tab.statistics"] {
+            for tab in ["tab.quick", "tab.diary", "tab.statistics", "tab.feedback"] {
                 let button = app.buttons[tab]
                 XCTAssertTrue(button.waitForExistence(timeout: 5), "\(tab) missing in \(pose)")
                 XCTAssertTrue(button.isHittable, "\(tab) hidden in \(pose)")
