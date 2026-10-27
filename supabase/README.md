@@ -11,7 +11,11 @@
 
 Backend có 10 bảng, RLS theo family, 3 public RPC và private bucket `babycare-media`. App iOS đã có đăng nhập email/mật khẩu, provider Supabase, SwiftData cache/outbox và upload ảnh. Google OAuth/OTP đã có code; chủ project đã xác nhận bật Google provider. Cần kiểm chứng Google login thực tế và cấu hình SMTP cho email. Xem [hướng dẫn thiết lập](AUTH_SETUP.md).
 
-**Chưa áp dụng:** `202610260012_shared_care.sql` (chia sẻ gia đình cho app 1.2: lời mời, thành viên, xoá tài khoản chuyển family dùng chung cho người còn lại, chặn xoá ảnh của family dùng chung). Chỉ thêm bảng trong `babycare_private` và RPC mới; thay thân 3 hàm `babycare_delete_account`, `babycare_private.can_delete_media`, `babycare_private.guard_consent_write` (đã đối chiếu 26/10/2026: bản đang chạy trùng hoàn toàn với repo). App 1.0.x và 1.1 không bị ảnh hưởng. Chạy trong SQL Editor trước khi phát hành 1.2; kiểm thử bằng `node supabase/tests/run-pglite.mjs <npm prefix>`.
+**Đã áp dụng 27/10/2026 (SQL Editor):** `202610260012_shared_care.sql` (chia sẻ gia đình cho app 1.2: lời mời, thành viên, xoá tài khoản chuyển family dùng chung cho người còn lại, chặn xoá ảnh của family dùng chung).
+- Thêm 3 bảng trong `babycare_private`, đều bật RLS và không có policy; chỉ các hàm SECURITY DEFINER đọc và ghi chúng.
+- Thêm các RPC mới; thay thân 3 hàm `babycare_delete_account`, `babycare_private.can_delete_media`, `babycare_private.guard_consent_write`. Trước khi áp dụng đã đối chiếu: bản đang chạy trùng hoàn toàn với repo.
+- Sau khi áp dụng, 14 hàm trên server trùng với repo. App 1.0.x và 1.1 không bị ảnh hưởng.
+- SQL Editor cảnh báo "destructive operations" vì thân hàm xoá tài khoản có lệnh `delete`; chạy migration không xoá dữ liệu.
 
 **Đã áp dụng 24/10/2026 (SQL Editor):** `202610240011_health_details.sql`: kind `breathing`, `p_api_version` cho `babycare_read_page`, cột `babies.medical_history` và `care_activities.follow_up_at`, allowlist mới của `babycare_private.babycare_apply` (vá tại chỗ từ định nghĩa đang chạy, vì bản trên server là thân hàm 0006 đã gộp dòng). Bản 1.0.x vẫn chạy bình thường. Trước khi có migration này, app 1.1 gặp server cũ sẽ bỏ thay đổi bị từ chối khỏi hàng đợi kèm thông báo thay vì kẹt mọi lần lưu sau.
 

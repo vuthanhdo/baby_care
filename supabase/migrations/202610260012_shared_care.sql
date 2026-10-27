@@ -33,6 +33,10 @@ create table babycare_private.baby_deletions (
 );
 revoke all on babycare_private.family_invites,babycare_private.invite_attempts,babycare_private.baby_deletions
   from public,anon,authenticated;
+-- No policies: only the SECURITY DEFINER functions below (owned by the table owner) read and write them.
+alter table babycare_private.family_invites enable row level security;
+alter table babycare_private.invite_attempts enable row level security;
+alter table babycare_private.baby_deletions enable row level security;
 
 create function babycare_private.invite_code() returns text
 language plpgsql volatile set search_path='' as $$
