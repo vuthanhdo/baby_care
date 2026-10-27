@@ -11,6 +11,17 @@
 
 Backend có 10 bảng, RLS theo family, 3 public RPC và private bucket `babycare-media`. App iOS đã có đăng nhập email/mật khẩu, provider Supabase, SwiftData cache/outbox và upload ảnh. Google OAuth/OTP đã có code; chủ project đã xác nhận bật Google provider. Cần kiểm chứng Google login thực tế và cấu hình SMTP cho email. Xem [hướng dẫn thiết lập](AUTH_SETUP.md).
 
+**Đã áp dụng 27/10/2026 (SQL Editor):** `202610270013_feedback.sql` (góp ý trong app, bản 1.2; đã kiểm tra: bảng bật RLS, 3 policy Storage, hàm trùng với repo). Thêm:
+- Bảng `public.app_feedback` bật RLS; người gửi chỉ đọc được dòng của mình, mọi lần ghi đi qua RPC `babycare_send_feedback` (tối đa 10 lần mỗi giờ, gửi lại cùng id thì không tạo bản trùng).
+- Bucket riêng tư `babycare-feedback` cho ảnh chụp màn hình, tối đa 3 ảnh, mỗi ảnh 5 MB.
+- View `babycare_private.feedback_inbox` cho nhà phát triển.
+- Xoá tài khoản thì xoá cả góp ý: dòng dữ liệu theo khoá ngoại, ảnh thì app xoá trước khi gọi RPC.
+
+**Xem góp ý:**
+- Dashboard → Table Editor, chọn schema `babycare_private` → `feedback_inbox`: mới nhất trước; có email nếu người gửi cho phép liên hệ, cùng phiên bản app, iOS và kiểu máy.
+- Ảnh: Storage → `babycare-feedback` → thư mục `<user_id>/<feedback id>/`.
+- Đánh dấu đã xem hoặc đã xử lý: sửa cột `status` của bảng `public.app_feedback` thành `seen` hoặc `done`.
+
 **Đã áp dụng 27/10/2026 (SQL Editor):** `202610260012_shared_care.sql` (chia sẻ gia đình cho app 1.2: lời mời, thành viên, xoá tài khoản chuyển family dùng chung cho người còn lại, chặn xoá ảnh của family dùng chung).
 - Thêm 3 bảng trong `babycare_private`, đều bật RLS và không có policy; chỉ các hàm SECURITY DEFINER đọc và ghi chúng.
 - Thêm các RPC mới; thay thân 3 hàm `babycare_delete_account`, `babycare_private.can_delete_media`, `babycare_private.guard_consent_write`. Trước khi áp dụng đã đối chiếu: bản đang chạy trùng hoàn toàn với repo.
