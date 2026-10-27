@@ -36,7 +36,7 @@ final class BabyCareUITests: XCTestCase {
         // The confirmation banner must be visible inside the still-open picker sheet.
         XCTAssertTrue(app.staticTexts["Đã lưu nhiệt độ"].waitForExistence(timeout: 3))
         // First reading without an episode offers to start one; decline here.
-        let skipEpisode = app.buttons["Không, chỉ ghi nhiệt độ"]
+        let skipEpisode = app.buttons["illnessOffer.skip"]
         XCTAssertTrue(skipEpisode.waitForExistence(timeout: 3))
         skipEpisode.tap()
 

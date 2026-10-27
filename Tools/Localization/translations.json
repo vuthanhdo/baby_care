@@ -1204,5 +1204,7 @@
   "8 ký tự, ví dụ ABCD EFGH": "8 characters, e.g. ABCD EFGH",
   "Sau khi tham gia, app mở gia đình mới. Gia đình của bạn vẫn còn và đổi qua lại được trong màn này.": "After joining, the app opens the new family. Your own family stays, and you can switch between them here.",
   "Tham gia": "Join",
-  "Có mã mời từ người thân? Tham gia gia đình của họ": "Have an invite code from family? Join their family"
+  "Có mã mời từ người thân? Tham gia gia đình của họ": "Have an invite code from family? Join their family",
+  "Vừa ghi: {0} lúc {1}": "Just logged: {0} at {1}",
+  "Chưa bắt đầu được. Hãy thử lại.": "Could not start. Please try again."
 }

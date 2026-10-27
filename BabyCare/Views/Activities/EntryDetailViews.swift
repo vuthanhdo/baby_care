@@ -139,6 +139,65 @@ struct BreathingReferenceView: View {
     }
 }
 
+/// After a first fever reading: offers to follow the illness as an episode. A sheet rather than an alert, so the
+/// choice reads as one main action and one way out, in the app's own buttons.
+struct IllnessOfferSheet: View {
+    let reading: CareActivity
+    /// Starts the episode; returns why it failed, or nil once started.
+    var start: () async -> String?
+    var skip: () -> Void
+    @State private var starting = false
+    @State private var failure: String?
+    @Environment(\.locale) private var appLocale
+
+    var body: some View {
+        let _ = appLocale
+        VStack(spacing: 18) {
+            CareIcon(name: "Stitch_thermostat", color: CareTheme.medical, size: 30)
+                .frame(width: 64, height: 64).background(CareTheme.medicalBackground, in: .circle)
+            VStack(spacing: 8) {
+                Text(L10n.text("Bắt đầu theo dõi ốm?")).font(CareFont.title3.bold()).multilineTextAlignment(.center)
+                Text(L10n.text("Gom nhiệt độ, thuốc và triệu chứng vào một đợt để theo dõi diễn biến. Bạn có thể kết thúc bất cứ lúc nào."))
+                    .font(CareFont.subheadline).foregroundStyle(CareTheme.secondary).multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Text(L10n.text("Vừa ghi: {0} lúc {1}", reading.formattedValue, reading.date.careFormatted(date: .omitted, time: .shortened)))
+                .font(CareFont.subheadline.weight(.semibold)).foregroundStyle(CareTheme.medical)
+                .padding(.horizontal, 14).padding(.vertical, 8).background(CareTheme.medicalBackground, in: .capsule)
+            if let failure {
+                Text(failure).font(CareFont.footnote).foregroundStyle(CareTheme.medical).multilineTextAlignment(.center)
+            }
+            VStack(spacing: 10) {
+                Button {
+                    Task {
+                        starting = true
+                        failure = await start()
+                        starting = false
+                    }
+                } label: {
+                    HStack(spacing: 8) {
+                        if starting { ProgressView().tint(.white) } else { CareIcon(name: "Stitch_clinical_notes", color: .white, size: 20) }
+                        Text(L10n.text("Bắt đầu theo dõi"))
+                    }
+                }
+                .buttonStyle(CareActionStyle(color: CareTheme.medical))
+                .accessibilityIdentifier("illnessOffer.start")
+                Button(L10n.text("Không, chỉ ghi nhiệt độ"), action: skip)
+                    .buttonStyle(CareActionStyle(color: CareTheme.secondary, outlined: true))
+                    .accessibilityIdentifier("illnessOffer.skip")
+            }
+            .disabled(starting)
+        }
+        .padding(.horizontal, 24).padding(.top, 28).padding(.bottom, 16)
+        .frame(maxWidth: 520)
+        .presentationDetents([.medium, .large])
+        .presentationDragIndicator(.visible)
+        // Opaque: through the default glass the form's green save button glowed under the buttons.
+        .presentationBackground(CareTheme.background)
+        .interactiveDismissDisabled(starting)
+    }
+}
+
 #if canImport(UIKit)
 /// Takes one photo with the camera; PhotosPicker only reads the library.
 struct CameraCaptureView: UIViewControllerRepresentable {

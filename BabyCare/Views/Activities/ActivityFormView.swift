@@ -17,7 +17,7 @@ struct ActivityFormView: View {
     @State private var discard = false
     @State private var saveError = false
     @State private var nextDose: NextDosePrompt?
-    @State private var episodeOffer: Date?
+    @State private var episodeOffer: CareActivity?
     @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var photoError: String?
     @State private var showingTemperatureInfo = false
@@ -208,13 +208,20 @@ struct ActivityFormView: View {
         .sheet(item: $nextDose) { prompt in
             NextDoseView(prompt: prompt) { nextDose = nil; dismiss() }
         }
-        .alert(L10n.text("Bắt đầu theo dõi ốm?"), isPresented: Binding(get: { episodeOffer != nil }, set: { if !$0 { episodeOffer = nil; dismiss() } })) {
-            Button(L10n.text("Bắt đầu theo dõi")) {
-                let start = Calendar.current.startOfDay(for: episodeOffer ?? Date())
-                Task { _ = await viewModel.send(.commit(.startIllness(babyID: viewModel.baby.id, title: "", date: start), message: L10n.text("Đã bắt đầu theo dõi"))) }
-            }
-            Button(L10n.text("Không, chỉ ghi nhiệt độ"), role: .cancel) { }
-        } message: { Text(L10n.text("Gom nhiệt độ, thuốc và triệu chứng vào một đợt để theo dõi diễn biến. Bạn có thể kết thúc bất cứ lúc nào.")) }
+        // Started, declined or swiped away: the reading is saved either way, so the form closes after the sheet.
+        .sheet(item: $episodeOffer, onDismiss: { dismiss() }) { reading in
+            IllnessOfferSheet(reading: reading, start: {
+                let start = Calendar.current.startOfDay(for: reading.date)
+                guard await viewModel.send(.commit(.startIllness(babyID: viewModel.baby.id, title: "", date: start), message: L10n.text("Đã bắt đầu theo dõi"))) else {
+                    // Shown in the sheet; the root alert would only appear after it closes.
+                    let reason = viewModel.state.error ?? L10n.text("Chưa bắt đầu được. Hãy thử lại.")
+                    await viewModel.send(.dismissError)
+                    return reason
+                }
+                episodeOffer = nil
+                return nil
+            }, skip: { episodeOffer = nil })
+        }
         .task(id: selectedPhotos) {
             let items = selectedPhotos
             guard !items.isEmpty else { return }
@@ -470,7 +477,7 @@ struct ActivityFormView: View {
             if let completingReminderID, let reminder = viewModel.medicationReminders.first(where: { $0.id == completingReminderID }) {
                 nextDose = NextDosePrompt(reminder: reminder, takenAt: entry.date)
             } else if offerEpisode {
-                episodeOffer = entry.date
+                episodeOffer = entry
             } else {
                 dismiss()
             }

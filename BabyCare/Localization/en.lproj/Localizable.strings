@@ -171,6 +171,7 @@
 "Chính sách bảo mật" = "Privacy Policy";
 "Chính sách quyền riêng tư" = "Privacy Policy";
 "Chăm sóc con khoa học & thảnh thơi" = "Thoughtful care, calmer parenting";
+"Chưa bắt đầu được. Hãy thử lại." = "Could not start. Please try again.";
 "Chưa chọn" = "Not selected";
 "Chưa cung cấp" = "Not provided";
 "Chưa cung cấp lưu ý sức khỏe" = "No health notes provided";
@@ -945,6 +946,7 @@
 "Về ứng dụng Bé Khỏe" = "About BabyCare";
 "Vị trí đo" = "Measurement site";
 "Vừa" = "Moderate";
+"Vừa ghi: {0} lúc {1}" = "Just logged: {0} at {1}";
 "WHO 2006 · chuẩn quốc tế, Việt Nam đang dùng" = "WHO 2006 · international standard, used in Vietnam";
 "WHO coi nhịp thở từ mốc này trở lên là thở nhanh. Nếu bé thở nhanh, thở rít hoặc rút lõm lồng ngực, hãy hỏi bác sĩ." = "WHO counts a rate at or above this as fast breathing. If your baby breathes fast, wheezes or the chest pulls in, ask a doctor.";
 "Xem / sửa số đo" = "View / edit measurement";
