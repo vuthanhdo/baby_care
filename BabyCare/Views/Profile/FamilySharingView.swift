@@ -99,7 +99,7 @@ struct FamilySharingView: View {
         .font(CareFont.subheadline)
         .navigationTitle(L10n.text("Gia đình & chia sẻ")).navigationBarTitleDisplayMode(.inline)
         .task { await reload() }
-        .refreshable { await session.refreshFamilies(); await reload() }
+        .refreshable { await Task { await session.refreshFamilies(); await reload() }.value } // not cancelled with the gesture
         .sheet(item: Binding(get: { created.map(InviteSheetItem.init) }, set: { if $0 == nil { created = nil } })) { item in
             InviteCodeSheet(invite: item.invite)
         }

@@ -120,6 +120,24 @@ struct SharedCareTests {
     }
 }
 
+extension SharedCareTests {
+    /// Pull to refresh: SwiftUI may cancel the gesture's task mid-load; that is not an error to show.
+    @Test func cancelledReloadKeepsTheScreenWithoutAnAlert() async {
+        let data = CarePreviewData.make()
+        let model = BabyCareViewModel(provider: CancellingProvider(database: data), initialData: data)
+        #expect(!(await model.send(.load)))
+        #expect(model.state.phase == .ready && model.state.error == nil && !model.state.isRefreshing)
+        #expect(model.activities == data.selectedBaby?.activities)
+    }
+}
+
+private actor CancellingProvider: CareDataProvider {
+    let database: CareDatabase
+    init(database: CareDatabase) { self.database = database }
+    func load() throws -> CareDatabase { throw CancellationError() }
+    func apply(_ mutation: CareDataMutation) throws -> CareDatabase { database }
+}
+
 private actor MemoryCloudCache: CareCloudCache {
     private var state = CloudCacheState()
     func read() -> CloudCacheState { state }

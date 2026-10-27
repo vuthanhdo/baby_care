@@ -97,6 +97,11 @@ final class BabyCareViewModel {
                 return true
             } catch {
                 guard active else { return false }
+                // A cancelled reload changed nothing: the screens keep what they showed, without an alert.
+                if error is CancellationError || (error as? URLError)?.code == .cancelled {
+                    state.phase = wasReady ? .ready : .failed
+                    return false
+                }
                 if error as? CloudError == .consentRequired { state.requiresConsent = true }
                 if error as? CloudError == .accessDenied || error as? CloudError == .signedOut {
                     state.database = CareDatabase(); state.phase = .failed

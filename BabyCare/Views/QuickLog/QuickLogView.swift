@@ -93,8 +93,9 @@ struct QuickLogView: View {
                 }
             }
         }
-        // Pull down for what other family members logged since.
-        .refreshable { await viewModel.send(.load) }
+        // Pull down for what other family members logged since. SwiftUI cancels the refresh task when the
+        // screen redraws mid-load; the load runs in its own task so it finishes anyway.
+        .refreshable { await Task { await viewModel.send(.load) }.value }
         .careScreen()
         .toolbar(.hidden, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)

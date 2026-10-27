@@ -39,7 +39,7 @@ struct DiaryView: View {
         let listWidth = listWidth
         HStack(spacing: 0) {
             list(isSplit: listWidth != nil)
-                .refreshable { await viewModel.send(.load) }
+                .refreshable { await Task { await viewModel.send(.load) }.value } // not cancelled with the gesture
                 .safeAreaInset(edge: .bottom, alignment: .trailing) { if viewModel.access.canWrite { addButton } }
                 .frame(width: listWidth)
             if listWidth != nil { detailPane }
