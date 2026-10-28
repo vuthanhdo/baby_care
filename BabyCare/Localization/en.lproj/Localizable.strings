@@ -1029,7 +1029,7 @@
 "Xóa toàn bộ dữ liệu trên thiết bị" = "Delete all data on this device";
 "Xóa toàn bộ dữ liệu {0}" = "Delete all data for {0}";
 "Xóa toàn bộ dữ liệu?" = "Delete all data?";
-"Xóa tài khoản sẽ xóa mọi gia đình do tài khoản sở hữu, toàn bộ hồ sơ bé, dữ liệu cloud và cache của tài khoản trên thiết bị này; sau đó bạn sẽ được đăng xuất." = "Deleting your account removes every family it owns, all baby profiles, cloud data, and this account's cache on this device, then signs you out.";
+"Xóa tài khoản sẽ xóa các gia đình chỉ có bạn sử dụng cùng hồ sơ bé trong đó, dữ liệu cloud, góp ý, đề xuất tính năng và cache của tài khoản trên thiết bị này; sau đó bạn sẽ được đăng xuất." = "Deleting your account removes the families only you use with their baby profiles, your cloud data, feedback, feature suggestions and this account's cache on this device, then signs you out.";
 "Xóa tìm kiếm" = "Clear search";
 "Xóa vĩnh viễn" = "Delete permanently";
 "Xóa vĩnh viễn dữ liệu {0}" = "Permanently delete {0}'s data";

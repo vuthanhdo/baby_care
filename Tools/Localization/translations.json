@@ -787,7 +787,7 @@
   "Xóa toàn bộ dữ liệu {0}": "Delete all data for {0}",
   "Hủy tài khoản & xóa toàn bộ": "Close account and delete everything",
   "Xóa toàn bộ dữ liệu trên thiết bị": "Delete all data on this device",
-  "Xóa tài khoản sẽ xóa mọi gia đình do tài khoản sở hữu, toàn bộ hồ sơ bé, dữ liệu cloud và cache của tài khoản trên thiết bị này; sau đó bạn sẽ được đăng xuất.": "Deleting your account removes every family it owns, all baby profiles, cloud data, and this account's cache on this device, then signs you out.",
+  "Xóa tài khoản sẽ xóa các gia đình chỉ có bạn sử dụng cùng hồ sơ bé trong đó, dữ liệu cloud, góp ý, đề xuất tính năng và cache của tài khoản trên thiết bị này; sau đó bạn sẽ được đăng xuất.": "Deleting your account removes the families only you use with their baby profiles, your cloud data, feedback, feature suggestions and this account's cache on this device, then signs you out.",
   "Xóa vĩnh viễn tài khoản & toàn bộ dữ liệu": "Permanently delete account and all data",
   "Thao tác này xóa mọi hồ sơ và nhật ký trong kho dữ liệu trên thiết bị. Ứng dụng sẽ quay lại onboarding.": "This removes every profile and log from on-device storage. The app will return to onboarding.",
   "Việc xóa được thực hiện trực tiếp với kho dữ liệu đang dùng. Nếu cloud chưa kết nối, BabyCare sẽ giữ nguyên dữ liệu và báo lỗi thay vì chỉ xóa bản hiển thị trên máy.": "Deletion is performed against the active data store. If cloud is unavailable, BabyCare keeps the data and reports an error instead of deleting only the local display.",

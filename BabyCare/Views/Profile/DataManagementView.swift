@@ -59,7 +59,7 @@ struct DataManagementView: View {
 
             Section(L10n.text(isCloudAccount ? "Hủy tài khoản & xóa toàn bộ" : "Xóa toàn bộ dữ liệu trên thiết bị")) {
                 if isCloudAccount {
-                    Text(L10n.text("Xóa tài khoản sẽ xóa mọi gia đình do tài khoản sở hữu, toàn bộ hồ sơ bé, dữ liệu cloud và cache của tài khoản trên thiết bị này; sau đó bạn sẽ được đăng xuất."))
+                    Text(L10n.text("Xóa tài khoản sẽ xóa các gia đình chỉ có bạn sử dụng cùng hồ sơ bé trong đó, dữ liệu cloud, góp ý, đề xuất tính năng và cache của tài khoản trên thiết bị này; sau đó bạn sẽ được đăng xuất."))
                         .font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
                     Text(L10n.text("Gia đình đang chia sẻ với người khác không bị xóa: quyền chủ gia đình được chuyển cho thành viên lâu nhất, và bạn rời khỏi gia đình đó."))
                         .font(CareFont.footnote).foregroundStyle(CareTheme.secondary)
