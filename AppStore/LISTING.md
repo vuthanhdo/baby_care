@@ -15,8 +15,8 @@ Screenshot: `screenshots/iphone-6.3/<en|vi>` cho khung iPhone (medium display), 
 | Support URL | https://vuthanhdo.github.io/baby_care/index.html |
 | Marketing URL | (trống) |
 | Copyright | 2026 Vu Thanh Do |
-| Version | 1.0 |
-| Age rating | 4+ (trả lời None/No cho mọi câu; Medical/Treatment Information: None; không quảng cáo, không nội dung người dùng công khai) |
+| Version | 1.2 (build 4); trước đó 1.0 (1), 1.0.1 (2), 1.1 (3) |
+| Age rating | 4+ (trả lời None/No cho mọi câu; Medical/Treatment Information: None; không quảng cáo; từ 1.2 User-Generated Content = Yes vì bảng bình chọn tính năng, nội dung được duyệt trước) |
 | Content rights | Does not contain, show, or access third-party content |
 | Advertising Identifier (IDFA) | No |
 | Export compliance | Đã khai `ITSAppUsesNonExemptEncryption = NO` (chỉ HTTPS) |
@@ -30,6 +30,8 @@ Screenshot: `screenshots/iphone-6.3/<en|vi>` cho khung iPhone (medium display), 
 
 **Promotional text (170):** 1.0.x: chưa điền. 1.1:
 `New in 1.1: weather and what to dress your baby in, a 60-second breathing counter, follow-up visit reminders, growth reference curves and dark mode.`
+1.2 (đổi ngay sau khi phát hành 1.2):
+`New in 1.2: share your baby's diary with family or a nanny, send feedback with screenshots, and vote for the features you want next.`
 
 **Keywords (100):** từ 1.1 (25/10/2026). Tên và subtitle đã được Apple đánh chỉ mục, nên không lặp lại baby/care/diary/fever/meds/feeds/vaccines:
 `tracker,newborn,infant,toddler,feeding,breastfeeding,pumping,nap,sleep,diaper,temperature,growth,log`
@@ -62,11 +64,19 @@ PROFILES AND VACCINATIONS
 • Vaccination history with next doses and reminders
 • Allergies, blood type and care notes
 
+SHARE WITH THE FAMILY
+• Invite grandparents, your partner or a nanny with a one-time code
+• Caregivers can log, viewers can only look; change roles or remove members anytime
+• Pull down to see what the family just logged
+
 YOUR DATA
-• Cloud sync so family members can view and log together
-• Works offline and syncs when back online
+• Cloud sync; works offline and syncs when back online
 • Delete a child profile or the whole account inside the app
 • iPhone and iPad, Vietnamese and English
+
+FEEDBACK
+• Report a bug with screenshots or send an idea from the Feedback tab
+• Vote for the features you want next
 
 Bé Khỏe records what the family enters. It does not diagnose, prescribe or replace a doctor's advice. If a child shows serious symptoms, contact a healthcare provider.
 ```
@@ -92,6 +102,16 @@ Bé Khỏe records what the family enters. It does not diagnose, prescribe or re
 • Dark mode that follows your device, changeable in Settings
 • Sync fixes and stability improvements
 ```
+1.2:
+```
+• Family sharing: invite grandparents, your partner or a nanny with a one-time code, as a caregiver who can log or a viewer who can only look
+• Switch between families, change roles or remove members; an invited caregiver can join right from the first screen
+• Pull down to refresh and see what the family just logged
+• New Feedback tab: report a bug with screenshots or send us an idea
+• Vote on features: suggest one and vote for what we build next
+• A clearer choice when starting illness tracking after a fever reading
+• Fixes and stability improvements
+```
 
 ## 3. Vietnamese — localization thêm
 
@@ -101,6 +121,8 @@ Bé Khỏe records what the family enters. It does not diagnose, prescribe or re
 
 **Promotional text (170):** 1.0.x: chưa điền. 1.1:
 `Mới ở bản 1.1: thời tiết và gợi ý trang phục cho bé, đếm nhịp thở 60 giây, nhắc lịch tái khám, biểu đồ tăng trưởng có đường chuẩn và giao diện tối.`
+1.2 (đổi ngay sau khi phát hành 1.2):
+`Mới ở bản 1.2: chia sẻ nhật ký của bé với người thân hoặc bảo mẫu, gửi góp ý kèm ảnh chụp màn hình và bình chọn tính năng bạn muốn có.`
 
 **Keywords (100):** từ 1.1 (25/10/2026), không lặp từ đã có trong tên/subtitle (bé, khỏe, nhật ký, chăm, sốt, thuốc, bú, ngủ, tiêm chủng). Giới hạn tính theo ký tự, không theo byte:
 `theo dõi,trẻ sơ sinh,ăn dặm,sữa mẹ,hút sữa,nhiệt độ,nhiệt kế,hạ sốt,tã,cân nặng,chiều cao,vắc xin`
@@ -133,11 +155,19 @@ HỒ SƠ VÀ TIÊM CHỦNG
 • Lịch sử tiêm chủng với mũi tiếp theo và lời nhắc trước ngày hẹn
 • Dị ứng, nhóm máu, thói quen chăm sóc
 
+CHIA SẺ CÙNG GIA ĐÌNH
+• Mời ông bà, bố mẹ hoặc bảo mẫu bằng mã dùng một lần
+• Người cùng chăm sóc được ghi, người chỉ xem thì không; đổi vai trò hoặc gỡ thành viên bất cứ lúc nào
+• Kéo xuống để thấy ngay những gì người nhà vừa ghi
+
 DỮ LIỆU CỦA BẠN
-• Đồng bộ cloud, thành viên gia đình cùng xem và ghi
-• Hoạt động offline, tự đồng bộ khi có mạng
+• Đồng bộ cloud; hoạt động offline, tự đồng bộ khi có mạng
 • Xóa hồ sơ bé hoặc toàn bộ tài khoản ngay trong app
 • Hỗ trợ iPhone, iPad, tiếng Việt và tiếng Anh
+
+GÓP Ý
+• Báo lỗi kèm ảnh chụp màn hình hoặc gửi ý tưởng từ tab Góp ý
+• Bình chọn tính năng bạn muốn có tiếp theo
 
 Bé Khỏe chỉ ghi nhận thông tin do gia đình nhập, không chẩn đoán, không kê đơn và không thay thế tư vấn của bác sĩ. Khi bé có dấu hiệu nghiêm trọng, hãy liên hệ cơ sở y tế.
 ```
@@ -163,6 +193,16 @@ Bé Khỏe chỉ ghi nhận thông tin do gia đình nhập, không chẩn đoá
 • Giao diện tối theo máy, đổi được trong Cài đặt
 • Sửa lỗi đồng bộ và cải thiện độ ổn định
 ```
+1.2:
+```
+• Chia sẻ gia đình: mời ông bà, bố mẹ hoặc bảo mẫu bằng mã dùng một lần, với vai trò cùng chăm sóc (được ghi) hoặc chỉ xem
+• Chuyển qua lại giữa các gia đình, đổi vai trò, gỡ thành viên; người được mời tham gia ngay từ màn hình đầu tiên
+• Kéo xuống để cập nhật những gì người nhà vừa ghi
+• Tab Góp ý mới: báo lỗi kèm ảnh chụp màn hình hoặc gửi ý tưởng cho nhà phát triển
+• Bình chọn tính năng: đề xuất và bình chọn tính năng bạn muốn có tiếp theo
+• Hỏi rõ ràng hơn khi bắt đầu theo dõi đợt ốm sau lần đo sốt
+• Sửa lỗi và cải thiện độ ổn định
+```
 
 ## 4. App Privacy (privacy nutrition labels)
 
@@ -172,15 +212,19 @@ Chọn **Data Linked to You** cho từng loại, mục đích **App Functionalit
 | --- | --- | --- |
 | Contact Info | Email Address | Tài khoản đăng nhập |
 | Health & Fitness | Health | Nhiệt độ, thuốc, triệu chứng, số đo của bé |
-| User Content | Photos or Videos | Ảnh đính kèm, ảnh đại diện bé |
-| User Content | Other User Content | Nhật ký, hồ sơ bé, ghi chú |
+| User Content | Photos or Videos | Ảnh đính kèm, ảnh đại diện bé, ảnh chụp màn hình gửi kèm góp ý |
+| User Content | Customer Support | Nội dung góp ý và báo lỗi (từ 1.2) |
+| User Content | Other User Content | Nhật ký, hồ sơ bé, ghi chú, đề xuất tính năng và phiếu bình chọn |
 | Identifiers | User ID | Supabase user id |
+| Diagnostics | Other Diagnostic Data | Phiên bản app và iOS, kiểu máy, ngôn ngữ, chế độ lưu gửi kèm góp ý (từ 1.2) |
 
-Không thu thập: vị trí, danh bạ, lịch sử duyệt web, dữ liệu tài chính, dữ liệu chẩn đoán/crash. Từ 1.1, thẻ thời tiết gửi vị trí gần đúng tới Apple WeatherKit chỉ để lấy thời tiết tức thời và không lưu, nên không tính là thu thập theo định nghĩa của Apple; chính sách quyền riêng tư nêu rõ việc này. Ảnh chụp bằng camera thuộc mục Photos or Videos đã khai. Âm thanh nhập giọng nói do Apple Speech xử lý, không lưu. Khai báo khớp `BabyCare/PrivacyInfo.xcprivacy`.
+Không thu thập: vị trí, danh bạ, lịch sử duyệt web, dữ liệu tài chính, dữ liệu crash và hiệu năng. Từ 1.1, thẻ thời tiết gửi vị trí gần đúng tới Apple WeatherKit chỉ để lấy thời tiết tức thời và không lưu, nên không tính là thu thập theo định nghĩa của Apple; chính sách quyền riêng tư nêu rõ việc này. Ảnh chụp bằng camera thuộc mục Photos or Videos đã khai. Âm thanh nhập giọng nói do Apple Speech xử lý, không lưu. Khai báo khớp `BabyCare/PrivacyInfo.xcprivacy`.
 
 ## 5. Age rating questionnaire
 
 Trả lời **None** cho Cartoon/Fantasy/Realistic Violence, Profanity, Mature/Suggestive Themes, Horror/Fear, Medical/Treatment Information, Alcohol/Tobacco/Drug, Sexual Content, Gambling, Contests; **No** cho Unrestricted Web Access, Gambling and Contests, Loot Boxes, Parental Controls, Age Assurance. Kết quả 4+.
+
+Từ 1.2 (đổi lúc nộp duyệt, App Information → Age Ratings): **User-Generated Content = Yes** (bảng bình chọn tính năng: đề xuất của người dùng hiện cho mọi người sau khi được duyệt); Social Media, Messaging and Chat, Advertising vẫn **No**. Xem lại xếp hạng kết quả trước khi lưu.
 
 ## 6. App Review Information
 
@@ -188,22 +232,32 @@ Trả lời **None** cho Cartoon/Fantasy/Realistic Violence, Profanity, Mature/S
 
 **Contact**: họ tên, số điện thoại, email của bạn.
 
-**Notes (EN, dán nguyên):**
+**Notes 1.2 (EN, dán nguyên; bản 1.1 nằm trong lịch sử git):**
 ```
-Bé Khỏe is a private care diary for parents of babies and young children (Vietnamese and English UI). It stores what the family enters (temperature, medicines, symptoms, feeds, sleep, diapers, growth, vaccinations), shows timeline/charts/statistics, reminds the medication time the parent chose and exports a PDF report for the doctor. It does not diagnose, prescribe or calculate doses. No social features, no public or shared user content, no paid content, no IAP.
+Bé Khỏe is a private care diary for parents of babies and young children. It stores what the family enters (temperature, medicines, symptoms, feeds, sleep, diapers, growth, vaccinations), shows timeline/charts/statistics, reminds the medication time the parent chose and exports a PDF report for the doctor. It does not diagnose, prescribe or calculate doses. No ads, paid content or IAP.
 
 ACCESS: use the demo account above (one child profile with sample entries is already created). Sign in with Apple and Google are also available. New accounts: sign up with any email; the confirmation link opens the app via babycare://auth-callback. First sign-in shows three consent checkboxes (terms/privacy, child health data, cloud sync) that must be accepted before editing data.
 
-MAIN FEATURES: "Quick log" tab (weather card, temperature, breathing rate, medicine, feeding, sleep, diaper, symptoms, doctor visits with follow-up reminders, voice entry, photos; "Illness & medicine tracking" card with temperature chart and medication reminders), "Diary" tab (timeline by day), "Statistics" tab (ranges, growth charts against the CDC 2000 reference, "Share report (PDF / QR)"), avatar → child profiles with allergies and medical history (up to 4), vaccinations, Settings (language, appearance: device/light/dark).
-ACCOUNT DELETION: Profile → Settings → Manage and delete data → Permanently delete account and all data (deletes all cloud data and revokes the Sign in with Apple token server-side).
-Optional permissions (mic/speech, photos, camera, location, notifications) are not required. Location is requested only when the parent taps "Show weather" on the Quick log card; the approximate location is sent to Apple WeatherKit for the current weather and is not stored.
+MAIN FEATURES: tabs "Quick log" (temperature, medicine, feeds, sleep, diapers, symptoms, doctor visits, weather, illness tracking with medication reminders), "Diary", "Statistics" (CDC 2000 growth charts, "Share report (PDF / QR)") and "Feedback"; avatar → child profiles and vaccinations; gear icon → Settings.
 
-EXTERNAL SERVICES: Supabase (auth, PostgreSQL, storage for photos, one Edge Function for Apple token revocation); Sign in with Apple; Google OAuth via Supabase; Brevo SMTP for confirmation/reset emails; Apple Speech framework (Vietnamese, on-device when supported); Apple WeatherKit for the weather card; GitHub Pages for privacy/support pages. No analytics, ads, payments, AI or third-party content.
+NEW IN 1.2
+1. FAMILY SHARING (Settings → Account → Family & sharing): the owner invites a "Caregiver" (can log) or a "View only" member with an 8-character code that works once and expires after 48 hours. Members see the family's baby profiles and each other's email address; the owner can change roles or remove members, and anyone can leave. The invited person enters the code under "Join another family" on the same screen, or on the first-run screen. Sharing stays inside the invited family; nothing is public. To try it, sign up a second account and enter a code created with the demo account.
+2. FEEDBACK tab → "Send feedback": a bug report, suggestion or question with up to 3 screenshots, sent privately to the developer. The app/iOS version and device model sent with it are shown before sending; we reply by email only if the user ticks "Allow a reply by email".
+3. FEEDBACK tab → "Vote on features": users suggest a feature (short title, optional details) and vote for published suggestions, one vote each; tapping again removes the vote.
+
+USER-GENERATED CONTENT (Guideline 1.2): feature suggestions are the only content a user can show to others.
+- Filtering: every new suggestion stays "Under review" and is visible only to its author until the developer approves it.
+- No identities: authors and voters are never shown; there are no profiles, comments or messages, so users cannot see, contact or target each other.
+- Reporting: long-press a published suggestion → "Report inappropriate content". Reports are reviewed within 24 hours: the content is removed and the offending account is suspended, which is how abusive users are blocked.
+- Terms of Use section 5 forbids objectionable content and personal details; at most 5 suggestions per account per day.
+
+ACCOUNT DELETION: Settings → Manage and delete data → Permanently delete account and all data. It deletes the account's cloud data, photos, feedback, suggestions and votes and revokes the Sign in with Apple token server-side; a family that still has other members passes to its longest-standing member.
+Permissions (mic, photos, camera, location, notifications) are optional; approximate location is asked only for "Show weather", sent to Apple WeatherKit and not stored.
+
+EXTERNAL SERVICES: Supabase (auth, PostgreSQL, private storage for photos and feedback screenshots, one Edge Function for Apple token revocation); Sign in with Apple; Google OAuth via Supabase; Brevo SMTP for confirmation/reset emails; Apple Speech; Apple WeatherKit; GitHub Pages for privacy/support pages. No analytics, ads, payments, AI or third-party content.
 
 REGIONS: identical in all regions; UI language follows the device (vi/en).
 REGULATION: not a medical device, no diagnosis or treatment advice; reports carry a "does not replace medical advice" notice. No protected third-party material.
-
-A screen recording of the full flow (launch, registration + email confirmation, consent, logging, reports, sign in with Apple, account deletion) was provided in the Resolution Center reply.
 ```
 
 **Attachment**: video quay trên máy thật (xem `REVIEW_REPLY.md`); Apple yêu cầu từ lần review đầu (21/10/2026).
