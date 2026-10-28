@@ -51,13 +51,24 @@ final class StoreScreenshotsUITests: XCTestCase {
         app.reveal(vaccinations); vaccinations.tap()
         XCTAssertTrue(app.buttons["addVaccinationButton"].waitForExistence(timeout: 5))
         settle(); capture("08-vaccinations")
+
+        // Family sharing (1.2): the signed-in sharing fixture lays four members over the showcase babies.
+        app = launch(extra: ["-ui-testing-sharing"])
+        let settings = app.buttons["app.settings"]
+        XCTAssertTrue(settings.waitForExistence(timeout: 10)); settings.tap()
+        let family = app.buttons["settings.family"]
+        app.reveal(family) // on iPhone the account rows start below the fold, outside the accessibility tree
+        XCTAssertTrue(family.exists); family.tap()
+        let member = app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@", "ba.ngoai@example.com")).firstMatch
+        XCTAssertTrue(member.waitForExistence(timeout: 5)) // the row combines email and role into one label
+        settle(); capture("09-family")
     }
 
-    @MainActor private func launch() -> XCUIApplication {
+    @MainActor private func launch(extra: [String] = []) -> XCUIApplication {
         let app = XCUIApplication()
         // The app language drives its own strings; the locale arguments make system-formatted chart axes match.
         app.launchArguments = ["-demo-full", "-store-screenshots", "-care.language", language,
-                               "-AppleLanguages", "(\(language))", "-AppleLocale", language == "vi" ? "vi_VN" : "en_US"]
+                               "-AppleLanguages", "(\(language))", "-AppleLocale", language == "vi" ? "vi_VN" : "en_US"] + extra
         app.launch()
         return app
     }

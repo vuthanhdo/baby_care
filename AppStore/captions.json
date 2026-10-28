@@ -31,6 +31,10 @@
     "08-vaccinations": [
       "Lịch tiêm chủng",
       "Ghi mũi đã tiêm, nhắc mũi tiếp theo"
+    ],
+    "09-family": [
+      "Cả nhà cùng chăm bé",
+      "Mời ông bà, bảo mẫu bằng mã dùng một lần"
     ]
   },
   "en": {
@@ -65,6 +69,10 @@
     "08-vaccinations": [
       "Vaccination record",
       "Log each dose, get reminded of the next"
+    ],
+    "09-family": [
+      "Care for your baby together",
+      "Invite grandparents or a nanny with a code"
     ]
   }
 }

@@ -17,7 +17,7 @@ import Foundation
         let session = SessionViewModel(consentRemote: Consent(), sharingRemote: Sharing(), feedbackRemote: Feedback(),
                                        featureRemote: Features(), defaults: defaults)
         let data = CarePreviewData.make()
-        session.openForUITests(userID: me, email: "me@example.invalid", families: families,
+        session.openForUITests(userID: me, email: storeMode ? storeMembers[0].email : "me@example.invalid", families: currentFamilies,
                                viewModel: BabyCareViewModel(provider: InMemoryCareDataProvider(database: data), initialData: data))
         return session
     }
@@ -25,6 +25,19 @@ import Foundation
     nonisolated static let families = [
         CloudFamilySummary(id: ownFamily, name: "Hồ sơ của tôi", revision: 1, role: .owner, createdBy: me, ownerEmail: "me@example.invalid", memberCount: 2),
         CloudFamilySummary(id: sharedFamily, name: "Hồ sơ của tôi", revision: 1, role: .viewer, createdBy: partner, ownerEmail: "grandma@example.invalid", memberCount: 2)
+    ]
+
+    /// With `-store-screenshots` (and `-demo-full` for the babies): one family shared with a partner,
+    /// a grandmother who only views and a nanny, for the App Store picture of Settings → Gia đình & chia sẻ.
+    nonisolated static var storeMode: Bool { ProcessInfo.processInfo.arguments.contains("-store-screenshots") }
+    nonisolated static var currentFamilies: [CloudFamilySummary] { storeMode ? [families[0]] : families }
+    nonisolated static let storeMembers = [
+        CloudFamilyMember(userID: me, email: "me.lan@example.com", role: .owner, joinedAt: Date(timeIntervalSince1970: 1_790_000_000)),
+        CloudFamilyMember(userID: partner, email: "bo.minh@example.com", role: .caregiver, joinedAt: Date(timeIntervalSince1970: 1_790_100_000)),
+        CloudFamilyMember(userID: UUID(uuidString: "00000000-0000-0000-0000-0000000000a3")!, email: "ba.ngoai@example.com", role: .viewer,
+                          joinedAt: Date(timeIntervalSince1970: 1_790_200_000)),
+        CloudFamilyMember(userID: UUID(uuidString: "00000000-0000-0000-0000-0000000000a4")!, email: "co.hoa.bao.mau@example.com", role: .caregiver,
+                          joinedAt: Date(timeIntervalSince1970: 1_790_300_000))
     ]
 
     private actor Consent: ConsentRemote {
@@ -81,9 +94,12 @@ import Foundation
         private var invites: [CloudFamilyInvite] = []
         private var partnerRole: CareFamilyRole = .caregiver
         // Never nil: nil sends the session to the real `families` table, which hangs without a real session.
-        func myFamilies() -> [CloudFamilySummary]? { SharingUITestFixture.families }
+        func myFamilies() -> [CloudFamilySummary]? { SharingUITestFixture.currentFamilies }
         func sharing(familyID: UUID) -> CloudFamilySharing {
-            CloudFamilySharing(role: .owner, createdBy: SharingUITestFixture.me, members: [
+            if SharingUITestFixture.storeMode {
+                return CloudFamilySharing(role: .owner, createdBy: SharingUITestFixture.me, members: SharingUITestFixture.storeMembers, invites: invites)
+            }
+            return CloudFamilySharing(role: .owner, createdBy: SharingUITestFixture.me, members: [
                 CloudFamilyMember(userID: SharingUITestFixture.me, email: "me@example.invalid", role: .owner, joinedAt: Date(timeIntervalSince1970: 1_790_000_000)),
                 CloudFamilyMember(userID: SharingUITestFixture.partner, email: "partner@example.invalid", role: partnerRole, joinedAt: Date(timeIntervalSince1970: 1_790_100_000))
             ], invites: invites)
