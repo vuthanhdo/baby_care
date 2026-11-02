@@ -4,6 +4,9 @@ import Supabase
 import UserNotifications
 
 @MainActor @Observable final class SessionViewModel {
+    /// The app's one session. The widget and the "Ghi cho bé" shortcut save through it when the system launches
+    /// the app in the background, so a process never holds two Supabase clients refreshing the same token.
+    static let shared = SessionViewModel()
     enum Phase { case starting, signedOut, accountError, consent, content }
     private(set) var phase: Phase = .starting
     private(set) var viewModel: BabyCareViewModel?
@@ -111,7 +114,7 @@ import UserNotifications
         families = []; familyID = nil
         isLocal = defaults.string(forKey: "care.mode") == "device"
         error = nil
-        guard session != nil else { phase = .signedOut; return }
+        guard session != nil else { CareWidgetPublisher().clear(); phase = .signedOut; return }
         pendingSignupEmail = nil
         defaults.removeObject(forKey: Self.pendingSignupKey)
         // Keep the splash visible while the previous family is restored. Publishing
@@ -200,7 +203,8 @@ import UserNotifications
         let provider = SupabaseCareDataProvider(remote: remote, cache: SwiftDataCloudCache(userID: userID, familyID: id), familyID: id)
         familyID = id
         viewModel = BabyCareViewModel(provider: provider, notifications: LocalCareReminderService(scope: "cloud.\(userID.uuidString).\(id.uuidString)"),
-                                      reviews: CareReviewTracker(), access: families.first { $0.id == id }?.role ?? .owner)
+                                      reviews: CareReviewTracker(), access: families.first { $0.id == id }?.role ?? .owner,
+                                      widget: CareWidgetPublisher())
         defaults.set(id.uuidString, forKey: "care.family.\(userID)")
         phase = .content; busy = false
     }

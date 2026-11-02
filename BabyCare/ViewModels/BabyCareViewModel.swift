@@ -36,6 +36,7 @@ final class BabyCareViewModel {
     @ObservationIgnored private let provider: any CareDataProvider
     @ObservationIgnored private let reviews: CareReviewTracker?
     @ObservationIgnored private let notifications: any CareReminderService
+    @ObservationIgnored private let widget: CareWidgetPublisher?
     @ObservationIgnored private var toastTask: Task<Void, Never>?
     @ObservationIgnored private let emptyProfile = BabyProfile()
     @ObservationIgnored private var active = true
@@ -44,9 +45,10 @@ final class BabyCareViewModel {
 
     init(provider: any CareDataProvider, notifications: (any CareReminderService)? = nil,
          initialData: CareDatabase? = nil, isDemo: Bool = false, reviews: CareReviewTracker? = nil,
-         access: CareFamilyRole = .owner) {
+         access: CareFamilyRole = .owner, widget: CareWidgetPublisher? = nil) {
         self.provider = provider
         self.access = access
+        self.widget = widget
         self.notifications = notifications ?? NoopCareReminderService()
         self.reviews = reviews
         self.isDemo = isDemo
@@ -94,6 +96,7 @@ final class BabyCareViewModel {
                 if let notice = await provider.takeNotice() { state.error = notice }
                 if let warning = await notifications.reconcile(previous: previous, current: loaded) { showMessage(warning) }
                 guard active else { return false }
+                widget?.publish(loaded, canWrite: access.canWrite)
                 return true
             } catch {
                 guard active else { return false }
@@ -137,6 +140,7 @@ final class BabyCareViewModel {
                 // Notifications are an effect after a durable commit, never part of a View.
                 let warning = await notifications.reconcile(previous: previous, current: saved)
                 guard active else { return false }
+                widget?.publish(saved, canWrite: access.canWrite)
                 if let message = warning ?? message { showMessage(message) }
                 if let notice = await provider.takeNotice() { state.error = notice }
                 if reviews?.didCommit(mutation) == true { reviewRequests += 1 }
@@ -152,6 +156,7 @@ final class BabyCareViewModel {
                     let previous = state.database
                     state.database = current
                     _ = await notifications.reconcile(previous: previous, current: current)
+                    widget?.publish(current, canWrite: access.canWrite)
                 }
                 if error as? CloudError == .accessDenied { state.accessLost = await provider.takeNotice() ?? error.localizedDescription }
                 state.error = error.localizedDescription
@@ -184,6 +189,7 @@ final class BabyCareViewModel {
     func deactivate() async {
         active = false; toastTask?.cancel()
         state = BabyCareState()
+        widget?.clear()
         await notifications.invalidate()
         await provider.invalidate()
     }

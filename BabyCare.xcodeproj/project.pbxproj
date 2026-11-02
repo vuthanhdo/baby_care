@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BC0000000000000000000001 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = BC0000000000000000000002 /* Supabase */; };
+		BC1000000000000000000001 /* BabyCareWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BC1000000000000000000002 /* BabyCareWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,12 +26,34 @@
 			remoteGlobalIDString = 95BDBF8E30506CBB00072646;
 			remoteInfo = BabyCare;
 		};
+		BC1000000000000000000005 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 95BDBF8730506CBB00072646 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BC1000000000000000000010;
+			remoteInfo = BabyCareWidgets;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BC1000000000000000000007 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BC1000000000000000000001 /* BabyCareWidgets.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		95BDBF8F30506CBB00072646 /* BabyCare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BabyCare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95BDBF9E30506CBC00072646 /* BabyCareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BabyCareTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		95BDBFA830506CBC00072646 /* BabyCareUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BabyCareUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC1000000000000000000002 /* BabyCareWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BabyCareWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -47,6 +70,16 @@
 		95BDBFAB30506CBC00072646 /* BabyCareUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = BabyCareUITests;
+			sourceTree = "<group>";
+		};
+		BC1000000000000000000003 /* BabyCareWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BabyCareWidgets;
+			sourceTree = "<group>";
+		};
+		BC1000000000000000000004 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -74,6 +107,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BC1000000000000000000012 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -83,6 +123,8 @@
 				95BDBF9130506CBB00072646 /* BabyCare */,
 				95BDBFA130506CBC00072646 /* BabyCareTests */,
 				95BDBFAB30506CBC00072646 /* BabyCareUITests */,
+				BC1000000000000000000003 /* BabyCareWidgets */,
+				BC1000000000000000000004 /* Shared */,
 				95BDBF9030506CBB00072646 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -93,6 +135,7 @@
 				95BDBF8F30506CBB00072646 /* BabyCare.app */,
 				95BDBF9E30506CBC00072646 /* BabyCareTests.xctest */,
 				95BDBFA830506CBC00072646 /* BabyCareUITests.xctest */,
+				BC1000000000000000000002 /* BabyCareWidgets.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -107,13 +150,16 @@
 				95BDBF8B30506CBB00072646 /* Sources */,
 				95BDBF8C30506CBB00072646 /* Frameworks */,
 				95BDBF8D30506CBB00072646 /* Resources */,
+				BC1000000000000000000007 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				BC1000000000000000000006 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				95BDBF9130506CBB00072646 /* BabyCare */,
+				BC1000000000000000000004 /* Shared */,
 			);
 			name = BabyCare;
 			packageProductDependencies = (
@@ -169,6 +215,29 @@
 			productReference = 95BDBFA830506CBC00072646 /* BabyCareUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		BC1000000000000000000010 /* BabyCareWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BC1000000000000000000020 /* Build configuration list for PBXNativeTarget "BabyCareWidgets" */;
+			buildPhases = (
+				BC1000000000000000000011 /* Sources */,
+				BC1000000000000000000012 /* Frameworks */,
+				BC1000000000000000000013 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				BC1000000000000000000003 /* BabyCareWidgets */,
+				BC1000000000000000000004 /* Shared */,
+			);
+			name = BabyCareWidgets;
+			packageProductDependencies = (
+			);
+			productName = BabyCareWidgets;
+			productReference = BC1000000000000000000002 /* BabyCareWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -189,6 +258,9 @@
 					95BDBFA730506CBC00072646 = {
 						CreatedOnToolsVersion = 26.6;
 						TestTargetID = 95BDBF8E30506CBB00072646;
+					};
+					BC1000000000000000000010 = {
+						CreatedOnToolsVersion = 27.1;
 					};
 				};
 			};
@@ -214,6 +286,7 @@
 				95BDBF8E30506CBB00072646 /* BabyCare */,
 				95BDBF9D30506CBC00072646 /* BabyCareTests */,
 				95BDBFA730506CBC00072646 /* BabyCareUITests */,
+				BC1000000000000000000010 /* BabyCareWidgets */,
 			);
 		};
 /* End PBXProject section */
@@ -234,6 +307,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		95BDBFA630506CBC00072646 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC1000000000000000000013 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -264,6 +344,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BC1000000000000000000011 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -276,6 +363,11 @@
 			isa = PBXTargetDependency;
 			target = 95BDBF8E30506CBB00072646 /* BabyCare */;
 			targetProxy = 95BDBFA930506CBC00072646 /* PBXContainerItemProxy */;
+		};
+		BC1000000000000000000006 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BC1000000000000000000010 /* BabyCareWidgets */;
+			targetProxy = BC1000000000000000000005 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -580,6 +672,82 @@
 			};
 			name = Release;
 		};
+		BC1000000000000000000021 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Configuration/BabyCareWidgets.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = K8CNPV49X7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Configuration/BabyCareWidgets-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Bé Khỏe";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vuthanhdo.BabyCare.Widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BC1000000000000000000022 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Configuration/BabyCareWidgets.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = K8CNPV49X7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Configuration/BabyCareWidgets-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Bé Khỏe";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vuthanhdo.BabyCare.Widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -615,6 +783,15 @@
 			buildConfigurations = (
 				95BDBFB930506CBC00072646 /* Debug */,
 				95BDBFBA30506CBC00072646 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BC1000000000000000000020 /* Build configuration list for PBXNativeTarget "BabyCareWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC1000000000000000000021 /* Debug */,
+				BC1000000000000000000022 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

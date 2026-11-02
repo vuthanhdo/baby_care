@@ -52,7 +52,8 @@ import Foundation
         }
         #endif
         // Only the real app asks for ratings; demo and UI-test builds never do.
-        return BabyCareViewModel(provider: SwiftDataCareDataProvider(), notifications: LocalCareReminderService(), reviews: CareReviewTracker())
+        return BabyCareViewModel(provider: SwiftDataCareDataProvider(), notifications: LocalCareReminderService(), reviews: CareReviewTracker(),
+                                 widget: CareWidgetPublisher())
     }
 
     /// Home-screen weather. UI tests (`-demo`, `-ui-testing…`) get none so the layout they check stays put;

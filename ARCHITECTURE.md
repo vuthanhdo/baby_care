@@ -111,6 +111,23 @@ Tab Góp ý có hai mục: "Gửi góp ý" (`FeedbackForm`) và "Bình chọn t�
 - Server: migration `202610270014_feature_board.sql`; nhà phát triển duyệt ở `babycare_private.feature_inbox`.
 - Test: `supabase/tests/features.sql`, `FeedbackTests`, `FeatureBoardUITests` (bản giả trong `SharingUITestFixture`).
 
+## Widget và phím tắt ghi nhanh (01/11/2026)
+
+Ghi cho bé đang chọn mà không mở app. Widget trên màn hình chính không hiện được ô nhập liệu (WidgetKit chỉ có nút và công tắc), nên có hai đường:
+- **Widget "Ghi nhanh"** (target `BabyCareWidgets`, cỡ nhỏ và vừa): ba nút Tã, Sữa (lặp lại cữ gần nhất) và Ngủ/Thức dậy, kèm thời gian lần gần nhất. Người chỉ xem thấy widget nhưng không có nút.
+- **Phím tắt "Ghi cho bé"** (`LogActivityIntent`, `BabyCareShortcuts`): chạy từ Siri, Spotlight, nút Action hoặc biểu tượng Phím tắt trên màn hình chính. Hệ thống hỏi loại hoạt động, rồi lượng (sữa, nước, nhiệt độ), nội dung tã, hoặc món ăn/nội dung.
+
+Luồng xử lý:
+- Mỗi nút widget là một intent không tham số (`LogDiaperIntent`, `RepeatMilkIntent`, `ToggleSleepIntent` trong `Shared/QuickLogShared.swift`, biên dịch vào cả app và extension). Vì là `LiveActivityIntent`, hệ thống chạy chúng trong tiến trình app, mở ngầm nếu app đang đóng; bản trong extension có `QuickLogPerformer` rỗng.
+- Không dùng tham số enum: widget gửi intent theo kiểu của module `BabyCareWidgets`, app khớp intent theo tên nhưng không giải mã được giá trị enum của module kia và đòi người dùng chọn lại.
+- `QuickLogPerformer` (app) đợi `SessionViewModel.shared` mở tài khoản và gia đình như lúc mở app, rồi lưu qua `BabyCareViewModel.send(.commit)`. Validation, outbox cloud, lịch nhắc và quyền chỉ xem giữ nguyên.
+- Cả app chỉ có một `SessionViewModel`, nên mỗi tiến trình chỉ có một client Supabase làm mới token.
+- `QuickLogPlanner` dựng bản ghi giống màn Ghi nhanh: tã "Thay tã"; sữa chép lượng, đơn vị, loại sữa của cữ trước; kết thúc giấc ngủ bằng `finishingSleep`.
+
+Widget không đọc được kho dữ liệu của app. `CareWidgetPublisher` ghi một `QuickLogSnapshot` nhỏ (tên bé, giờ tã/sữa gần nhất, giờ bắt đầu ngủ, ngôn ngữ app, quyền ghi) vào App Group `group.com.vuthanhdo.BabyCare` sau mỗi lần tải hoặc lưu thành công, rồi reload widget. Bản tóm tắt bị xoá khi đăng xuất hoặc đổi gia đình. Lần bấm không lưu được hiện lý do trên widget trong 15 phút.
+
+Trên simulator, bản build ký "Sign to Run Locally" không có team ID: nút widget chạy được, nhưng App Shortcut từ Spotlight hoặc thẻ trong app Phím tắt báo "Couldn't find AppShortcutsProvider" (linkd từ chối bundle). Thử intent bằng cách thêm action "Log for baby" vào một phím tắt mới. Test: `QuickLogTests`.
+
 ## Tài khoản và tối đa 4 bé (12/09/2026)
 
 App không còn màn chọn/tạo family hay thao tác chọn family trong Cài đặt. Sau đăng nhập, SessionViewModel tự mở vùng dữ liệu trước đó; tài khoản mới tự tạo vùng dữ liệu rồi vào bước tạo bé. Lỗi tải tài khoản hiển thị Thử lại/Đăng xuất.

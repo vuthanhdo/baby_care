@@ -10,9 +10,9 @@ struct AppRootView: View {
     init() {
         #if DEBUG
         _session = State(initialValue: ConsentUITestFixture.enabled ? ConsentUITestFixture.makeSession()
-            : SharingUITestFixture.enabled ? SharingUITestFixture.makeSession() : SessionViewModel())
+            : SharingUITestFixture.enabled ? SharingUITestFixture.makeSession() : SessionViewModel.shared)
         #else
-        _session = State(initialValue: SessionViewModel())
+        _session = State(initialValue: SessionViewModel.shared)
         #endif
     }
     private var bypass: Bool {

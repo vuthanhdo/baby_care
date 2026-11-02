@@ -64,6 +64,7 @@
 "BabyCare xin quyền ảnh, micro và thông báo đúng lúc dùng tính năng tương ứng. Dữ liệu cloud được truyền qua HTTPS và quyền truy cập được giới hạn bằng phiên đăng nhập cùng chính sách cách ly gia đình." = "BabyCare xin quyền ảnh, micro và thông báo đúng lúc dùng tính năng tương ứng. Dữ liệu cloud được truyền qua HTTPS và quyền truy cập được giới hạn bằng phiên đăng nhập cùng chính sách cách ly gia đình.";
 "BabyCare xử lý hồ sơ trẻ, nhật ký chăm sóc và sức khỏe, số đo, tiêm chủng, lịch nhắc, ảnh bạn chọn và thông tin tài khoản đăng nhập. Micro chỉ được dùng khi bạn chủ động ghi bằng giọng nói." = "BabyCare xử lý hồ sơ trẻ, nhật ký chăm sóc và sức khỏe, số đo, tiêm chủng, lịch nhắc, ảnh bạn chọn và thông tin tài khoản đăng nhập. Micro chỉ được dùng khi bạn chủ động ghi bằng giọng nói.";
 "BabyCare xử lý hồ sơ trẻ, nhật ký chăm sóc và sức khỏe, số đo, tiêm chủng, lịch nhắc, ảnh bạn chọn và thông tin tài khoản đăng nhập. Micro chỉ được dùng khi bạn chủ động ghi bằng giọng nói. Vị trí gần đúng chỉ được dùng khi bạn bật thời tiết trên màn hình chính và không được lưu. Khi bạn gửi góp ý, BabyCare nhận nội dung bạn viết, ảnh chụp màn hình bạn đính kèm (có thể chứa thông tin của bé đang hiện trên màn hình) và thông tin kỹ thuật hiện trước khi gửi: phiên bản ứng dụng và iOS, kiểu máy, ngôn ngữ, chế độ lưu. Đề xuất tính năng, phiếu bình chọn và báo cáo nội dung được lưu kèm tài khoản của bạn." = "BabyCare xử lý hồ sơ trẻ, nhật ký chăm sóc và sức khỏe, số đo, tiêm chủng, lịch nhắc, ảnh bạn chọn và thông tin tài khoản đăng nhập. Micro chỉ được dùng khi bạn chủ động ghi bằng giọng nói. Vị trí gần đúng chỉ được dùng khi bạn bật thời tiết trên màn hình chính và không được lưu. Khi bạn gửi góp ý, BabyCare nhận nội dung bạn viết, ảnh chụp màn hình bạn đính kèm (có thể chứa thông tin của bé đang hiện trên màn hình) và thông tin kỹ thuật hiện trước khi gửi: phiên bản ứng dụng và iOS, kiểu máy, ngôn ngữ, chế độ lưu. Đề xuất tính năng, phiếu bình chọn và báo cáo nội dung được lưu kèm tài khoản của bạn.";
+"Bao nhiêu ml?" = "Bao nhiêu ml?";
 "Biểu hiện" = "Biểu hiện";
 "Biểu hiện và tác nhân nếu biết" = "Biểu hiện và tác nhân nếu biết";
 "Biểu đồ & lịch sử tăng trưởng" = "Biểu đồ & lịch sử tăng trưởng";
@@ -97,6 +98,7 @@
 "Bé trong gia đình · 1 bé" = "Bé trong gia đình · 1 bé";
 "Bé trong gia đình · {0} bé" = "Bé trong gia đình · {0} bé";
 "Bé {0}" = "Bé {0}";
+"Bé ăn gì?" = "Bé ăn gì?";
 "Bé đang ngủ" = "Bé đang ngủ";
 "Bé đã có giấc ngủ đang diễn ra." = "Bé đã có giấc ngủ đang diễn ra.";
 "Bé đã ngủ dậy? Ghi giấc vừa ngủ" = "Bé đã ngủ dậy? Ghi giấc vừa ngủ";
@@ -192,6 +194,7 @@
 "Chưa cung cấp lưu ý sức khỏe" = "Chưa cung cấp lưu ý sức khỏe";
 "Chưa cung cấp thông tin dị ứng" = "Chưa cung cấp thông tin dị ứng";
 "Chưa cung cấp tiền sử bệnh" = "Chưa cung cấp tiền sử bệnh";
+"Chưa có cữ sữa nào để lặp lại. Hãy ghi cữ đầu tiên trong app." = "Chưa có cữ sữa nào để lặp lại. Hãy ghi cữ đầu tiên trong app.";
 "Chưa có ghi chú" = "Chưa có ghi chú";
 "Chưa có ghi nhận" = "Chưa có ghi nhận";
 "Chưa có ghi nhận trong khoảng này" = "Chưa có ghi nhận trong khoảng này";
@@ -216,6 +219,7 @@
 "Chưa lưu được dữ liệu. Hãy thử lại; nội dung và mã hoạt động được giữ để tránh tạo bản ghi trùng." = "Chưa lưu được dữ liệu. Hãy thử lại; nội dung và mã hoạt động được giữ để tránh tạo bản ghi trùng.";
 "Chưa lưu được. Hãy thử lại." = "Chưa lưu được. Hãy thử lại.";
 "Chưa lấy được thời tiết. Kiểm tra mạng rồi thử lại." = "Chưa lấy được thời tiết. Kiểm tra mạng rồi thử lại.";
+"Chưa mở được dữ liệu của bé. Hãy thử lại." = "Chưa mở được dữ liệu của bé. Hãy thử lại.";
 "Chưa nghe rõ nội dung hoặc câu quá dài. Hãy nói lại từng hoạt động." = "Chưa nghe rõ nội dung hoặc câu quá dài. Hãy nói lại từng hoạt động.";
 "Chưa nghe rõ nội dung. Hãy nói lại; chưa lưu hoạt động nào." = "Chưa nghe rõ nội dung. Hãy nói lại; chưa lưu hoạt động nào.";
 "Chưa nhận được kết quả cuối. Hãy nói lại hoặc sửa văn bản rồi bấm Phân tích và lưu." = "Chưa nhận được kết quả cuối. Hãy nói lại hoặc sửa văn bản rồi bấm Phân tích và lưu.";
@@ -347,18 +351,22 @@
 "Email này đã có tài khoản. Hãy đăng nhập hoặc dùng Quên mật khẩu." = "Email này đã có tài khoản. Hãy đăng nhập hoặc dùng Quên mật khẩu.";
 "GIẤC NGỦ ĐÃ KẾT THÚC" = "GIẤC NGỦ ĐÃ KẾT THÚC";
 "Ghi" = "Ghi";
+"Ghi ${kind} cho bé" = "Ghi ${kind} cho bé";
 "Ghi biểu hiện của bé" = "Ghi biểu hiện của bé";
+"Ghi cho bé" = "Ghi cho bé";
 "Ghi cho {0}" = "Ghi cho {0}";
 "Ghi chú" = "Ghi chú";
 "Ghi chú · Tùy chọn" = "Ghi chú · Tùy chọn";
 "Ghi cữ sữa" = "Ghi cữ sữa";
 "Ghi hoạt động" = "Ghi hoạt động";
 "Ghi hoạt động cho {0}" = "Ghi hoạt động cho {0}";
+"Ghi hoạt động nào?" = "Ghi hoạt động nào?";
 "Ghi hoạt động đầu tiên cho bé trong ngày này." = "Ghi hoạt động đầu tiên cho bé trong ngày này.";
 "Ghi lại các mũi đã tiêm và lịch hẹn tiếp theo." = "Ghi lại các mũi đã tiêm và lịch hẹn tiếp theo.";
 "Ghi lại hôm nay để ngày mai yên tâm hơn." = "Ghi lại hôm nay để ngày mai yên tâm hơn.";
 "Ghi lại lời dặn và lịch hẹn để không quên tái khám." = "Ghi lại lời dặn và lịch hẹn để không quên tái khám.";
 "Ghi mũi tiếp theo" = "Ghi mũi tiếp theo";
+"Ghi một hoạt động cho bé đang chọn trong Bé Khỏe mà không cần mở app." = "Ghi một hoạt động cho bé đang chọn trong Bé Khỏe mà không cần mở app.";
 "Ghi nhanh" = "Ghi nhanh";
 "Ghi nhanh lần tắm cho bé" = "Ghi nhanh lần tắm cho bé";
 "Ghi nhanh nhật ký · Theo dõi sát sao\nĐồng hành cùng bé yêu" = "Ghi nhanh nhật ký · Theo dõi sát sao\nĐồng hành cùng bé yêu";
@@ -424,6 +432,7 @@
 "Hiện tại: {0}" = "Hiện tại: {0}";
 "Ho" = "Ho";
 "Hoạt động" = "Hoạt động";
+"Hoạt động gì?" = "Hoạt động gì?";
 "Hoạt động gần đây" = "Hoạt động gần đây";
 "Hoạt động khác" = "Hoạt động khác";
 "Hoạt động khác trong ngày" = "Hoạt động khác trong ngày";
@@ -433,6 +442,9 @@
 "Hoặc điền thông tin bên dưới" = "Hoặc điền thông tin bên dưới";
 "HÔM NAY" = "HÔM NAY";
 "Hãy chăm sóc cả bản thân, vì bé cần bố mẹ khỏe mạnh." = "Hãy chăm sóc cả bản thân, vì bé cần bố mẹ khỏe mạnh.";
+"Hãy mở Bé Khỏe và đăng nhập trước." = "Hãy mở Bé Khỏe và đăng nhập trước.";
+"Hãy mở Bé Khỏe để tạo hồ sơ bé trước." = "Hãy mở Bé Khỏe để tạo hồ sơ bé trước.";
+"Hãy mở Bé Khỏe để xác nhận quyền riêng tư trước." = "Hãy mở Bé Khỏe để xác nhận quyền riêng tư trước.";
 "Hãy thử lại." = "Hãy thử lại.";
 "Hãy đăng nhập tài khoản cloud để tham gia gia đình." = "Hãy đăng nhập tài khoản cloud để tham gia gia đình.";
 "Hãy đăng nhập để bình chọn và đề xuất tính năng." = "Hãy đăng nhập để bình chọn và đề xuất tính năng.";
@@ -507,6 +519,7 @@
 "Liên kết không còn hiệu lực. Hãy yêu cầu email mới." = "Liên kết không còn hiệu lực. Hãy yêu cầu email mới.";
 "Logo Bé Khỏe" = "Logo Bé Khỏe";
 "Loại" = "Loại";
+"Loại hoạt động" = "Loại hoạt động";
 "Loại nhiệt kế" = "Loại nhiệt kế";
 "Loại sữa" = "Loại sữa";
 "Lúc ngủ" = "Lúc ngủ";
@@ -527,6 +540,7 @@
 "Lưu ý sức khỏe" = "Lưu ý sức khỏe";
 "Lưu ý sức khỏe và dị ứng" = "Lưu ý sức khỏe và dị ứng";
 "Lưu ý sức khỏe: {0}" = "Lưu ý sức khỏe: {0}";
+"Lượng" = "Lượng";
 "Lượng dùng" = "Lượng dùng";
 "Lượng ml chưa gồm bú mẹ trực tiếp." = "Lượng ml chưa gồm bú mẹ trực tiếp.";
 "Lượng nước bé đã uống" = "Lượng nước bé đã uống";
@@ -656,6 +670,7 @@
 "Người tạo hồ sơ xác nhận có quyền đại diện hợp pháp và đồng ý rõ ràng trước khi BabyCare tạo hồ sơ. BabyCare áp dụng nguyên tắc tối thiểu dữ liệu và lợi ích tốt nhất của trẻ." = "Người tạo hồ sơ xác nhận có quyền đại diện hợp pháp và đồng ý rõ ràng trước khi BabyCare tạo hồ sơ. BabyCare áp dụng nguyên tắc tối thiểu dữ liệu và lợi ích tốt nhất của trẻ.";
 "Ngủ" = "Ngủ";
 "Ngủ & Sinh hoạt" = "Ngủ & Sinh hoạt";
+"Ngủ / Thức dậy" = "Ngủ / Thức dậy";
 "Ngủ theo ngày · giờ" = "Ngủ theo ngày · giờ";
 "Ngủ · 1 giấc" = "Ngủ · 1 giấc";
 "Ngủ · {0} giấc" = "Ngủ · {0} giấc";
@@ -663,6 +678,7 @@
 "Nhiệt kế tai cho kết quả đáng tin hơn khi bé trên 6 tháng." = "Nhiệt kế tai cho kết quả đáng tin hơn khi bé trên 6 tháng.";
 "Nhiệt kế {0}" = "Nhiệt kế {0}";
 "Nhiệt độ" = "Nhiệt độ";
+"Nhiệt độ bao nhiêu °C?" = "Nhiệt độ bao nhiêu °C?";
 "Nhiệt độ bình thường" = "Nhiệt độ bình thường";
 "Nhiệt độ bình thường theo vị trí đo" = "Nhiệt độ bình thường theo vị trí đo";
 "Nhiệt độ gần nhất" = "Nhiệt độ gần nhất";
@@ -732,6 +748,7 @@
 "NỘI DUNG GHI NHẬN" = "NỘI DUNG GHI NHẬN";
 "Nội dung" = "Nội dung";
 "Nội dung này mô tả cách BabyCare hiện đang hoạt động và không phải tư vấn pháp lý hoặc y tế." = "Nội dung này mô tả cách BabyCare hiện đang hoạt động và không phải tư vấn pháp lý hoặc y tế.";
+"Nội dung tã" = "Nội dung tã";
 "Nội dung · Bắt buộc" = "Nội dung · Bắt buộc";
 "PDF được tạo từ dữ liệu đã lưu trên thiết bị. Kiểm tra bản xem trước trước khi gửi." = "PDF được tạo từ dữ liệu đã lưu trên thiết bị. Kiểm tra bản xem trước trước khi gửi.";
 "Phiên bản" = "Phiên bản";
@@ -794,6 +811,7 @@
 "Sữa" = "Sữa";
 "Sữa công thức" = "Sữa công thức";
 "Sữa mẹ vắt" = "Sữa mẹ vắt";
+"Sữa như cữ trước" = "Sữa như cữ trước";
 "Sữa theo ngày · ml" = "Sữa theo ngày · ml";
 "Sữa, bữa ăn, uống nước" = "Sữa, bữa ăn, uống nước";
 "Sự đồng ý của bạn" = "Sự đồng ý của bạn";
@@ -909,6 +927,7 @@
 "Tài liệu bạn nên xem" = "Tài liệu bạn nên xem";
 "Tác nhân, mức độ và độ chắc chắn" = "Tác nhân, mức độ và độ chắc chắn";
 "Tã" = "Tã";
+"Tã thế nào?" = "Tã thế nào?";
 "Tã · Gần nhất {0}" = "Tã · Gần nhất {0}";
 "Tên chất / tác nhân dị ứng · Bắt buộc" = "Tên chất / tác nhân dị ứng · Bắt buộc";
 "Tên gọi và tuổi" = "Tên gọi và tuổi";
@@ -1073,6 +1092,7 @@
 "{0} (bạn)" = "{0} (bạn)";
 "{0} / 3 đã chọn" = "{0} / 3 đã chọn";
 "{0} bữa" = "{0} bữa";
+"{0} cho {1}" = "{0} cho {1}";
 "{0} của bé" = "{0} của bé";
 "{0} cữ" = "{0} cữ";
 "{0} ghi nhận" = "{0} ghi nhận";
@@ -1157,6 +1177,7 @@
 "ĐÃ TẠM DỪNG" = "ĐÃ TẠM DỪNG";
 "Đây là gia đình của tài khoản bạn nên không thể rời đi." = "Đây là gia đình của tài khoản bạn nên không thể rời đi.";
 "Đã bắt đầu theo dõi" = "Đã bắt đầu theo dõi";
+"Đã bắt đầu tính giờ ngủ" = "Đã bắt đầu tính giờ ngủ";
 "Đã cho phép" = "Đã cho phép";
 "Đã chọn" = "Đã chọn";
 "Đã chọn dữ liệu trên máy. Hãy đăng nhập để ghi nhận sự đồng ý trước khi tiếp tục; dữ liệu của bé không tự tải lên cloud." = "Đã chọn dữ liệu trên máy. Hãy đăng nhập để ghi nhận sự đồng ý trước khi tiếp tục; dữ liệu của bé không tự tải lên cloud.";

@@ -64,6 +64,7 @@
 "BabyCare xin quyền ảnh, micro và thông báo đúng lúc dùng tính năng tương ứng. Dữ liệu cloud được truyền qua HTTPS và quyền truy cập được giới hạn bằng phiên đăng nhập cùng chính sách cách ly gia đình." = "BabyCare requests photo, microphone, and notification permissions when you use the related feature. Cloud data is transmitted over HTTPS, and access is restricted by signed-in sessions and family-isolation policies.";
 "BabyCare xử lý hồ sơ trẻ, nhật ký chăm sóc và sức khỏe, số đo, tiêm chủng, lịch nhắc, ảnh bạn chọn và thông tin tài khoản đăng nhập. Micro chỉ được dùng khi bạn chủ động ghi bằng giọng nói." = "BabyCare processes child profiles, care and health logs, measurements, vaccinations, reminders, photos you select, and sign-in account information. The microphone is used only when you start voice entry.";
 "BabyCare xử lý hồ sơ trẻ, nhật ký chăm sóc và sức khỏe, số đo, tiêm chủng, lịch nhắc, ảnh bạn chọn và thông tin tài khoản đăng nhập. Micro chỉ được dùng khi bạn chủ động ghi bằng giọng nói. Vị trí gần đúng chỉ được dùng khi bạn bật thời tiết trên màn hình chính và không được lưu. Khi bạn gửi góp ý, BabyCare nhận nội dung bạn viết, ảnh chụp màn hình bạn đính kèm (có thể chứa thông tin của bé đang hiện trên màn hình) và thông tin kỹ thuật hiện trước khi gửi: phiên bản ứng dụng và iOS, kiểu máy, ngôn ngữ, chế độ lưu. Đề xuất tính năng, phiếu bình chọn và báo cáo nội dung được lưu kèm tài khoản của bạn." = "BabyCare processes child profiles, care and health logs, measurements, vaccinations, reminders, photos you select, and sign-in account information. The microphone is used only when you start voice entry. The approximate location is used only when you turn on the weather on the home screen and is not stored. When you send feedback, BabyCare receives what you write, the screenshots you attach (which may show your child's information on screen) and the technical details shown before sending: app and iOS version, device model, language and storage mode. Feature suggestions, votes and content reports are stored with your account.";
+"Bao nhiêu ml?" = "How many ml?";
 "Biểu hiện" = "Signs";
 "Biểu hiện và tác nhân nếu biết" = "Symptoms and trigger, if known";
 "Biểu đồ & lịch sử tăng trưởng" = "Growth charts & history";
@@ -97,6 +98,7 @@
 "Bé trong gia đình · 1 bé" = "Your babies · 1 baby";
 "Bé trong gia đình · {0} bé" = "Your babies · {0} babies";
 "Bé {0}" = "Baby {0}";
+"Bé ăn gì?" = "What did your baby eat?";
 "Bé đang ngủ" = "Baby is sleeping";
 "Bé đã có giấc ngủ đang diễn ra." = "Your baby already has an ongoing sleep session.";
 "Bé đã ngủ dậy? Ghi giấc vừa ngủ" = "Already awake? Log the nap";
@@ -192,6 +194,7 @@
 "Chưa cung cấp lưu ý sức khỏe" = "No health notes provided";
 "Chưa cung cấp thông tin dị ứng" = "No allergy information provided";
 "Chưa cung cấp tiền sử bệnh" = "No medical history provided";
+"Chưa có cữ sữa nào để lặp lại. Hãy ghi cữ đầu tiên trong app." = "No feed to repeat yet. Log the first one in the app.";
 "Chưa có ghi chú" = "No notes";
 "Chưa có ghi nhận" = "No entries yet";
 "Chưa có ghi nhận trong khoảng này" = "No entries in this period";
@@ -216,6 +219,7 @@
 "Chưa lưu được dữ liệu. Hãy thử lại; nội dung và mã hoạt động được giữ để tránh tạo bản ghi trùng." = "Unable to save. Try again; your text and activity IDs are kept to prevent duplicates.";
 "Chưa lưu được. Hãy thử lại." = "Unable to save. Please try again.";
 "Chưa lấy được thời tiết. Kiểm tra mạng rồi thử lại." = "Couldn't get the weather. Check your connection and try again.";
+"Chưa mở được dữ liệu của bé. Hãy thử lại." = "Couldn't open your baby's data. Try again.";
 "Chưa nghe rõ nội dung hoặc câu quá dài. Hãy nói lại từng hoạt động." = "The speech was unclear or too long. Try one activity at a time.";
 "Chưa nghe rõ nội dung. Hãy nói lại; chưa lưu hoạt động nào." = "The speech was unclear. Please try again. No activities were saved.";
 "Chưa nhận được kết quả cuối. Hãy nói lại hoặc sửa văn bản rồi bấm Phân tích và lưu." = "No final result received. Try again or edit the text and tap Parse & save.";
@@ -347,18 +351,22 @@
 "Email này đã có tài khoản. Hãy đăng nhập hoặc dùng Quên mật khẩu." = "This email already has an account. Sign in or use Forgot password.";
 "GIẤC NGỦ ĐÃ KẾT THÚC" = "COMPLETED SLEEP";
 "Ghi" = "Log";
+"Ghi ${kind} cho bé" = "Log ${kind} for baby";
 "Ghi biểu hiện của bé" = "Record your baby's symptoms";
+"Ghi cho bé" = "Log for baby";
 "Ghi cho {0}" = "Log for {0}";
 "Ghi chú" = "Notes";
 "Ghi chú · Tùy chọn" = "Notes · Optional";
 "Ghi cữ sữa" = "Log a milk feed";
 "Ghi hoạt động" = "Log activity";
 "Ghi hoạt động cho {0}" = "Log an activity for {0}";
+"Ghi hoạt động nào?" = "Which activity?";
 "Ghi hoạt động đầu tiên cho bé trong ngày này." = "Log your baby's first activity for this day.";
 "Ghi lại các mũi đã tiêm và lịch hẹn tiếp theo." = "Record administered doses and the next appointment.";
 "Ghi lại hôm nay để ngày mai yên tâm hơn." = "Write today down so tomorrow feels calmer.";
 "Ghi lại lời dặn và lịch hẹn để không quên tái khám." = "Note the doctor's advice and the next appointment so you don't miss the follow-up.";
 "Ghi mũi tiếp theo" = "Record next dose";
+"Ghi một hoạt động cho bé đang chọn trong Bé Khỏe mà không cần mở app." = "Log an activity for the baby selected in Bé Khỏe without opening the app.";
 "Ghi nhanh" = "Quick log";
 "Ghi nhanh lần tắm cho bé" = "Quickly log your baby's bath";
 "Ghi nhanh nhật ký · Theo dõi sát sao\nĐồng hành cùng bé yêu" = "Quick logging · Closer tracking\nBy your baby's side";
@@ -424,6 +432,7 @@
 "Hiện tại: {0}" = "Current age: {0}";
 "Ho" = "Cough";
 "Hoạt động" = "Activities";
+"Hoạt động gì?" = "What happened?";
 "Hoạt động gần đây" = "Recent activities";
 "Hoạt động khác" = "Other activity";
 "Hoạt động khác trong ngày" = "Other activities during the day";
@@ -433,6 +442,9 @@
 "Hoặc điền thông tin bên dưới" = "Or enter your details below";
 "HÔM NAY" = "TODAY";
 "Hãy chăm sóc cả bản thân, vì bé cần bố mẹ khỏe mạnh." = "Look after yourself too; your baby needs you well.";
+"Hãy mở Bé Khỏe và đăng nhập trước." = "Open Bé Khỏe and sign in first.";
+"Hãy mở Bé Khỏe để tạo hồ sơ bé trước." = "Open Bé Khỏe to add your baby first.";
+"Hãy mở Bé Khỏe để xác nhận quyền riêng tư trước." = "Open Bé Khỏe to confirm the privacy terms first.";
 "Hãy thử lại." = "Please try again.";
 "Hãy đăng nhập tài khoản cloud để tham gia gia đình." = "Sign in to a cloud account to join a family.";
 "Hãy đăng nhập để bình chọn và đề xuất tính năng." = "Sign in to vote and suggest features.";
@@ -507,6 +519,7 @@
 "Liên kết không còn hiệu lực. Hãy yêu cầu email mới." = "This link has expired. Please request a new email.";
 "Logo Bé Khỏe" = "BabyCare logo";
 "Loại" = "Type";
+"Loại hoạt động" = "Activity";
 "Loại nhiệt kế" = "Thermometer";
 "Loại sữa" = "Milk type";
 "Lúc ngủ" = "Asleep";
@@ -527,6 +540,7 @@
 "Lưu ý sức khỏe" = "Health notes";
 "Lưu ý sức khỏe và dị ứng" = "Health notes and allergies";
 "Lưu ý sức khỏe: {0}" = "Health notes: {0}";
+"Lượng" = "Amount";
 "Lượng dùng" = "Amount given";
 "Lượng ml chưa gồm bú mẹ trực tiếp." = "Milk volume excludes direct breastfeeding.";
 "Lượng nước bé đã uống" = "Amount of water consumed";
@@ -656,6 +670,7 @@
 "Người tạo hồ sơ xác nhận có quyền đại diện hợp pháp và đồng ý rõ ràng trước khi BabyCare tạo hồ sơ. BabyCare áp dụng nguyên tắc tối thiểu dữ liệu và lợi ích tốt nhất của trẻ." = "The person creating a profile confirms legal authority and gives explicit consent before BabyCare creates it. BabyCare applies data minimization and the best interests of the child.";
 "Ngủ" = "Sleep";
 "Ngủ & Sinh hoạt" = "Sleep & routines";
+"Ngủ / Thức dậy" = "Sleep / Wake up";
 "Ngủ theo ngày · giờ" = "Daily sleep · hours";
 "Ngủ · 1 giấc" = "Sleep · 1 nap";
 "Ngủ · {0} giấc" = "Sleep · {0} naps";
@@ -663,6 +678,7 @@
 "Nhiệt kế tai cho kết quả đáng tin hơn khi bé trên 6 tháng." = "Ear thermometers are more reliable after 6 months of age.";
 "Nhiệt kế {0}" = "{0} thermometer";
 "Nhiệt độ" = "Temperature";
+"Nhiệt độ bao nhiêu °C?" = "What temperature, in °C?";
 "Nhiệt độ bình thường" = "Normal temperature";
 "Nhiệt độ bình thường theo vị trí đo" = "Normal temperature by site";
 "Nhiệt độ gần nhất" = "Latest temperature";
@@ -732,6 +748,7 @@
 "NỘI DUNG GHI NHẬN" = "RECORDED DETAILS";
 "Nội dung" = "Details";
 "Nội dung này mô tả cách BabyCare hiện đang hoạt động và không phải tư vấn pháp lý hoặc y tế." = "This content describes how BabyCare currently works and is not legal or medical advice.";
+"Nội dung tã" = "Diaper";
 "Nội dung · Bắt buộc" = "Details · Required";
 "PDF được tạo từ dữ liệu đã lưu trên thiết bị. Kiểm tra bản xem trước trước khi gửi." = "The PDF uses data saved on this device. Review the preview before sending.";
 "Phiên bản" = "Version";
@@ -794,6 +811,7 @@
 "Sữa" = "Milk";
 "Sữa công thức" = "Formula";
 "Sữa mẹ vắt" = "Expressed breast milk";
+"Sữa như cữ trước" = "Milk like last feed";
 "Sữa theo ngày · ml" = "Daily milk · ml";
 "Sữa, bữa ăn, uống nước" = "Milk, meals, water";
 "Sự đồng ý của bạn" = "Your consent";
@@ -909,6 +927,7 @@
 "Tài liệu bạn nên xem" = "Documents to review";
 "Tác nhân, mức độ và độ chắc chắn" = "Trigger, severity and certainty";
 "Tã" = "Diapers";
+"Tã thế nào?" = "What was in the diaper?";
 "Tã · Gần nhất {0}" = "Diapers · Last {0}";
 "Tên chất / tác nhân dị ứng · Bắt buộc" = "Allergen or trigger · Required";
 "Tên gọi và tuổi" = "Name and age";
@@ -1073,6 +1092,7 @@
 "{0} (bạn)" = "{0} (you)";
 "{0} / 3 đã chọn" = "{0} of 3 selected";
 "{0} bữa" = "{0} meals";
+"{0} cho {1}" = "{0} for {1}";
 "{0} của bé" = "{0} for your baby";
 "{0} cữ" = "{0} feeds";
 "{0} ghi nhận" = "{0} entries";
@@ -1157,6 +1177,7 @@
 "ĐÃ TẠM DỪNG" = "PAUSED";
 "Đây là gia đình của tài khoản bạn nên không thể rời đi." = "This is your account's own family, so you cannot leave it.";
 "Đã bắt đầu theo dõi" = "Tracking started";
+"Đã bắt đầu tính giờ ngủ" = "Sleep timer started";
 "Đã cho phép" = "Allowed";
 "Đã chọn" = "Selected";
 "Đã chọn dữ liệu trên máy. Hãy đăng nhập để ghi nhận sự đồng ý trước khi tiếp tục; dữ liệu của bé không tự tải lên cloud." = "On-device data selected. Sign in to record your consent before continuing; your child's data will not be uploaded automatically.";
