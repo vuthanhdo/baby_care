@@ -15,7 +15,7 @@ Screenshot: `screenshots/iphone-6.3/<en|vi>` cho khung iPhone (medium display), 
 | Support URL | https://vuthanhdo.github.io/baby_care/index.html |
 | Marketing URL | (trống) |
 | Copyright | 2026 Vu Thanh Do |
-| Version | 1.2 (build 4); trước đó 1.0 (1), 1.0.1 (2), 1.1 (3) |
+| Version | 1.3 (build 5); trước đó 1.0 (1), 1.0.1 (2), 1.1 (3), 1.2 (4) |
 | Age rating | 4+ (trả lời None/No cho mọi câu; Medical/Treatment Information: None; không quảng cáo; từ 1.2 User-Generated Content = Yes vì bảng bình chọn tính năng, nội dung được duyệt trước) |
 | Content rights | Does not contain, show, or access third-party content |
 | Advertising Identifier (IDFA) | No |
@@ -32,6 +32,8 @@ Screenshot: `screenshots/iphone-6.3/<en|vi>` cho khung iPhone (medium display), 
 `New in 1.1: weather and what to dress your baby in, a 60-second breathing counter, follow-up visit reminders, growth reference curves and dark mode.`
 1.2 (đổi ngay sau khi phát hành 1.2):
 `New in 1.2: share your baby's diary with family or a nanny, send feedback with screenshots, and vote for the features you want next.`
+1.3:
+`New in 1.3: log a diaper, a feed or a sleep straight from the Home Screen widget, or use the "Log for baby" shortcut without opening the app.`
 
 **Keywords (100):** từ 1.1 (25/10/2026). Tên và subtitle đã được Apple đánh chỉ mục, nên không lặp lại baby/care/diary/fever/meds/feeds/vaccines:
 `tracker,newborn,infant,toddler,feeding,breastfeeding,pumping,nap,sleep,diaper,temperature,growth,log`
@@ -46,6 +48,7 @@ QUICK LOGGING
 • Milk feeds, meals, water
 • Sleep (start and stop), baths, diaper changes
 • Voice entry and up to 3 photos per entry
+• Home Screen widget and a "Log for baby" shortcut: log a diaper, a feed or a sleep without opening the app
 • A "Today" card with feeds, sleep hours, diapers and medicines
 
 ILLNESS TRACKING
@@ -112,6 +115,13 @@ Bé Khỏe records what the family enters. It does not diagnose, prescribe or re
 • A clearer choice when starting illness tracking after a fever reading
 • Fixes and stability improvements
 ```
+1.3:
+```
+• Home Screen widget: log a diaper change, repeat the last milk feed, or start and end a sleep with one tap, without opening the app
+• The widget shows how long ago your baby last fed, had a diaper change, and how long the current sleep has lasted
+• "Log for baby" shortcut: run it from Spotlight, Siri, the Action button or the Shortcuts app, answer a question or two (activity, amount), and it's saved
+• Fixes and stability improvements
+```
 
 ## 3. Vietnamese — localization thêm
 
@@ -123,6 +133,8 @@ Bé Khỏe records what the family enters. It does not diagnose, prescribe or re
 `Mới ở bản 1.1: thời tiết và gợi ý trang phục cho bé, đếm nhịp thở 60 giây, nhắc lịch tái khám, biểu đồ tăng trưởng có đường chuẩn và giao diện tối.`
 1.2 (đổi ngay sau khi phát hành 1.2):
 `Mới ở bản 1.2: chia sẻ nhật ký của bé với người thân hoặc bảo mẫu, gửi góp ý kèm ảnh chụp màn hình và bình chọn tính năng bạn muốn có.`
+1.3:
+`Mới ở bản 1.3: ghi tã, cữ sữa hay giấc ngủ ngay từ widget trên màn hình chính, hoặc dùng phím tắt "Ghi cho bé" mà không cần mở app.`
 
 **Keywords (100):** từ 1.1 (25/10/2026), không lặp từ đã có trong tên/subtitle (bé, khỏe, nhật ký, chăm, sốt, thuốc, bú, ngủ, tiêm chủng). Giới hạn tính theo ký tự, không theo byte:
 `theo dõi,trẻ sơ sinh,ăn dặm,sữa mẹ,hút sữa,nhiệt độ,nhiệt kế,hạ sốt,tã,cân nặng,chiều cao,vắc xin`
@@ -137,6 +149,7 @@ GHI NHANH TRONG VÀI GIÂY
 • Cữ sữa, bữa ăn, nước uống
 • Giấc ngủ (bấm bắt đầu, bấm kết thúc), tắm, thay tã
 • Nhập bằng giọng nói tiếng Việt, đính kèm tối đa 3 ảnh mỗi lần ghi
+• Widget trên màn hình chính và phím tắt "Ghi cho bé": ghi tã, cữ sữa, giấc ngủ mà không cần mở app
 • Thẻ "Hôm nay" tóm tắt cữ sữa, giờ ngủ, số lần thay tã và thuốc
 
 THEO DÕI ĐỢT ỐM
@@ -203,6 +216,13 @@ Bé Khỏe chỉ ghi nhận thông tin do gia đình nhập, không chẩn đoá
 • Hỏi rõ ràng hơn khi bắt đầu theo dõi đợt ốm sau lần đo sốt
 • Sửa lỗi và cải thiện độ ổn định
 ```
+1.3:
+```
+• Widget trên màn hình chính: ghi thay tã, lặp lại cữ sữa trước, bắt đầu hoặc kết thúc giấc ngủ chỉ với một chạm, không cần mở app
+• Widget cho biết lần bú, lần thay tã gần nhất cách đây bao lâu và bé đã ngủ được bao lâu
+• Phím tắt "Ghi cho bé": chạy từ Spotlight, Siri, nút Action hoặc app Phím tắt, trả lời một hai câu (hoạt động, lượng) là lưu xong
+• Sửa lỗi và cải thiện độ ổn định
+```
 
 ## 4. App Privacy (privacy nutrition labels)
 
@@ -232,18 +252,17 @@ Từ 1.2 (đổi lúc nộp duyệt, App Information → Age Ratings): **User-Ge
 
 **Contact**: họ tên, số điện thoại, email của bạn.
 
-**Notes 1.2 (EN, dán nguyên; bản 1.1 nằm trong lịch sử git):**
+**Notes 1.3 (EN, dán nguyên; bản 1.1, 1.2 nằm trong lịch sử git):**
 ```
 Bé Khỏe is a private care diary for parents of babies and young children. It stores what the family enters (temperature, medicines, symptoms, feeds, sleep, diapers, growth, vaccinations), shows timeline/charts/statistics, reminds the medication time the parent chose and exports a PDF report for the doctor. It does not diagnose, prescribe or calculate doses. No ads, paid content or IAP.
 
-ACCESS: use the demo account above (one child profile with sample entries is already created). Sign in with Apple and Google are also available. New accounts: sign up with any email; the confirmation link opens the app via babycare://auth-callback. First sign-in shows three consent checkboxes (terms/privacy, child health data, cloud sync) that must be accepted before editing data.
+ACCESS: use the demo account above (one child profile with sample entries is already created). Sign in with Apple and Google are also available. First sign-in shows three consent checkboxes (terms/privacy, child health data, cloud sync) that must be accepted before editing data.
 
-MAIN FEATURES: tabs "Quick log" (temperature, medicine, feeds, sleep, diapers, symptoms, doctor visits, weather, illness tracking with medication reminders), "Diary", "Statistics" (CDC 2000 growth charts, "Share report (PDF / QR)") and "Feedback"; avatar → child profiles and vaccinations; gear icon → Settings.
+MAIN FEATURES: tabs "Quick log", "Diary", "Statistics" (growth charts, PDF/QR report) and "Feedback" (bug reports with screenshots, feature voting); avatar → child profiles and vaccinations; gear icon → Settings → Account → Family & sharing (one-time invite codes, Caregiver or View only roles).
 
-NEW IN 1.2
-1. FAMILY SHARING (Settings → Account → Family & sharing): the owner invites a "Caregiver" (can log) or a "View only" member with an 8-character code that works once and expires after 48 hours. Members see the family's baby profiles and each other's email address; the owner can change roles or remove members, and anyone can leave. The invited person enters the code under "Join another family" on the same screen, or on the first-run screen. Sharing stays inside the invited family; nothing is public. To try it, sign up a second account and enter a code created with the demo account.
-2. FEEDBACK tab → "Send feedback": a bug report, suggestion or question with up to 3 screenshots, sent privately to the developer. The app/iOS version and device model sent with it are shown before sending; we reply by email only if the user ticks "Allow a reply by email".
-3. FEEDBACK tab → "Vote on features": users suggest a feature (short title, optional details) and vote for published suggestions, one vote each; tapping again removes the vote.
+NEW IN 1.3: logging without opening the app.
+1. HOME SCREEN WIDGET "Quick log" (small and medium): sign in and open the app once, then long-press the Home Screen → Edit → Add Widget → Bé Khỏe. Its buttons log a diaper change, repeat the last milk feed, or start/end a sleep for the child selected in the app. The system runs the action inside the app in the background; the entry appears in the Diary and syncs like any other. View-only family members see the widget without buttons. The widget only shows the child's name and when the last feed, diaper and sleep happened; this summary stays on the device and is removed on sign-out.
+2. SHORTCUT "Log for baby" ("Ghi cho bé" in Vietnamese): from the Shortcuts app (Bé Khỏe), Spotlight, Siri or the Action button. It asks for the activity, then the amount (ml or °C), the diaper content or the food, and saves it for the selected child.
 
 USER-GENERATED CONTENT (Guideline 1.2): feature suggestions are the only content a user can show to others.
 - Filtering: every new suggestion stays "Under review" and is visible only to its author until the developer approves it.

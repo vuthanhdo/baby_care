@@ -6,7 +6,7 @@
 
 1. Google Cloud → OAuth consent screen → **Publish app** (Production); nếu không, đăng nhập Google chỉ chạy cho test user.
 2. Tài khoản test cho App Review: xác nhận email `thanhdo.vtb+bekhoe-test@gmail.com`, đặt mật khẩu qua "Quên mật khẩu?" trong app, tạo một hồ sơ bé và vài bản ghi; điền vào Notes.
-3. Kiểm tra `MARKETING_VERSION` và `CURRENT_PROJECT_VERSION` trong Xcode → target BabyCare → General. Mỗi lần upload lại cùng phiên bản phải tăng build number. Lịch sử: 1.0 (1) nộp 20/10/2026, được duyệt và phát hành; 1.0.1 (2) upload 23/10/2026 (iPhone Duo/iPad, sửa đăng ký bằng email đã tồn tại), kèm ảnh iPad mới và ảnh iPhone Duo. 1.1 (3) upload và nộp duyệt 25/10/2026, rút ra lúc tối để thay ảnh có tiêu đề (`Tools/store_captions.swift`) cùng keyword/promotional text mới rồi nộp lại 22:24; phát hành thủ công (thời tiết, nhịp thở, tái khám, dị ứng/tiền sử bệnh, biểu đồ chuẩn CDC, dark mode); cần migration Supabase 0011 (đã chạy) và WeatherKit trong App Services của App ID (đã bật). 1.2 (4) upload 28/10/2026 qua Xcode Organizer (`xcodebuild -exportArchive` báo "Failed to Use Accounts" dù đã đăng nhập lại Xcode) và nộp duyệt 07:49 cùng ngày, phát hành thủ công (chính sách web đổi ngày 28/10, App Privacy 7 loại, Age Rating nội dung người dùng = Yes vẫn 4+): chia sẻ gia đình, tab Góp ý, bình chọn tính năng; cần migration 0012–0014 (đã chạy 27/10); ảnh store thêm `09-family` (54 ảnh: 6.3", iPad 13", Duo × vi/en).
+3. Kiểm tra `MARKETING_VERSION` và `CURRENT_PROJECT_VERSION` trong Xcode → target BabyCare → General. Mỗi lần upload lại cùng phiên bản phải tăng build number. Lịch sử: 1.0 (1) nộp 20/10/2026, được duyệt và phát hành; 1.0.1 (2) upload 23/10/2026 (iPhone Duo/iPad, sửa đăng ký bằng email đã tồn tại), kèm ảnh iPad mới và ảnh iPhone Duo. 1.1 (3) upload và nộp duyệt 25/10/2026, rút ra lúc tối để thay ảnh có tiêu đề (`Tools/store_captions.swift`) cùng keyword/promotional text mới rồi nộp lại 22:24; phát hành thủ công (thời tiết, nhịp thở, tái khám, dị ứng/tiền sử bệnh, biểu đồ chuẩn CDC, dark mode); cần migration Supabase 0011 (đã chạy) và WeatherKit trong App Services của App ID (đã bật). 1.2 (4) upload 28/10/2026 qua Xcode Organizer (`xcodebuild -exportArchive` báo "Failed to Use Accounts" dù đã đăng nhập lại Xcode) và nộp duyệt 07:49 cùng ngày, phát hành thủ công (chính sách web đổi ngày 28/10, App Privacy 7 loại, Age Rating nội dung người dùng = Yes vẫn 4+): chia sẻ gia đình, tab Góp ý, bình chọn tính năng; cần migration 0012–0014 (đã chạy 27/10); ảnh store thêm `09-family` (54 ảnh: 6.3", iPad 13", Duo × vi/en). 1.3 (5) chuẩn bị 02/11/2026: widget Ghi nhanh trên màn hình chính và phím tắt "Ghi cho bé" (target mới `BabyCareWidgets`, App Group `group.com.vuthanhdo.BabyCare`); không cần migration Supabase.
 4. Chạy test: `xcodebuild -project BabyCare.xcodeproj -scheme BabyCare -destination 'platform=iOS Simulator,name=iPhone 17' test`.
 5. Push `develop`, gắn tag `git tag v1.0 && git push origin v1.0`. Tùy chọn: merge `develop` vào `main`.
 6. Thu hồi token GitHub đang nằm trong remote URL: `git remote set-url origin https://github.com/vuthanhdo/baby_care.git` rồi revoke token trên GitHub → Settings → Developer settings.
@@ -46,6 +46,13 @@ App Privacy và trang chính sách phải khớp với bản đang bán, nên ch
 23. **Age Ratings** (App Information → Age Ratings → View): User-Generated Content → **Yes**; các câu khác giữ No; xem lại xếp hạng trước khi lưu.
 24. Bảng bình chọn có sẵn vài đề xuất đã duyệt (`open`) để reviewer thử bình chọn và báo cáo; không để đề xuất thử nghiệm.
 25. Promotional text 1.2 đã điền trong version 1.2, lên store cùng bản 1.2.
+
+## G. Bản 1.3: widget và phím tắt
+
+26. Archive bằng **Xcode** (Product → Archive, đích Any iOS Device): extension `com.vuthanhdo.BabyCare.Widgets` là App ID mới và cả app lẫn widget thêm App Group `group.com.vuthanhdo.BabyCare`. Xcode (automatic signing) tự đăng ký hai thứ này; `xcodebuild` dòng lệnh báo "No Accounts" nên không làm được (02/11/2026). Sau đó Organizer → Distribute App → App Store Connect.
+27. App Privacy và Age Ratings không đổi: bản tóm tắt cho widget (tên bé, giờ lần cuối) chỉ nằm trên máy. `PrivacyInfo.xcprivacy` thêm lý do UserDefaults `1C8F.1`; extension có privacy manifest riêng.
+28. Ảnh store giữ bộ của 1.2 (App Store Connect tự chép sang version mới).
+29. Thử trên máy thật hoặc TestFlight trước khi nộp: thêm widget, bấm từng nút khi app đã tắt; chạy phím tắt "Ghi cho bé" từ Spotlight (simulator không chạy được App Shortcut vì bản build ký ad-hoc không có team ID).
 
 ## Lý do từ chối hay gặp và trạng thái của app
 
