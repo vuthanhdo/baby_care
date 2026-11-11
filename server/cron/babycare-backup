@@ -1,0 +1,2 @@
+# Nightly backup at 19:30 UTC (02:30 in Vietnam). Output goes to the journal: journalctl -t babycare-backup
+30 19 * * * root /srv/babycare/scripts/backup.sh 2>&1 | logger -t babycare-backup

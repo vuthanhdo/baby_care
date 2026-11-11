@@ -1,0 +1,29 @@
+{
+  "name": "babycare-api",
+  "private": true,
+  "type": "module",
+  "description": "Self-hosted BabyCare backend: the subset of GoTrue, PostgREST, Storage and Functions that the iOS app uses.",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node src/main.ts",
+    "test": "node --test --test-concurrency=1 test/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hono/node-server": "2.1.7",
+    "bcryptjs": "3.0.3",
+    "hono": "4.13.18",
+    "jose": "6.2.17",
+    "nodemailer": "10.5.0",
+    "postgres": "4.1.1"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.16",
+    "@electric-sql/pglite-socket": "0.2.19",
+    "@types/node": "26.6.6",
+    "@types/nodemailer": "8.0.2",
+    "typescript": "7.0.2"
+  }
+}

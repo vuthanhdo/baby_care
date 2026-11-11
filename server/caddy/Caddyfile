@@ -1,0 +1,19 @@
+# SITE_HOST comes from .env: <ip with dashes>.sslip.io for now, a real domain before release.
+{$SITE_HOST} {
+	encode zstd gzip
+	handle /healthz {
+		respond "ok" 200
+	}
+	# The API speaks the Supabase paths the app already calls.
+	@api path /auth/v1/* /rest/v1/* /storage/v1/* /functions/v1/*
+	handle @api {
+		request_body {
+			max_size 12MB
+		}
+		reverse_proxy api:8080
+	}
+	handle {
+		root * /srv/site
+		file_server
+	}
+}

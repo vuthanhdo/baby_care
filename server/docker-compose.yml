@@ -1,0 +1,86 @@
+# BabyCare backend on the VPS: Caddy (HTTPS) in front of the API, Postgres 17 behind it.
+
+# Docker keeps container logs without a size limit by default. A loop of errors filled Supabase's disk in
+# 11/2026; here each service keeps at most 5 files of 10 MB.
+x-logging: &logging
+  driver: local
+  options:
+    max-size: 10m
+    max-file: "5"
+
+services:
+  db:
+    image: postgres:17.6
+    restart: unless-stopped
+    logging: *logging
+    environment:
+      POSTGRES_DB: babycare
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?run scripts/init-env.sh}
+    # Not published: only containers on this network (and docker compose exec) reach it.
+    command: postgres -c shared_buffers=1GB -c effective_cache_size=4GB -c max_connections=100 -c log_min_duration_statement=1000
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db:/sql/platform:ro
+      - ./migrations:/sql/migrations:ro
+      - ./sql-tests:/sql/tests:ro
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "babycare"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build: ./api
+    restart: unless-stopped
+    logging: *logging
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SITE_URL: https://${SITE_HOST}
+      DATABASE_URL: postgres://babycare_api:${API_DB_PASSWORD}@db:5432/babycare
+      JWT_SECRET: ${JWT_SECRET}
+      PUBLISHABLE_KEY: ${PUBLISHABLE_KEY}
+      FILES_DIRECTORY: /srv/files
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_SENDER: ${SMTP_SENDER:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      APPLE_TEAM_ID: ${APPLE_TEAM_ID:-}
+      APPLE_KEY_ID: ${APPLE_KEY_ID:-}
+      APPLE_PRIVATE_KEY: ${APPLE_PRIVATE_KEY:-}
+    volumes:
+      # Photos and feedback screenshots; scripts/bootstrap.sh creates the folder, owned by the container's node user.
+      - /srv/babycare/files:/srv/files
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/healthz').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+
+  caddy:
+    image: caddy:2.8.4
+    restart: unless-stopped
+    logging: *logging
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    depends_on:
+      - api
+    environment:
+      SITE_HOST: ${SITE_HOST}
+    volumes:
+      # The folder, not the single file: rsync replaces files, and a single-file mount keeps the old inode.
+      - ./caddy:/etc/caddy:ro
+      - ./site:/srv/site:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:
