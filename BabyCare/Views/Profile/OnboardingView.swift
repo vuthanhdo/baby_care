@@ -53,6 +53,29 @@ struct OnboardingView: View {
                         }
                         .accessibilityIdentifier("onboarding.join")
                     }
+                    // A caregiver whose own family has no baby yet (opened from Settings, or first on a new device)
+                    // gets back to the families they share in; this screen has no other way out.
+                    if !isAddingBaby, let session, session.canShare, session.families.count > 1 {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(L10n.text("Hoặc mở gia đình bạn đã tham gia")).font(CareFont.caption.weight(.semibold)).foregroundStyle(CareTheme.secondary)
+                            ForEach(session.families.filter { $0.id != session.familyID }) { family in
+                                Button { Task { await session.switchFamily(family.id) } } label: {
+                                    Label(session.title(of: family), systemImage: "person.2")
+                                        .font(CareFont.subheadline.weight(.semibold))
+                                }
+                                .disabled(session.busy)
+                                .accessibilityIdentifier("onboarding.family.\(family.id.uuidString)")
+                            }
+                        }
+                    }
+                    // After the move to the new server: what the previous version left on this phone comes back here.
+                    if !isAddingBaby, let session, !session.legacyBackups.isEmpty, viewModel.access.canWrite {
+                        NavigationLink { LegacyRestoreView() } label: {
+                            Label(L10n.text("Khôi phục dữ liệu từ phiên bản trước của app"), systemImage: "clock.arrow.circlepath")
+                                .font(CareFont.subheadline.weight(.semibold))
+                        }
+                        .accessibilityIdentifier("onboarding.restore")
+                    }
                 }
                 .padding(.vertical, 8)
             }

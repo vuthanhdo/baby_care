@@ -15,12 +15,12 @@ Screenshot: `screenshots/iphone-6.3/<en|vi>` cho khung iPhone (medium display), 
 | Support URL | https://vuthanhdo.github.io/baby_care/index.html |
 | Marketing URL | (trống) |
 | Copyright | 2026 Vu Thanh Do |
-| Version | 1.3 (build 5); trước đó 1.0 (1), 1.0.1 (2), 1.1 (3), 1.2 (4) |
+| Version | 1.3 (build 6; build 5 được duyệt nhưng huỷ phát hành 11/11/2026 vì còn trỏ Supabase); trước đó 1.0 (1), 1.0.1 (2), 1.1 (3), 1.2 (4) |
 | Age rating | 4+ (trả lời None/No cho mọi câu; Medical/Treatment Information: None; không quảng cáo; từ 1.2 User-Generated Content = Yes vì bảng bình chọn tính năng, nội dung được duyệt trước) |
 | Content rights | Does not contain, show, or access third-party content |
 | Advertising Identifier (IDFA) | No |
 | Export compliance | Đã khai `ITSAppUsesNonExemptEncryption = NO` (chỉ HTTPS) |
-| Sign-in | Email/password, Sign in with Apple, Google |
+| Sign-in | Email/password, Sign in with Apple (Google ẩn từ 1.3 (6) tới khi VPS có khoá Google: `CloudConfiguration.googleSignIn`) |
 
 ## 2. English (U.K.) — localization chính
 
@@ -120,6 +120,8 @@ Bé Khỏe records what the family enters. It does not diagnose, prescribe or re
 • Home Screen widget: log a diaper change, repeat the last milk feed, or start and end a sleep with one tap, without opening the app
 • The widget shows how long ago your baby last fed, had a diaper change, and how long the current sleep has lasted
 • "Log for baby" shortcut: run it from Spotlight, Siri, the Action button or the Shortcuts app, answer a question or two (activity, amount), and it's saved
+• Bé Khỏe now runs on its own server. Data on the previous server could not be moved: sign in again (if you use email, sign up again with the same address), then choose "Restore data from the previous version of the app" to upload the copy kept on your phone, photos included
+• Password reset links now open the screen for choosing a new password
 • Fixes and stability improvements
 ```
 
@@ -221,6 +223,8 @@ Bé Khỏe chỉ ghi nhận thông tin do gia đình nhập, không chẩn đoá
 • Widget trên màn hình chính: ghi thay tã, lặp lại cữ sữa trước, bắt đầu hoặc kết thúc giấc ngủ chỉ với một chạm, không cần mở app
 • Widget cho biết lần bú, lần thay tã gần nhất cách đây bao lâu và bé đã ngủ được bao lâu
 • Phím tắt "Ghi cho bé": chạy từ Spotlight, Siri, nút Action hoặc app Phím tắt, trả lời một hai câu (hoạt động, lượng) là lưu xong
+• Bé Khỏe chuyển sang máy chủ riêng. Dữ liệu trên máy chủ cũ không chuyển sang được: hãy đăng nhập lại (nếu dùng email, đăng ký lại bằng chính email đó), rồi chọn "Khôi phục dữ liệu từ phiên bản trước của app" để tải lên bản sao còn trên máy, kèm ảnh
+• Link đặt lại mật khẩu giờ mở đúng màn chọn mật khẩu mới
 • Sửa lỗi và cải thiện độ ổn định
 ```
 
@@ -235,7 +239,7 @@ Chọn **Data Linked to You** cho từng loại, mục đích **App Functionalit
 | User Content | Photos or Videos | Ảnh đính kèm, ảnh đại diện bé, ảnh chụp màn hình gửi kèm góp ý |
 | User Content | Customer Support | Nội dung góp ý và báo lỗi (từ 1.2) |
 | User Content | Other User Content | Nhật ký, hồ sơ bé, ghi chú, đề xuất tính năng và phiếu bình chọn |
-| Identifiers | User ID | Supabase user id |
+| Identifiers | User ID | ID tài khoản trên máy chủ BabyCare |
 | Diagnostics | Other Diagnostic Data | Phiên bản app và iOS, kiểu máy, ngôn ngữ, chế độ lưu gửi kèm góp ý (từ 1.2) |
 
 Không thu thập: vị trí, danh bạ, lịch sử duyệt web, dữ liệu tài chính, dữ liệu crash và hiệu năng. Từ 1.1, thẻ thời tiết gửi vị trí gần đúng tới Apple WeatherKit chỉ để lấy thời tiết tức thời và không lưu, nên không tính là thu thập theo định nghĩa của Apple; chính sách quyền riêng tư nêu rõ việc này. Ảnh chụp bằng camera thuộc mục Photos or Videos đã khai. Âm thanh nhập giọng nói do Apple Speech xử lý, không lưu. Khai báo khớp `BabyCare/PrivacyInfo.xcprivacy`.
@@ -248,7 +252,7 @@ Từ 1.2 (đổi lúc nộp duyệt, App Information → Age Ratings): **User-Ge
 
 ## 6. App Review Information
 
-**Sign-in required**: bật; email và mật khẩu lấy từ `review-account.local.txt` (tài khoản `thanhdo.vtb+review@gmail.com`, đã xác nhận, có 1 hồ sơ bé và vài bản ghi).
+**Sign-in required**: bật; email và mật khẩu lấy từ `review-account.local.txt` (tài khoản `thanhdo.vtb+review@gmail.com`, đã xác nhận, có 1 hồ sơ bé và vài bản ghi). Từ build 6 tài khoản nằm trên VPS: tạo lại bằng `server/scripts/create-user.sh AppStore/review-account.local.txt` (chủ dự án chạy), rồi khôi phục "Bé Sóc" làm dữ liệu mẫu.
 
 **Contact**: họ tên, số điện thoại, email của bạn.
 
@@ -256,11 +260,12 @@ Từ 1.2 (đổi lúc nộp duyệt, App Information → Age Ratings): **User-Ge
 ```
 Bé Khỏe is a private care diary for parents of babies and young children. It stores what the family enters (temperature, medicines, symptoms, feeds, sleep, diapers, growth, vaccinations), shows timeline/charts/statistics, reminds the medication time the parent chose and exports a PDF report for the doctor. It does not diagnose, prescribe or calculate doses. No ads, paid content or IAP.
 
-ACCESS: use the demo account above (one child profile with sample entries is already created). Sign in with Apple and Google are also available. First sign-in shows three consent checkboxes (terms/privacy, child health data, cloud sync) that must be accepted before editing data.
+ACCESS: use the demo account above (one child profile with sample entries is already created). Sign in with Apple is also available. First sign-in shows three consent checkboxes (terms/privacy, child health data, cloud sync) that must be accepted before editing data.
 
 MAIN FEATURES: tabs "Quick log", "Diary", "Statistics" (growth charts, PDF/QR report) and "Feedback" (bug reports with screenshots, feature voting); avatar → child profiles and vaccinations; gear icon → Settings → Account → Family & sharing (one-time invite codes, Caregiver or View only roles).
 
 NEW IN 1.3: logging without opening the app.
+0. BUILD 6: the app now uses our own server (Oracle Cloud, Singapore) instead of Supabase, whose database failed on 4 Nov 2026; the demo account was recreated there. On a phone that still holds data from an older build, Settings → Account offers "Restore old data" (not shown on a fresh install).
 1. HOME SCREEN WIDGET "Quick log" (small and medium): sign in and open the app once, then long-press the Home Screen → Edit → Add Widget → Bé Khỏe. Its buttons log a diaper change, repeat the last milk feed, or start/end a sleep for the child selected in the app. The system runs the action inside the app in the background; the entry appears in the Diary and syncs like any other. View-only family members see the widget without buttons. The widget only shows the child's name and when the last feed, diaper and sleep happened; this summary stays on the device and is removed on sign-out.
 2. SHORTCUT "Log for baby" ("Ghi cho bé" in Vietnamese): from the Shortcuts app (Bé Khỏe), Spotlight, Siri or the Action button. It asks for the activity, then the amount (ml or °C), the diaper content or the food, and saves it for the selected child.
 
@@ -273,7 +278,7 @@ USER-GENERATED CONTENT (Guideline 1.2): feature suggestions are the only content
 ACCOUNT DELETION: Settings → Manage and delete data → Permanently delete account and all data. It deletes the account's cloud data, photos, feedback, suggestions and votes and revokes the Sign in with Apple token server-side; a family that still has other members passes to its longest-standing member.
 Permissions (mic, photos, camera, location, notifications) are optional; approximate location is asked only for "Show weather", sent to Apple WeatherKit and not stored.
 
-EXTERNAL SERVICES: Supabase (auth, PostgreSQL, private storage for photos and feedback screenshots, one Edge Function for Apple token revocation); Sign in with Apple; Google OAuth via Supabase; Brevo SMTP for confirmation/reset emails; Apple Speech; Apple WeatherKit; GitHub Pages for privacy/support pages. No analytics, ads, payments, AI or third-party content.
+EXTERNAL SERVICES: BabyCare's own server on Oracle Cloud, Singapore (auth, PostgreSQL, private storage for photos and feedback screenshots, Apple token revocation); Sign in with Apple; Brevo SMTP for confirmation/reset emails; Apple Speech; Apple WeatherKit; GitHub Pages for privacy/support pages. No analytics, ads, payments, AI or third-party content.
 
 REGIONS: identical in all regions; UI language follows the device (vi/en).
 REGULATION: not a medical device, no diagnosis or treatment advice; reports carry a "does not replace medical advice" notice. No protected third-party material.

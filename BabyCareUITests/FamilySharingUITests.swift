@@ -39,6 +39,20 @@ final class FamilySharingUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Lời mời cùng chăm sóc"].waitForExistence(timeout: 5))
     }
 
+    /// A caregiver who opens their own, still empty family lands on onboarding; it must offer the other families back.
+    @MainActor func testOnboardingOffersTheOtherFamilies() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-ui-testing-sharing", "-ui-testing-empty-family", "-care.language", "vi"]
+        app.launch()
+        XCTAssertTrue(app.buttons["createBabyButton"].waitForExistence(timeout: 10))
+        let shared = app.buttons["onboarding.family.00000000-0000-0000-0000-00000000BB10"]
+        XCTAssertTrue(shared.exists)
+        XCTAssertTrue(shared.label.contains("Gia đình của grandma@example.invalid"))
+        // The family already open is not offered again.
+        XCTAssertFalse(app.buttons["onboarding.family.00000000-0000-0000-0000-00000000AA10"].exists)
+        XCTAssertTrue(app.buttons["onboarding.join"].exists)
+    }
+
     @MainActor func testJoiningWithAWrongCodeExplainsWhy() {
         let app = openSharing()
         let join = app.buttons["family.join"]

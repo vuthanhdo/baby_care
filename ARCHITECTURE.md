@@ -89,7 +89,8 @@ Trong app:
 - Dữ liệu tự tải lại khi app quay lại sau 30 giây và khi kéo để làm mới; lần tải ngầm không về splash (`isRefreshing`).
 - Provider so `families.revision` trước khi đọc toàn bộ. `CloudSnapshot.readVersion` ngăn cache của bản đọc v1 (thiếu kind mới) được coi là đủ.
 - Màn: Cài đặt → Gia đình & chia sẻ (`FamilySharingView`).
-- UI test dùng `-ui-testing-sharing` (`SharingUITestFixture`, không gọi Supabase).
+- Family đang mở chưa có bé thì app vào màn tạo hồ sơ (`OnboardingView`). Màn này liệt kê các family khác để mở lại (02/11/2026). Ví dụ: người cùng chăm sóc mở family riêng của mình, hoặc đăng nhập trên máy mới và app mở family riêng trước.
+- UI test dùng `-ui-testing-sharing` (`SharingUITestFixture`, không gọi Supabase); thêm `-ui-testing-empty-family` để family đang mở không có bé.
 
 ## Góp ý trong app (27/10/2026, bản 1.2)
 
@@ -127,6 +128,20 @@ Luồng xử lý:
 Widget không đọc được kho dữ liệu của app. `CareWidgetPublisher` ghi một `QuickLogSnapshot` nhỏ (tên bé, giờ tã/sữa gần nhất, giờ bắt đầu ngủ, ngôn ngữ app, quyền ghi) vào App Group `group.com.vuthanhdo.BabyCare` sau mỗi lần tải hoặc lưu thành công, rồi reload widget. Bản tóm tắt bị xoá khi đăng xuất hoặc đổi gia đình. Lần bấm không lưu được hiện lý do trên widget trong 15 phút.
 
 Trên simulator, bản build ký "Sign to Run Locally" không có team ID: nút widget chạy được, nhưng App Shortcut từ Spotlight hoặc thẻ trong app Phím tắt báo "Couldn't find AppShortcutsProvider" (linkd từ chối bundle). Thử intent bằng cách thêm action "Log for baby" vào một phím tắt mới. Test: `QuickLogTests`.
+
+## Backend trên VPS và khôi phục dữ liệu cũ (11/11/2026, bản 1.3 build 6)
+
+Database Supabase đầy đĩa và sập từ 04/11/2026; chủ dự án quyết định không cứu dữ liệu trên đó (chi tiết: `BACKEND_VPS_PLAN.md`, mục 6). Từ build 6 app gọi backend tự host trong `server/`. Backend nói đúng phần giao thức Supabase mà app dùng, nên `supabase-swift` và các remote giữ nguyên.
+- `CloudConfiguration` gom URL, publishable key và `namespace` (`babycare-vps`). Namespace đặt tên thư mục cache `Cloud/<namespace>/<user>/<family>` và khoá phiên trong Keychain; đổi tên miền thì giữ nguyên namespace. Phiên Supabase cũ (`babycare.session`) bị xoá khi tạo client, nên người dùng cũ mở app sẽ thấy màn đăng nhập và phải tạo lại tài khoản.
+- **Khôi phục từ máy** (`LegacyCloudRestore`, `LegacyRestoreView`): cache của project cũ (`Cloud/cxlqvuqloaokzmaewvdy/...`) vẫn còn trên máy. Mỗi cache được đọc như máy đã thấy lần cuối (write chưa gửi mới nhất, nếu không thì snapshot).
+  - `plan` đổi dữ liệu thành các mutation bình thường: tạo bé; hoạt động theo lô tối đa 50 bản ghi hoặc 20 ảnh; số đo, tiêm chủng, lịch nhắc; bệnh đang theo dõi. Giấc ngủ còn treo thì bỏ; lịch nhắc đã quá giờ được tắt; bản ghi mà quy tắc hiện tại từ chối thì bỏ và đếm.
+  - ID mới suy ra từ tài khoản và ID cũ. Hai người khôi phục cùng một bản không đụng nhau trên server; chạy lại sau khi gián đoạn chỉ gửi phần còn thiếu.
+  - `BabyCareViewModel.restore` gửi từng mutation qua provider như một lần lưu, và dừng khi có lỗi hoặc khi một write chỉ vào hàng đợi (offline). Lịch nhắc và widget được cập nhật một lần ở cuối, không hỏi đánh giá app. Trong lúc chạy, cả app bị khoá và hiện `CareRestoreProgressOverlay`.
+  - Lối vào: màn tạo hồ sơ bé và Cài đặt → Tài khoản, chỉ hiện khi còn cache cũ và người dùng có quyền ghi. Khôi phục xong thì xoá bản cũ khỏi máy; cũng có nút xoá mà không khôi phục.
+- **Xung đột còn nguyên sau rebase:** write đầu hàng đợi bị bỏ kèm thông báo, giống write bị server từ chối (`rejected`). Trước đây nó nằm lì ở đầu hàng đợi, chặn mọi lần lưu sau và đọc lại toàn bộ dữ liệu, kể cả ảnh, ở mỗi lần thử lại.
+- **Thử lại hàng đợi:** bắt đầu sau `retryDelay` (10 giây), mỗi lần thất bại thì gấp đôi, tối đa 5 phút.
+- **Link đặt lại mật khẩu:** với PKCE, SDK báo là đăng nhập thường. Server thêm `type=recovery` vào link quay về app, và `SessionViewModel.isRecoveryLink` dựa vào đó để mở màn đặt mật khẩu mới.
+- Test: `LegacyRestoreTests`, `CloudProviderTests.aConflictThatSurvivesRebaseDropsOnlyThatWrite`; phía server: `server/api` (`npm test`).
 
 ## Tài khoản và tối đa 4 bé (12/09/2026)
 

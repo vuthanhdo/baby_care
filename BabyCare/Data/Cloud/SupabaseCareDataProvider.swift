@@ -197,6 +197,15 @@ actor SupabaseCareDataProvider: CareDataProvider {
                     try await flushQueuedWrites(allowRebase: false)
                     return
                 }
+                // Still a conflict on freshly read data: the change targets a record another device edited or
+                // deleted meanwhile. Kept at the head, it would block every later save and reread all data on each
+                // retry, so it goes like a refused write.
+                if error as? CloudError == .conflict {
+                    try await dropHead(onto: committed)
+                    notice = L10n.text("Cloud không nhận một thay đổi nên thay đổi đó chưa được lưu; các thay đổi khác vẫn được đồng bộ. {0}",
+                                       L10n.text("Bản ghi này vừa được sửa hoặc xóa trên máy khác."))
+                    continue
+                }
                 if case .rejected(let reason) = error as? CloudError {
                     // Kept at the head, this write would fail every later save and load the same way.
                     try await dropHead(onto: committed)
@@ -286,14 +295,18 @@ actor SupabaseCareDataProvider: CareDataProvider {
         try await cache.write(state)
     }
 
+    /// Retries the queue after `retryDelay`, doubling the wait after each failure up to 5 minutes, so a phone
+    /// offline for hours or a server in trouble is not called every few seconds.
     private func scheduleRetry() {
         guard retryTask == nil, active, !state.queuedWrites.isEmpty else { return }
-        let delay = retryDelay
+        let first = retryDelay, longest = max(retryDelay, .seconds(300))
         retryTask = Task { [weak self] in
+            var delay = first
             while !Task.isCancelled {
                 try? await Task.sleep(for: delay)
                 guard !Task.isCancelled, let self else { return }
                 if await self.retryOnce() { return }
+                delay = min(delay * 2, longest)
             }
         }
     }

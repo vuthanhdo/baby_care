@@ -3,6 +3,7 @@
 "+ Thêm dị ứng" = "+ Add allergy";
 "+ Thêm số đo" = "+ Add measurement";
 "0–3 tháng" = "0–3 months";
+"1 bản ghi" = "1 record";
 "1 bữa" = "1 meal";
 "1 chữ hoa" = "1 uppercase letter";
 "1 cữ" = "1 feed";
@@ -91,6 +92,7 @@
 "Bé Khỏe cần quyền vị trí để lấy thời tiết. Bạn có thể bật trong Cài đặt." = "BabyCare needs location access to get the weather. You can turn it on in Settings.";
 "Bé Khỏe sẽ nhắc lúc {0}, trước 2 ngày." = "BabyCare will remind you at {0}, 2 days before.";
 "Bé Khỏe · {0}" = "BabyCare · {0}";
+"Bé Khỏe đã chuyển sang máy chủ mới và dữ liệu trên máy chủ cũ không chuyển sang được. Điện thoại này còn giữ một bản sao tới lần đồng bộ cuối, kèm ảnh. Khôi phục sẽ tải bản sao đó lên gia đình đang mở." = "Bé Khỏe has moved to a new server, and the data on the old server couldn't be moved. This phone still keeps a copy as of its last sync, photos included. Restoring uploads that copy to the family that's open.";
 "Bé Khỏe – Bố Mẹ An Tâm" = "BabyCare – Peace of mind for parents";
 "Bé dưới 1 tuổi thường cần mặc thêm một lớp so với người lớn." = "Babies under 1 usually need one more layer than adults.";
 "Bé gái" = "Girl";
@@ -139,6 +141,7 @@
 "Bạn đã nhập sai quá nhiều lần. Hãy thử lại sau 1 giờ." = "Too many wrong codes. Try again in an hour.";
 "Bạn đã ở trong gia đình của {0}." = "You are already in {0}'s family.";
 "BẢN XEM TRƯỚC" = "PREVIEW";
+"Bản ghi này vừa được sửa hoặc xóa trên máy khác." = "This record was just changed or deleted on another device.";
 "Bản xem trước chỉ chứa những mục bạn đã chọn." = "The preview only includes the sections you selected.";
 "Bấm khi bé bắt đầu ngủ để tính thời gian." = "Tap when your baby starts sleeping to track the duration.";
 "Bấm liên kết xác thực trong email để quay lại Bé Khỏe và hoàn tất đăng ký. Nếu chưa thấy email, hãy kiểm tra thư rác." = "Tap the verification link in your email to return to BabyCare and complete sign-up. Check your spam folder if you cannot find it.";
@@ -214,6 +217,7 @@
 "Chưa gồm bú mẹ trực tiếp" = "Excludes direct breastfeeding";
 "Chưa hoàn tất thao tác" = "Action not completed";
 "Chưa hoàn tất đăng nhập. Kiểm tra email, mật khẩu hoặc xác nhận email. Nếu gửi email thất bại, hãy thử lại sau hoặc kiểm tra cấu hình gửi email của project." = "Sign-in was not completed. Check your email, password and email verification. If email delivery fails, try again later or check the project's email configuration.";
+"Chưa khôi phục xong: {0} Bấm Khôi phục lần nữa để làm tiếp." = "The restore isn't finished: {0} Tap Restore again to continue.";
 "Chưa khả dụng" = "Unavailable";
 "Chưa kiểm tra được sự đồng ý. Hãy kiểm tra kết nối và thử lại." = "Unable to check consent. Check your connection and try again.";
 "Chưa lưu được dữ liệu. Hãy thử lại; nội dung và mã hoạt động được giữ để tránh tạo bản ghi trùng." = "Unable to save. Try again; your text and activity IDs are kept to prevent duplicates.";
@@ -243,7 +247,7 @@
 "Chạm để sửa số đo" = "Tap to edit measurement";
 "Chẩn đoán (nếu có), vd. viêm họng cấp" = "Diagnosis (if any), e.g. acute sore throat";
 "Chẩn đoán của bác sĩ" = "Doctor's diagnosis";
-"Chế độ cloud sử dụng Supabase để xác thực, lưu dữ liệu và ảnh. Chủ gia đình có thể mời người khác bằng mã dùng một lần, với vai trò cùng chăm sóc (xem và ghi) hoặc chỉ xem. Mọi thành viên thấy mọi hồ sơ bé trong gia đình và email của nhau; chủ gia đình có thể đổi vai trò hoặc gỡ thành viên, và thành viên có thể tự rời gia đình. Báo cáo được gửi qua chức năng chia sẻ do bạn chọn. Nhập giọng nói dùng Apple Speech; khi thiết bị không hỗ trợ nhận dạng tại chỗ, âm thanh có thể được xử lý qua dịch vụ của Apple. Thời tiết lấy từ Apple Weather (WeatherKit) bằng vị trí gần đúng của bạn. Góp ý và ảnh đính kèm chỉ nhà phát triển xem được. Đề xuất tính năng chỉ hiện cho người dùng khác sau khi nhà phát triển duyệt, gồm tiêu đề, mô tả và số phiếu, không kèm thông tin của người gửi; ai đã bình chọn cũng không được hiển thị." = "Cloud mode uses Supabase for authentication, data and photos. A family owner can invite others with a single-use code, as a caregiver (view and log) or a viewer. Every member sees every baby profile in the family and each other's email; the owner can change roles or remove members, and members can leave. Reports are sent through the sharing option you choose. Voice entry uses Apple Speech; when on-device recognition is unavailable, audio may be processed through Apple's service. Weather comes from Apple Weather (WeatherKit) using your approximate location. Only the developer sees feedback and its screenshots. A feature suggestion is shown to other users only after the developer approves it, with its title, description and vote count but nothing about who sent it; who voted is not shown either.";
+"Chế độ cloud dùng máy chủ riêng của BabyCare, chạy trên hạ tầng thuê của Oracle Cloud, để xác thực, lưu dữ liệu và ảnh. Chủ gia đình có thể mời người khác bằng mã dùng một lần, với vai trò cùng chăm sóc (xem và ghi) hoặc chỉ xem. Mọi thành viên thấy mọi hồ sơ bé trong gia đình và email của nhau; chủ gia đình có thể đổi vai trò hoặc gỡ thành viên, và thành viên có thể tự rời gia đình. Báo cáo được gửi qua chức năng chia sẻ do bạn chọn. Nhập giọng nói dùng Apple Speech; khi thiết bị không hỗ trợ nhận dạng tại chỗ, âm thanh có thể được xử lý qua dịch vụ của Apple. Thời tiết lấy từ Apple Weather (WeatherKit) bằng vị trí gần đúng của bạn. Góp ý và ảnh đính kèm chỉ nhà phát triển xem được. Đề xuất tính năng chỉ hiện cho người dùng khác sau khi nhà phát triển duyệt, gồm tiêu đề, mô tả và số phiếu, không kèm thông tin của người gửi; ai đã bình chọn cũng không được hiển thị." = "Cloud mode uses BabyCare's own server, running on infrastructure rented from Oracle Cloud, for authentication, data and photos. A family owner can invite others with a single-use code, as a caregiver (view and log) or a viewer. Every member sees every baby profile in the family and each other's email; the owner can change roles or remove members, and members can leave. Reports are sent through the sharing option you choose. Voice entry uses Apple Speech; when on-device recognition is unavailable, audio may be processed through Apple's service. Weather comes from Apple Weather (WeatherKit) using your approximate location. Only the developer sees feedback and its screenshots. A feature suggestion is shown to other users only after the developer approves it, with its title, description and vote count but nothing about who sent it; who voted is not shown either.";
 "Chế độ cloud sử dụng Supabase để xác thực, lưu dữ liệu và ảnh. Thành viên có quyền trong gia đình có thể truy cập dữ liệu được chia sẻ. Báo cáo được gửi qua chức năng chia sẻ do bạn chọn. Nhập giọng nói dùng Apple Speech; khi thiết bị không hỗ trợ nhận dạng tại chỗ, âm thanh có thể được xử lý qua dịch vụ của Apple." = "Cloud mode uses Supabase for authentication, data, and photos. Authorized family members can access shared data. Reports are sent through the sharing option you choose. Voice entry uses Apple Speech; when on-device recognition is unavailable, audio may be processed through Apple's service.";
 "Chỉ chủ gia đình mới làm được việc này." = "Only the family owner can do this.";
 "Chỉ chủ gia đình mới xóa được hồ sơ bé." = "Only the family owner can delete a baby profile.";
@@ -344,7 +348,7 @@
 "Dữ liệu đã thay đổi hoặc trùng mã bản ghi. Hãy tải lại trước khi lưu." = "Data has changed or a record ID is duplicated. Reload before saving.";
 "Dữ liệu đã được server xác nhận và có cache SwiftData riêng cho tài khoản, gia đình này. Khi offline, thay đổi được lưu trên máy và tự đồng bộ khi có mạng." = "Server-confirmed data has a separate SwiftData cache for this account. Offline changes are saved on this device and synced when you are online.";
 "Dữ liệu được dùng để lưu nhật ký, hiển thị lịch sử và thống kê, tạo lời nhắc, đồng bộ khi bạn chọn cloud và tạo báo cáo do bạn chủ động chia sẻ. Góp ý và đề xuất được dùng để sửa lỗi, trả lời bạn khi bạn cho phép liên hệ, cải thiện ứng dụng và chọn tính năng sẽ làm." = "Data is used to store logs, show history and statistics, create reminders, sync when you choose cloud mode, and create reports you choose to share. Feedback and suggestions are used to fix bugs, reply to you when you allow contact, improve the app and decide which features to build.";
-"Dữ liệu được giữ khi hồ sơ hoặc tài khoản còn hoạt động. Chỉ chủ gia đình xóa được hồ sơ bé, và việc xóa áp dụng cho mọi thành viên. Xóa tài khoản sẽ xóa các gia đình chỉ có bạn sử dụng, dữ liệu cloud, ảnh và cache của tài khoản trên thiết bị này. Gia đình còn thành viên khác không bị xóa: thành viên lâu nhất trở thành chủ gia đình và giữ dữ liệu của gia đình, kể cả những gì bạn đã ghi. Góp ý, ảnh đính kèm, đề xuất, phiếu bình chọn và báo cáo được giữ không lâu hơn tài khoản của bạn: xóa tài khoản sẽ xóa cả những dữ liệu này, và đề xuất bạn đã gửi không còn hiện cho người khác." = "Data is kept while a profile or account remains active. Only a family owner can delete a baby profile, and the deletion applies to every member. Deleting your account removes the families only you use, your cloud data, photos and this account's cache on this device. A family that has other members is not deleted: its longest-standing member becomes the owner and keeps the family's data, including what you logged. Feedback, screenshots, suggestions, votes and reports are kept no longer than your account: deleting your account deletes them too, and suggestions you sent stop appearing for others.";
+"Dữ liệu được giữ khi hồ sơ hoặc tài khoản còn hoạt động. Chỉ chủ gia đình xóa được hồ sơ bé, và việc xóa áp dụng cho mọi thành viên. Xóa tài khoản sẽ xóa các gia đình chỉ có bạn sử dụng, dữ liệu cloud, ảnh và cache của tài khoản trên thiết bị này. Gia đình còn thành viên khác không bị xóa: thành viên lâu nhất trở thành chủ gia đình và giữ dữ liệu của gia đình, kể cả những gì bạn đã ghi. Góp ý, ảnh đính kèm, đề xuất, phiếu bình chọn và báo cáo được giữ không lâu hơn tài khoản của bạn: xóa tài khoản sẽ xóa cả những dữ liệu này, và đề xuất bạn đã gửi không còn hiện cho người khác. Máy chủ được sao lưu mỗi đêm và giữ 14 bản gần nhất, nên dữ liệu đã xóa có thể còn trong bản sao lưu tối đa 14 ngày trước khi tự mất." = "Data is kept while a profile or account remains active. Only a family owner can delete a baby profile, and the deletion applies to every member. Deleting your account removes the families only you use, your cloud data, photos and this account's cache on this device. A family that has other members is not deleted: its longest-standing member becomes the owner and keeps the family's data, including what you logged. Feedback, screenshots, suggestions, votes and reports are kept no longer than your account: deleting your account deletes them too, and suggestions you sent stop appearing for others. The server is backed up nightly and keeps the 14 most recent backups, so deleted data may remain in a backup for up to 14 days before it is gone.";
 "Dữ liệu được thu thập, mục đích sử dụng, lưu trữ và quyền của bạn" = "Data collected, its use and storage, and your rights";
 "Dữ liệu được xử lý và quyền của phụ huynh" = "Data processing and caregiver rights";
 "Email không hợp lệ. Ví dụ: bome@gmail.com." = "Invalid email. For example: parent@gmail.com.";
@@ -406,6 +410,7 @@
 "Giờ" = "Time";
 "Giờ bắt đầu và kết thúc" = "Start and end time";
 "Giờ kết thúc phải sau giờ bắt đầu và không ở tương lai." = "The end must be after the start and not in the future.";
+"Giữ ứng dụng mở cho tới khi xong." = "Keep the app open until it finishes.";
 "Gom nhiệt độ, thuốc và triệu chứng vào một đợt để theo dõi diễn biến. Bạn có thể kết thúc bất cứ lúc nào." = "Group temperatures, medicines and symptoms into one episode to follow how it develops. You can end it at any time.";
 "Góp ý" = "Feedback";
 "Góp ý cho Bé Khỏe" = "Feedback for Bé Khỏe";
@@ -439,6 +444,7 @@
 "Hoạt động này sẽ được bỏ khỏi nhật ký và thống kê." = "This activity will be removed from the diary and statistics.";
 "Hoạt động trong ngày" = "Today's activities";
 "Hoạt động y tế" = "Health activities";
+"Hoặc mở gia đình bạn đã tham gia" = "Or open a family you've joined";
 "Hoặc điền thông tin bên dưới" = "Or enter your details below";
 "HÔM NAY" = "TODAY";
 "Hãy chăm sóc cả bản thân, vì bé cần bố mẹ khỏe mạnh." = "Look after yourself too; your baby needs you well.";
@@ -480,6 +486,9 @@
 "Khác" = "Other";
 "Khám lại {0}" = "Follow-up {0}";
 "Khói mù" = "Smoky";
+"Khôi phục dữ liệu cũ" = "Restore old data";
+"Khôi phục dữ liệu từ phiên bản trước của app" = "Restore data from the previous version of the app";
+"Khôi phục vào gia đình này" = "Restore to this family";
 "Không có bố mẹ hoàn hảo, chỉ có bố mẹ luôn cố gắng vì con." = "There are no perfect parents, only parents who keep trying for their child.";
 "Không dùng BabyCare cho tình huống cấp cứu hoặc làm căn cứ duy nhất để quyết định điều trị. Khi trẻ có dấu hiệu nghiêm trọng, hãy liên hệ cơ sở y tế hoặc dịch vụ cấp cứu phù hợp." = "Do not use BabyCare in an emergency or as the sole basis for treatment decisions. If a child shows serious symptoms, contact an appropriate healthcare facility or emergency service.";
 "Không dùng nhiệt kế thủy ngân để đo hậu môn hoặc miệng cho bé vì dễ vỡ." = "Don't use a mercury thermometer in your baby's bottom or mouth; it can break.";
@@ -490,12 +499,14 @@
 "Không nói thời gian: mọi hoạt động được ghi lúc hiện tại. Dùng “rồi” để tách nhiều hoạt động." = "Without a time, activities are recorded as happening now. Use “rồi” to separate multiple activities in Vietnamese.";
 "Không thể bắt đầu micrô. Hãy thử lại hoặc nhập bằng bàn phím." = "Unable to start the microphone. Try again or type your entry.";
 "Không thể chuẩn hóa ảnh hoặc ảnh vượt quá 5 MB. Hãy chọn ảnh khác." = "Unable to process the photo, or it exceeds 5 MB. Choose another photo.";
+"Không thể hoàn tác. Dữ liệu đã khôi phục lên cloud không bị ảnh hưởng." = "This can't be undone. Data already restored to the cloud isn't affected.";
 "Không thể xử lý ảnh trên cloud ({0})." = "Unable to process the photo in the cloud ({0}).";
 "Không thể đăng nhập bằng Apple. Hãy thử lại hoặc dùng email và mật khẩu." = "Could not sign in with Apple. Try again or use email and password.";
 "Không thể đăng nhập bằng Google. Hãy thử lại hoặc dùng email và mật khẩu." = "Unable to sign in with Google. Try again or use your email and password.";
 "Không tìm thấy hồ sơ bé. Hãy tải lại dữ liệu." = "Baby profile not found. Please reload.";
 "Không tìm thấy micrô khả dụng. Hãy kiểm tra thiết bị âm thanh rồi thử lại." = "No microphone is available. Check your audio device and try again.";
 "Không xác định đủ hoạt động, số lượng và đơn vị. Ví dụ: Bé uống 120 ml sữa; Bé đo nhiệt độ 37,5 độ; Bé thay tã." = "The activity, amount or unit is unclear. Vietnamese examples: Bé uống 120 ml sữa; Bé đo nhiệt độ 37,5 độ; Bé thay tã.";
+"Không đọc được bản dữ liệu cũ trên máy." = "Couldn't read the old data saved on this phone.";
 "Không đọc được dữ liệu" = "Unable to load data";
 "Không đọc được dữ liệu đã lưu. Dữ liệu gốc vẫn được giữ." = "Unable to read saved data. The original data is kept.";
 "Không đọc được một ảnh. Hãy chọn ảnh khác." = "One picture could not be read. Please choose another.";
@@ -743,6 +754,7 @@
 "Nắng, có mây" = "Sunny with clouds";
 "Nằm đo" = "Lying down";
 "Nặng" = "Severe";
+"Nếu cả nhà dùng chung một gia đình, chỉ một người khôi phục rồi mời những người còn lại." = "If your household shares one family, have one person restore it and then invite the others.";
 "Nếu tài khoản tồn tại, bạn sẽ nhận được email đặt lại mật khẩu." = "If an account exists, you will receive a password reset email.";
 "NỘI DUNG CẦN GHI" = "ACTIVITY TEXT";
 "NỘI DUNG GHI NHẬN" = "RECORDED DETAILS";
@@ -1036,6 +1048,8 @@
 "Xác nhận tư cách đại diện hợp pháp" = "Confirm legal authority";
 "Xóa" = "Delete";
 "Xóa & Quản lý dữ liệu" = "Delete and manage data";
+"Xóa bản cũ trên máy" = "Delete the old copy from this phone";
+"Xóa bản dữ liệu cũ trên máy?" = "Delete the old data from this phone?";
 "Xóa bộ lọc" = "Clear filters";
 "Xóa dị ứng này" = "Remove this allergy";
 "Xóa hoạt động này" = "Delete this activity";
@@ -1091,6 +1105,7 @@
 "viên" = "tablet";
 "{0} (bạn)" = "{0} (you)";
 "{0} / 3 đã chọn" = "{0} of 3 selected";
+"{0} bản ghi" = "{0} records";
 "{0} bữa" = "{0} meals";
 "{0} cho {1}" = "{0} for {1}";
 "{0} của bé" = "{0} for your baby";
@@ -1120,6 +1135,7 @@
 "{0} tuổi {1} tháng" = "{0} years {1} months";
 "{0} {1} · Theo lịch đã lưu" = "{0} {1} · From saved schedule";
 "{0} · Dữ liệu do bố mẹ ghi nhận" = "{0} · Recorded by parents";
+"{0} · ghi gần nhất {1}" = "{0} · latest entry {1}";
 "{0} · {1} {2} · Xem / sửa số đo" = "{0} · {1} {2} · View / edit measurement";
 "{0}/4 hồ sơ bé" = "{0}/4 baby profiles";
 "{0}/4 mục" = "{0}/4 sections";
@@ -1149,6 +1165,7 @@
 "Đang có 5 lời mời chưa dùng. Hủy bớt rồi tạo mã mới." = "There are already 5 unused invites. Cancel one, then create a new code.";
 "Đang dùng dữ liệu trên máy" = "Using on-device data";
 "Đang hoàn tất…" = "Finishing…";
+"Đang khôi phục dữ liệu cũ… {0}/{1}" = "Restoring old data… {0}/{1}";
 "Đang kiểm tra…" = "Checking…";
 "Đang lưu…" = "Saving…";
 "Đang lấy thời tiết…" = "Getting the weather…";
@@ -1195,6 +1212,9 @@
 "Đã gửi email tới {0}. Bấm liên kết trong email để xác minh tài khoản." = "An email was sent to {0}. Tap the link in the email to verify your account.";
 "Đã gửi lại email xác thực tới {0}." = "A new verification email was sent to {0}.";
 "Đã hủy trước khi bắt đầu nhận dạng. Chưa lưu hoạt động nào." = "Cancelled before recognition started. No activities were saved.";
+"Đã khôi phục dữ liệu cũ." = "Old data restored.";
+"Đã khôi phục dữ liệu cũ; 1 bản ghi không hợp lệ được bỏ qua." = "Old data restored; 1 invalid record was skipped.";
+"Đã khôi phục dữ liệu cũ; {0} bản ghi không hợp lệ được bỏ qua." = "Old data restored; {0} invalid records were skipped.";
 "Đã kết thúc theo dõi" = "Tracking ended";
 "Đã lên kế hoạch" = "Planned";
 "Đã lưu 1 hoạt động" = "Saved 1 activity";
@@ -1277,9 +1297,10 @@
 "Ảnh đại diện {0}" = "{0}'s profile photo";
 "Ẩn mật khẩu" = "Hide password";
 "Ở chế độ thiết bị, dữ liệu nằm trong vùng lưu trữ của ứng dụng trên thiết bị. Khi đăng nhập cloud, dữ liệu được đồng bộ với dự án BabyCare trên Supabase và có cache tách riêng theo tài khoản và gia đình." = "In device mode, data stays in the app's storage on that device. When you sign in to cloud mode, data is synchronized with BabyCare's Supabase project and cached separately by account and family.";
-"Ở chế độ thiết bị, hồ sơ và nhật ký nằm trong vùng lưu trữ của ứng dụng trên máy. Tài khoản và bản ghi đồng ý vẫn được xử lý trên Supabase. Ở chế độ cloud, dữ liệu được đồng bộ với Supabase và có cache tách riêng theo tài khoản và gia đình." = "In on-device mode, profiles and diaries stay in the app's device storage. Accounts and consent records are still processed on Supabase. In cloud mode, data syncs with Supabase and is cached separately for each account and family.";
+"Ở chế độ thiết bị, hồ sơ và nhật ký nằm trong vùng lưu trữ của ứng dụng trên máy. Tài khoản và bản ghi đồng ý vẫn được xử lý trên máy chủ của BabyCare. Ở chế độ cloud, dữ liệu và ảnh được đồng bộ với máy chủ riêng của BabyCare, đặt trên hạ tầng Oracle Cloud tại Singapore, và có cache tách riêng theo tài khoản và gia đình. Từ 11/11/2026 BabyCare không còn dùng Supabase: dữ liệu trên hệ thống cũ không được chuyển sang và sẽ bị xóa cùng hệ thống đó. Ứng dụng chỉ tải lên bản sao còn trên máy của bạn khi bạn chọn Khôi phục." = "In on-device mode, profiles and diaries stay in the app's device storage. Accounts and consent records are still processed on BabyCare's server. In cloud mode, data and photos sync with BabyCare's own server, hosted on Oracle Cloud infrastructure in Singapore, and are cached separately for each account and family. Since 11 November 2026 BabyCare no longer uses Supabase: data on the old system was not moved and will be deleted together with that system. The app uploads the copy left on your phone only if you choose Restore.";
 "Ở chỗ râm" = "Stay in shade";
 "Ứng dụng chỉ yêu cầu quyền khi bạn dùng tính năng tương ứng." = "The app only requests access when you use the related feature.";
 "Ứng dụng ghi nhận dữ liệu do gia đình cung cấp. Không tự chẩn đoán, kê đơn hoặc tính liều thuốc." = "The app records information provided by caregivers. It does not diagnose, prescribe or calculate medicine doses.";
+"Ứng dụng đang bận, hãy thử lại sau giây lát." = "The app is busy. Try again in a moment.";
 "👦 Bé trai" = "👦 Boy";
 "👧 Bé gái" = "👧 Girl";

@@ -22,6 +22,13 @@ struct BabyCareState {
     var isRefreshing = false
     /// Set when the family is no longer readable (the member was removed); the session then picks another family.
     var accessLost: String?
+    /// Writes done and planned while old data is restored (`restore`); nil otherwise.
+    var restoring: RestoreProgress?
+}
+
+struct RestoreProgress: Equatable {
+    var done: Int
+    var total: Int
 }
 
 /// The single owner of shared UI state. Views dispatch actions and read snapshots.
@@ -163,6 +170,47 @@ final class BabyCareViewModel {
                 return false
             }
         }
+    }
+
+    enum RestoreOutcome: Equatable { case done, stopped(String) }
+
+    /// Applies a restore plan one save at a time, as if each were made on screen, and stops at the first failure or
+    /// as soon as a save is only queued for later (offline): every queued save keeps a full copy of the data,
+    /// photos included. Reminders and the widget catch up once at the end; no rating prompt.
+    func restore(_ mutations: [CareDataMutation]) async -> RestoreOutcome {
+        guard state.phase == .ready, !state.isSaving, state.restoring == nil else { return .stopped(L10n.text("Ứng dụng đang bận, hãy thử lại sau giây lát.")) }
+        if let first = mutations.first, let refusal = refusal(for: first) { return .stopped(refusal) }
+        state.isSaving = true; state.error = nil
+        state.restoring = RestoreProgress(done: 0, total: mutations.count)
+        defer { state.isSaving = false; state.restoring = nil }
+        while state.isRefreshing {
+            try? await Task.sleep(for: .milliseconds(50))
+            guard active else { return .stopped(CloudError.signedOut.localizedDescription) }
+        }
+        let previous = state.database
+        var outcome = RestoreOutcome.done
+        for mutation in mutations {
+            guard active else { return .stopped(CloudError.signedOut.localizedDescription) }
+            do {
+                state.database = try await provider.apply(mutation)
+                guard active else { return .stopped(CloudError.signedOut.localizedDescription) }
+                state.storage = await provider.status()
+                state.restoring?.done += 1
+                if state.storage == .pending { outcome = .stopped(CloudError.offline.localizedDescription); break }
+            } catch {
+                guard active else { return .stopped(CloudError.signedOut.localizedDescription) }
+                if error as? CloudError == .consentRequired { state.requiresConsent = true }
+                state.storage = await provider.status()
+                if let current = await provider.currentDatabase() { state.database = current }
+                outcome = .stopped(error.localizedDescription); break
+            }
+        }
+        guard active else { return outcome }
+        if let warning = await notifications.reconcile(previous: previous, current: state.database) { showMessage(warning) }
+        guard active else { return outcome }
+        widget?.publish(state.database, canWrite: access.canWrite)
+        if let notice = await provider.takeNotice() { state.error = notice }
+        return outcome
     }
 
     /// Reloads when the app comes back after a while, so a dose given on the other parent's phone shows up.

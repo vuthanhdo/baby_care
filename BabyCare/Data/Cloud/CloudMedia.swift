@@ -101,7 +101,8 @@ nonisolated enum CloudMediaPlan {
         stableUUID("media-operation|\(assetID.uuidString)|\(stage)")
     }
 
-    private static func stableUUID(_ value: String) -> UUID {
+    /// A UUID (version 5 layout) derived from a string: the same input always gives the same ID.
+    static func stableUUID(_ value: String) -> UUID {
         var bytes = Array(SHA256.hash(data: Data(value.utf8)).prefix(16))
         bytes[6] = (bytes[6] & 0x0f) | 0x50
         bytes[8] = (bytes[8] & 0x3f) | 0x80

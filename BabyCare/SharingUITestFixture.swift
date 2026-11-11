@@ -16,7 +16,8 @@ import Foundation
         defaults.removePersistentDomain(forName: "BabyCare.SharingUITests")
         let session = SessionViewModel(consentRemote: Consent(), sharingRemote: Sharing(), feedbackRemote: Feedback(),
                                        featureRemote: Features(), defaults: defaults)
-        let data = CarePreviewData.make()
+        // `-ui-testing-empty-family`: the open family (the account's own) has no baby yet, so the app shows onboarding.
+        let data = ProcessInfo.processInfo.arguments.contains("-ui-testing-empty-family") ? CareDatabase() : CarePreviewData.make()
         session.openForUITests(userID: me, email: storeMode ? storeMembers[0].email : "me@example.invalid", families: currentFamilies,
                                viewModel: BabyCareViewModel(provider: InMemoryCareDataProvider(database: data), initialData: data))
         return session

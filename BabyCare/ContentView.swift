@@ -49,6 +49,7 @@ struct ContentView: View {
         }
         .font(CareFont.body)
         .disabled(viewModel.state.isSaving)
+        .overlay { if let progress = viewModel.state.restoring { CareRestoreProgressOverlay(progress: progress) } }
 //        .safeAreaInset(edge: .bottom) {
 //            if let message = viewModel.state.storage.message {
 //                HStack {

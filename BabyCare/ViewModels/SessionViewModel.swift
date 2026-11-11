@@ -22,6 +22,8 @@ import UserNotifications
     private(set) var familyID: UUID?
     /// An invite opened before signing in, joined once the account is ready.
     private(set) var pendingInviteCode: String?
+    /// Caches left on this phone by the backend used until 1.3 (5), offered for restore into the open family.
+    private(set) var legacyBackups: [LegacyCloudRestore.Backup] = []
     @ObservationIgnored private lazy var client = CloudConfiguration.makeClient()
     @ObservationIgnored private(set) lazy var consent = ConsentViewModel(remote: consentRemote ?? SupabaseConsentRemote(client: client), store: defaults)
     @ObservationIgnored private let consentRemote: (any ConsentRemote)?
@@ -36,17 +38,18 @@ import UserNotifications
     @ObservationIgnored private var generation = 0
     @ObservationIgnored private var listener: Task<Void, Never>?
     @ObservationIgnored private let defaults: UserDefaults
+    @ObservationIgnored private let cacheRoot: URL
     static let callback = URL(string: "babycare://auth-callback")!
     private static let pendingSignupKey = "care.auth.pendingSignupEmail"
     static let pendingInviteKey = "care.invite.pendingCode"
 
     init(consentRemote: (any ConsentRemote)? = nil, sharingRemote: (any CareSharingRemote)? = nil,
          feedbackRemote: (any CareFeedbackRemote)? = nil, featureRemote: (any CareFeatureRemote)? = nil,
-         defaults: UserDefaults = .standard,
+         defaults: UserDefaults = .standard, cacheRoot: URL = .applicationSupportDirectory,
          makeLocalViewModel: @escaping @MainActor () -> BabyCareViewModel = { AppDependencies.makeViewModel() }) {
         self.consentRemote = consentRemote; self.sharingRemote = sharingRemote
         self.feedbackRemote = feedbackRemote; self.featureRemote = featureRemote
-        self.defaults = defaults; self.makeLocalViewModel = makeLocalViewModel
+        self.defaults = defaults; self.cacheRoot = cacheRoot; self.makeLocalViewModel = makeLocalViewModel
         pendingSignupEmail = defaults.string(forKey: Self.pendingSignupKey)
         pendingInviteCode = defaults.string(forKey: Self.pendingInviteKey)
     }
@@ -111,7 +114,7 @@ import UserNotifications
         consent.reset()
         consent.userKey = session?.user.id.uuidString
         userID = session?.user.id; email = session?.user.email ?? ""
-        families = []; familyID = nil
+        families = []; familyID = nil; legacyBackups = []
         isLocal = defaults.string(forKey: "care.mode") == "device"
         error = nil
         guard session != nil else { CareWidgetPublisher().clear(); phase = .signedOut; return }
@@ -207,6 +210,42 @@ import UserNotifications
                                       widget: CareWidgetPublisher())
         defaults.set(id.uuidString, forKey: "care.family.\(userID)")
         phase = .content; busy = false
+        let root = cacheRoot
+        Task { [weak self] in
+            let found = await LegacyCloudRestore.find(root: root)
+            guard let self, self.generation == ticket else { return }
+            self.legacyBackups = found
+        }
+    }
+
+    /// Uploads one old cache into the open family through the ordinary save path. Running it again after an
+    /// interruption sends only what is still missing; once complete, the old copy is deleted from the phone.
+    func restoreLegacy(_ backup: LegacyCloudRestore.Backup) async {
+        guard let viewModel, let userID, !isLocal, viewModel.state.restoring == nil else { return }
+        error = nil; message = nil
+        guard let source = await LegacyCloudRestore.database(at: backup.id) else {
+            error = L10n.text("Không đọc được bản dữ liệu cũ trên máy."); return
+        }
+        let plan = LegacyCloudRestore.plan(restoring: source, into: viewModel.state.database, account: userID)
+        switch await viewModel.restore(plan.mutations) {
+        case .done:
+            LegacyCloudRestore.remove(backup, root: cacheRoot)
+            legacyBackups.removeAll { $0.id == backup.id }
+            // Caches without a baby are never offered; once nothing else is left, they go too.
+            if legacyBackups.isEmpty { LegacyCloudRestore.remove(nil, root: cacheRoot) }
+            let text = plan.skipped == 0 ? L10n.text("Đã khôi phục dữ liệu cũ.")
+                : L10n.count(plan.skipped, one: "Đã khôi phục dữ liệu cũ; 1 bản ghi không hợp lệ được bỏ qua.",
+                             many: "Đã khôi phục dữ liệu cũ; {0} bản ghi không hợp lệ được bỏ qua.")
+            message = text
+            await viewModel.send(.showMessage(text))
+        case .stopped(let reason):
+            error = L10n.text("Chưa khôi phục xong: {0} Bấm Khôi phục lần nữa để làm tiếp.", reason)
+        }
+    }
+    /// Deletes every old cache from the phone without restoring it.
+    func discardLegacyBackups() {
+        LegacyCloudRestore.remove(nil, root: cacheRoot)
+        legacyBackups = []
     }
 
     private func listFamilies(userID: UUID) async throws -> [CloudFamilySummary] {
@@ -417,7 +456,11 @@ import UserNotifications
             return
         }
         guard url.scheme == "babycare", url.host == "auth-callback" else { return }
-        do { _ = try await client.auth.session(from: url) }
+        do {
+            _ = try await client.auth.session(from: url)
+            // With PKCE the SDK reports a reset link as an ordinary sign-in; the server marks it with type=recovery.
+            if Self.isRecoveryLink(url) { needsNewPassword = true }
+        }
         catch { self.error = L10n.text("Liên kết không còn hiệu lực. Hãy yêu cầu email mới.") }
     }
     func updatePassword(_ password: String) async {
@@ -452,9 +495,8 @@ import UserNotifications
             _ = try await client.rpc("babycare_delete_account").execute()
             let ticket = await detach()
             guard generation == ticket else { busy = false; return false }
-            let cacheRoot = URL.applicationSupportDirectory
-                .appending(path: "BabyCare/Cloud/cxlqvuqloaokzmaewvdy/\(deletingUserID.uuidString)", directoryHint: .isDirectory)
-            try? FileManager.default.removeItem(at: cacheRoot)
+            try? FileManager.default.removeItem(at: CloudConfiguration.cacheDirectory(root: cacheRoot)
+                .appending(path: deletingUserID.uuidString, directoryHint: .isDirectory))
             defaults.removeObject(forKey: "care.family.\(deletingUserID)")
             defaults.removeObject(forKey: Self.pendingSignupKey)
             defaults.set("cloud", forKey: "care.mode")
@@ -468,6 +510,9 @@ import UserNotifications
             busy = false
             return false
         }
+    }
+    nonisolated static func isRecoveryLink(_ url: URL) -> Bool {
+        URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.contains { $0.name == "type" && $0.value == "recovery" } == true
     }
     nonisolated enum SignupOutcome: Equatable { case signedIn, confirmationPending, existingAccount }
 

@@ -514,3 +514,21 @@ extension CloudProviderTests {
         await provider.invalidate()
     }
 }
+
+extension CloudProviderTests {
+    /// A write that still conflicts after rereading the family (its record was edited or deleted on another phone)
+    /// is dropped with a notice: kept at the head, it blocked every later save and reread all data on each retry.
+    @Test func aConflictThatSurvivesRebaseDropsOnlyThatWrite() async throws {
+        let remote = FakeCloudRemote(), cache = FakeCloudCache(), family = UUID()
+        let provider = SupabaseCareDataProvider(remote: remote, cache: cache, familyID: family, retryDelay: .seconds(3600))
+        _ = try await provider.load()
+        await remote.setApplyError(.conflict)
+        await #expect(throws: CloudError.self) { try await provider.apply(.createBaby(baby())) }
+        #expect(await remote.requests.count == 2) // the write, then once more on the reread data
+        #expect(try await cache.read().queuedWrites.isEmpty)
+        await remote.setApplyError(nil)
+        #expect(try await provider.apply(.createBaby(baby())).babies.count == 1)
+        #expect(try await cache.read().queuedWrites.isEmpty)
+        await provider.invalidate()
+    }
+}

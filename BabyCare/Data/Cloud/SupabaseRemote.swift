@@ -2,13 +2,30 @@ import Foundation
 import Supabase
 
 nonisolated enum CloudConfiguration {
-    static let url = URL(string: "https://cxlqvuqloaokzmaewvdy.supabase.co")!
+    /// The self-hosted backend on the Oracle VPS (server/ in this repository) since 1.3 (6). It speaks the part
+    /// of the Supabase protocol this app uses, so supabase-swift stays the client.
+    static let url = URL(string: "https://158-178-232-52.sslip.io")!
     // Public client key. Authorization is enforced by session JWT + database RLS.
-    static let publishableKey = "sb_publishable_wiLbsz0rj_tMAiGNv5a6pA_G-noEQ7n"
+    static let publishableKey = "d8468bcdf611bec2baf6273eba42f7ede0f21fe1c6bdfa1e"
+    /// Names this backend's cache folder and keychain session; it stays when only the domain changes.
+    static let namespace = "babycare-vps"
+    /// The Supabase project used until 1.3 (5). Its database went down on 4/11/2026 and was not moved; what is
+    /// left of its data are the caches on each phone, which `LegacyCloudRestore` uploads again.
+    static let legacyNamespace = "cxlqvuqloaokzmaewvdy"
+    private static let keychainService = "com.vuthanhdo.BabyCare.auth"
+    /// Google sign-in needs GOOGLE_CLIENT_ID/SECRET in the server's .env and the server's callback URL in the Google
+    /// console. Off in 1.3 (6) until both are set; Sign in with Apple and email work without them.
+    static let googleSignIn = false
     static func makeClient() -> SupabaseClient {
-        SupabaseClient(supabaseURL: url, supabaseKey: publishableKey, options: .init(auth: .init(
-            storage: KeychainLocalStorage(service: "com.vuthanhdo.BabyCare.auth"),
-            storageKey: "babycare.session", emitLocalSessionAsInitialSession: true)))
+        let storage = KeychainLocalStorage(service: keychainService)
+        // The old project's session cannot work against this backend; without it the app opens on sign-in.
+        try? storage.remove(key: "babycare.session")
+        return SupabaseClient(supabaseURL: url, supabaseKey: publishableKey, options: .init(auth: .init(
+            storage: storage, storageKey: "babycare.session.\(namespace)", emitLocalSessionAsInitialSession: true)))
+    }
+    /// Per-backend root of the account/family caches.
+    static func cacheDirectory(namespace: String = namespace, root: URL = .applicationSupportDirectory) -> URL {
+        root.appending(path: "BabyCare/Cloud/\(namespace)", directoryHint: .isDirectory)
     }
 }
 

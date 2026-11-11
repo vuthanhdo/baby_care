@@ -109,13 +109,17 @@ struct SignInView: View {
                     HStack { Spacer(); LanguagePicker() }.disabled(session.busy)
                     if !registering || session.pendingSignupEmail != nil || resetting {
                         entryHeader
-                        if session.pendingSignupEmail == nil && !resetting { appleButton; googleButton; emailDivider }
+                        if session.pendingSignupEmail == nil && !resetting {
+                            appleButton
+                            if CloudConfiguration.googleSignIn { googleButton }
+                            emailDivider
+                        }
                     }
                     EntryFormCard {
                         if registering && session.pendingSignupEmail == nil && !resetting {
                             entryHeader
                             appleButton
-                            googleButton
+                            if CloudConfiguration.googleSignIn { googleButton }
                             emailDivider
                         }
                         if session.pendingSignupEmail != nil {
@@ -416,6 +420,12 @@ struct CareAccountSection: View {
                         } label: { Label(L10n.text("Gia đình & chia sẻ"), systemImage: "person.2") }
                     }
                     .accessibilityIdentifier("settings.family")
+                    if !session.legacyBackups.isEmpty, session.role.canWrite {
+                        NavigationLink { LegacyRestoreView() } label: {
+                            Label(L10n.text("Khôi phục dữ liệu cũ"), systemImage: "clock.arrow.circlepath")
+                        }
+                        .accessibilityIdentifier("settings.restore")
+                    }
                     CareAsyncButton(L10n.text("Đăng xuất"), role: .destructive) { await session.signOut() }
                 }
             }.disabled(session.busy)

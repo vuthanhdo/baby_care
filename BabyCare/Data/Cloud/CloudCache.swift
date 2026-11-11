@@ -39,8 +39,10 @@ actor SwiftDataCloudCache: CareCloudCache {
     private let url: URL
     private var container: ModelContainer?
     init(userID: UUID, familyID: UUID, root: URL = .applicationSupportDirectory) {
-        url = root.appending(path: "BabyCare/Cloud/cxlqvuqloaokzmaewvdy/\(userID.uuidString)/\(familyID.uuidString)/Cache.store")
+        self.init(url: CloudConfiguration.cacheDirectory(root: root).appending(path: "\(userID.uuidString)/\(familyID.uuidString)/Cache.store"))
     }
+    /// A cache file found on disk, such as one left by the previous backend.
+    init(url: URL) { self.url = url }
     private func context() throws -> ModelContext {
         if container == nil {
             try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
